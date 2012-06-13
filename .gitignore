@@ -1,0 +1,6 @@
+
+*.suo
+/Goniometer/bin
+/Goniometer/obj
+/Goniometer Controller/obj
+/Goniometer Controller/bin
