@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 
-using System.Net;
-
 using Com6srvr;
+using SimpleLogger;
 
-namespace Goniometer_Controller
+namespace Goniometer_Controller.Motors
 {
-    class MotorSocket : IDisposable
+    public class MotorSocket : IDisposable
     {
-        INet socket;
-        
+        private INet _socket;
+
         public MotorSocket(IPAddress ipaddress)
         {
-            socket = new NetClass();
-            socket.Connect(ipaddress.ToString());
-            socket.FSEnabled = true;
+            _socket = new NetClass();
+            _socket.Connect(ipaddress.ToString());
+            _socket.FSEnabled = true;
 
             this.Connect();
         }
@@ -42,27 +43,53 @@ namespace Goniometer_Controller
 
         public void Write(string cmd)
         {
-            socket.Write(cmd);
-            socket.Flush();
+            try
+            {
+                _socket.Write(cmd);
+                _socket.Flush();
+            }
+            finally
+            {
+                Logging.WriteToLog(cmd);
+            }
+        }
+
+        public void Flush()
+        {
+            _socket.Flush();
         }
 
         public void WriteBlocking(string cmd, short timeout)
         {
-            socket.WriteBlocking(cmd, timeout);
+            try
+            {
+                _socket.WriteBlocking(cmd, timeout);
+            }
+            finally
+            {
+                Logging.WriteToLog(cmd);
+            }
         }
 
         public string Read()
         {
-            return socket.Read();
+            string result = _socket.Read();
+
+            Logging.WriteToLog(result);
+
+            return result;
         }
 
         public void Dispose()
         {
             //attempt to kill motors on termination
-            if (socket != null)
+            if (_socket != null)
             {
-                socket.Write("!k:");
-                socket = null;
+                string cmd = "!k:";
+                _socket.Write(cmd);
+                _socket = null;
+
+                Logging.WriteToLog(cmd);
             }
         }
     }
