@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO.Ports;
 using System.Text;
+using System.Threading;
 
 namespace Goniometer_Controller.Sensors
 {
     public class MinoltaTTenSensor
     {
-        SerialPort port;
+        private SerialPort _port;
 
         public MinoltaTTenSensor(SerialPort port)
         {
-            this.port = port;
+            this._port = port;
         }
 
         public void Connect()
@@ -21,6 +22,16 @@ namespace Goniometer_Controller.Sensors
             //data = 1\s\s\s = Connect
             //[Connect][Empty][Empty][Empty]
             SendCommand(0, 54, "1   ");
+            
+            Thread.Sleep(1000);
+
+            //read out confirmation
+            _port.ReadLine();
+        }
+
+        public void Disconnect()
+        {
+            _port.Close();
         }
 
         public void Run()
@@ -31,6 +42,10 @@ namespace Goniometer_Controller.Sensors
             //[Run/Hold][Empty][Empty][Fast/Slow]
 
             SendCommand(99, 55, "1  1");
+            
+            Thread.Sleep(5000);
+            
+            //no reply to read out
         }
 
         public double Read()
@@ -41,9 +56,6 @@ namespace Goniometer_Controller.Sensors
             //[Run/Hold][CCF][Range][Fast/Slow]
 
             SendCommand(0, 10, "0200");
-
-            //suggest delay in reading
-
             return ReadResult();
         }
 
@@ -58,31 +70,16 @@ namespace Goniometer_Controller.Sensors
 
             string bcc = BlockCheckChar(cmd);
 
-            port.Write("\u0002");       //start bytes
-            port.Write(cmd);
-            port.Write(bcc);
-            port.Write("\u000D\u000A"); //new line with carriage return
+            _port.Write("\u0002");       //start bytes
+            _port.Write(cmd);
+            _port.Write(bcc);
+            _port.Write("\u000D\u000A"); //new line with carriage return
         }
 
         private double ReadResult()
         {
-            string res = port.ReadLine();
+            string res = _port.ReadLine();
 
-            //length validation
-            //31 or 32 depending on if the system considers the newline one or two chars
-            if (res.Length != 31 & res.Length != 32)
-                throw new Exception("Message Malformed");
-
-            //REMOVE, the device doesn't provide valid checksums back
-            //checksum validation
-            string bcc = BlockCheckChar(res.Substring(1, 27));
-            if (bcc != res.Substring(28, 2))
-                throw new Exception("Message Malformed");
-
-            //error informaiton
-            if (res.Substring(6, 1) != " ")
-                throw new Exception("Device Error Reported");
-            
             /* 
              * res.Substring(0, 1);    //Start of Text     \u0002
              * res.Substring(1, 2);    //Receptor #        "00"
@@ -110,6 +107,21 @@ namespace Goniometer_Controller.Sensors
              * res.Substring(30, 2);   //newline
              * */
 
+            //length validation
+            //31 or 32 depending on if the system considers the newline one or two chars
+            if (res.Length != 31 & res.Length != 32)
+                throw new Exception("Message Malformed");
+
+            //REMOVE, the device doesn't provide valid checksums back
+            //checksum validation
+            string bcc = BlockCheckChar(res.Substring(1, 27));
+            if (bcc != res.Substring(28, 2))
+                throw new Exception("Message Malformed");
+
+            //error informaiton
+            if (res.Substring(6, 1) != " ")
+                throw new Exception("Device Error Reported");
+            
             return ParseReadingValue(res.Substring(9, 6));
         }
 

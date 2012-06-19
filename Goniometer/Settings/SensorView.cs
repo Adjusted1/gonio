@@ -37,7 +37,7 @@ namespace Goniometer
 
             MinoltaTTenControllerFactory.ConfigureMotorController(portName);
 
-            controller = MinoltaTTenControllerFactory.getMotorController();
+            controller = MinoltaTTenControllerFactory.GetSensorController();
             controller.PropertyChanged += controller_PropertyChanged;
         }
 

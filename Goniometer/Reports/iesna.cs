@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Goniometer.Functions;
+
 namespace Goniometer.Reports
 {
     //ANSI LM-63-2002
 
-    class iesna
+    public class iesna
     {
         #region required keywords
         public string test;
@@ -31,13 +33,23 @@ namespace Goniometer.Reports
         
         public string lampPosition;
         public string search;
-        #endregion
 
         public Dictionary<string, string> comments;
-
-        #region testdata
-
         #endregion
+
+        //horizontal, vertical, reading
+        List<Tuple<double, double, double>> _data;
+        List<Tuple<double, double, double>> _stray;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data">horizontal, vertical, reading</param>
+        public iesna(IEnumerable<Tuple<double, double, double>> data, IEnumerable<Tuple<double, double, double>> strayLight)
+        {
+            this._data = data.ToList();
+            this._stray = strayLight.ToList();
+        }
 
         public override string ToString()
         {
@@ -64,6 +76,9 @@ namespace Goniometer.Reports
             {
                 report += String.Format("[_{0}] {1}", key.ToUpper(), comments[key]);
             }
+
+            report += "TILT=NONE\n";
+            report += "1";
 
             return report;
         }

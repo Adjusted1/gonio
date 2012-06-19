@@ -34,6 +34,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.motorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sensorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTest = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,22 +75,33 @@
             // motorToolStripMenuItem
             // 
             this.motorToolStripMenuItem.Name = "motorToolStripMenuItem";
-            this.motorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.motorToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.motorToolStripMenuItem.Text = "Motor";
             this.motorToolStripMenuItem.Click += new System.EventHandler(this.motorToolStripMenuItem_Click);
             // 
             // sensorToolStripMenuItem
             // 
             this.sensorToolStripMenuItem.Name = "sensorToolStripMenuItem";
-            this.sensorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sensorToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.sensorToolStripMenuItem.Text = "Sensor";
             this.sensorToolStripMenuItem.Click += new System.EventHandler(this.sensorToolStripMenuItem_Click);
+            // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(13, 28);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 61);
+            this.btnTest.TabIndex = 2;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 401);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -110,5 +122,6 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem motorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sensorToolStripMenuItem;
+        private System.Windows.Forms.Button btnTest;
     }
 }

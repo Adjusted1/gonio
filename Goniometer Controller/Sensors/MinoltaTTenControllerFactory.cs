@@ -11,7 +11,7 @@ namespace Goniometer_Controller.Sensors
         private static MinoltaTTenController _instance;
         private static string _portName;
 
-        public static MinoltaTTenController getMotorController()
+        public static MinoltaTTenController GetSensorController()
         {
             if (_instance == null)
             {

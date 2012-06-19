@@ -31,5 +31,13 @@ namespace Goniometer
                 view.ShowDialog();
             }
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            using (var view = new Test())
+            {
+                view.ShowDialog();
+            }
+        }
     }
 }
