@@ -1,6 +1,6 @@
 ﻿namespace Goniometer
 {
-    partial class TestProgress
+    partial class LumenTestProgress
     {
         /// <summary>
         /// Required designer variable.
@@ -62,6 +62,7 @@
             this.chkEmail.TabIndex = 8;
             this.chkEmail.Text = "Email Upon Completion";
             this.chkEmail.UseVisualStyleBackColor = true;
+            this.chkEmail.CheckedChanged += new System.EventHandler(this.chkEmail_CheckedChanged);
             // 
             // btnCancel
             // 
@@ -103,7 +104,7 @@
             this.txtStatus.Size = new System.Drawing.Size(258, 214);
             this.txtStatus.TabIndex = 13;
             // 
-            // TestProgress
+            // LumenTestProgress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -117,10 +118,10 @@
             this.Controls.Add(this.progressbar);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "TestProgress";
+            this.Name = "LumenTestProgress";
             this.Text = "Test in Progress";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.TestProgress_Load);
+            this.Load += new System.EventHandler(this.LumenTestProgress_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GoniometerController.cs" />
     <Compile Include="Motors\BaseMotor.cs" />
     <Compile Include="Motors\MotorController.cs" />
     <Compile Include="Functions\Extensions.cs" />

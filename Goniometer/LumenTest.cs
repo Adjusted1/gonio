@@ -11,9 +11,9 @@ using Goniometer.Functions;
 
 namespace Goniometer
 {
-    public partial class Test : Form
+    public partial class LumenTest : Form
     {
-        public Test()
+        public LumenTest()
         {
             InitializeComponent();
         }
@@ -27,11 +27,18 @@ namespace Goniometer
         {
             btnStart.Enabled = false;
 
+            //calculate offset
+            double k = Double.Parse(txtOffset.Text);
+
             //calculate test ranges
             double[] hRange = CalculateHorizontalRange();
             double[] vRange = CalculateVerticalRange();
 
-            using (var view = new TestProgress(hRange, vRange))
+            //calculate stray test ranges
+            double[] hStrayRange = CalculateStrayHorizontalRange();
+            double[] vStrayRange = CalculateStrayVerticalRange();
+
+            using (var view = new LumenTestProgress(hRange, vRange, hStrayRange, vStrayRange, k))
             {
                 view.chkEmail.Checked = chkEmail.Checked;
                 view.txtEmail.Text    = txtEmail.Text;
@@ -52,16 +59,29 @@ namespace Goniometer
             UpdateEstimate();
         }
 
+        private void txtStrayVerticalResolution_TextChanged(object sender, EventArgs e)
+        {
+            UpdateEstimate();
+        }
+
         private void UpdateEstimate()
         {
             try
             {
                 lblTime.Text = "00:00";
 
+                //regular test
                 double[] hRange = CalculateHorizontalRange();
                 double[] vRange = CalculateVerticalRange();
+                TimeSpan test = ReportUtils.TimeEstimate(hRange.Length, vRange.Length);
+                
+                //stray test
+                double[] hStrayRange = CalculateStrayHorizontalRange();
+                double[] vStrayRange = CalculateStrayVerticalRange();
+                TimeSpan stray = ReportUtils.TimeEstimate(hStrayRange.Length, vStrayRange.Length);
 
-                var result = ReportUtils.TimeEstimate(hRange.Length, vRange.Length);
+                var result = test + stray;
+
                 lblTime.Text = String.Format("{0:hh\\:mm}", result);
             }
             catch
@@ -70,6 +90,7 @@ namespace Goniometer
             }
         }
 
+        #region range calculations
         private double[] CalculateHorizontalRange()
         {
             double hRes = 0; //resolution between steps
@@ -79,6 +100,11 @@ namespace Goniometer
             hRange = 360;
 
             return ReportUtils.Range(hRes, 0, hRange);
+        }
+
+        private double[] CalculateStrayHorizontalRange()
+        {
+            return CalculateHorizontalRange();
         }
 
         private double[] CalculateVerticalRange()
@@ -107,5 +133,33 @@ namespace Goniometer
 
             return ReportUtils.Range(vRes, vRangeStart, vRangeStop);
         }
+
+        private double[] CalculateStrayVerticalRange()
+        {
+            double vRes = 0;        //resolution between steps
+            int vRangeStart = 0;    //start of range in degrees
+            int vRangeStop = 0;     //stop of range in degrees
+
+            vRes = Double.Parse(txtStrayVerticalResolution.Text);
+
+            if (radVerticalTop.Checked)
+            {
+                vRangeStart = 90;
+                vRangeStop = 180;
+            }
+            else if (radVerticalBottom.Checked)
+            {
+                vRangeStart = 0;
+                vRangeStop = 90;
+            }
+            else
+            {
+                vRangeStart = 0;
+                vRangeStop = 180;
+            }
+
+            return ReportUtils.Range(vRes, vRangeStart, vRangeStop);
+        }
+        #endregion
     }
 }

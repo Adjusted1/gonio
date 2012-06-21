@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 
 using Goniometer.Functions;
+using System.IO;
 
 namespace Goniometer.Reports
 {
-    //ANSI LM-63-2002
-
+    /// <summary>
+    /// ANSI LM-63-2002
+    /// </summary>
     public class iesna
     {
         #region required keywords
@@ -38,17 +40,28 @@ namespace Goniometer.Reports
         #endregion
 
         //horizontal, vertical, reading
-        List<Tuple<double, double, double>> _data;
-        List<Tuple<double, double, double>> _stray;
+        public List<Tuple<double, double, double>> data;
+        public double lumens;
 
         /// <summary>
-        /// 
+        /// write report to file according to ansi standards
         /// </summary>
-        /// <param name="data">horizontal, vertical, reading</param>
-        public iesna(IEnumerable<Tuple<double, double, double>> data, IEnumerable<Tuple<double, double, double>> strayLight)
+        /// <param name="report"></param>
+        /// <param name="filefolder"></param>
+        /// <returns>fullpath to created file</returns>
+        public static string WriteToFile(iesna report, string fileFolder)
         {
-            this._data = data.ToList();
-            this._stray = strayLight.ToList();
+            string fileName = fileFolder + String.Format("//iesna_{0}.ies", DateTime.Now);
+
+            using (var fs = new FileStream(fileName, FileMode.CreateNew))   //never overwrite a previous file
+            using (var sw = new StreamWriter(fs, Encoding.ASCII))           //standard requires ansii
+            {
+                //TODO implement max column lengths of 256 char including /n
+
+                sw.Write(report.ToString());
+            }
+
+            return fileName
         }
 
         public override string ToString()

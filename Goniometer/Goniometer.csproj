@@ -38,7 +38,9 @@
     <Reference Include="NationalInstruments.UI, Version=9.1.40.204, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
     <Reference Include="NationalInstruments.UI.WindowsForms, Version=9.1.40.204, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions\Extensions.cs" />
+    <Compile Include="Functions\LightMath.cs" />
     <Compile Include="Functions\ReportUtils.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -72,17 +75,17 @@
     <Compile Include="Settings\SensorView.Designer.cs">
       <DependentUpon>SensorView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs">
+    <Compile Include="LumenTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Test.Designer.cs">
-      <DependentUpon>Test.cs</DependentUpon>
+    <Compile Include="LumenTest.Designer.cs">
+      <DependentUpon>LumenTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestProgress.cs">
+    <Compile Include="LumenTestProgress.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TestProgress.Designer.cs">
-      <DependentUpon>TestProgress.cs</DependentUpon>
+    <Compile Include="LumenTestProgress.Designer.cs">
+      <DependentUpon>LumenTestProgress.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -104,11 +107,11 @@
     <EmbeddedResource Include="Settings\SensorView.resx">
       <DependentUpon>SensorView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Test.resx">
-      <DependentUpon>Test.cs</DependentUpon>
+    <EmbeddedResource Include="LumenTest.resx">
+      <DependentUpon>LumenTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestProgress.resx">
-      <DependentUpon>TestProgress.cs</DependentUpon>
+    <EmbeddedResource Include="LumenTestProgress.resx">
+      <DependentUpon>LumenTestProgress.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

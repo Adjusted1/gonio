@@ -18,6 +18,13 @@ namespace Goniometer.Functions
             return new TimeSpan(step * horizontalSteps * verticalSteps);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="step"></param>
+        /// <param name="start">inclusive</param>
+        /// <param name="stop">inclusive</param>
+        /// <returns></returns>
         public static double[] Range(double step, int start, int stop)
         {
             if (step == 0)
