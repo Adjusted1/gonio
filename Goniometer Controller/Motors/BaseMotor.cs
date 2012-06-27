@@ -15,7 +15,7 @@ namespace Goniometer_Controller.Motors
         private object _lock = new object();
         private MotorSocket _socket;
 
-        private int _motorNumber;
+        private int _axisNumber;
         private Timer _updateTimer;
 
         private double _angle;
@@ -36,10 +36,10 @@ namespace Goniometer_Controller.Motors
             }
         }
 
-        public BaseMotor(MotorSocket socket, int motorNumber)
+        public BaseMotor(MotorSocket socket, int axisNumber)
         {
             this._socket = socket;
-            this._motorNumber = motorNumber;
+            this._axisNumber = axisNumber;
             this._updateTimer = new Timer(UpdateAngle, null, 0, 1000);
         }
 
@@ -48,7 +48,7 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 string cmd = "pset";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += "0:";
 
                 _socket.Write(cmd); 
@@ -64,22 +64,22 @@ namespace Goniometer_Controller.Motors
 
                 //acceleration
                 cmd = "a";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += acceleration + ":";
 
                 //average acceleration
                 cmd = "aa";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += acceleration + ":";
 
                 //deceleration
                 cmd = "ad";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += acceleration + ":";
 
                 //average deceleration
                 cmd = "ada";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += acceleration + ":";
 
                 _socket.Write(cmd); 
@@ -91,7 +91,7 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 string cmd = "v";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += velocity + ":";
 
                 _socket.Write(cmd); 
@@ -103,8 +103,19 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 string cmd = "d";
-                cmd += ','.Multiply(_motorNumber);
+                cmd += ','.Multiply(_axisNumber);
                 cmd += angle + ":";
+
+                _socket.Write(cmd); 
+            }
+        }
+
+        public void SendCommand(string cmd, string data)
+        {
+            lock (_lock)
+            {
+                cmd += ','.Multiply(_axisNumber);
+                cmd += data + ":";
 
                 _socket.Write(cmd); 
             }
@@ -115,7 +126,7 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 string cmd = "!go";
-                cmd += 'x'.Multiply(_motorNumber);
+                cmd += 'x'.Multiply(_axisNumber);
                 cmd += "1:";
 
                 _socket.Write(cmd); 
@@ -127,7 +138,7 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 string cmd = "!k";
-                cmd += 'x'.Multiply(_motorNumber);
+                cmd += 'x'.Multiply(_axisNumber);
                 cmd += "1:";
 
                 _socket.Write(cmd); 
@@ -140,7 +151,7 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 string cmd = "!";
-                cmd += _motorNumber + 1; //controller is 1-indexed
+                cmd += _axisNumber + 1; //controller is 1-indexed
                 cmd += "tpe:";
 
                 _socket.Write(cmd);

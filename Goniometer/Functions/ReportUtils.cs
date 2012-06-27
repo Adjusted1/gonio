@@ -37,14 +37,14 @@ namespace Goniometer.Functions
                 step *= -1;
 
             int size = (int)Math.Ceiling((stop - start) / step);
-            double[] range = new double[size];
+            double[] range = new double[size + 1];
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i <= size; i++)
             {
                 range[i] = start + (step * i);
             }
 
-            return range;
+           return range;
         }
 
         public static void EmailResults(string subject, string body, string to, Attachment attachment)

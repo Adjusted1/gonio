@@ -1,65 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO.Ports;
 using System.Text;
-using System.Threading;
+using System.IO.Ports;
 
 namespace Goniometer_Controller.Sensors
 {
-    public class MinoltaTTenSensor
+    abstract class MinoltaBaseSensor : IDisposable
     {
-        private SerialPort _port;
+        protected SerialPort _port;
 
-        public MinoltaTTenSensor(SerialPort port)
+        public MinoltaBaseSensor(SerialPort port)
         {
-            this._port = port;
+            _port = port;
         }
 
+        /// <summary>
+        /// Open SerialPort
+        /// </summary>
         public void Connect()
         {
-            //command 54 = set device to pc mode
-            //data = 1\s\s\s = Connect
-            //[Connect][Empty][Empty][Empty]
-            SendCommand(0, 54, "1   ");
-            
-            Thread.Sleep(1000);
-
-            //read out confirmation
-            _port.ReadLine();
+            if (!_port.IsOpen)
+                _port.Open();
         }
 
+        /// <summary>
+        /// Close SerialPort
+        /// </summary>
         public void Disconnect()
         {
-            _port.Close();
+            if (_port != null && _port.IsOpen)
+                _port.Close();
         }
 
-        public void Run()
+        public void IDisposable.Dispose()
         {
-            //99 = send to all receptors
-            //command 55 = set hold to all connected recptors
-            //data = 1  1 = Run, Slow
-            //[Run/Hold][Empty][Empty][Fast/Slow]
-
-            SendCommand(99, 55, "1  1");
-            
-            Thread.Sleep(5000);
-            
-            //no reply to read out
+            Disconnect();
         }
 
-        public double Read()
-        {
-            //00 = send to first receptor
-            //command 10 = read illuminance
-            //data = "0220" = Run, CCF_Off, Range..., Fast
-            //[Run/Hold][CCF][Range][Fast/Slow]
-
-            SendCommand(0, 10, "0200");
-            return ReadResult();
-        }
-
-        private void SendCommand(int receptor, int command, string data)
+        /// <summary>
+        /// Send Command to sensor
+        /// </summary>
+        /// <param name="receptor"></param>
+        /// <param name="command"></param>
+        /// <param name="data"></param>
+        protected void SendCommand(int receptor, int command, string data)
         {
             string cmd = "";
 
@@ -76,7 +61,13 @@ namespace Goniometer_Controller.Sensors
             _port.Write("\u000D\u000A"); //new line with carriage return
         }
 
-        private double ReadResult()
+        /// <summary>
+        /// Read Response from sensor
+        /// </summary>
+        /// <param name="receptor"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        protected string ReadResponse(out int receptor, out int command)
         {
             string res = _port.ReadLine();
 
@@ -85,31 +76,17 @@ namespace Goniometer_Controller.Sensors
              * res.Substring(1, 2);    //Receptor #        "00"
              * res.Substring(3, 2);    //Command #         "10"
              * 
-             * //Data 4, Reading Metadata
-             * res.Substring(5, 1);    //HOLD status       "0, 2, 4, 6" or "1, 3, 5, 7"
-             * res.Substring(6, 1);    //Error Info
-             * res.Substring(7, 1);    //Range             "0" or "1 - 5"
-             * res.Substring(8, 1);    //Battery Info      "0, 2"
+             * //Data, Length Unknown
+             * res.Substring(4, L-6);
              * 
-             * //Data 3, Illuminance Value
-             * res.Substring(9, 6);
-             * 
-             * //Data 2, Delta Value
-             * res.Substring(15, 6);   
-             * 
-             * //Data 1, % Value
-             * res.Substring(21, 6);   
-             * 
-             * res.Substring(27, 1);   //End of Text       \u0003
-             * 
-             * res.Substring(28, 2);   //BCC
-             * 
-             * res.Substring(30, 2);   //newline
+             * res.Substring(L-5, 1);   //End of Text       \u0003
+             * res.Substring(L-4, 2);   //BCC
+             * res.Substring(L-2, 2);   //newline
              * */
 
             //length validation
-            //31 or 32 depending on if the system considers the newline one or two chars
-            if (res.Length != 31 & res.Length != 32)
+            //minimum message contains 10 char
+            if (res.Length < 10)
                 throw new Exception("Message Malformed");
 
             //REMOVE, the device doesn't provide valid checksums back
@@ -122,7 +99,10 @@ namespace Goniometer_Controller.Sensors
             if (res.Substring(6, 1) != " ")
                 throw new Exception("Device Error Reported");
             
-            return ParseReadingValue(res.Substring(9, 6));
+            receptor = Int32.Parse(res.Substring(1, 2));
+            command = Int32.Parse(res.Substring(3, 2));
+
+            return res.Substring(5, res.Length - 5);
         }
 
         /// <summary>
@@ -145,7 +125,12 @@ namespace Goniometer_Controller.Sensors
             return value.ToString("X2");
         }
 
-        private double ParseReadingValue(string payload)
+        /// <summary>
+        /// Parse Minolta Long-Communication Number-Format
+        /// </summary>
+        /// <param name="payload">Value to Parse</param>
+        /// <returns></returns>
+        protected double ParseReadingValue(string payload)
         {
             if (payload == null || payload.Length != 6)
                 throw new ArgumentException("reading must be length of 6");

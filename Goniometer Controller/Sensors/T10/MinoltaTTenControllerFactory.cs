@@ -33,6 +33,7 @@ namespace Goniometer_Controller.Sensors
             lock (_lock)
             {
                 _portName = portName;
+                _instance = null;
             }
         }
     }

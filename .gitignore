@@ -7,3 +7,4 @@
 /Goniometer Tests/bin
 /Goniometer Tests/obj
 /TestResults
+*.testsettings

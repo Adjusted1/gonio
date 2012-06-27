@@ -54,6 +54,18 @@
     <Compile Include="Functions\Extensions.cs" />
     <Compile Include="Functions\LightMath.cs" />
     <Compile Include="Functions\ReportUtils.cs" />
+    <Compile Include="LumenTestProgressControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LumenTestProgressControl.Designer.cs">
+      <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LumenTestSetupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LumenTestSetupControl.Designer.cs">
+      <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,18 +87,19 @@
     <Compile Include="Settings\SensorView.Designer.cs">
       <DependentUpon>SensorView.cs</DependentUpon>
     </Compile>
-    <Compile Include="LumenTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LumenTest.Designer.cs">
-      <DependentUpon>LumenTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="LumenTestProgress.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LumenTestProgress.Designer.cs">
       <DependentUpon>LumenTestProgress.cs</DependentUpon>
     </Compile>
+    <Compile Include="SymmetryEnum.cs" />
+    <EmbeddedResource Include="LumenTestProgressControl.resx">
+      <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LumenTestSetupControl.resx">
+      <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -106,9 +119,6 @@
     </Compile>
     <EmbeddedResource Include="Settings\SensorView.resx">
       <DependentUpon>SensorView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LumenTest.resx">
-      <DependentUpon>LumenTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LumenTestProgress.resx">
       <DependentUpon>LumenTestProgress.cs</DependentUpon>

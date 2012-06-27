@@ -34,6 +34,7 @@ namespace Goniometer_Controller.Motors
             lock (_lock)
             {
                 _address = address;
+                _instance = null;
             }
         }
     }

@@ -28,11 +28,18 @@ namespace Goniometer
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            IPAddress address = IPAddress.Parse(txtIPAddress.Text);
-            MotorControllerFactory.ConfigureMotorController(address);
+            try
+            {
+                IPAddress address = IPAddress.Parse(txtIPAddress.Text);
+                MotorControllerFactory.ConfigureMotorController(address);
 
-            controller = MotorControllerFactory.getMotorController();
-            controller.PropertyChanged += controller_PropertyChanged;
+                controller = MotorControllerFactory.getMotorController();
+                controller.PropertyChanged += controller_PropertyChanged;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         protected void controller_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -47,6 +54,15 @@ namespace Goniometer
                 gaugeVertical.Value = controller.verticalAngle;
                 txtVerticalAngle.Text = controller.verticalAngle.ToString("0.##");
             }
+        }
+
+        private void txtIPAddress_TextChanged(object sender, EventArgs e)
+        {
+            IPAddress address;
+            if (IPAddress.TryParse(txtIPAddress.Text, out address))
+                btnConnect.Enabled = true;
+            else
+                btnConnect.Enabled = false;
         }
     }
 }

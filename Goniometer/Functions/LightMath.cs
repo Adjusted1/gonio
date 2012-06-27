@@ -7,6 +7,7 @@ namespace Goniometer.Functions
 {
     public static class LightMath
     {
+        #region general algorithms
         public static double Radians(double degrees)
         {
             return degrees * Math.PI / 180;
@@ -18,53 +19,124 @@ namespace Goniometer.Functions
         }
 
         /// <summary>
-        /// Average horizontal readings, then calculate Lumens
+        /// Gives the width between the midpoint of each sequential pair of values.
+        /// </summary>
+        /// <param name="values">sorted list</param>
+        /// <returns></returns>
+        public static double[] WidthOnCenter(double[] values)
+        {
+            double[] widths = new double[values.Length];
+            for (int i = 0; i < values.Length; i++)
+            {
+                //get midrange between this and previous angle
+                double theta1;
+                if (i == 0)
+                    theta1 = values[i];
+                else
+                    theta1 = values[i] - (values[i] - values[i - 1]) / 2;
+
+                //get midrange between this and next angle
+                double theta2;
+                if (i == values.Length - 1)
+                    theta2 = values[i];
+                else
+                    theta2 = values[i] + (values[i + 1] - values[i]) / 2;
+
+                widths[i] = theta2 - theta1;
+            }
+            return widths;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p1">x1, y1</param>
+        /// <param name="p2">x2, y2</param>
+        /// <param name="x">x0</param>
+        /// <returns>y0</returns>
+        public static double LinearExtrapolation(Tuple<double, double> p1, Tuple<double, double> p2, double x)
+        {
+            double m = (p1.Item2 - p2.Item2) / (p1.Item1 - p2.Item1);
+            double c = m * p1.Item1 - p1.Item2;
+
+            return m * x + c;
+        }
+
+        public static double BiLinearExtrapolation(
+            Tuple<double, double, double> p1, Tuple<double, double, double> p2,
+            Tuple<double, double, double> p3, Tuple<double, double, double> p4,
+            double x, double y)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        /// <summary>
+        /// Average weighted horizontal readings, then calculate along 
         /// </summary>
         /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
         /// <returns></returns>
         public static double CalculateLumensByHorizontalAverage(List<Tuple<double, double, double>> data)
         {
             //vAngle, footcandle
-            List<Tuple<double, double>> candleReadings = new List<Tuple<double, double>>();
+            var averagedReadings = new List<Tuple<double, double>>();
 
             double[] vRange = data.Select((item) => item.Item2).Distinct().ToArray();
-            foreach (double v in vRange)
+            for (int v = 0; v < vRange.Length; v++)
             {
-                double candles = data.Where((item) => item.Item2 == v)
-                                     .Average((item) => item.Item3);
+                //select just those values in the vertical range
+                var cross = data.Where((item) => item.Item2 == vRange[v]).ToList(); 
 
-                candleReadings.Add(Tuple.Create(v, candles));
+                double averageCandles = 0;
+                
+                double[] hAngles = cross.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
+                double[] hWidths = WidthOnCenter(hAngles);
+                double hRange = hAngles[hAngles.Length - 1] - hAngles[0];
+
+                for (int h = 0; h < hAngles.Length; h++)
+                {
+                    double weightedCandle = cross[h].Item3;
+
+                    weightedCandle *= hWidths[h] / hRange;   //weight the measurement
+                    averageCandles += weightedCandle;        //sum weighted measurement
+                }
+
+                averagedReadings.Add(Tuple.Create(vRange[v], averageCandles));
             }
 
-            return CalculateLumens(candleReadings);
+            return CalculateLumens(averagedReadings);
         }
 
         /// <summary>
-        /// Calculate the Lumen value of a vertical array and average them together
+        /// Calculate the Lumen value of a vertical array and weight them by horizontal angle
         /// </summary>
         /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
         /// <returns></returns>
         public static double CalculateLumensByVertical(List<Tuple<double, double, double>> data)
         {
-            //hAngle, lumen
-            List<Tuple<double, double>> lumenReadings = new List<Tuple<double, double>>();
+            double totalLumens = 0;            
             
-            double[] hRange = data.Select((item) => item.Item1).Distinct().ToArray();
-            foreach(double h in hRange)
+            double[] hAngles = data.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
+            double[] hWidths = WidthOnCenter(hAngles);
+            double hRange = hAngles[hAngles.Length - 1] - hAngles[0];
+
+            for(int h = 0; h < hAngles.Length; h++)
             {
-                var vData = data.Where((item) => item.Item1 == h)
+                var vData = data.Where((item) => item.Item1 == hAngles[h])
                                 .Select((item) => Tuple.Create(item.Item2, item.Item3))
                                 .ToList();
 
-                lumenReadings.Add(Tuple.Create(h, CalculateLumens(vData)));
+                double lumen = CalculateLumens(vData);
+                lumen *= hWidths[h] / hRange;   //weight the measurement
+
+                totalLumens += lumen;           //sum weighted measurement
             }
 
-            //average by hAngle
-            return lumenReadings.Average((item) => item.Item2);
+            return totalLumens;
         }
 
         /// <summary>
-        /// Calculate Lumen data along single vertical axis
+        /// Calculate Lumen data from angular data
         /// </summary>
         /// <param name="data">Units: degrees, footcandles</param>
         /// <returns></returns>
@@ -107,29 +179,6 @@ namespace Goniometer.Functions
 
             //return calculated lumen as: sum of components * 2 * PI * SolidAngle
             return total * SolidAngle(angle);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="p1">x1, y1</param>
-        /// <param name="p2">x2, y2</param>
-        /// <param name="x">x0</param>
-        /// <returns>y0</returns>
-        public static double LinearExtrapolation(Tuple<double, double> p1, Tuple<double, double> p2, double x)
-        {
-            double m = (p1.Item2 - p2.Item2) / (p1.Item1 - p2.Item1);
-            double c = m * p1.Item1 - p1.Item2;
-
-            return m * x + c;
-        }
-
-        public static double BiLinearExtrapolation(
-            Tuple<double, double, double> p1, Tuple<double, double, double> p2,
-            Tuple<double, double, double> p3, Tuple<double, double, double> p4,
-            double x, double y)
-        {
-            throw new NotImplementedException();
         }
     }
 }

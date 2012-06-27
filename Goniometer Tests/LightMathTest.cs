@@ -19,10 +19,10 @@ namespace Goniometer_Tests
         public void CalculateLumensByHorizontalAverageTest()
         {
             List<Tuple<double, double, double>> data = GenerateData();
-            double expected = 2700;
+            double expected = 2905;
             double actual;
             actual = LightMath.CalculateLumensByHorizontalAverage(data);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual, 1);
         }
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace Goniometer_Tests
         public void CalculateLumensByVerticalTest()
         {
             List<Tuple<double, double, double>> data = GenerateData();
-            double expected = 2700;
+            double expected = 2905;
             double actual;
             actual = LightMath.CalculateLumensByVertical(data);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual, 1);
         }
 
         private List<Tuple<double, double, double>> GenerateData()

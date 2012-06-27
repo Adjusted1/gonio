@@ -61,7 +61,7 @@ namespace Goniometer.Reports
                 sw.Write(report.ToString());
             }
 
-            return fileName
+            return fileName;
         }
 
         public override string ToString()

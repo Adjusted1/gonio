@@ -19,26 +19,6 @@ namespace Goniometer_Controller.Motors
             _socket = new NetClass();
             _socket.Connect(ipaddress.ToString());
             _socket.FSEnabled = true;
-
-            this.Connect();
-        }
-
-        private void Connect()
-        {
-            string cmd = "";
-
-            cmd += "eres8192,8192:";
-            cmd += "lh0,0:";
-            cmd += "scla9102,100:";
-            cmd += "sclv9102,100:";
-            cmd += "scld9102.2,2000:";
-            cmd += "smper4,15:";
-            cmd += "sgp20,1:";           //Proportional [microvolts/step]
-            cmd += "sgv3,15:";           //Velocity or Derivative [microvolts/step/sec]
-            cmd += "sgi,0.1:";           //Integral [microvolts/sec*sec]
-            cmd += "sgilim,2:";          //Limit?
-
-            Write(cmd);
         }
 
         public void Write(string cmd)
