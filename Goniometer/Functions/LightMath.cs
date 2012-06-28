@@ -147,10 +147,6 @@ namespace Goniometer.Functions
 
             double total = 0;
 
-            //we are only measuring the horizontal component
-            Func<double, double, double> HorizontalComponent = (t1, t2) => 
-                { return Math.Cos(Radians(t1)) - Math.Cos(Radians(t2)); };
-
             for (int i = 0; i < data.Count; i++)
             {
                 //get midrange between this and previous angle
@@ -167,18 +163,14 @@ namespace Goniometer.Functions
                 else
                     theta2 = data[i].Item1 + (data[i + 1].Item1 - data[i].Item1) / 2;
 
-                //determine horizontal component of reading
-                double h = HorizontalComponent(theta1, theta2);
+                //determine solid angle for this band
+                double s = SolidAngle(theta2) - SolidAngle(theta1);
 
                 //sum component values
-                total += data[i].Item2 * h;
+                total += data[i].Item2 * s;
             }
 
-            //get angle range for solid angle calculations
-            double angle = data.Max(t => t.Item1) - data.Min(t => t.Item1);
-
-            //return calculated lumen as: sum of components * 2 * PI * SolidAngle
-            return total * SolidAngle(angle);
+            return total;
         }
     }
 }

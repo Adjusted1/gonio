@@ -18,11 +18,18 @@ namespace Goniometer_Tests
         [TestMethod()]
         public void CalculateLumensByHorizontalAverageTest()
         {
-            List<Tuple<double, double, double>> data = GenerateData();
-            double expected = 2905;
-            double actual;
-            actual = LightMath.CalculateLumensByHorizontalAverage(data);
-            Assert.AreEqual(expected, actual, 1);
+            string testfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string[] testfiles = { "exampledata.txt", "exampledata2.txt" };
+
+            foreach (string testfile in testfiles)
+            {
+                double expected;
+                double actual;
+                var data = GenerateData(testfolder + "//" + testfile, out expected);
+
+                actual = LightMath.CalculateLumensByHorizontalAverage(data);
+                Assert.AreEqual(expected, actual, 0.1);
+            }
         }
 
         /// <summary>
@@ -31,21 +38,29 @@ namespace Goniometer_Tests
         [TestMethod()]
         public void CalculateLumensByVerticalTest()
         {
-            List<Tuple<double, double, double>> data = GenerateData();
-            double expected = 2905;
-            double actual;
-            actual = LightMath.CalculateLumensByVertical(data);
-            Assert.AreEqual(expected, actual, 1);
+            string testfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string[] testfiles = { "exampledata.txt", "exampledata2.txt" };
+
+            foreach (string testfile in testfiles)
+            {
+                double expected;
+                double actual;
+                var data = GenerateData(testfolder + "//" + testfile, out expected);
+
+                actual = LightMath.CalculateLumensByVertical(data);
+                Assert.AreEqual(expected, actual, 0.1);
+            }
         }
 
-        private List<Tuple<double, double, double>> GenerateData()
+        private List<Tuple<double, double, double>> GenerateData(string filename, out double lumens)
         {
-            string filename = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "//exampledata.txt";
             var results = new List<Tuple<double, double, double>>();
 
             string hValues, vValues, readings;
             using (var sr = new StreamReader(filename))
             {
+                lumens = Double.Parse(sr.ReadLine());
+
                 vValues = sr.ReadLine();
                 hValues = sr.ReadLine();
 
