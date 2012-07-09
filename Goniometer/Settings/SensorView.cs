@@ -14,7 +14,7 @@ namespace Goniometer
 {
     public partial class SensorView : Form
     {
-        private MinoltaTTenController controller;
+        private MinoltaTTenController _sensor;
 
         public SensorView()
         {
@@ -28,17 +28,24 @@ namespace Goniometer
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            string portName = cboPortNames.SelectedItem.ToString();
-            if (String.IsNullOrEmpty(portName))
+            try
             {
-                MessageBox.Show("You must select a portName to continue");
-                return;
+                string portName = cboPortNames.SelectedItem.ToString();
+                if (String.IsNullOrEmpty(portName))
+                {
+                    MessageBox.Show("You must select a portName to continue");
+                    return;
+                }
+
+                MinoltaTTenControllerFactory.SetPortName(portName);
+
+                _sensor = MinoltaTTenControllerFactory.GetSensorController();
+                _sensor.PropertyChanged += controller_PropertyChanged;
             }
-
-            MinoltaTTenControllerFactory.ConfigureMotorController(portName);
-
-            controller = MinoltaTTenControllerFactory.GetSensorController();
-            controller.PropertyChanged += controller_PropertyChanged;
+            catch (Exception ex)
+            {
+                //failure to connect?
+            }
         }
 
         private void controller_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -46,7 +53,7 @@ namespace Goniometer
             if (e.PropertyName == "reading")
             {
                 txtReading.Invoke(() => 
-                    txtReading.Text = controller.reading.ToString("0.###"));
+                    txtReading.Text = _sensor.reading.ToString("0.###"));
             }
         }
     }

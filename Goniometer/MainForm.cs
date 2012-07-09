@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
+
+using Goniometer.Tests;
+using Goniometer.Tests.IESNA;
 
 using Goniometer_Controller;
 using Goniometer_Controller.Motors;
@@ -15,34 +20,27 @@ namespace Goniometer
 {
     public partial class MainForm : Form
     {
-        MotorController _motor;
-        MinoltaTTenController _sensor;
-
         public MainForm()
         {
+            try
+            {
+                string address = ConfigurationManager.AppSettings["motor.ip"];
+                MotorController.Connect(IPAddress.Parse(address));
+
+                //string portName = ConfigurationManager.AppSettings["sensor.port"];
+                //MinoltaTTenControllerFactory.SetPortName(portName);
+            }
+            catch (Exception ex)
+            {
+            }
+
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _motor = MotorControllerFactory.getMotorController();
-            _motor.PropertyChanged += new PropertyChangedEventHandler(_motor_PropertyChanged);
-
-            _sensor = MinoltaTTenControllerFactory.GetSensorController();
-            _sensor.PropertyChanged += new PropertyChangedEventHandler(_sensor_PropertyChanged);
-        }
-
-        private void _motor_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "horizontalAngle")
-                gaugeHorizontal.Value = _motor.horizontalAngle;
-
-            else if (e.PropertyName == "verticalAngle")
-                gaugeVertical.Value = _motor.verticalAngle;
-        }
-
-        private void _sensor_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+            //load main content
+            LoadTestListControl();
         }
 
         #region menu items
@@ -52,8 +50,6 @@ namespace Goniometer
             {
                 view.ShowDialog();
             }
-
-            _motor = MotorControllerFactory.getMotorController();
         }
 
         private void sensorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,26 +58,60 @@ namespace Goniometer
             {
                 view.ShowDialog();
             }
-
-            _sensor = MinoltaTTenControllerFactory.GetSensorController();
         }
         #endregion
 
         #region main panel context switching
-        private void btnTest_Click(object sender, EventArgs e)
+
+        #region TestListControl
+        private void LoadTestListControl()
         {
             panelMain.Controls.Clear();
 
-            var control = new LumenTestSetupControl();
-            control.Size = panelMain.Size;
-            control.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            control.PropertyChanged += new PropertyChangedEventHandler(LumenTestSetupControl_PropertyChanged);
-            control.StartClicked += new EventHandler(LumenTestSetupControl_StartClicked);
+            var testListControl = new TestListControl();
+            testListControl.Size = panelMain.Size;
+            testListControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            testListControl.btnTest_Clicked += new EventHandler(testListControl_btnTest_Clicked);
 
-            panelMain.Controls.Add(control);
+            panelMain.Controls.Add(testListControl);
         }
 
-        private void LumenTestSetupControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void testListControl_btnTest_Clicked(object sender, EventArgs e)
+        {
+            var testListControl = sender as TestListControl;
+            if (testListControl == null)
+                return;
+
+            string testName = testListControl.TestName;
+            if (testName == "Lumen Test")
+                LoadLumenTestControl();
+            else if (testName == "Calibration Test")
+                LoadCalibrationTestControl();
+        }
+        #endregion
+
+        #region CalibrationTestControl
+        private void LoadCalibrationTestControl()
+        {
+
+        }
+        #endregion
+
+        #region LumenTestControl
+        private void LoadLumenTestControl()
+        {
+            panelMain.Controls.Clear();
+
+            var lumenTestControl = new LumenTestControl();
+            lumenTestControl.Size = panelMain.Size;
+            lumenTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lumenTestControl.PropertyChanged += new PropertyChangedEventHandler(lumenTestControl_PropertyChanged);
+            lumenTestControl.OnExit += new EventHandler(lumenTestControl_OnExit);
+
+            panelMain.Controls.Add(lumenTestControl);
+        }
+
+        private void lumenTestControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             try
             {
@@ -120,39 +150,148 @@ namespace Goniometer
             }
         }
 
-        private void LumenTestSetupControl_StartClicked(object sender, EventArgs e)
+        private void lumenTestControl_OnExit(object sender, EventArgs e)
+        {
+            LoadTestListControl();
+        }
+        #endregion
+
+        #endregion
+
+        #region status panel
+        private void timerMotor_Tick(object sender, EventArgs e)
         {
             try
             {
-                LumenTestSetupControl setup = sender as LumenTestSetupControl;
-                if (setup == null)
-                    return;
-
-                double[] hRange = setup.CalculateHorizontalRange();
-                double[] vRange = setup.CalculateVerticalRange();
-                double[] hStrayRange = setup.CalculateStrayHorizontalRange();
-                double[] vStrayRange = setup.CalculateStrayVerticalRange();
-                double k = (setup.offset.HasValue ? setup.offset.Value : 1);
-
-                panelMain.Controls.Clear();
-
-                var control = new LumenTestProgressControl(this._motor, this._sensor, hRange, vRange, hStrayRange, vStrayRange, k);
-                control.Size = panelMain.Size;
-                control.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                control.LightTestFinished += new EventHandler(LumentTestProgressControl_LightTestFinished);
-
-                panelMain.Controls.Add(control);
+                double hAngle = MotorController.GetHorizontalAngle();
+                lblHorizontalAngle.Text = hAngle.ToString("0.##");
+                if (hAngle < gaugeHorizontal.Range.Minimum)
+                    gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
+                else if (hAngle > gaugeHorizontal.Range.Maximum)
+                    gaugeHorizontal.Value = gaugeHorizontal.Range.Maximum;
+                else
+                    gaugeHorizontal.Value = hAngle;
+                
+                double vAngle = MotorController.GetVerticalAngle();
+                lblVerticalAngle.Text = vAngle.ToString("0.##");
+                if (vAngle < gaugeVertical.Range.Minimum)
+                    gaugeVertical.Value = gaugeVertical.Range.Minimum;
+                else if (vAngle > gaugeVertical.Range.Maximum)
+                    gaugeVertical.Value = gaugeVertical.Range.Maximum;
+                else
+                    gaugeVertical.Value = vAngle;
             }
-            catch
+            catch (InvalidOperationException)
             {
-                //omnomnom
+                //omnomnom, (connectivity problems)
+            }
+            catch (Exception ex)
+            {
             }
         }
 
-        private void LumentTestProgressControl_LightTestFinished(object sender, EventArgs e)
+        private void btnExecute_Click(object sender, EventArgs e)
         {
-            //nothing! //we're done!
+            ExecuteMotor();
+        }
+
+        private void ExecuteMotor()
+        {
+            try
+            {
+                double h;
+                if (Double.TryParse(txtHorizontalAngle.Text, out h))
+                    MotorController.SetHorizontalAngle(h);
+
+                double v;
+                if (Double.TryParse(txtVerticalAngle.Text, out v))
+                    MotorController.SetVerticalAngle(v);
+            }
+            catch (InvalidOperationException)
+            {
+                //omnomnom, (connectivity problems)
+            }
+        }
+
+        private void txtHorizontalAngle_KeyDown(object sender, KeyEventArgs e)
+        {
+            //valid keys: 0-9 and .(dot)
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            if (e.KeyCode == Keys.OemPeriod)
+                return;
+
+            //back/delete also valid
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
+                return;
+
+            if (e.KeyCode == Keys.Enter | e.KeyCode == Keys.Return)
+                ExecuteMotor();
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void txtHorizontalAngle_TextChanged(object sender, EventArgs e)
+        {
+            double d;
+            if (!Double.TryParse(txtHorizontalAngle.Text, out d))
+                picHorizontalAngleValid.Visible = true;
+
+            if (d < 0 | d > 360)
+                picHorizontalAngleValid.Visible = true;
+
+            picHorizontalAngleValid.Visible = false;
+        }
+
+        private void txtVerticalAngle_KeyDown(object sender, KeyEventArgs e)
+        {
+            //valid keys: 0-9 and .(dot)
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            if (e.KeyCode == Keys.OemPeriod)
+                return;
+
+            //back/delete also valid
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
+                return;
+
+            if (e.KeyCode == Keys.Enter | e.KeyCode == Keys.Return)
+                ExecuteMotor();
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void txtVerticalAngle_TextChanged(object sender, EventArgs e)
+        {
+            double d;
+            if (!Double.TryParse(txtVerticalAngle.Text, out d))
+                picVerticalAngleValid.Visible = true;
+
+            if (d < 0 | d > 180)
+                picVerticalAngleValid.Visible = true;
+
+            picVerticalAngleValid.Visible = false;
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            using (var view = new MotorView())
+            {
+                view.ShowDialog();
+            }
         }
         #endregion
+
+        private void btnPanic_Click(object sender, EventArgs e)
+        {
+            MotorController.EmergencyStop();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MotorController.EmergencyStop();
+        }
     }
 }

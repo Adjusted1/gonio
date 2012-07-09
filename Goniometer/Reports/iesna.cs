@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 using Goniometer.Functions;
-using System.IO;
+using Goniometer_Controller;
+using Goniometer_Controller.Functions;
 
 namespace Goniometer.Reports
 {
@@ -39,9 +41,12 @@ namespace Goniometer.Reports
         public Dictionary<string, string> comments;
         #endregion
 
-        //horizontal, vertical, reading
-        public List<Tuple<double, double, double>> data;
-        public double lumens;
+        public ReadingsCollection _data;
+
+        public iesna(ReadingsCollection data)
+        {
+            _data = data;
+        }
 
         /// <summary>
         /// write report to file according to ansi standards
@@ -92,6 +97,25 @@ namespace Goniometer.Reports
 
             report += "TILT=NONE\n";
             report += "1";
+
+            //lumen reading
+            double lumen = _data.CalculateLumens();
+            report += lumen + '\n';
+
+            //horizontal values
+            double[] hRange = _data.GetHorizontalRange();
+            report += String.Join(" ", hRange) + '\n';
+
+            //vertical values
+            double[] vRange = _data.GetVerticalRange();
+            report += String.Join(" ", vRange) + '\n';
+
+            //raw values
+            for (int h = 0; h < hRange.Length; h++)
+            {
+                double[] values = _data.GetVerticalReadings(hRange[h]).Select(t => t.Item2).ToArray();
+                report += String.Join(" ", values) + '\n';
+            }
 
             return report;
         }

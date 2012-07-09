@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Goniometer.Functions
+namespace Goniometer_Controller.Functions
 {
     public static class LightMath
     {

@@ -10,9 +10,9 @@ using SimpleLogger;
 
 namespace Goniometer_Controller.Sensors
 {
-    public class MinoltaTTenController : INotifyPropertyChanged, IDisposable
+    public class MinoltaTTenController : IMinoltaTTenController, IDisposable
     {
-        private object _sensorLock = new object();
+        private object _lock = new object();
         private MinoltaTTenSensor _sensor;
         private int _refreshRate = 100; //milliseconds
 
@@ -23,28 +23,38 @@ namespace Goniometer_Controller.Sensors
         #region construction
         internal MinoltaTTenController(string portName)
         {
-            SerialPort port = new SerialPort(portName);
-            port.BaudRate = 9600;
-            port.DataBits = 7;
-            port.StopBits = StopBits.One;
-            port.Parity = Parity.Even;
+            SetPort(portName);
+        }
 
-            if (port.IsOpen)
+        public void SetPort(string portName)
+        {
+            lock (_lock)
             {
-                status = "Closing Port";
-                port.Close();
+                SerialPort port = new SerialPort(portName);
+                port.BaudRate = 9600;
+                port.DataBits = 7;
+                port.StopBits = StopBits.One;
+                port.Parity = Parity.Even;
+
+                if (port.IsOpen)
+                {
+                    status = "Closing Port";
+                    port.Close();
+                }
+
+                status = "Opening Port";
+                port.Open();
+
+                _sensor = new MinoltaTTenSensor(port);
+
+                InitializeSensor(); 
             }
+        }
 
-            status = "Opening Port";
-            port.Open();
-
-            _sensor = new MinoltaTTenSensor(port);
-
+        private void InitializeSensor()
+        {
             status = "Connecting with Device";
             _sensor.Connect();
-
-            status = "Enabling Device";
-            _sensor.Run();
 
             status = "Starting Measurement";
             _updateTimer = new Timer(UpdateReading, this, 0, _refreshRate);
@@ -57,7 +67,7 @@ namespace Goniometer_Controller.Sensors
         private bool _disposed = false;
         public void Dispose()
         {
-            lock (_sensorLock)
+            lock (_lock)
             {
                 if (_updateTimer != null)
                     _updateTimer.Dispose();
@@ -117,7 +127,7 @@ namespace Goniometer_Controller.Sensors
 
         private void UpdateReading(object state)
         {
-            if (Monitor.TryEnter(_sensorLock))
+            if (Monitor.TryEnter(_lock))
             {
                 try
                 {
@@ -132,7 +142,7 @@ namespace Goniometer_Controller.Sensors
                 }
                 finally
                 {
-                    Monitor.Exit(_sensorLock);
+                    Monitor.Exit(_lock);
                 }
             }
         }

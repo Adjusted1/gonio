@@ -31,7 +31,6 @@
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblCompletionTime = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.chkEmail = new System.Windows.Forms.CheckBox();
             this.progressbar = new System.Windows.Forms.ProgressBar();
@@ -66,16 +65,6 @@
             this.lblCompletionTime.Size = new System.Drawing.Size(34, 13);
             this.lblCompletionTime.TabIndex = 18;
             this.lblCompletionTime.Text = "00:00";
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(191, 300);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 17;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // txtEmail
             // 
@@ -112,13 +101,12 @@
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCompletionTime);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.chkEmail);
             this.Controls.Add(this.progressbar);
+            this.MinimumSize = new System.Drawing.Size(270, 327);
             this.Name = "LumenTestProgressControl";
             this.Size = new System.Drawing.Size(270, 327);
-            this.Load += new System.EventHandler(this.LumenTestProgressControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,7 +117,6 @@
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCompletionTime;
-        private System.Windows.Forms.Button btnCancel;
         public System.Windows.Forms.TextBox txtEmail;
         public System.Windows.Forms.CheckBox chkEmail;
         private System.Windows.Forms.ProgressBar progressbar;

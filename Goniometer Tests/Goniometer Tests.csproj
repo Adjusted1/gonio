@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="LightMathTest.cs" />
     <Compile Include="MinoltaTTenControllerFactoryTest.cs" />
-    <Compile Include="Mocks\MotorControllerMock.cs" />
+    <Compile Include="Mocks\MinoltaTTenControllerMock.cs" />
     <Compile Include="MotorControllerFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

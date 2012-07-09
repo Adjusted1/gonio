@@ -28,12 +28,14 @@ namespace Goniometer_Controller.Sensors
             return _instance;
         }
 
-        public static void ConfigureMotorController(string portName)
+        public static void SetPortName(string portName)
         {
             lock (_lock)
             {
                 _portName = portName;
-                _instance = null;
+
+                if (_instance != null)
+                    _instance.SetPort(portName);
             }
         }
     }

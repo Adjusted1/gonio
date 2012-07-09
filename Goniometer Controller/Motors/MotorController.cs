@@ -9,61 +9,68 @@ using System.Net;
 
 namespace Goniometer_Controller.Motors
 {
-    public class MotorController : INotifyPropertyChanged, IDisposable
-    {
-        private MotorSocket _socket;
-        private BaseMotor _horizontalMotor;
-        private BaseMotor _verticalMotor;
+    /* SO yeah... you might be asking yourself: is the static/singleton really necessary here?
+     * Pretty much. I'd like to have multiple consumers of the MotorController (readers and writers),
+     * but I also need to support: 1) the ability to reset the connection without requiring everyone to
+     * fetch new instances from a factory. Additionally, 2) some methods require a write-wait-read pattern
+     * that should lock the socket for the duration of that command.
+     */
 
-        #region constructor and initializer
-        internal MotorController(IPAddress address)
+    public static class MotorController
+    {
+        private static BaseMotor _horizontalMotor;
+        private static BaseMotor _verticalMotor;
+
+        #region configuration and initialization
+        static MotorController()
         {
-            Connect(address);
+            _horizontalMotor = new BaseMotor(1, 2222.2);
+
+            _verticalMotor   = new BaseMotor(0, 9102.2);
         }
 
-        private void Connect(IPAddress address)
+        public static void Connect(IPAddress address)
         {
-            if (_socket != null)
-                _socket.Dispose();
+            //halt all motion during configuration process
+            EmergencyStop();
 
-            _socket = new MotorSocket(address);
+            MotorSocketProvider.SetIPAddress(address);
 
             InitializeVerticalMotor();
             InitializeHorizontalMotor();
+
+            //Global Controller Commands
+            MotorSocketProvider.Write("scale11");   //set all axis to scale mode
+
+            MotorSocketProvider.Write("!comexc1:"); //set continuous execution mode
+
+            //Default not zeroing!
+            ExitZeroingMode();
         }
 
-        private void InitializeHorizontalMotor()
+        private static void InitializeHorizontalMotor()
         {
-            _horizontalMotor = new BaseMotor(_socket, 1);
-            _horizontalMotor.PropertyChanged += HandleHorizontalAngleChanges;
+            //encoder resolution not necessary?
+            _horizontalMotor.SendCommand("eres",    "8000");    //encoder resolution * 4 = 8000 counts per rev
+            //_horizontalMotor.SendCommand("lh",      "0");     //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
 
-            _horizontalMotor.SendCommand("eres",    "8192");    //encoder resolution * 4 = 8192 counts per rev
-            _horizontalMotor.SendCommand("lh",      "0");       //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
-
-            //scale factors: 
-            _horizontalMotor.SendCommand("scla",    "100");     //Acceleration Scale Factor [rev/sec/sec]
-            _horizontalMotor.SendCommand("sclv",    "100");     //Velocity Scale Factor     [rev/sec]
+            //scale factors: 100:1 gear reducer = 800,000 counts per rev / 360deg = 2222.222 counts per degree
+            _horizontalMotor.SendCommand("scla",    "2222");    //Acceleration Scale Factor [rev/sec/sec]
+            _horizontalMotor.SendCommand("sclv",    "2222");    //Velocity Scale Factor     [rev/sec]
             _horizontalMotor.SendCommand("scld",    "2222");    //Distance Scale Factor     [rev]
 
             //feedback values
             _horizontalMotor.SendCommand("smper",   "15");      //Maximum Allowable Position Error
             _horizontalMotor.SendCommand("sgp",     "1");       //Proportional Feeback Gain [microvolts/step]
             _horizontalMotor.SendCommand("sgv",     "15");      //Velocity Feedback Gain    [microvolts/step/sec]
-
-            _horizontalMotor.SendAccelerationCommand(200);
-            _horizontalMotor.SendVelocityCommand(210);
-            _horizontalMotor.ExecuteCommands();
         }
 
-        private void InitializeVerticalMotor()
+        private static void InitializeVerticalMotor()
         {
-            _verticalMotor = new BaseMotor(_socket, 0);
-            _verticalMotor.PropertyChanged += HandleVerticalAngleChanges;
-
             _verticalMotor.SendCommand("eres", "8192");         //encoder resolution * 4 = 8192 counts per rev
-            _verticalMotor.SendCommand("lh",    "0");           //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
+            //_verticalMotor.SendCommand("lh",    "0");         //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
 
-            //scale factors: 400:1 gear reducer = 3276800 counts per rev / 360deg = 9102.222 counts per degree
+            //scale factors: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.222 counts per degree
             _verticalMotor.SendCommand("scla",  "9102");        //Acceleration Scale Factor [rev/sec/sec]
             _verticalMotor.SendCommand("sclv",  "9102");        //Velocity Scale Factor     [rev/sec]
             _verticalMotor.SendCommand("scld",  "9102.2");      //Distance Scale Factor     [rev]
@@ -75,137 +82,86 @@ namespace Goniometer_Controller.Motors
             //cause occillation errors
             //_verticalMotor.SendCommand("sgi", "0.1");        //Integral Feedback Gain    [microvolts/sec*sec]
             //_verticalMotor.SendCommand("sgilim", "2");       //Integral Windup Limit
-
-            _verticalMotor.SendAccelerationCommand(5);
-            _verticalMotor.SendVelocityCommand(3);
-            _verticalMotor.ExecuteCommands();
         }
         #endregion
 
-        public void Dispose()
-        {
-            EmergencyStop();
-        }
-
         #region get angles
-        public double horizontalAngle
+        public static double GetHorizontalAngle()
         {
-            get
-            {
-                return _horizontalMotor.angle;
-            }
+            return _horizontalMotor.GetAngle();
         }
 
-        public double verticalAngle
+        public static double GetVerticalAngle()
         {
-            get
-            {
-                return _verticalMotor.angle;
-            }
+            return _verticalMotor.GetAngle() * -1;
         }
         #endregion
 
         #region set angles
-        public void SetHorizontalAngle(double angle)
+        public static void SetHorizontalAngle(double angle)
         {
-            SetAngle(_horizontalMotor, angle);
+            _horizontalMotor.Move(angle, 10, 10, true);
         }
 
-        public void SetVerticalAngle(double angle)
+        public static void SetVerticalAngle(double angle)
         {
-            SetAngle(_verticalMotor, angle);
+            angle *= -1;
+            _verticalMotor.Move(angle, 5, 3, true);
         }
 
-        private void SetAngle(BaseMotor motor, double angle)
+        public static void SetHorizontalAngleAndWait(double angle)
         {
-            motor.SendAngleCommand(angle);
-            motor.ExecuteCommands();
-        }
-        
-        public void SetHorizontalAngleAndWait(double angle)
-        {
-            SetAngleAndAwait(_horizontalMotor, angle);
+            _horizontalMotor.MoveAndWait(angle, 10, 10, true);
         }
 
-        public void SetVerticalAngleAndWait(double angle)
+        public static void SetVerticalAngleAndWait(double angle)
         {
-            SetAngleAndAwait(_verticalMotor, angle);
-        }
-
-        private void SetAngleAndAwait(BaseMotor motor, double angle)
-        {
-            //TODO calculate timeout required for a full 360 loop
-            TimeSpan timeout = new TimeSpan(0, 0, 1);
-
-            motor.SendAngleCommand(angle);
-            motor.ExecuteCommands();
-
-            DateTime startTime = DateTime.Now;
-            while (motor.angle - angle < motor.accuracy)
-            {
-                if (DateTime.Now - startTime > timeout)
-                    //we've exceeded our alloted time
-                    throw new TimeoutException();
-                else
-                    //sleep then check again
-                    Thread.Sleep(100);
-            }
-        }
-        #endregion
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(String info)
-        {
-            var notify = PropertyChanged;
-            if (notify != null)
-            {
-                notify(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
-        private void HandleHorizontalAngleChanges(object sender, PropertyChangedEventArgs args)
-        {
-            //propogate update
-            if (args.PropertyName == "angle")
-            {
-                NotifyPropertyChanged("horizontalAngle");
-            }
-        }
-
-        private void HandleVerticalAngleChanges(object sender, PropertyChangedEventArgs args)
-        {
-            //propogate update
-            if (args.PropertyName == "angle")
-            {
-                NotifyPropertyChanged("verticalAngle");
-            }
+            angle *= -1;
+            _verticalMotor.MoveAndWait(angle, 5, 3, true);
         }
         #endregion
 
         #region zero motors
-        public void ZeroVerticalMotor()
+        private static bool _zeroing;        
+        public static void EnterZeroingMode()
         {
+            MotorSocketProvider.Write("ma00:");     //set all axis to incremental mode (not absolute)
+            _zeroing = true;
+        }
+
+        public static void ZeroHorizontalMotor()
+        {
+            if (!_zeroing)
+                throw new InvalidOperationException("Call EnterZeroingMode before calling Zero Methods");
+
+            _horizontalMotor.ZeroMotor();
+        }
+
+        public static void ZeroVerticalMotor()
+        {
+            if (!_zeroing)
+                throw new InvalidOperationException("Call EnterZeroingMode before calling Zero Methods");
+
             _verticalMotor.ZeroMotor();
         }
 
-        public void ZeroHorizontalMotor()
+        public static void ExitZeroingMode()
         {
-            _horizontalMotor.ZeroMotor();
+            MotorSocketProvider.Write("ma11:");     //set all axis to absolute mode (not incremental)
+            _zeroing = false;
         }
         #endregion
 
-        public void EmergencyStop()
+        public static void EmergencyStop()
         {
-            if (_verticalMotor != null)
-                _verticalMotor.EmergencyStop();
-
-            if (_horizontalMotor != null)
-                _horizontalMotor.EmergencyStop();
-
-            if (_socket != null)
-                _socket.Write("!k:");
+            try
+            {
+                MotorSocketProvider.Write("!k:");
+            }
+            catch(Exception)
+            {
+                //omnomnom
+            }
         }
     }
 }

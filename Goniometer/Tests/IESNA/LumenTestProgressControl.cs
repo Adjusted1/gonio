@@ -32,27 +32,26 @@ namespace Goniometer
         #endregion
 
         #region results variables
-        private List<Tuple<double, double, double>> _candles;
-        private List<Tuple<double, double, double>> _strayCandles;
+        private ReadingsCollection _candles;
+        private ReadingsCollection _strayCandles;
         #endregion
 
-        public LumenTestProgressControl(MotorController motor, MinoltaTTenController sensor, double[] hRange, double[] vRange, double[] hStrayRange, double[] vStrayRange, double k)
+        public LumenTestProgressControl()
         {
             InitializeComponent();
+        }
 
+        public void BeginTestAsync(IMinoltaTTenController sensor, double[] hRange, double[] vRange, double[] hStrayRange, double[] vStrayRange, double k)
+        {
             _hRange = hRange;
             _vRange = vRange;
             _hStrayRange = hStrayRange;
             _vStrayRange = vStrayRange;
             _k = k;
 
-            _controller = new GoniometerController(motor, sensor);
+            _controller = GoniometerControllerFactory.getController();
             _controller.ProgressChanged += OnProgressChanged;
-        }
 
-        private void LumenTestProgressControl_Load(object sender, EventArgs e)
-        {
-            //start test
             BeginStrayTestAsync();
         }
 
@@ -72,6 +71,12 @@ namespace Goniometer
             _controller.RunAsync(_hRange, _vRange);
         }
 
+        public void CancelTestAsync()
+        {
+            txtStatus.Text += "Canceling\n";
+            _controller.CancelAsync();
+        }
+
         #region controller callback methods
         protected virtual void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -85,7 +90,7 @@ namespace Goniometer
         protected virtual void OnStrayLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             //record results
-            _strayCandles = e.Result as List<Tuple<double, double, double>>;
+            _strayCandles = e.Result as ReadingsCollection;
 
             //unsubscribe
             _controller.RunWorkerCompleted -= OnStrayLightTestFinished;
@@ -127,7 +132,7 @@ namespace Goniometer
         protected virtual void OnLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             //record results
-            _candles = e.Result as List<Tuple<double, double, double>>;
+            _candles = e.Result as ReadingsCollection;
 
             //unsubscribe
             _controller.RunWorkerCompleted -= OnLightTestFinished;
@@ -172,15 +177,6 @@ namespace Goniometer
         }
         #endregion
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            btnCancel.Enabled = false;
-            btnCancel.Text = "Canceling";
-            txtStatus.Text += "Canceling\n";
-
-            _controller.CancelAsync();
-        }
-
         private void chkEmail_CheckedChanged(object sender, EventArgs e)
         {
             txtEmail.Enabled = chkEmail.Checked;
@@ -188,65 +184,16 @@ namespace Goniometer
 
         private string GenerateReport()
         {
-            //calculate corrected values from stray and offset
-            var correctedData = new List<Tuple<double, double, double>>();
-            foreach (var item in _candles)
-            {
-                double correctedValue = (item.Item3 - GetStrayLight(item.Item1, item.Item2)) * _k;
-                correctedData.Add(Tuple.Create(item.Item1, item.Item2, correctedValue));
-            }
+            //calculate corrected values from stray
+            var correctedData = ReadingsCollection.RemoveStrayLight(_candles, _strayCandles);
 
             //calculate lumens from corrected values
-            double lumens = LightMath.CalculateLumensByHorizontalAverage(correctedData);
-
-            var report = new iesna
-            {
-                data = correctedData,
-                lumens = lumens,
-            };
+            var report = new iesna(correctedData);
 
             //generate report file
             string filepath = ConfigurationManager.AppSettings["reportFolder"];
             string fullpath = iesna.WriteToFile(report, filepath);
             return fullpath;
-        }
-
-        private double GetStrayLight(double hAngle, double vAngle)
-        {
-            //try for an exact match:
-            var match = _strayCandles.Find((item) => item.Item1 == hAngle & item.Item2 == vAngle);
-            if (match != null)
-                return match.Item3;
-
-            //if any horizontal angles are valid, use them for linear extrapoliation
-            var horizontalmatches = _strayCandles.FindAll((item) => item.Item1 == hAngle);
-            if (horizontalmatches != null)
-            {
-                //split points into those above and below vAngle, already proved there is not value at exact vAngle
-                var above = horizontalmatches.Where((item) => item.Item2 > vAngle).ToList();
-                var below = horizontalmatches.Where((item) => item.Item2 < vAngle).ToList();
-
-                if (above.Count == 0)
-                {
-                    //all values are below, return closest one
-                    return below.OrderByDescending((item) => item.Item2).First().Item3;
-                }
-                else if (below.Count == 0)
-                {
-                    //all values are above, return closest one
-                    return above.OrderBy((item) => item.Item2).First().Item3;
-                }
-                else
-                {
-                    var top = below.OrderByDescending((item) => item.Item2).First();
-                    var bot = above.OrderBy((item) => item.Item2).First();
-
-                    return LightMath.LinearExtrapolation(Tuple.Create(top.Item2, top.Item3), Tuple.Create(top.Item2, top.Item3), vAngle);
-                }
-            }
-
-            //find 3 close values and 
-            throw new NotImplementedException();
         }
     }
 }

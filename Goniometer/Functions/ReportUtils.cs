@@ -53,11 +53,11 @@ namespace Goniometer.Functions
             {
                 string from = ConfigurationManager.AppSettings["fromEmail"];
                 if (String.IsNullOrEmpty(from))
-                    throw new ConfigurationException("fromEmail has not been configured properly");
+                    throw new ConfigurationErrorsException("fromEmail has not been configured properly");
 
                 string host = ConfigurationManager.AppSettings["smtpHost"];
                 if (String.IsNullOrEmpty(host))
-                    throw new ConfigurationException("smtpHost has not been configured properly");
+                    throw new ConfigurationErrorsException("smtpHost has not been configured properly");
 
                 MailMessage message = new MailMessage(from, to);
                 message.Subject = subject;

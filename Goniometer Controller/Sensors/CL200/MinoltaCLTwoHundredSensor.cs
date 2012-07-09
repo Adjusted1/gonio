@@ -85,6 +85,13 @@ namespace Goniometer_Controller.Sensors
             ReadMeasurement(receptor, command, useCF, mode, out Ev, out u, out v);
         }
 
+        public void ReadEvTcpUV(int receptor, bool useCF, CalibrationModeEnum mode,
+            out double Ev, out double Tcp, out double uv)
+        {
+            int command = 8;
+            ReadMeasurement(receptor, command, useCF, mode, out Ev, out Tcp, out uv);
+        }
+
         public void ReadEvDWP(int receptor, bool useCF, CalibrationModeEnum mode,
             out double Ev, out double dw, out double p)
         {

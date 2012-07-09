@@ -36,13 +36,14 @@
             this.radSensorTypeT10 = new System.Windows.Forms.RadioButton();
             this.radSensorTypeCL200 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
             this.grpSensorType.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 289);
+            this.label1.Location = new System.Drawing.Point(37, 253);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // txtReading
             // 
-            this.txtReading.Location = new System.Drawing.Point(37, 306);
+            this.txtReading.Location = new System.Drawing.Point(37, 269);
             this.txtReading.Name = "txtReading";
             this.txtReading.Size = new System.Drawing.Size(100, 20);
             this.txtReading.TabIndex = 1;
@@ -61,12 +62,12 @@
             this.cboPortNames.FormattingEnabled = true;
             this.cboPortNames.Location = new System.Drawing.Point(37, 173);
             this.cboPortNames.Name = "cboPortNames";
-            this.cboPortNames.Size = new System.Drawing.Size(133, 21);
+            this.cboPortNames.Size = new System.Drawing.Size(75, 21);
             this.cboPortNames.TabIndex = 2;
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(37, 210);
+            this.btnConnect.Location = new System.Drawing.Point(37, 200);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
             this.btnConnect.TabIndex = 3;
@@ -112,15 +113,25 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(37, 154);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 13);
+            this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Communications Port";
+            this.label2.Text = "Port";
+            // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(95, 345);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.TabIndex = 6;
+            this.btnExit.Text = "button1";
+            this.btnExit.UseVisualStyleBackColor = true;
             // 
             // SensorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 380);
+            this.ClientSize = new System.Drawing.Size(209, 380);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.grpSensorType);
             this.Controls.Add(this.btnConnect);
@@ -147,5 +158,6 @@
         private System.Windows.Forms.RadioButton radSensorTypeCL200;
         private System.Windows.Forms.RadioButton radSensorTypeT10;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnExit;
     }
 }

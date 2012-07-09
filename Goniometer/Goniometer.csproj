@@ -52,18 +52,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions\Extensions.cs" />
-    <Compile Include="Functions\LightMath.cs" />
     <Compile Include="Functions\ReportUtils.cs" />
-    <Compile Include="LumenTestProgressControl.cs">
+    <Compile Include="Tests\Calibration\CalibrationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LumenTestProgressControl.Designer.cs">
+    <Compile Include="Tests\Calibration\CalibrationControl.Designer.cs">
+      <DependentUpon>CalibrationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\IESNA\LumenTestControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tests\IESNA\LumenTestControl.Designer.cs">
+      <DependentUpon>LumenTestControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\IESNA\LumenTestProgressControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tests\IESNA\LumenTestProgressControl.Designer.cs">
       <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="LumenTestSetupControl.cs">
+    <Compile Include="Tests\IESNA\LumenTestSetupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LumenTestSetupControl.Designer.cs">
+    <Compile Include="Tests\IESNA\LumenTestSetupControl.Designer.cs">
       <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -87,17 +98,23 @@
     <Compile Include="Settings\SensorView.Designer.cs">
       <DependentUpon>SensorView.cs</DependentUpon>
     </Compile>
-    <Compile Include="LumenTestProgress.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LumenTestProgress.Designer.cs">
-      <DependentUpon>LumenTestProgress.cs</DependentUpon>
-    </Compile>
     <Compile Include="SymmetryEnum.cs" />
-    <EmbeddedResource Include="LumenTestProgressControl.resx">
+    <Compile Include="Tests\TestListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tests\TestListControl.Designer.cs">
+      <DependentUpon>TestListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Tests\Calibration\CalibrationControl.resx">
+      <DependentUpon>CalibrationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tests\IESNA\LumenTestProgressControl.resx">
       <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LumenTestSetupControl.resx">
+    <EmbeddedResource Include="Tests\IESNA\LumenTestSetupControl.resx">
       <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -120,10 +137,15 @@
     <EmbeddedResource Include="Settings\SensorView.resx">
       <DependentUpon>SensorView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LumenTestProgress.resx">
-      <DependentUpon>LumenTestProgress.cs</DependentUpon>
+    <EmbeddedResource Include="Tests\IESNA\LumenTestControl.resx">
+      <DependentUpon>LumenTestControl.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <EmbeddedResource Include="Tests\TestListControl.resx">
+      <DependentUpon>TestListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -145,6 +167,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Tests\TestList.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

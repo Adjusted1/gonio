@@ -6,7 +6,7 @@ using System.IO.Ports;
 
 namespace Goniometer_Controller.Sensors
 {
-    abstract class MinoltaBaseSensor : IDisposable
+    public abstract class MinoltaBaseSensor : IDisposable
     {
         protected SerialPort _port;
 
@@ -18,7 +18,7 @@ namespace Goniometer_Controller.Sensors
         /// <summary>
         /// Open SerialPort
         /// </summary>
-        public void Connect()
+        public virtual void Connect()
         {
             if (!_port.IsOpen)
                 _port.Open();
@@ -27,13 +27,13 @@ namespace Goniometer_Controller.Sensors
         /// <summary>
         /// Close SerialPort
         /// </summary>
-        public void Disconnect()
+        public virtual void Disconnect()
         {
             if (_port != null && _port.IsOpen)
                 _port.Close();
         }
 
-        public void IDisposable.Dispose()
+        void IDisposable.Dispose()
         {
             Disconnect();
         }
@@ -110,7 +110,7 @@ namespace Goniometer_Controller.Sensors
         /// </summary>
         /// <param name="payload">string to checksum</param>
         /// <returns>checksum byte, in hex, as a string</returns>
-        private string BlockCheckChar(string payload)
+        protected string BlockCheckChar(string payload)
         {
             if (String.IsNullOrEmpty(payload))
                 throw new ArgumentNullException("payload cannot be null or empty");

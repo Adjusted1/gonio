@@ -24,19 +24,7 @@ namespace Goniometer
         }
 
         #region parsed values
-        public double? offset
-        {
-            get
-            {
-                double value;
-                if (Double.TryParse(txtOffset.Text, out value))
-                    return value;
-                else
-                    return null;
-            }
-        }
-
-        public double? horizontalResolution
+        public double horizontalResolution
         {
             get
             {
@@ -44,15 +32,11 @@ namespace Goniometer
                 if (Double.TryParse(txtHorizontalResolution.Text, out value))
                     return value;
                 else
-                    return null;
-            }
-            set
-            {
-                txtHorizontalResolution.Text = String.Format("{0:0.0}", value);
+                    return 0;
             }
         }
 
-        public double? horizontalStrayResolution
+        public double horizontalStrayResolution
         {
             get
             {
@@ -60,11 +44,11 @@ namespace Goniometer
                 if (Double.TryParse(txtHorizontalResolution.Text, out value))
                     return value;
                 else
-                    return null;
+                    return 0;
             }
         }
 
-        public double? verticalResolution
+        public double verticalResolution
         {
             get
             {
@@ -72,50 +56,36 @@ namespace Goniometer
                 if (Double.TryParse(txtVerticalResolution.Text, out value))
                     return value;
                 else
-                    return null;
-            }
-            set
-            {
-                txtVerticalResolution.Text = String.Format("{0:0.0}", value);
+                    return 0;
             }
         }
 
-        public double? verticalStrayResolution
+        public double verticalStrayResolution
         {
             get
             {
                 double value;
-                if (Double.TryParse(txtVerticalStrayResolution.Text, out value))
+                if (Double.TryParse(txtVerticalResolution.Text, out value))
                     return value;
                 else
-                    return null;
-            }
-            set
-            {
-                txtVerticalStrayResolution.Text = String.Format("{0:0.0}", value);
+                    return 0;
             }
         }
 
-        public VerticalSymmetryEnum? verticalSymmetry
+        public VerticalSymmetryEnum verticalSymmetry
         {
             get
             {
-                if (radVerticalFull.Checked)
-                    return VerticalSymmetryEnum.Full;
-                else if (radVerticalTop.Checked)
+                if (radVerticalTop.Checked)
                     return VerticalSymmetryEnum.TopOnly;
                 else if (radVerticalBottom.Checked)
                     return VerticalSymmetryEnum.BottomOnly;
-                else
-                    return null;
-            }
-            set
-            {
 
+                return VerticalSymmetryEnum.Full;
             }
         }
 
-        public HorizontalSymmetryEnum? horizontalSymmetry
+        public HorizontalSymmetryEnum horizontalSymmetry
         {
             get
             {
@@ -125,14 +95,8 @@ namespace Goniometer
                     return HorizontalSymmetryEnum.Half;
                 else if (radHorizontalQuarter.Checked)
                     return HorizontalSymmetryEnum.Quarter;
-                else if (radHorizontalSingle.Checked)
-                    return HorizontalSymmetryEnum.Single;
-                else
-                    return null;
-            }
-            set
-            {
-
+                    
+                return HorizontalSymmetryEnum.Single;
             }
         }
         #endregion
@@ -140,12 +104,6 @@ namespace Goniometer
         #region range calculations
         public double[] CalculateHorizontalRange()
         {
-            if (horizontalResolution == null || horizontalResolution <= 0)
-                return new double[0];
-
-            if (horizontalSymmetry == null)
-                return new double[0];
-
             int hRange = 0;  //total range in degrees
             switch(horizontalSymmetry)
             {
@@ -162,11 +120,13 @@ namespace Goniometer
                     break;
 
                 case HorizontalSymmetryEnum.Single:
-                default:
                     return new double[] { 0 };
             }
 
-            return ReportUtils.Range(horizontalResolution.Value, 0, hRange);
+            if (horizontalResolution <= 0 || horizontalResolution > hRange)
+                return new double[] { 0, hRange };
+
+            return ReportUtils.Range(horizontalResolution, 0, hRange);
         }
 
         public double[] CalculateStrayHorizontalRange()
@@ -176,12 +136,6 @@ namespace Goniometer
 
         public double[] CalculateVerticalRange()
         {
-            if (verticalResolution == null || verticalResolution <= 0)
-                return new double[0];
-
-            if (verticalSymmetry == null)
-                return new double[0];
-
             int vRangeStart = 0;     //start of range in degrees
             int vRangeStop = 180;     //stop of range in degrees
 
@@ -190,23 +144,15 @@ namespace Goniometer
             else if (verticalSymmetry == VerticalSymmetryEnum.BottomOnly)
                 vRangeStop = 90;
 
-            return ReportUtils.Range(verticalResolution.Value, vRangeStart, vRangeStop);
+            if (verticalResolution <= 0 || verticalResolution > vRangeStop - vRangeStart)
+                return new double[] { vRangeStart, vRangeStop };
+
+            return ReportUtils.Range(verticalResolution, vRangeStart, vRangeStop);
         }
 
         public double[] CalculateStrayVerticalRange()
         {
-            if (verticalStrayResolution == null || verticalStrayResolution <= 0)
-                return new double[0];
-
-            int vRangeStart = 0;     //start of range in degrees
-            int vRangeStop = 180;     //stop of range in degrees
-
-            if (verticalSymmetry == VerticalSymmetryEnum.TopOnly)
-                vRangeStart = 90;
-            else if (verticalSymmetry == VerticalSymmetryEnum.BottomOnly)
-                vRangeStop = 90;
-
-            return ReportUtils.Range(verticalStrayResolution.Value, vRangeStart, vRangeStop);
+            return CalculateVerticalRange();
         }
         #endregion
 
@@ -220,12 +166,6 @@ namespace Goniometer
         private void txtVerticalResolution_TextChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("verticalResolution");
-            UpdateEstimate();
-        }
-
-        private void txtVerticalStrayResolution_TextChanged(object sender, EventArgs e)
-        {
-            NotifyPropertyChanged("verticalStrayResolution");
             UpdateEstimate();
         }
         #endregion
@@ -253,24 +193,33 @@ namespace Goniometer
         #region horizontal radios
         private void radHorizontalFull_CheckedChanged(object sender, EventArgs e)
         {
+            txtHorizontalResolution.Enabled = true;
+
             NotifyPropertyChanged("horizontalSymmetry");
             UpdateEstimate();
         }
 
         private void radHorizontalHalf_CheckedChanged(object sender, EventArgs e)
         {
+            txtHorizontalResolution.Enabled = true;
+
             NotifyPropertyChanged("horizontalSymmetry");
             UpdateEstimate();
         }
 
         private void radHorizontalQuarter_CheckedChanged(object sender, EventArgs e)
         {
+            txtHorizontalResolution.Enabled = true;
+            
             NotifyPropertyChanged("horizontalSymmetry");
             UpdateEstimate();
         }
 
         private void radHorizontalSingle_CheckedChanged(object sender, EventArgs e)
         {
+            txtHorizontalResolution.Enabled = false;
+            txtHorizontalResolution.Text = String.Format("{0}", 0);
+            
             NotifyPropertyChanged("horizontalSymmetry");
             UpdateEstimate();
         }
@@ -279,16 +228,6 @@ namespace Goniometer
         private void chkEmail_CheckedChanged(object sender, EventArgs e)
         {
             txtEmail.Enabled = chkEmail.Checked;
-        }
-
-        public event EventHandler StartClicked;
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            var notify = StartClicked;
-            if (notify != null)
-            {
-                StartClicked(this, null);
-            }
         }
 
         #region INotifyPropertyChanged
@@ -327,6 +266,15 @@ namespace Goniometer
             {
                 //omnomnom
             }
+        }
+
+        /// <summary>
+        /// Check if setup values are valid
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            return true;
         }
     }
 }
