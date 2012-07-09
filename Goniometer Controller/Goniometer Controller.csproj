@@ -50,8 +50,9 @@
     <Compile Include="Motors\MotorSocketProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadingsCollection.cs" />
+    <Compile Include="Sensors\CL200\MinoltaCL200Provider.cs" />
     <Compile Include="Sensors\MinoltaBaseSensor.cs" />
-    <Compile Include="Sensors\CL200\MinoltaCLTwoHundredSensor.cs" />
+    <Compile Include="Sensors\CL200\MinoltaCL200Controller.cs" />
     <Compile Include="Sensors\T10\IMinoltaTTenController.cs" />
     <Compile Include="Sensors\T10\MinoltaTTenController.cs" />
     <Compile Include="Sensors\T10\MinoltaTTenControllerFactory.cs" />

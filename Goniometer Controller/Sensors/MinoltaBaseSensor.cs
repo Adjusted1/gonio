@@ -10,6 +10,9 @@ namespace Goniometer_Controller.Sensors
     {
         protected SerialPort _port;
 
+        public MinoltaBaseSensor()
+        { }
+
         public MinoltaBaseSensor(SerialPort port)
         {
             _port = port;
@@ -96,8 +99,39 @@ namespace Goniometer_Controller.Sensors
                 throw new Exception("Message Malformed");
 
             //error informaiton
-            if (res.Substring(6, 1) != " ")
-                throw new Exception("Device Error Reported");
+            switch(res.Substring(6, 1))
+            {
+                case " ":
+                    //normal operation
+                    break;
+                
+                case "1":
+                    throw new Exception("Receptor Head Off");
+
+                case "2":
+                    throw new Exception("EEPROM Error 1");
+
+                case "3":
+                    throw new Exception("EEPROM Error 2");
+
+                case "4":
+                    //normal operation
+                    break;
+
+                case "5":
+                    throw new Exception("Measurement over value error");
+
+                case "6":
+                    //normal operation
+                    break;
+
+                case "7":
+                    //normal operation
+                    break;
+
+                default:
+                    throw new Exception("Unknown Error");
+            }
             
             receptor = Int32.Parse(res.Substring(1, 2));
             command = Int32.Parse(res.Substring(3, 2));

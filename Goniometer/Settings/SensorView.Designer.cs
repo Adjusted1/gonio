@@ -28,46 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtReading = new System.Windows.Forms.TextBox();
+            this.components = new System.ComponentModel.Container();
             this.cboPortNames = new System.Windows.Forms.ComboBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.grpSensorType = new System.Windows.Forms.GroupBox();
-            this.radSensorTypeT10 = new System.Windows.Forms.RadioButton();
             this.radSensorTypeCL200 = new System.Windows.Forms.RadioButton();
+            this.radSensorTypeT10 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
+            this.gridReadings = new System.Windows.Forms.DataGridView();
+            this.timerSensor = new System.Windows.Forms.Timer(this.components);
             this.grpSensorType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridReadings)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(37, 253);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Reading";
-            // 
-            // txtReading
-            // 
-            this.txtReading.Location = new System.Drawing.Point(37, 269);
-            this.txtReading.Name = "txtReading";
-            this.txtReading.Size = new System.Drawing.Size(100, 20);
-            this.txtReading.TabIndex = 1;
-            this.txtReading.Text = "0.000";
             // 
             // cboPortNames
             // 
             this.cboPortNames.FormattingEnabled = true;
-            this.cboPortNames.Location = new System.Drawing.Point(37, 173);
+            this.cboPortNames.Location = new System.Drawing.Point(12, 125);
             this.cboPortNames.Name = "cboPortNames";
             this.cboPortNames.Size = new System.Drawing.Size(75, 21);
             this.cboPortNames.TabIndex = 2;
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(37, 200);
+            this.btnConnect.Location = new System.Drawing.Point(12, 152);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
             this.btnConnect.TabIndex = 3;
@@ -79,23 +64,12 @@
             // 
             this.grpSensorType.Controls.Add(this.radSensorTypeCL200);
             this.grpSensorType.Controls.Add(this.radSensorTypeT10);
-            this.grpSensorType.Location = new System.Drawing.Point(37, 29);
+            this.grpSensorType.Location = new System.Drawing.Point(12, 12);
             this.grpSensorType.Name = "grpSensorType";
             this.grpSensorType.Size = new System.Drawing.Size(133, 94);
             this.grpSensorType.TabIndex = 4;
             this.grpSensorType.TabStop = false;
             this.grpSensorType.Text = "Sensor Type";
-            // 
-            // radSensorTypeT10
-            // 
-            this.radSensorTypeT10.AutoSize = true;
-            this.radSensorTypeT10.Location = new System.Drawing.Point(18, 31);
-            this.radSensorTypeT10.Name = "radSensorTypeT10";
-            this.radSensorTypeT10.Size = new System.Drawing.Size(81, 17);
-            this.radSensorTypeT10.TabIndex = 0;
-            this.radSensorTypeT10.TabStop = true;
-            this.radSensorTypeT10.Text = "Minolta T10";
-            this.radSensorTypeT10.UseVisualStyleBackColor = true;
             // 
             // radSensorTypeCL200
             // 
@@ -108,10 +82,21 @@
             this.radSensorTypeCL200.Text = "Minolta CL200";
             this.radSensorTypeCL200.UseVisualStyleBackColor = true;
             // 
+            // radSensorTypeT10
+            // 
+            this.radSensorTypeT10.AutoSize = true;
+            this.radSensorTypeT10.Location = new System.Drawing.Point(18, 31);
+            this.radSensorTypeT10.Name = "radSensorTypeT10";
+            this.radSensorTypeT10.Size = new System.Drawing.Size(81, 17);
+            this.radSensorTypeT10.TabIndex = 0;
+            this.radSensorTypeT10.TabStop = true;
+            this.radSensorTypeT10.Text = "Minolta T10";
+            this.radSensorTypeT10.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 154);
+            this.label2.Location = new System.Drawing.Point(12, 109);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 5;
@@ -119,30 +104,43 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(95, 345);
+            this.btnExit.Location = new System.Drawing.Point(12, 181);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 6;
-            this.btnExit.Text = "button1";
+            this.btnExit.Text = "Select";
             this.btnExit.UseVisualStyleBackColor = true;
+            // 
+            // gridReadings
+            // 
+            this.gridReadings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridReadings.Location = new System.Drawing.Point(151, 12);
+            this.gridReadings.Name = "gridReadings";
+            this.gridReadings.Size = new System.Drawing.Size(326, 192);
+            this.gridReadings.TabIndex = 2;
+            // 
+            // timerSensor
+            // 
+            this.timerSensor.Enabled = true;
+            this.timerSensor.Tick += new System.EventHandler(this.timerSensor_Tick);
             // 
             // SensorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(209, 380);
+            this.ClientSize = new System.Drawing.Size(489, 212);
+            this.Controls.Add(this.gridReadings);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.grpSensorType);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cboPortNames);
-            this.Controls.Add(this.txtReading);
-            this.Controls.Add(this.label1);
             this.Name = "SensorView";
-            this.Text = "SensorView";
+            this.Text = "Sensor Settings";
             this.Load += new System.EventHandler(this.SensorView_Load);
             this.grpSensorType.ResumeLayout(false);
             this.grpSensorType.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridReadings)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,8 +148,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtReading;
         private System.Windows.Forms.ComboBox cboPortNames;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.GroupBox grpSensorType;
@@ -159,5 +155,7 @@
         private System.Windows.Forms.RadioButton radSensorTypeT10;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.DataGridView gridReadings;
+        private System.Windows.Forms.Timer timerSensor;
     }
 }

@@ -41,7 +41,7 @@ namespace Goniometer.Reports
         public Dictionary<string, string> comments;
         #endregion
 
-        public ReadingsCollection _data;
+        private ReadingsCollection _data;
 
         public iesna(ReadingsCollection data)
         {

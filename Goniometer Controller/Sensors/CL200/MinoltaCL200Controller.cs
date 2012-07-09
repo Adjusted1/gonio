@@ -7,9 +7,18 @@ using System.Threading;
 
 namespace Goniometer_Controller.Sensors
 {
-    public class MinoltaCLTwoHundredSensor : MinoltaBaseSensor
+    public class MinoltaCL200Controller : MinoltaBaseSensor
     {
-        public MinoltaCLTwoHundredSensor(SerialPort port)
+        public MinoltaCL200Controller(string portName)
+        {
+            _port = new SerialPort(portName);
+            _port.BaudRate = 9600;
+            _port.DataBits = 7;
+            _port.StopBits = StopBits.One;
+            _port.Parity = Parity.Even;
+        }
+
+        public MinoltaCL200Controller(SerialPort port)
             : base(port)
         {
         }
