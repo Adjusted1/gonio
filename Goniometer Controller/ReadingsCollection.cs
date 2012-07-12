@@ -16,6 +16,7 @@ namespace Goniometer_Controller
             _values = new List<Tuple<double, double, double>>();
         }
 
+        #region get/set
         public void Add(double horizontal, double vertical, double reading)
         {
             var existing = _values.FirstOrDefault(t => t.Item1 == horizontal & t.Item2 == vertical);
@@ -87,10 +88,21 @@ namespace Goniometer_Controller
         {
             return _values.Select(t => t.Item2).Distinct().ToArray();
         }
+        #endregion
+
+        public override string ToString()
+        {
+            string result = "";
+            foreach (var val in _values)
+            {
+                result += String.Format("{0:0.0},{1:0.0},{2:0.0}\n", val.Item1, val.Item2, val.Item3);
+            }
+            return result;
+        }
 
         public double CalculateLumens()
         {
-            return LightMath.CalculateLumensByHorizontalAverage(_values);
+            return LightMath.CalculateLumens(_values);
         }
 
         public static ReadingsCollection RemoveStrayLight(ReadingsCollection readings, ReadingsCollection strayReadings)

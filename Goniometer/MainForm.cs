@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Goniometer.Tests;
+using Goniometer.Tests.Calibration;
 using Goniometer.Tests.IESNA;
 
 using Goniometer_Controller;
@@ -93,7 +94,13 @@ namespace Goniometer
         #region CalibrationTestControl
         private void LoadCalibrationTestControl()
         {
+            panelMain.Controls.Clear();
 
+            var calibrationTestControl = new CalibrationControl();
+            calibrationTestControl.Size = panelMain.Size;
+            calibrationTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            panelMain.Controls.Add(calibrationTestControl);
         }
         #endregion
 

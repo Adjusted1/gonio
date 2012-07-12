@@ -72,11 +72,39 @@ namespace Goniometer_Controller.Functions
         #endregion
 
         /// <summary>
-        /// Average weighted horizontal readings, then calculate along 
+        /// Calculate the Lumen value of a vertical array and weight them by horizontal angle
         /// </summary>
         /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
         /// <returns></returns>
-        public static double CalculateLumensByHorizontalAverage(List<Tuple<double, double, double>> data)
+        public static double CalculateLumensByVertical(List<Tuple<double, double, double>> data)
+        {
+            double totalLumens = 0;            
+            
+            double[] hAngles = data.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
+            double[] hWidths = WidthOnCenter(hAngles);
+            double hRange = hAngles[hAngles.Length - 1] - hAngles[0];
+
+            for(int h = 0; h < hAngles.Length; h++)
+            {
+                var vData = data.Where((item) => item.Item1 == hAngles[h])
+                                .Select((item) => Tuple.Create(item.Item2, item.Item3))
+                                .ToList();
+
+                double lumen = CalculateLumens(vData);
+                lumen *= hWidths[h] / hRange;   //weight the measurement
+
+                totalLumens += lumen;           //sum weighted measurement
+            }
+
+            return totalLumens;
+        }
+        
+        /// <summary>
+        /// Average weighted horizontal readings, then calculate along surface angle
+        /// </summary>
+        /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
+        /// <returns></returns>
+        public static double CalculateLumens(List<Tuple<double, double, double>> data)
         {
             //vAngle, footcandle
             var averagedReadings = new List<Tuple<double, double>>();
@@ -105,34 +133,6 @@ namespace Goniometer_Controller.Functions
             }
 
             return CalculateLumens(averagedReadings);
-        }
-
-        /// <summary>
-        /// Calculate the Lumen value of a vertical array and weight them by horizontal angle
-        /// </summary>
-        /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
-        /// <returns></returns>
-        public static double CalculateLumensByVertical(List<Tuple<double, double, double>> data)
-        {
-            double totalLumens = 0;            
-            
-            double[] hAngles = data.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
-            double[] hWidths = WidthOnCenter(hAngles);
-            double hRange = hAngles[hAngles.Length - 1] - hAngles[0];
-
-            for(int h = 0; h < hAngles.Length; h++)
-            {
-                var vData = data.Where((item) => item.Item1 == hAngles[h])
-                                .Select((item) => Tuple.Create(item.Item2, item.Item3))
-                                .ToList();
-
-                double lumen = CalculateLumens(vData);
-                lumen *= hWidths[h] / hRange;   //weight the measurement
-
-                totalLumens += lumen;           //sum weighted measurement
-            }
-
-            return totalLumens;
         }
 
         /// <summary>

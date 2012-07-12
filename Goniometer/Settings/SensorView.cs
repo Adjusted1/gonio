@@ -28,36 +28,7 @@ namespace Goniometer
         {
             try
             {
-
-                //check portName
-                string portName = cboPortNames.SelectedItem.ToString();
-                if (String.IsNullOrEmpty(portName))
-                {
-                    MessageBox.Show("You must select a portName to continue");
-                    return;
-                }
-
-                //setup sensor and timer
-                controllerUpdate = null;
-                if (radSensorTypeT10.Checked)
-                {
-                    MinoltaTTenControllerFactory.SetPortName(portName);
-                    controllerUpdate = ReadT10values;
-                }
-                else if (radSensorTypeCL200.Checked)
-                {
-                    MinoltaCL200Provider.SetPortName(portName);
-                    _cl200 = MinoltaCL200Provider.GetController();
-                    _cl200.Connect();
-
-                    controllerUpdate = ReadCL200Values;
-                }
-                else
-                {
-                    MessageBox.Show("You must select a sensor type to continue");
-                    return;
-                }
-                
+                Connect();
             }
             catch (Exception ex)
             {
@@ -70,6 +41,51 @@ namespace Goniometer
         {
             if (controllerUpdate != null)
                 controllerUpdate();
+        }
+
+        private bool ValidateSettings()
+        {
+            string portName = cboPortNames.SelectedItem.ToString();
+            if (String.IsNullOrEmpty(portName))
+                return false;
+
+            if (!radSensorTypeT10.Checked & !radSensorTypeCL200.Checked)
+                return false;
+
+            return true;
+        }
+
+        private void Connect()
+        {
+            //check portName
+            string portName = cboPortNames.SelectedItem.ToString();
+            if (String.IsNullOrEmpty(portName))
+            {
+                MessageBox.Show("You must select a portName to continue");
+                return;
+            }
+
+            //setup sensor and timer
+            controllerUpdate = null;
+            if (radSensorTypeT10.Checked)
+            {
+                MinoltaTTenControllerFactory.SetPortName(portName);
+
+                controllerUpdate = ReadT10values;
+            }
+            else if (radSensorTypeCL200.Checked)
+            {
+                MinoltaCL200Provider.SetPortName(portName);
+                _cl200 = MinoltaCL200Provider.GetController();
+                _cl200.Connect();
+
+                controllerUpdate = ReadCL200Values;
+            }
+            else
+            {
+                MessageBox.Show("You must select a sensor type to continue");
+                return;
+            }
         }
 
         #region t10
@@ -104,5 +120,28 @@ namespace Goniometer
             gridReadings.DataSource = table;
         }
         #endregion
+
+        private void cboPortNames_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ValidateSettings())
+                Connect();
+        }
+
+        private void radSensorTypeT10_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ValidateSettings())
+                Connect();
+        }
+
+        private void radSensorTypeCL200_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ValidateSettings())
+                Connect();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

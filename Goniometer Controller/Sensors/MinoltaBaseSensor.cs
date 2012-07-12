@@ -49,6 +49,9 @@ namespace Goniometer_Controller.Sensors
         /// <param name="data"></param>
         protected void SendCommand(int receptor, int command, string data)
         {
+            if (!_port.IsOpen)
+                Connect();
+
             string cmd = "";
 
             cmd += receptor.ToString("0#");
@@ -72,6 +75,9 @@ namespace Goniometer_Controller.Sensors
         /// <returns></returns>
         protected string ReadResponse(out int receptor, out int command)
         {
+            if (!_port.IsOpen)
+                Connect();
+
             string res = _port.ReadLine();
 
             /* 

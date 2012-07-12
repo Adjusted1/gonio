@@ -49,6 +49,7 @@
             this.cboPortNames.Name = "cboPortNames";
             this.cboPortNames.Size = new System.Drawing.Size(75, 21);
             this.cboPortNames.TabIndex = 2;
+            this.cboPortNames.SelectedIndexChanged += new System.EventHandler(this.cboPortNames_SelectedIndexChanged);
             // 
             // btnConnect
             // 
@@ -81,6 +82,7 @@
             this.radSensorTypeCL200.TabStop = true;
             this.radSensorTypeCL200.Text = "Minolta CL200";
             this.radSensorTypeCL200.UseVisualStyleBackColor = true;
+            this.radSensorTypeCL200.CheckedChanged += new System.EventHandler(this.radSensorTypeCL200_CheckedChanged);
             // 
             // radSensorTypeT10
             // 
@@ -92,6 +94,7 @@
             this.radSensorTypeT10.TabStop = true;
             this.radSensorTypeT10.Text = "Minolta T10";
             this.radSensorTypeT10.UseVisualStyleBackColor = true;
+            this.radSensorTypeT10.CheckedChanged += new System.EventHandler(this.radSensorTypeT10_CheckedChanged);
             // 
             // label2
             // 
@@ -104,15 +107,19 @@
             // 
             // btnExit
             // 
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnExit.Location = new System.Drawing.Point(12, 181);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 6;
             this.btnExit.Text = "Select";
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // gridReadings
             // 
+            this.gridReadings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridReadings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridReadings.Location = new System.Drawing.Point(151, 12);
             this.gridReadings.Name = "gridReadings";
@@ -135,6 +142,7 @@
             this.Controls.Add(this.grpSensorType);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cboPortNames);
+            this.MinimumSize = new System.Drawing.Size(505, 250);
             this.Name = "SensorView";
             this.Text = "Sensor Settings";
             this.Load += new System.EventHandler(this.SensorView_Load);

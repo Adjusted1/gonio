@@ -18,6 +18,7 @@ namespace Goniometer.Tests
 
         private void TestListControl_Load(object sender, EventArgs e)
         {
+            cboTest.Items.Add("Calibration Test");
             cboTest.Items.Add("Lumen Test");
         }
 

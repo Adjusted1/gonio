@@ -27,7 +27,7 @@ namespace Goniometer_Tests
                 double actual;
                 var data = GenerateData(testfolder + "//" + testfile, out expected);
 
-                actual = LightMath.CalculateLumensByHorizontalAverage(data);
+                actual = LightMath.CalculateLumens(data);
                 Assert.AreEqual(expected, actual, 0.1);
             }
         }
