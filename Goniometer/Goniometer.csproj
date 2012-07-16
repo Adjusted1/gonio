@@ -53,11 +53,11 @@
   <ItemGroup>
     <Compile Include="Functions\Extensions.cs" />
     <Compile Include="Functions\ReportUtils.cs" />
-    <Compile Include="Settings\Sensors\MinoltaCL200.cs">
+    <Compile Include="Setup\SensorSetup.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Settings\Sensors\MinoltaCL200.Designer.cs">
-      <DependentUpon>MinoltaCL200.cs</DependentUpon>
+    <Compile Include="Setup\SensorSetup.Designer.cs">
+      <DependentUpon>SensorSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\Calibration\CalibrationControl.cs">
       <SubType>UserControl</SubType>
@@ -114,8 +114,8 @@
     <Compile Include="WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Include="Settings\Sensors\MinoltaCL200.resx">
-      <DependentUpon>MinoltaCL200.cs</DependentUpon>
+    <EmbeddedResource Include="Setup\SensorSetup.resx">
+      <DependentUpon>SensorSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\Calibration\CalibrationControl.resx">
       <DependentUpon>CalibrationControl.cs</DependentUpon>

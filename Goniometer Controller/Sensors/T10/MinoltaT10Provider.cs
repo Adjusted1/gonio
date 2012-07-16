@@ -5,23 +5,23 @@ using System.Text;
 
 namespace Goniometer_Controller.Sensors
 {
-    public static class MinoltaTTenControllerFactory
+    public static class MinoltaT10Provider
     {
         private static object _lock = new object();
-        private static MinoltaTTenController _instance;
+        private static MinoltaT10Controller _instance;
         private static string _portName;
 
-        public static MinoltaTTenController GetSensorController()
+        public static MinoltaT10Controller GetController()
         {
             if (_instance == null)
             {
                 lock (_lock)
                 {
                     if (String.IsNullOrEmpty(_portName))
-                        throw new Exception("PortName is null or empty. Configure the factory before requesting an instance");
+                        throw new InvalidOperationException("PortName is null or empty. Configure the factory before requesting an instance");
 
                     if (_instance == null)
-                        _instance = new MinoltaTTenController(_portName);
+                        _instance = new MinoltaT10Controller(_portName);
                 }
             }
 
@@ -33,9 +33,7 @@ namespace Goniometer_Controller.Sensors
             lock (_lock)
             {
                 _portName = portName;
-
-                if (_instance != null)
-                    _instance.SetPort(portName);
+                _instance = new MinoltaT10Controller(_portName);
             }
         }
     }

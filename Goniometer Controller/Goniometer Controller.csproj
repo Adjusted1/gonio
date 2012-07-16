@@ -70,8 +70,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Functions\LightMath.cs" />
-    <Compile Include="GoniometerController.cs" />
-    <Compile Include="GoniometerControllerFactory.cs" />
+    <Compile Include="GoniometerWorker.cs" />
+    <Compile Include="Models\CandlePowerMeasurement.cs" />
+    <Compile Include="Models\ChrominanceReading.cs" />
+    <Compile Include="Models\ChrominanceReadingCollection.cs" />
+    <Compile Include="Models\MeasurementBase.cs" />
+    <Compile Include="Models\MeasurementKeys.cs" />
     <Compile Include="Motors\BaseMotor.cs" />
     <Compile Include="Motors\MotorController.cs" />
     <Compile Include="Functions\Extensions.cs" />
@@ -82,14 +86,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ReadingsCollection.cs" />
+    <Compile Include="Models\MeasurementCollection.cs" />
     <Compile Include="Sensors\CL200\MinoltaCL200Provider.cs" />
     <Compile Include="Sensors\MinoltaBaseSensor.cs" />
     <Compile Include="Sensors\CL200\MinoltaCL200Controller.cs" />
-    <Compile Include="Sensors\T10\IMinoltaTTenController.cs" />
-    <Compile Include="Sensors\T10\MinoltaTTenController.cs" />
-    <Compile Include="Sensors\T10\MinoltaTTenControllerFactory.cs" />
-    <Compile Include="Sensors\T10\MinoltaTTenSensor.cs" />
+    <Compile Include="Sensors\MinoltaSensorProvider.cs" />
+    <Compile Include="Sensors\T10\IMinoltaT10Controller.cs" />
+    <Compile Include="Sensors\T10\MinoltaT10Controller.cs" />
+    <Compile Include="Sensors\T10\MinoltaT10Provider.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Com6srvr">

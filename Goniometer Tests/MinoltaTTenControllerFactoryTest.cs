@@ -20,10 +20,10 @@ namespace Goniometer_Tests
         public void GetSensorControllerTest()
         {
             string portname = ConfigurationManager.AppSettings["sensor_port"];
-            MinoltaTTenControllerFactory.SetPortName(portname);
+            MinoltaT10Provider.SetPortName(portname);
 
-            MinoltaTTenController actual;
-            actual = MinoltaTTenControllerFactory.GetSensorController();
+            MinoltaT10Controller actual;
+            actual = MinoltaT10Provider.GetController();
 
             Assert.IsNotNull(actual);
         }
@@ -35,7 +35,7 @@ namespace Goniometer_Tests
         public void ConfigureMotorControllerTest()
         {
             string portname = ConfigurationManager.AppSettings["sensor_port"];
-            MinoltaTTenControllerFactory.SetPortName(portname);
+            MinoltaT10Provider.SetPortName(portname);
         }
     }
 }

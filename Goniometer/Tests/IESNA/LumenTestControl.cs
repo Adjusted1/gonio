@@ -17,8 +17,6 @@ namespace Goniometer.Tests.IESNA
 {
     public partial class LumenTestControl : UserControl, INotifyPropertyChanged
     {
-        GoniometerController _controller;
-
         public LumenTestControl()
         {
             InitializeComponent();
@@ -27,10 +25,6 @@ namespace Goniometer.Tests.IESNA
         private void LumenTestControl_Load(object sender, EventArgs e)
         {
             setupControl.PropertyChanged += new PropertyChangedEventHandler(setupControl_PropertyChanged);
-
-            //var sensor = MinoltaTTenControllerFactory.GetSensorController();
-
-            //_controller = new GoniometerController(motor, sensor);
         }
 
         #region setup page
@@ -50,13 +44,14 @@ namespace Goniometer.Tests.IESNA
             progressControl.chkEmail.Checked = setupControl.chkEmail.Checked;
             progressControl.txtEmail.Text    = setupControl.txtEmail.Text;
 
-            double[] hRange = setupControl.CalculateHorizontalRange();
-            double[] hStrayRange = setupControl.CalculateStrayHorizontalRange();
-            double[] vRange = setupControl.CalculateVerticalRange();
-            double[] vStrayRange = setupControl.CalculateStrayVerticalRange();
-
+            double[] hRange =          setupControl.CalculateHorizontalRange();
+            double[] vRange =          setupControl.CalculateVerticalRange();
+            double[] hStrayRange =     setupControl.CalculateStrayHorizontalRange();
+            double[] vStrayRange =     setupControl.CalculateStrayVerticalRange();
+            MinoltaBaseSensor sensor = setupControl.Sensor;
+            
             //start test
-            //progressControl.BeginTestAsync();
+            progressControl.BeginTestAsync(setupControl.Sensor, hRange, vRange, hStrayRange, vStrayRange, 1);
             wizard.SelectedTab = tabProgress;
         }
 

@@ -15,6 +15,9 @@ namespace Goniometer_Controller.Sensors
 
         public static MinoltaCL200Controller GetController()
         {
+            if (String.IsNullOrEmpty(_portname))
+                throw new InvalidOperationException("Set portname before calling");
+
             return new MinoltaCL200Controller(_portname);
         }
     }

@@ -12,14 +12,25 @@ using System.Windows.Forms;
 using Goniometer.Functions;
 using Goniometer.Reports;
 using Goniometer_Controller;
+using Goniometer_Controller.Models;
 using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
 
 namespace Goniometer
 {
+    /* Standard Lumen Test
+     * 
+     * Order:
+     *    Light test -> Stray test
+     * 
+     * 
+     * 
+     * */
+
     public partial class LumenTestProgressControl : UserControl
     {
-        private GoniometerController _controller;
+        private GoniometerWorker _lightWorker;
+        private GoniometerWorker _strayWorker;
 
         #region setup variables
         private double[] _hRange;
@@ -29,11 +40,13 @@ namespace Goniometer
         private double[] _vStrayRange;
 
         private double _k;
+
+        private MinoltaBaseSensor _sensor;
         #endregion
 
         #region results variables
-        private ReadingsCollection _candles;
-        private ReadingsCollection _strayCandles;
+        private MeasurementCollection _candles;
+        private MeasurementCollection _strayCandles;
         #endregion
 
         public LumenTestProgressControl()
@@ -41,7 +54,8 @@ namespace Goniometer
             InitializeComponent();
         }
 
-        public void BeginTestAsync(IMinoltaTTenController sensor, double[] hRange, double[] vRange, double[] hStrayRange, double[] vStrayRange, double k)
+        #region public methods
+        public void BeginTestAsync(MinoltaBaseSensor sensor, double[] hRange, double[] vRange, double[] hStrayRange, double[] vStrayRange, double k)
         {
             _hRange = hRange;
             _vRange = vRange;
@@ -49,51 +63,77 @@ namespace Goniometer
             _vStrayRange = vStrayRange;
             _k = k;
 
-            _controller = GoniometerControllerFactory.getController();
-            _controller.ProgressChanged += OnProgressChanged;
+            _sensor = sensor;
 
+            //setup workers
+            SetupStrayTest();
+            SetupStandardTest();
+
+            //start the standard test when the stray is finished
+            StrayTestFinished += new EventHandler((o, e) => BeginStandardTestAsync());
+
+            //start with stray test
             BeginStrayTestAsync();
         }
 
-        public void BeginStrayTestAsync()
+        public void PauseTestAsync()
         {
-            var result = MessageBox.Show("Please ensure that the mirror is properly covered");
+            txtStatus.Text += "Pausing\n";
 
-            _controller.RunWorkerCompleted += OnStrayLightTestFinished;
-            _controller.RunAsync(_hStrayRange, _vStrayRange);
+            if (_strayWorker != null)
+                _strayWorker.PauseAsync();
+
+            if (_lightWorker != null)
+                _lightWorker.PauseAsync();
         }
 
-        public void BeginLightTestAsync()
+        public void UnpauseTestAsync()
         {
-            var result = MessageBox.Show("Please ensure that the mirror is properly exposed");
+            txtStatus.Text += "Unpausing\n";
 
-            _controller.RunWorkerCompleted += OnLightTestFinished;
-            _controller.RunAsync(_hRange, _vRange);
+            if (_strayWorker != null)
+                _strayWorker.UnPauseAsync();
+
+            if (_lightWorker != null)
+                _lightWorker.UnPauseAsync();
         }
 
         public void CancelTestAsync()
         {
-            txtStatus.Text += "Canceling\n";
-            _controller.CancelAsync();
-        }
+            txtStatus.Text += "Cancelling\n";
 
-        #region controller callback methods
-        protected virtual void OnProgressChanged(object sender, ProgressChangedEventArgs e)
+            if (_strayWorker != null)
+                _strayWorker.CancelAsync();
+
+            if (_lightWorker != null)
+                _lightWorker.CancelAsync();
+        }
+        #endregion
+
+        #region stray lumen test
+        private void SetupStrayTest()
         {
-            progressbar.Value = e.ProgressPercentage;
-            txtStatus.Text += e.UserState.ToString() + "\n";
-
-            long time = ReportUtils.TimeEstimate(_hRange.Length, _vRange.Length).Ticks * ((100 - e.ProgressPercentage) / 100);
-            lblCompletionTime.Text = String.Format("{0:hh\\:mm}", new TimeSpan(time));
+            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensor);
+            _strayWorker.ProgressChanged += OnProgressChanged;
+            _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
+            _strayWorker.Error += OnError;
         }
 
-        protected virtual void OnStrayLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
+        private void BeginStrayTestAsync()
+        {
+            var result = MessageBox.Show("Please ensure that the mirror is properly covered");
+            _strayWorker.RunAsync();
+        }
+
+        public event EventHandler StrayTestFinished;
+        private void OnStrayLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             //record results
-            _strayCandles = e.Result as ReadingsCollection;
+            _strayCandles = e.Result as MeasurementCollection;
 
             //unsubscribe
-            _controller.RunWorkerCompleted -= OnStrayLightTestFinished;
+            _strayWorker.ProgressChanged -= OnProgressChanged;
+            _strayWorker.RunWorkerCompleted -= OnStrayLightTestFinished;
 
             //inform user
             if (chkEmail.Checked)
@@ -123,19 +163,37 @@ namespace Goniometer
                 }
             }
 
-            //if successful, start the next step
-            if (_strayCandles != null)
-                BeginLightTestAsync();
+            //test completed
+            var notify = StrayTestFinished;
+            if (notify != null)
+                notify(this, null);
+        }
+        #endregion
+
+        #region standard lumen test
+        private void SetupStandardTest()
+        {
+            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensor);
+            _lightWorker.ProgressChanged += OnProgressChanged;
+            _lightWorker.RunWorkerCompleted += OnLightTestFinished;
+            _lightWorker.Error += OnError;
         }
 
-        public event EventHandler LightTestFinished;
+        private void BeginStandardTestAsync()
+        {
+            var result = MessageBox.Show("Please ensure that the mirror is properly exposed");
+            _lightWorker.RunAsync();
+        }
+
+        public event EventHandler LightTestFinished; 
         protected virtual void OnLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             //record results
-            _candles = e.Result as ReadingsCollection;
+            _candles = e.Result as MeasurementCollection;
 
             //unsubscribe
-            _controller.RunWorkerCompleted -= OnLightTestFinished;
+            _lightWorker.ProgressChanged -= OnProgressChanged;
+            _lightWorker.RunWorkerCompleted -= OnLightTestFinished;
 
             //if successful, generate report
             string reportFilepath = "";
@@ -177,15 +235,35 @@ namespace Goniometer
         }
         #endregion
 
+        #region interface methods
+        private void OnError(object sender, GoniometerWorker.GonioErrorEventArgs e)
+        {
+            e.stop = true;
+            e.skip = false;
+        }
+
+        /// <summary>
+        /// Call to advance progress bar
+        /// </summary>
+        private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressbar.Value = e.ProgressPercentage;
+            txtStatus.Text += e.UserState.ToString() + "\n";
+
+            long time = ReportUtils.TimeEstimate(_hRange.Length, _vRange.Length).Ticks * ((100 - e.ProgressPercentage) / 100);
+            lblCompletionTime.Text = String.Format("{0:hh\\:mm}", new TimeSpan(time));
+        }
+
         private void chkEmail_CheckedChanged(object sender, EventArgs e)
         {
             txtEmail.Enabled = chkEmail.Checked;
         }
+        #endregion
 
         private string GenerateReport()
         {
             //calculate corrected values from stray
-            var correctedData = ReadingsCollection.RemoveStrayLight(_candles, _strayCandles);
+            var correctedData = CandlePowerMeasurement.RemoveStrayLight(_candles, _strayCandles);
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);

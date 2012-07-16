@@ -6,6 +6,7 @@ using System.Text;
 
 using Goniometer.Functions;
 using Goniometer_Controller;
+using Goniometer_Controller.Models;
 using Goniometer_Controller.Functions;
 
 namespace Goniometer.Reports
@@ -41,9 +42,9 @@ namespace Goniometer.Reports
         public Dictionary<string, string> comments;
         #endregion
 
-        private ReadingsCollection _data;
+        private MeasurementCollection _data;
 
-        public iesna(ReadingsCollection data)
+        public iesna(MeasurementCollection data)
         {
             _data = data;
         }
@@ -98,22 +99,27 @@ namespace Goniometer.Reports
             report += "TILT=NONE\n";
             report += "1";
 
+            //fetch all candle readings
+            var candles = _data.FindAll(MeasurementKeys.IlluminanceEv)
+                               .Select(m => Tuple.Create(m.theta, m.phi, m.value))
+                               .ToList();
+
             //lumen reading
-            double lumen = _data.CalculateLumens();
+            double lumen =  LightMath.CalculateLumens(candles);
             report += lumen + '\n';
 
             //horizontal values
-            double[] hRange = _data.GetHorizontalRange();
+            double[] hRange = _data.GetPhiRange();
             report += String.Join(" ", hRange) + '\n';
 
             //vertical values
-            double[] vRange = _data.GetVerticalRange();
+            double[] vRange = _data.GetThetaRange();
             report += String.Join(" ", vRange) + '\n';
 
             //raw values
-            for (int h = 0; h < hRange.Length; h++)
+            for (int v = 0; v < vRange.Length; v++)
             {
-                double[] values = _data.GetVerticalReadings(hRange[h]).Select(t => t.Item2).ToArray();
+                double[] values = _data.FindAll(MeasurementKeys.IlluminanceEv, vRange[v]).Select(m => m.value).ToArray();
                 report += String.Join(" ", values) + '\n';
             }
 

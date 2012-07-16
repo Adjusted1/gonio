@@ -38,25 +38,27 @@
             this.txtVerticalResolution = new System.Windows.Forms.TextBox();
             this.lblTime = new System.Windows.Forms.Label();
             this.radHorizontalFull = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupHorizontal = new System.Windows.Forms.GroupBox();
             this.radHorizontalSingle = new System.Windows.Forms.RadioButton();
             this.label10 = new System.Windows.Forms.Label();
             this.radHorizontalQuarter = new System.Windows.Forms.RadioButton();
             this.radHorizontalHalf = new System.Windows.Forms.RadioButton();
             this.txtHorizontalResolution = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.chkEmail = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupVertical = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.radVerticalFull = new System.Windows.Forms.RadioButton();
             this.radVerticalBottom = new System.Windows.Forms.RadioButton();
             this.radVerticalTop = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
+            this.groupSensor = new System.Windows.Forms.GroupBox();
+            this.groupCalibration = new System.Windows.Forms.GroupBox();
+            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
             this.grpLamp.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupHorizontal.SuspendLayout();
+            this.groupVertical.SuspendLayout();
+            this.groupSensor.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpLamp
@@ -126,9 +128,9 @@
             // 
             // txtVerticalResolution
             // 
-            this.txtVerticalResolution.Location = new System.Drawing.Point(15, 42);
+            this.txtVerticalResolution.Location = new System.Drawing.Point(6, 19);
             this.txtVerticalResolution.Name = "txtVerticalResolution";
-            this.txtVerticalResolution.Size = new System.Drawing.Size(141, 20);
+            this.txtVerticalResolution.Size = new System.Drawing.Size(150, 20);
             this.txtVerticalResolution.TabIndex = 0;
             this.txtVerticalResolution.TextChanged += new System.EventHandler(this.txtVerticalResolution_TextChanged);
             // 
@@ -136,7 +138,7 @@
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(363, 353);
+            this.lblTime.Location = new System.Drawing.Point(560, 353);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(34, 13);
             this.lblTime.TabIndex = 23;
@@ -146,7 +148,7 @@
             // 
             this.radHorizontalFull.AutoSize = true;
             this.radHorizontalFull.Checked = true;
-            this.radHorizontalFull.Location = new System.Drawing.Point(30, 81);
+            this.radHorizontalFull.Location = new System.Drawing.Point(9, 65);
             this.radHorizontalFull.Name = "radHorizontalFull";
             this.radHorizontalFull.Size = new System.Drawing.Size(51, 17);
             this.radHorizontalFull.TabIndex = 8;
@@ -155,27 +157,27 @@
             this.radHorizontalFull.UseVisualStyleBackColor = true;
             this.radHorizontalFull.CheckedChanged += new System.EventHandler(this.radHorizontalFull_CheckedChanged);
             // 
-            // groupBox2
+            // groupHorizontal
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.groupHorizontal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.radHorizontalSingle);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.radHorizontalFull);
-            this.groupBox2.Controls.Add(this.radHorizontalQuarter);
-            this.groupBox2.Controls.Add(this.radHorizontalHalf);
-            this.groupBox2.Controls.Add(this.txtHorizontalResolution);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Location = new System.Drawing.Point(203, 117);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(194, 200);
-            this.groupBox2.TabIndex = 22;
-            this.groupBox2.TabStop = false;
+            this.groupHorizontal.Controls.Add(this.radHorizontalSingle);
+            this.groupHorizontal.Controls.Add(this.label10);
+            this.groupHorizontal.Controls.Add(this.radHorizontalFull);
+            this.groupHorizontal.Controls.Add(this.radHorizontalQuarter);
+            this.groupHorizontal.Controls.Add(this.radHorizontalHalf);
+            this.groupHorizontal.Controls.Add(this.txtHorizontalResolution);
+            this.groupHorizontal.Location = new System.Drawing.Point(203, 117);
+            this.groupHorizontal.Name = "groupHorizontal";
+            this.groupHorizontal.Size = new System.Drawing.Size(194, 200);
+            this.groupHorizontal.TabIndex = 22;
+            this.groupHorizontal.TabStop = false;
+            this.groupHorizontal.Text = "Horizontal Resolution";
             // 
             // radHorizontalSingle
             // 
             this.radHorizontalSingle.AutoSize = true;
-            this.radHorizontalSingle.Location = new System.Drawing.Point(30, 150);
+            this.radHorizontalSingle.Location = new System.Drawing.Point(9, 134);
             this.radHorizontalSingle.Name = "radHorizontalSingle";
             this.radHorizontalSingle.Size = new System.Drawing.Size(146, 17);
             this.radHorizontalSingle.TabIndex = 12;
@@ -186,7 +188,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(27, 65);
+            this.label10.Location = new System.Drawing.Point(6, 42);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(102, 13);
             this.label10.TabIndex = 11;
@@ -195,7 +197,7 @@
             // radHorizontalQuarter
             // 
             this.radHorizontalQuarter.AutoSize = true;
-            this.radHorizontalQuarter.Location = new System.Drawing.Point(30, 127);
+            this.radHorizontalQuarter.Location = new System.Drawing.Point(9, 111);
             this.radHorizontalQuarter.Name = "radHorizontalQuarter";
             this.radHorizontalQuarter.Size = new System.Drawing.Size(84, 17);
             this.radHorizontalQuarter.TabIndex = 10;
@@ -206,7 +208,7 @@
             // radHorizontalHalf
             // 
             this.radHorizontalHalf.AutoSize = true;
-            this.radHorizontalHalf.Location = new System.Drawing.Point(30, 104);
+            this.radHorizontalHalf.Location = new System.Drawing.Point(9, 88);
             this.radHorizontalHalf.Name = "radHorizontalHalf";
             this.radHorizontalHalf.Size = new System.Drawing.Size(62, 17);
             this.radHorizontalHalf.TabIndex = 9;
@@ -216,20 +218,11 @@
             // 
             // txtHorizontalResolution
             // 
-            this.txtHorizontalResolution.Location = new System.Drawing.Point(27, 42);
+            this.txtHorizontalResolution.Location = new System.Drawing.Point(6, 19);
             this.txtHorizontalResolution.Name = "txtHorizontalResolution";
             this.txtHorizontalResolution.Size = new System.Drawing.Size(141, 20);
             this.txtHorizontalResolution.TabIndex = 0;
             this.txtHorizontalResolution.TextChanged += new System.EventHandler(this.txtHorizontalResolution_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 26);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(154, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Horizontal Resolution (degrees)";
             // 
             // txtEmail
             // 
@@ -255,32 +248,32 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(230, 353);
+            this.label3.Location = new System.Drawing.Point(427, 353);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 13);
             this.label3.TabIndex = 17;
             this.label3.Text = "Completion Time Estimate:";
             // 
-            // groupBox1
+            // groupVertical
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.groupVertical.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.radVerticalFull);
-            this.groupBox1.Controls.Add(this.radVerticalBottom);
-            this.groupBox1.Controls.Add(this.radVerticalTop);
-            this.groupBox1.Controls.Add(this.txtVerticalResolution);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(3, 117);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(194, 200);
-            this.groupBox1.TabIndex = 21;
-            this.groupBox1.TabStop = false;
+            this.groupVertical.Controls.Add(this.label9);
+            this.groupVertical.Controls.Add(this.radVerticalFull);
+            this.groupVertical.Controls.Add(this.radVerticalBottom);
+            this.groupVertical.Controls.Add(this.radVerticalTop);
+            this.groupVertical.Controls.Add(this.txtVerticalResolution);
+            this.groupVertical.Location = new System.Drawing.Point(3, 117);
+            this.groupVertical.Name = "groupVertical";
+            this.groupVertical.Size = new System.Drawing.Size(194, 200);
+            this.groupVertical.TabIndex = 21;
+            this.groupVertical.TabStop = false;
+            this.groupVertical.Text = "Vertical Resolution";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 65);
+            this.label9.Location = new System.Drawing.Point(3, 42);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(90, 13);
             this.label9.TabIndex = 13;
@@ -290,7 +283,7 @@
             // 
             this.radVerticalFull.AutoSize = true;
             this.radVerticalFull.Checked = true;
-            this.radVerticalFull.Location = new System.Drawing.Point(15, 84);
+            this.radVerticalFull.Location = new System.Drawing.Point(6, 65);
             this.radVerticalFull.Name = "radVerticalFull";
             this.radVerticalFull.Size = new System.Drawing.Size(111, 17);
             this.radVerticalFull.TabIndex = 8;
@@ -302,7 +295,7 @@
             // radVerticalBottom
             // 
             this.radVerticalBottom.AutoSize = true;
-            this.radVerticalBottom.Location = new System.Drawing.Point(15, 130);
+            this.radVerticalBottom.Location = new System.Drawing.Point(6, 111);
             this.radVerticalBottom.Name = "radVerticalBottom";
             this.radVerticalBottom.Size = new System.Drawing.Size(141, 17);
             this.radVerticalBottom.TabIndex = 10;
@@ -313,7 +306,7 @@
             // radVerticalTop
             // 
             this.radVerticalTop.AutoSize = true;
-            this.radVerticalTop.Location = new System.Drawing.Point(15, 107);
+            this.radVerticalTop.Location = new System.Drawing.Point(6, 88);
             this.radVerticalTop.Name = "radVerticalTop";
             this.radVerticalTop.Size = new System.Drawing.Size(127, 17);
             this.radVerticalTop.TabIndex = 9;
@@ -321,36 +314,62 @@
             this.radVerticalTop.UseVisualStyleBackColor = true;
             this.radVerticalTop.CheckedChanged += new System.EventHandler(this.radVerticalTop_CheckedChanged);
             // 
-            // label1
+            // groupSensor
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Vertical Resolution (degrees)";
+            this.groupSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupSensor.Controls.Add(this.controlSensorSetup);
+            this.groupSensor.Location = new System.Drawing.Point(404, 118);
+            this.groupSensor.Name = "groupSensor";
+            this.groupSensor.Size = new System.Drawing.Size(190, 199);
+            this.groupSensor.TabIndex = 25;
+            this.groupSensor.TabStop = false;
+            this.groupSensor.Text = "Sensor";
+            // 
+            // groupCalibration
+            // 
+            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupCalibration.Location = new System.Drawing.Point(404, 3);
+            this.groupCalibration.Name = "groupCalibration";
+            this.groupCalibration.Size = new System.Drawing.Size(190, 108);
+            this.groupCalibration.TabIndex = 26;
+            this.groupCalibration.TabStop = false;
+            this.groupCalibration.Text = "Calibration";
+            // 
+            // controlSensorSetup
+            // 
+            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
+            this.controlSensorSetup.Name = "controlSensorSetup";
+            this.controlSensorSetup.Size = new System.Drawing.Size(177, 175);
+            this.controlSensorSetup.TabIndex = 0;
             // 
             // LumenTestSetupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupCalibration);
+            this.Controls.Add(this.groupSensor);
             this.Controls.Add(this.grpLamp);
             this.Controls.Add(this.lblTime);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupHorizontal);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.chkEmail);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupVertical);
             this.MinimumSize = new System.Drawing.Size(411, 376);
             this.Name = "LumenTestSetupControl";
-            this.Size = new System.Drawing.Size(411, 376);
-            this.Load += new System.EventHandler(this.LumenTestSetupControl_Load);
+            this.Size = new System.Drawing.Size(608, 376);
             this.grpLamp.ResumeLayout(false);
             this.grpLamp.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupHorizontal.ResumeLayout(false);
+            this.groupHorizontal.PerformLayout();
+            this.groupVertical.ResumeLayout(false);
+            this.groupVertical.PerformLayout();
+            this.groupSensor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,21 +387,22 @@
         private System.Windows.Forms.TextBox txtVerticalResolution;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.RadioButton radHorizontalFull;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupHorizontal;
         private System.Windows.Forms.RadioButton radHorizontalQuarter;
         private System.Windows.Forms.RadioButton radHorizontalHalf;
         private System.Windows.Forms.TextBox txtHorizontalResolution;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupVertical;
         private System.Windows.Forms.RadioButton radVerticalFull;
         private System.Windows.Forms.RadioButton radVerticalBottom;
         private System.Windows.Forms.RadioButton radVerticalTop;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.RadioButton radHorizontalSingle;
         public System.Windows.Forms.TextBox txtEmail;
         public System.Windows.Forms.CheckBox chkEmail;
+        private System.Windows.Forms.GroupBox groupSensor;
+        private Setup.SensorSetup controlSensorSetup;
+        private System.Windows.Forms.GroupBox groupCalibration;
     }
 }

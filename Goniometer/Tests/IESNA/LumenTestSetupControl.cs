@@ -8,19 +8,23 @@ using System.Text;
 using System.Windows.Forms;
 
 using Goniometer.Functions;
+using Goniometer_Controller.Sensors;
 
 namespace Goniometer
 {
     public partial class LumenTestSetupControl : UserControl, INotifyPropertyChanged
     {
+        public MinoltaBaseSensor Sensor
+        {
+            get
+            {
+                return controlSensorSetup.Sensor;
+            }
+        }
+
         public LumenTestSetupControl()
         {
             InitializeComponent();
-        }
-
-        private void LumenTestSetupControl_Load(object sender, EventArgs e)
-        {
-
         }
 
         #region parsed values
@@ -274,6 +278,9 @@ namespace Goniometer
         /// <returns></returns>
         public bool IsValid()
         {
+            if (controlSensorSetup.Sensor == null)
+                return false;
+
             return true;
         }
     }

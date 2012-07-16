@@ -45,8 +45,7 @@ namespace Goniometer
 
         private bool ValidateSettings()
         {
-            string portName = cboPortNames.SelectedItem.ToString();
-            if (String.IsNullOrEmpty(portName))
+            if (cboPortNames.SelectedItem == null || String.IsNullOrEmpty(cboPortNames.SelectedItem.ToString()))
                 return false;
 
             if (!radSensorTypeT10.Checked & !radSensorTypeCL200.Checked)
@@ -69,7 +68,7 @@ namespace Goniometer
             controllerUpdate = null;
             if (radSensorTypeT10.Checked)
             {
-                MinoltaTTenControllerFactory.SetPortName(portName);
+                MinoltaT10Provider.SetPortName(portName);
 
                 controllerUpdate = ReadT10values;
             }
@@ -89,7 +88,7 @@ namespace Goniometer
         }
 
         #region t10
-        private MinoltaTTenController _t10;
+        private MinoltaT10Controller _t10;
         private void ReadT10values()
         {
 

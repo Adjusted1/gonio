@@ -13,7 +13,7 @@ namespace Goniometer.Functions
         {
             long step = 0;
             
-            step += (new TimeSpan(0, 0, 1)).Ticks; //time to measure
+            step += (new TimeSpan(0, 0, 5)).Ticks; //time to measure
 
             return new TimeSpan(step * horizontalSteps * verticalSteps);
         }

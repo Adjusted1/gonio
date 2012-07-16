@@ -8,7 +8,7 @@ using Goniometer_Controller.Sensors;
 
 namespace Goniometer_Tests.Mocks
 {
-    public class MinoltaTTenControllerMock : IMinoltaTTenController
+    public class MinoltaTTenControllerMock : IMinoltaT10Controller
     {
         public double reading
         {

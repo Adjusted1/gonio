@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Goniometer_Controller.Sensors
 {
-    public interface IMinoltaTTenController : INotifyPropertyChanged
+    public interface IMinoltaT10Controller : INotifyPropertyChanged
     {
         double reading { get; }
         string status { get; }

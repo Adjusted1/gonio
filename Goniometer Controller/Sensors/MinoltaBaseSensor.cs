@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.IO.Ports;
+
+using Goniometer_Controller.Models;
 
 namespace Goniometer_Controller.Sensors
 {
@@ -10,6 +13,7 @@ namespace Goniometer_Controller.Sensors
     {
         protected SerialPort _port;
 
+        #region construction
         public MinoltaBaseSensor()
         { }
 
@@ -25,8 +29,10 @@ namespace Goniometer_Controller.Sensors
         {
             if (!_port.IsOpen)
                 _port.Open();
-        }
+        } 
+        #endregion
 
+        #region disposal
         /// <summary>
         /// Close SerialPort
         /// </summary>
@@ -39,8 +45,10 @@ namespace Goniometer_Controller.Sensors
         void IDisposable.Dispose()
         {
             Disconnect();
-        }
+        } 
+        #endregion
 
+        #region communication
         /// <summary>
         /// Send Command to sensor
         /// </summary>
@@ -105,12 +113,12 @@ namespace Goniometer_Controller.Sensors
                 throw new Exception("Message Malformed");
 
             //error informaiton
-            switch(res.Substring(6, 1))
+            switch (res.Substring(6, 1))
             {
                 case " ":
                     //normal operation
                     break;
-                
+
                 case "1":
                     throw new Exception("Receptor Head Off");
 
@@ -138,7 +146,7 @@ namespace Goniometer_Controller.Sensors
                 default:
                     throw new Exception("Unknown Error");
             }
-            
+
             receptor = Int32.Parse(res.Substring(1, 2));
             command = Int32.Parse(res.Substring(3, 2));
 
@@ -195,6 +203,11 @@ namespace Goniometer_Controller.Sensors
             reading *= Math.Pow(10, power);
 
             return reading;
-        }
+        } 
+        #endregion
+
+        public abstract string GetName();
+
+        public abstract List<MeasurementBase> CollectMeasurements(double theta, double phi);
     }
 }
