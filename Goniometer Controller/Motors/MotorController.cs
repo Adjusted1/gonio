@@ -100,7 +100,7 @@ namespace Goniometer_Controller.Motors
         #region set angles
         public static void SetHorizontalAngle(double angle)
         {
-            _horizontalMotor.Move(angle, 10, 10, true);
+            _horizontalMotor.Move(angle, 10, 5, true);
         }
 
         public static void SetVerticalAngle(double angle)

@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+using System.IO;
 using System.Net.Mail;
-using System.Text;
 using System.Windows.Forms;
 
 using Goniometer.Functions;
 using Goniometer.Reports;
 using Goniometer_Controller;
 using Goniometer_Controller.Models;
-using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
 
 namespace Goniometer
@@ -32,6 +27,8 @@ namespace Goniometer
         private GoniometerWorker _lightWorker;
         private GoniometerWorker _strayWorker;
 
+        private DateTime _startTime;
+
         #region setup variables
         private double[] _hRange;
         private double[] _vRange;
@@ -45,8 +42,8 @@ namespace Goniometer
         #endregion
 
         #region results variables
-        private MeasurementCollection _candles;
-        private MeasurementCollection _strayCandles;
+        private MeasurementCollection _lightData;
+        private MeasurementCollection _strayData;
         #endregion
 
         public LumenTestProgressControl()
@@ -69,11 +66,17 @@ namespace Goniometer
             SetupStrayTest();
             SetupStandardTest();
 
-            //start the standard test when the stray is finished
+            //schedule the standard test when the stray is finished
             StrayTestFinished += new EventHandler((o, e) => BeginStandardTestAsync());
+
+            //schedule test finalization when the light test is finished
+            LightTestFinished += new EventHandler((o, e) => FinalizeTest());
 
             //start with stray test
             BeginStrayTestAsync();
+
+            _startTime = DateTime.Now;
+            timerElapsed.Enabled = true;
         }
 
         public void PauseTestAsync()
@@ -129,7 +132,7 @@ namespace Goniometer
         private void OnStrayLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             //record results
-            _strayCandles = e.Result as MeasurementCollection;
+            _strayData = e.Result as MeasurementCollection;
 
             //unsubscribe
             _strayWorker.ProgressChanged -= OnProgressChanged;
@@ -189,7 +192,7 @@ namespace Goniometer
         protected virtual void OnLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             //record results
-            _candles = e.Result as MeasurementCollection;
+            _lightData = e.Result as MeasurementCollection;
 
             //unsubscribe
             _lightWorker.ProgressChanged -= OnProgressChanged;
@@ -197,7 +200,7 @@ namespace Goniometer
 
             //if successful, generate report
             string reportFilepath = "";
-            if (_candles != null)
+            if (_lightData != null)
                 reportFilepath = GenerateReport();
 
             if (chkEmail.Checked)
@@ -248,22 +251,37 @@ namespace Goniometer
         private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressbar.Value = e.ProgressPercentage;
-            txtStatus.Text += e.UserState.ToString() + "\n";
+            txtStatus.Text += String.Format("{0:yyyy-MM-dd-HH:mm:ss} - {1}\n", DateTime.Now, e.UserState);
 
             long time = ReportUtils.TimeEstimate(_hRange.Length, _vRange.Length).Ticks * ((100 - e.ProgressPercentage) / 100);
-            lblCompletionTime.Text = String.Format("{0:hh\\:mm}", new TimeSpan(time));
+            lblCompletionTime.Text = String.Format("{0:hh\\:mm\\:ss}", new TimeSpan(time));
         }
 
         private void chkEmail_CheckedChanged(object sender, EventArgs e)
         {
             txtEmail.Enabled = chkEmail.Checked;
         }
+
+        private void timerElapsed_Tick(object sender, EventArgs e)
+        {
+            TimeSpan elapsed = _startTime - DateTime.Now;
+            lblElapsed.Text = String.Format("{0:hh\\:mm\\:ss}", elapsed);
+        }
         #endregion
+
+        private void FinalizeTest()
+        {
+            timerElapsed.Enabled = false;
+            progressbar.Value = progressbar.Maximum;
+
+            GenerateReport();
+            WriteRawData();
+        }
 
         private string GenerateReport()
         {
             //calculate corrected values from stray
-            var correctedData = CandlePowerMeasurement.RemoveStrayLight(_candles, _strayCandles);
+            var correctedData = CandlePowerMeasurement.RemoveStrayLight(_lightData, _strayData);
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
@@ -273,5 +291,27 @@ namespace Goniometer
             string fullpath = iesna.WriteToFile(report, filepath);
             return fullpath;
         }
+
+        private void WriteRawData()
+        {
+            DateTime now = DateTime.Now;
+            string filepath = ConfigurationManager.AppSettings["reportFolder"];
+
+            string standard_fullpath = filepath + String.Format("//raw_standard_{0:yyyyMMddHHmmss}.csv", now);
+            using (FileStream fs = new FileStream(standard_fullpath, FileMode.CreateNew))
+            using (StringWriter sw = new StringWriter())
+            {
+                sw.Write(_lightData.GetRaw());
+            }
+
+            string stray_fullpath    = filepath + String.Format("//raw_stray_{0:yyyyMMddHHmmss}.csv",    now);
+            using (FileStream fs = new FileStream(stray_fullpath, FileMode.CreateNew))
+            using (StringWriter sw = new StringWriter())
+            {
+                sw.Write(_strayData.GetRaw());
+            }
+        }
+
+        
     }
 }

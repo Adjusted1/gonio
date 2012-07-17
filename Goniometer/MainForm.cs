@@ -72,7 +72,7 @@ namespace Goniometer
             var testListControl = new TestListControl();
             testListControl.Size = panelMain.Size;
             testListControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            testListControl.btnTest_Clicked += new EventHandler(testListControl_btnTest_Clicked);
+            testListControl.OnTestSelected += new EventHandler(testListControl_btnTest_Clicked);
 
             panelMain.Controls.Add(testListControl);
         }
@@ -83,7 +83,7 @@ namespace Goniometer
             if (testListControl == null)
                 return;
 
-            string testName = testListControl.TestName;
+            string testName = testListControl.SelectedTest;
             if (testName == "Lumen Test")
                 LoadLumenTestControl();
             else if (testName == "Calibration Test")

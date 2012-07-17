@@ -28,43 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblCompletionTime = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.chkEmail = new System.Windows.Forms.CheckBox();
             this.progressbar = new System.Windows.Forms.ProgressBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblElapsed = new System.Windows.Forms.Label();
+            this.timerElapsed = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // txtStatus
             // 
+            this.txtStatus.AcceptsReturn = true;
             this.txtStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtStatus.Location = new System.Drawing.Point(6, 55);
+            this.txtStatus.Location = new System.Drawing.Point(6, 32);
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(258, 214);
-            this.txtStatus.TabIndex = 20;
+            this.txtStatus.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtStatus.Size = new System.Drawing.Size(392, 237);
+            this.txtStatus.TabIndex = 1;
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(40, 7);
+            this.label1.Location = new System.Drawing.Point(249, 280);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 13);
+            this.label1.Size = new System.Drawing.Size(90, 13);
             this.label1.TabIndex = 19;
-            this.label1.Text = "Completion Time Estimate:";
+            this.label1.Text = "Time To Finish";
             // 
             // lblCompletionTime
             // 
+            this.lblCompletionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCompletionTime.AutoSize = true;
-            this.lblCompletionTime.Location = new System.Drawing.Point(199, 7);
+            this.lblCompletionTime.Location = new System.Drawing.Point(345, 280);
             this.lblCompletionTime.Name = "lblCompletionTime";
-            this.lblCompletionTime.Size = new System.Drawing.Size(34, 13);
+            this.lblCompletionTime.Size = new System.Drawing.Size(49, 13);
             this.lblCompletionTime.TabIndex = 18;
-            this.lblCompletionTime.Text = "00:00";
+            this.lblCompletionTime.Text = "00:00:00";
             // 
             // txtEmail
             // 
@@ -72,7 +80,7 @@
             this.txtEmail.Location = new System.Drawing.Point(6, 303);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(135, 20);
-            this.txtEmail.TabIndex = 16;
+            this.txtEmail.TabIndex = 3;
             // 
             // chkEmail
             // 
@@ -81,7 +89,7 @@
             this.chkEmail.Location = new System.Drawing.Point(6, 279);
             this.chkEmail.Name = "chkEmail";
             this.chkEmail.Size = new System.Drawing.Size(135, 17);
-            this.chkEmail.TabIndex = 15;
+            this.chkEmail.TabIndex = 2;
             this.chkEmail.Text = "Email Upon Completion";
             this.chkEmail.UseVisualStyleBackColor = true;
             // 
@@ -89,15 +97,42 @@
             // 
             this.progressbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressbar.Location = new System.Drawing.Point(5, 25);
+            this.progressbar.Location = new System.Drawing.Point(6, 3);
             this.progressbar.Name = "progressbar";
-            this.progressbar.Size = new System.Drawing.Size(260, 23);
+            this.progressbar.Size = new System.Drawing.Size(394, 23);
             this.progressbar.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(256, 304);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 13);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Time Elapsed";
+            // 
+            // lblElapsed
+            // 
+            this.lblElapsed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblElapsed.AutoSize = true;
+            this.lblElapsed.Location = new System.Drawing.Point(345, 304);
+            this.lblElapsed.Name = "lblElapsed";
+            this.lblElapsed.Size = new System.Drawing.Size(49, 13);
+            this.lblElapsed.TabIndex = 22;
+            this.lblElapsed.Text = "00:00:00";
+            // 
+            // timerElapsed
+            // 
+            this.timerElapsed.Tick += new System.EventHandler(this.timerElapsed_Tick);
             // 
             // LumenTestProgressControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblElapsed);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCompletionTime);
@@ -106,7 +141,7 @@
             this.Controls.Add(this.progressbar);
             this.MinimumSize = new System.Drawing.Size(270, 327);
             this.Name = "LumenTestProgressControl";
-            this.Size = new System.Drawing.Size(270, 327);
+            this.Size = new System.Drawing.Size(404, 327);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,5 +155,8 @@
         public System.Windows.Forms.TextBox txtEmail;
         public System.Windows.Forms.CheckBox chkEmail;
         private System.Windows.Forms.ProgressBar progressbar;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblElapsed;
+        private System.Windows.Forms.Timer timerElapsed;
     }
 }

@@ -46,7 +46,6 @@ namespace Goniometer.Setup
         {
             cboSensor.SelectedItem = null;
             cboSensor.Items.Clear();
-            cboSensor.Items.Add("");
             cboSensor.Items.AddRange(MinoltaSensorProvider.GetSensorNames());
         }
 
@@ -54,7 +53,6 @@ namespace Goniometer.Setup
         {
             cboPort.SelectedItem = null;
             cboPort.Items.Clear();
-            cboPort.Items.Add("");
             cboPort.Items.AddRange(SerialPort.GetPortNames());
         } 
         #endregion
@@ -95,41 +93,25 @@ namespace Goniometer.Setup
                 if (cboPort.SelectedItem == null || String.IsNullOrEmpty(cboPort.SelectedItem.ToString()))
                     return;
                 
-                //prepare sensor before assigning to member var
+                lblMessage.Text = "Connecting";
+
+                //prepare sensor in local variable before assigning to member
                 MinoltaSensorProvider.ConfigureControllers(cboPort.SelectedItem.ToString());
                 var sensor = this.Sensor = MinoltaSensorProvider.GetSensorByName(cboSensor.SelectedItem.ToString());
                 sensor.Connect();
 
+                //test the read method on the sensor
+                var source = new BindingSource();
+                source.DataSource = sensor.CollectMeasurements(0,0);
+                gridData.DataSource = source;
+                gridData.Visible = true;
+
                 this.Sensor = sensor;
+                lblMessage.Text = "Success";
             }
             catch (Exception)
             {
                 lblMessage.Text = "Error";
-            }
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                lblMessage.Text = "Communicating";
-
-                if (Sensor != null)
-                {
-                    var source = new BindingSource();
-                    source.DataSource = Sensor.CollectMeasurements(0,0);
-                    gridData.DataSource = source;
-                    gridData.Visible = true;
-                }
-                else
-                {
-                    gridData.Visible = false;
-                }
-            }
-            catch (Exception)
-            {
-                lblMessage.Text = "Error";
-                gridData.Visible = false;
             }
         }
     }

@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.cboSensor = new System.Windows.Forms.ComboBox();
             this.cboPort = new System.Windows.Forms.ComboBox();
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblMessage = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.gridData = new System.Windows.Forms.DataGridView();
@@ -58,13 +56,8 @@
             this.cboPort.Location = new System.Drawing.Point(3, 30);
             this.cboPort.Name = "cboPort";
             this.cboPort.Size = new System.Drawing.Size(162, 21);
-            this.cboPort.TabIndex = 3;
+            this.cboPort.TabIndex = 2;
             this.cboPort.SelectedIndexChanged += new System.EventHandler(this.cboPort_SelectedIndexChanged);
-            // 
-            // timer
-            // 
-            this.timer.Enabled = true;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // lblMessage
             // 
@@ -81,7 +74,7 @@
             this.btnReset.Location = new System.Drawing.Point(90, 57);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 5;
+            this.btnReset.TabIndex = 3;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
@@ -120,7 +113,6 @@
 
         private System.Windows.Forms.ComboBox cboSensor;
         private System.Windows.Forms.ComboBox cboPort;
-        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.DataGridView gridData;

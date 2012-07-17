@@ -19,13 +19,14 @@ namespace Goniometer_Controller.Models
 
         public static MeasurementCollection RemoveStrayLight(MeasurementCollection readings, MeasurementCollection strayReadings)
         {
+            var key = MeasurementKeys.IlluminanceEv;
             MeasurementCollection results = new MeasurementCollection();
             
-            foreach(var m in readings.FindAll(MeasurementKeys.CandlePower))
+            foreach(var m in readings.FindAll(key))
             {
-                var stray = strayReadings.GetEstimateReading(MeasurementKeys.CandlePower, m.theta, m.phi);
+                var stray = strayReadings.GetEstimateReading(key, m.theta, m.phi);
 
-                results.Add(MeasurementBase.Create(m.theta, m.phi, MeasurementKeys.CandlePower, m.value - stray.value));
+                results.Add(MeasurementBase.Create(m.theta, m.phi, key, m.value - stray.value));
             }
 
             return results;
@@ -33,11 +34,12 @@ namespace Goniometer_Controller.Models
 
         public static MeasurementCollection ApplyOffsetFactor(MeasurementCollection readings, double factor)
         {
+            var key = MeasurementKeys.IlluminanceEv;
             MeasurementCollection results = new MeasurementCollection();
             
-            foreach(var m in readings.FindAll(MeasurementKeys.CandlePower))
+            foreach(var m in readings.FindAll(key))
             {
-                results.Add(MeasurementBase.Create(m.theta, m.phi, MeasurementKeys.CandlePower, m.value * factor));
+                results.Add(MeasurementBase.Create(m.theta, m.phi, key, m.value * factor));
             }
 
             return results;

@@ -39,11 +39,11 @@
             this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDescription.Location = new System.Drawing.Point(15, 52);
+            this.txtDescription.Location = new System.Drawing.Point(15, 32);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
-            this.txtDescription.Size = new System.Drawing.Size(241, 217);
+            this.txtDescription.Size = new System.Drawing.Size(267, 237);
             this.txtDescription.TabIndex = 7;
             // 
             // label5
@@ -58,11 +58,12 @@
             // cboTest
             // 
             this.cboTest.FormattingEnabled = true;
-            this.cboTest.Location = new System.Drawing.Point(15, 24);
+            this.cboTest.Location = new System.Drawing.Point(79, 5);
             this.cboTest.Name = "cboTest";
             this.cboTest.Size = new System.Drawing.Size(121, 21);
             this.cboTest.TabIndex = 5;
             this.cboTest.SelectedIndexChanged += new System.EventHandler(this.cboTest_SelectedIndexChanged);
+            this.cboTest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cboTest_KeyDown);
             // 
             // btnTest
             // 
@@ -84,7 +85,7 @@
             this.Controls.Add(this.cboTest);
             this.Controls.Add(this.btnTest);
             this.Name = "TestListControl";
-            this.Size = new System.Drawing.Size(274, 301);
+            this.Size = new System.Drawing.Size(300, 301);
             this.Load += new System.EventHandler(this.TestListControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

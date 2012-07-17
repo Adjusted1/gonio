@@ -125,11 +125,13 @@ namespace Goniometer.Tests.IESNA
             {
                 btnPause.Text = "Pause";
                 paused = false;
+                progressControl.PauseTestAsync();
             }
             else
             {
                 btnPause.Text = "Unpause";
                 paused = true;
+                progressControl.UnpauseTestAsync();
             }
         }
         #endregion

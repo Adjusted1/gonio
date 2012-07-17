@@ -250,7 +250,7 @@ namespace Goniometer
         {
             try
             {
-                lblTime.Text = "00:00";
+                lblTime.Text = "00:00:00";
 
                 //regular test
                 double[] hRange = CalculateHorizontalRange();
@@ -264,7 +264,7 @@ namespace Goniometer
 
                 var result = test + stray;
 
-                lblTime.Text = String.Format("{0:hh\\:mm}", result);
+                lblTime.Text = String.Format("{0:hh\\:mm\\:ss}", result);
             }
             catch
             {

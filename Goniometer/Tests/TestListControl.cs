@@ -22,7 +22,7 @@ namespace Goniometer.Tests
             cboTest.Items.Add("Lumen Test");
         }
 
-        public string TestName
+        public string SelectedTest
         {
             get
             {
@@ -38,15 +38,26 @@ namespace Goniometer.Tests
             }
         }
 
-        public event EventHandler btnTest_Clicked;
         private void btnTest_Click(object sender, EventArgs e)
+        {
+            SelectTest();
+        }
+
+        private void cboTest_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter | e.KeyCode == Keys.Return)
+                SelectTest();
+        }
+
+        public event EventHandler OnTestSelected;
+        private void SelectTest()
         {
             if (String.IsNullOrEmpty(cboTest.Text))
                 return;
 
-            var notify = btnTest_Clicked;
+            var notify = OnTestSelected;
             if (notify != null)
-                notify(this, e);
+                notify(this, null);
         }
     }
 }

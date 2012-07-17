@@ -57,7 +57,7 @@ namespace Goniometer.Reports
         /// <returns>fullpath to created file</returns>
         public static string WriteToFile(iesna report, string fileFolder)
         {
-            string fileName = fileFolder + String.Format("//iesna_{0}.ies", DateTime.Now);
+            string fileName = fileFolder + String.Format("//iesna_{0:yyyyMMddHHmmss}.ies", DateTime.Now);
 
             using (var fs = new FileStream(fileName, FileMode.CreateNew))   //never overwrite a previous file
             using (var sw = new StreamWriter(fs, Encoding.ASCII))           //standard requires ansii
@@ -91,10 +91,9 @@ namespace Goniometer.Reports
             report += "[LAMPPOSITION]"  + lampPosition                         + "\n";
             report += "[SEARCH]"        + search                               + "\n";
 
-            foreach (var key in comments.Keys)
-            {
-                report += String.Format("[_{0}] {1}", key.ToUpper(), comments[key]);
-            }
+            if (comments != null && comments.Count > 0)
+                foreach (var key in comments.Keys)
+                    report += String.Format("[_{0}] {1}", key.ToUpper(), comments[key]);
 
             report += "TILT=NONE\n";
             report += "1";

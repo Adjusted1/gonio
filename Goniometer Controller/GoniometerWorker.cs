@@ -20,6 +20,8 @@ namespace Goniometer_Controller
         private double[] _hRange;
         private double[] _vRange;
         private MeasurementCollection _data = new MeasurementCollection();
+        private DateTime _startTime;
+        private DateTime _stopTime;
 
         private bool _running = false;
         private bool _paused = false;
@@ -30,6 +32,8 @@ namespace Goniometer_Controller
             _vRange = vRange;
 
             _worker = new BackgroundWorker();
+            _worker.WorkerReportsProgress = true;
+            _worker.WorkerSupportsCancellation = true;
             _worker.DoWork             += DoWork;
             _worker.ProgressChanged    += OnProgressChanged;
             _worker.RunWorkerCompleted += OnRunWorkerCompleted;
@@ -70,7 +74,9 @@ namespace Goniometer_Controller
             if (_running)
                 throw new Exception("Goniometer is already running a test");
 
+            _startTime = DateTime.Now;
             _running = true;
+
             _worker.RunWorkerAsync();
         }
 
@@ -103,7 +109,7 @@ namespace Goniometer_Controller
                         } while (_paused);
 
                         //update progress, move vertical arm
-                        int progress = (int)(h / _hRange.Length) * (v / _vRange.Length);
+                        int progress = (int)(h + 1 / _hRange.Length) * (v / _vRange.Length);
                         _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
                         MotorController.SetVerticalAngleAndWait(_vRange[v]);
 
@@ -173,6 +179,7 @@ namespace Goniometer_Controller
         protected virtual void OnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _running = false;
+            _stopTime = DateTime.Now;
 
             var temp = RunWorkerCompleted;
             if (temp != null)

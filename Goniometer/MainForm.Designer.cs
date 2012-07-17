@@ -43,9 +43,6 @@
             NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision24 = new NationalInstruments.UI.ScaleCustomDivision();
             NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision25 = new NationalInstruments.UI.ScaleCustomDivision();
             NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision26 = new NationalInstruments.UI.ScaleCustomDivision();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +64,6 @@
             this.gaugeVertical = new NationalInstruments.UI.WindowsForms.Gauge();
             this.panelMain = new System.Windows.Forms.Panel();
             this.timerMotor = new System.Windows.Forms.Timer(this.components);
-            this.statusStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.panelStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVerticalAngleValid)).BeginInit();
@@ -75,28 +71,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gaugeHorizontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gaugeVertical)).BeginInit();
             this.SuspendLayout();
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 523);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(935, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip";
-            // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(250, 16);
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // menuStrip
             // 
@@ -145,8 +119,8 @@
             this.btnPanic.BackColor = System.Drawing.Color.Red;
             this.btnPanic.Location = new System.Drawing.Point(12, 28);
             this.btnPanic.Name = "btnPanic";
-            this.btnPanic.Size = new System.Drawing.Size(88, 492);
-            this.btnPanic.TabIndex = 0;
+            this.btnPanic.Size = new System.Drawing.Size(88, 505);
+            this.btnPanic.TabIndex = 1;
             this.btnPanic.TabStop = false;
             this.btnPanic.Text = "STOP";
             this.btnPanic.UseVisualStyleBackColor = false;
@@ -171,7 +145,7 @@
             this.panelStatus.Controls.Add(this.gaugeVertical);
             this.panelStatus.Location = new System.Drawing.Point(784, 24);
             this.panelStatus.Name = "panelStatus";
-            this.panelStatus.Size = new System.Drawing.Size(151, 496);
+            this.panelStatus.Size = new System.Drawing.Size(151, 509);
             this.panelStatus.TabIndex = 2;
             // 
             // picVerticalAngleValid
@@ -196,10 +170,10 @@
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(4, 427);
+            this.btnExecute.Location = new System.Drawing.Point(4, 450);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(140, 23);
-            this.btnExecute.TabIndex = 19;
+            this.btnExecute.TabIndex = 5;
             this.btnExecute.Text = "Execute";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
@@ -218,7 +192,7 @@
             this.txtHorizontalAngle.Location = new System.Drawing.Point(42, 184);
             this.txtHorizontalAngle.Name = "txtHorizontalAngle";
             this.txtHorizontalAngle.Size = new System.Drawing.Size(69, 20);
-            this.txtHorizontalAngle.TabIndex = 17;
+            this.txtHorizontalAngle.TabIndex = 3;
             this.txtHorizontalAngle.Text = "0";
             this.txtHorizontalAngle.TextChanged += new System.EventHandler(this.txtHorizontalAngle_TextChanged);
             this.txtHorizontalAngle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHorizontalAngle_KeyDown);
@@ -237,7 +211,7 @@
             this.txtVerticalAngle.Location = new System.Drawing.Point(42, 400);
             this.txtVerticalAngle.Name = "txtVerticalAngle";
             this.txtVerticalAngle.Size = new System.Drawing.Size(69, 20);
-            this.txtVerticalAngle.TabIndex = 15;
+            this.txtVerticalAngle.TabIndex = 4;
             this.txtVerticalAngle.Text = "0";
             this.txtVerticalAngle.TextChanged += new System.EventHandler(this.txtVerticalAngle_TextChanged);
             this.txtVerticalAngle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerticalAngle_KeyDown);
@@ -245,10 +219,10 @@
             // btnSettings
             // 
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSettings.Location = new System.Drawing.Point(4, 466);
+            this.btnSettings.Location = new System.Drawing.Point(4, 479);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(140, 23);
-            this.btnSettings.TabIndex = 10;
+            this.btnSettings.TabIndex = 6;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
@@ -342,8 +316,8 @@
             this.panelMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelMain.Location = new System.Drawing.Point(106, 25);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(677, 491);
-            this.panelMain.TabIndex = 3;
+            this.panelMain.Size = new System.Drawing.Size(677, 508);
+            this.panelMain.TabIndex = 2;
             // 
             // timerMotor
             // 
@@ -358,7 +332,6 @@
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelStatus);
             this.Controls.Add(this.btnPanic);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(951, 583);
@@ -366,8 +339,6 @@
             this.Text = "Goniometer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.panelStatus.ResumeLayout(false);
@@ -383,15 +354,12 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem motorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sensorToolStripMenuItem;
         private System.Windows.Forms.Button btnPanic;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Panel panelStatus;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Label label2;

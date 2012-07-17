@@ -112,7 +112,7 @@ namespace Goniometer_Controller.Motors
             Move(distance, velocity, acceleration, absolute);
 
             DateTime startTime = DateTime.Now;
-            while (GetAngle() - distance < accuracy)
+            while (Math.Abs(GetAngle() - distance) > accuracy)
             {
                 if (DateTime.Now - startTime > timeout)
                     //we've exceeded our alloted time
