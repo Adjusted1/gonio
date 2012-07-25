@@ -118,8 +118,8 @@ namespace Goniometer_Controller.Functions
                 double averageCandles = 0;
                 
                 double[] hAngles = cross.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
-                double[] hWidths = WidthOnCenter(hAngles);
-                double hRange = hAngles[hAngles.Length - 1] - hAngles[0];
+                double[] hWidths = hAngles.Length == 1 ? new double[] { 360 } : WidthOnCenter(hAngles);
+                double   hRange  = hAngles.Length == 1 ? 360                  : hAngles[hAngles.Length - 1] - hAngles[0];
 
                 for (int h = 0; h < hAngles.Length; h++)
                 {

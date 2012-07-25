@@ -51,6 +51,20 @@ namespace Goniometer
             InitializeComponent();
         }
 
+        #region public variables
+        public bool EmailNotifications
+        {
+            get { return chkEmail.Checked; }
+            set { chkEmail.Checked = value; }
+        }
+
+        public string Email
+        {
+            get { return txtEmail.Text; }
+            set { txtEmail.Text = value; }
+        }
+        #endregion
+
         #region public methods
         public void BeginTestAsync(MinoltaBaseSensor sensor, double[] hRange, double[] vRange, double[] hStrayRange, double[] vStrayRange, double k)
         {
@@ -111,6 +125,8 @@ namespace Goniometer
             if (_lightWorker != null)
                 _lightWorker.CancelAsync();
         }
+
+        public event EventHandler TestCompleted;
         #endregion
 
         #region stray lumen test
@@ -131,35 +147,42 @@ namespace Goniometer
         public event EventHandler StrayTestFinished;
         private void OnStrayLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
-            //record results
-            _strayData = e.Result as MeasurementCollection;
-
             //unsubscribe
             _strayWorker.ProgressChanged -= OnProgressChanged;
             _strayWorker.RunWorkerCompleted -= OnStrayLightTestFinished;
 
-            //inform user
-            if (chkEmail.Checked)
+            //check status
+            if (e.Cancelled)
             {
-                if (e.Cancelled)
+                //inform user
+                if (chkEmail.Checked)
                 {
                     string subject = "Goniometer Lumen Test Canceled";
                     string body = "The Goniometer Lumen Test has been canceled.\n\nProgress:\n" + txtStatus.Text;
                     ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
                 }
-                else if (e.Error != null)
-                {
-                    SimpleLogger.Logging.WriteToLog(e.Error.Message);
+            }
+            else if (e.Error != null)
+            {
+                SimpleLogger.Logging.WriteToLog(e.Error.Message);
 
+                //inform user
+                if (chkEmail.Checked)
+                {
                     string subject = "Goniometer Lumen Test Failed";
                     string body = "The Goniometer Lumen Test has failed with the following error:\n\n" + e.Error.Message;
                     body += "\n\nStack:\n\n" + e.Error.StackTrace;
                     ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
                 }
-                else
-                {
-                    var data = e.Result as Tuple<double, double, double>;
+            }
+            else
+            {
+                //record results
+                _strayData = e.Result as MeasurementCollection;
 
+                //inform user
+                if (chkEmail.Checked)
+                {
                     string subject = "Goniometer Lumen Test Requires Attention!";
                     string body = "The Goniometer Lumen Test requires your input to continue";
                     ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
@@ -191,43 +214,50 @@ namespace Goniometer
         public event EventHandler LightTestFinished; 
         protected virtual void OnLightTestFinished(object sender, RunWorkerCompletedEventArgs e)
         {
-            //record results
-            _lightData = e.Result as MeasurementCollection;
-
             //unsubscribe
             _lightWorker.ProgressChanged -= OnProgressChanged;
             _lightWorker.RunWorkerCompleted -= OnLightTestFinished;
 
-            //if successful, generate report
-            string reportFilepath = "";
-            if (_lightData != null)
-                reportFilepath = GenerateReport();
-
-            if (chkEmail.Checked)
+            if (e.Cancelled)
             {
-                if (e.Cancelled)
+                if (chkEmail.Checked)
                 {
                     string subject = "Goniometer Lumen Test Canceled";
                     string body = "The Goniometer Lumen Test has been canceled.\n\nProgress:\n" + txtStatus.Text;
                     ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
                 }
-                else if (e.Error != null)
-                {
-                    SimpleLogger.Logging.WriteToLog(e.Error.Message);
+            }
+            else if (e.Error != null)
+            {
+                SimpleLogger.Logging.WriteToLog(e.Error.Message);
 
+                if (chkEmail.Checked)
+                {
                     string subject = "Goniometer Lumen Test Failed";
                     string body = "The Goniometer Lumen Test has failed with the following error:\n\n" + e.Error.Message;
                     body += "\n\nStack:\n\n" + e.Error.StackTrace;
                     ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
                 }
-                else
+            }
+            else
+            {
+                //record results
+                _lightData = e.Result as MeasurementCollection;
+                
+                //if successful, generate report
+                string reportFilepath = "";
+                if (_lightData != null)
                 {
-                    var data = e.Result as Tuple<double, double, double>;
+                    reportFilepath = GenerateReport();
+                    WriteRawData(); //write out raw data!
 
-                    string subject = "Goniometer Lumen Test Completed";
-                    string body = "The Goniometer Lumen Test has completed";
-                    Attachment attachment = new Attachment(reportFilepath);
-                    ReportUtils.EmailResults(subject, body, txtEmail.Text, attachment);
+                    if (chkEmail.Checked)
+                    {
+                        string subject = "Goniometer Lumen Test Completed";
+                        string body = "The Goniometer Lumen Test has completed";
+                        Attachment attachment = new Attachment(reportFilepath);
+                        ReportUtils.EmailResults(subject, body, txtEmail.Text, attachment);
+                    }
                 }
             }
 
@@ -241,8 +271,22 @@ namespace Goniometer
         #region interface methods
         private void OnError(object sender, GoniometerWorker.GonioErrorEventArgs e)
         {
-            e.stop = true;
-            e.skip = false;
+            var result = MessageBox.Show("Measurement Error Occured. Stop Test (Abort), Retest (Retry), or Skip Reading (Ignore)", "Measurement Error", MessageBoxButtons.AbortRetryIgnore);
+
+            if (result == DialogResult.Abort)
+            {
+                e.Stop = true;
+            }
+            else if (result == DialogResult.Retry)
+            {
+                e.Stop = false;
+                e.Skip = false;
+            }
+            else //ignore
+            {
+                e.Stop = false;
+                e.Skip = true;
+            }
         }
 
         /// <summary>
@@ -274,14 +318,15 @@ namespace Goniometer
             timerElapsed.Enabled = false;
             progressbar.Value = progressbar.Maximum;
 
-            GenerateReport();
-            WriteRawData();
+            var temp = TestCompleted;
+            if (TestCompleted != null)
+                TestCompleted(this, null);
         }
 
         private string GenerateReport()
         {
             //calculate corrected values from stray
-            var correctedData = CandlePowerMeasurement.RemoveStrayLight(_lightData, _strayData);
+            var correctedData = CandlePowerMeasurementFunctions.RemoveStrayLight(_lightData, _strayData);
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
@@ -299,19 +344,19 @@ namespace Goniometer
 
             string standard_fullpath = filepath + String.Format("//raw_standard_{0:yyyyMMddHHmmss}.csv", now);
             using (FileStream fs = new FileStream(standard_fullpath, FileMode.CreateNew))
-            using (StringWriter sw = new StringWriter())
+            using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.Write(_lightData.GetRaw());
+                sw.Flush();
             }
 
             string stray_fullpath    = filepath + String.Format("//raw_stray_{0:yyyyMMddHHmmss}.csv",    now);
             using (FileStream fs = new FileStream(stray_fullpath, FileMode.CreateNew))
-            using (StringWriter sw = new StringWriter())
+            using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.Write(_strayData.GetRaw());
+                sw.Flush();
             }
         }
-
-        
     }
 }

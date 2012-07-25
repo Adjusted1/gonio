@@ -77,10 +77,10 @@
             this.setupControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.setupControl.Location = new System.Drawing.Point(6, 7);
+            this.setupControl.Location = new System.Drawing.Point(6, 6);
             this.setupControl.MinimumSize = new System.Drawing.Size(411, 430);
             this.setupControl.Name = "setupControl";
-            this.setupControl.Size = new System.Drawing.Size(606, 460);
+            this.setupControl.Size = new System.Drawing.Size(606, 461);
             this.setupControl.TabIndex = 2;
             // 
             // btnBack
@@ -132,7 +132,7 @@
             // btnPause
             // 
             this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPause.Location = new System.Drawing.Point(537, 473);
+            this.btnPause.Location = new System.Drawing.Point(-315, -383);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
             this.btnPause.TabIndex = 3;

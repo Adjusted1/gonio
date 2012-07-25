@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<tests>
-  <test>
-    <name>Lumen Test</name>
-    <description></description>
-    <control>Goniometer.LumenTestSetupControl</control>
-  </test>
-</tests>

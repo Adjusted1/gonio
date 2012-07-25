@@ -14,21 +14,50 @@ namespace Goniometer
 {
     public partial class LumenTestSetupControl : UserControl, INotifyPropertyChanged
     {
-        public MinoltaBaseSensor Sensor
-        {
-            get
-            {
-                return controlSensorSetup.Sensor;
-            }
-        }
-
         public LumenTestSetupControl()
         {
             InitializeComponent();
         }
 
-        #region parsed values
-        public double horizontalResolution
+        #region public values
+        public MinoltaBaseSensor Sensor
+        {
+            get { return controlSensorSetup.Sensor; }
+        }
+
+        public string DataFolder
+        {
+            get { return txtDataFolder.Text; }
+        }
+
+        public bool EmailNotifications
+        {
+            get { return chkEmail.Checked; }
+            set { chkEmail.Checked = value; }
+        }
+
+        public string Email
+        {
+            get { return txtEmail.Text; }
+            set { txtEmail.Text = value; }
+        }
+
+        public string TestNumber
+        {
+            get { return txtTestNumber.Text; }
+        }
+
+        public string Manufacturer
+        {
+            get { return txtManufacturer.Text; }
+        }
+
+        public int NumberOfLamps
+        {
+            get { return Int32.Parse(txtNumberOfLamps.Text); }
+        }
+
+        public double HorizontalResolution
         {
             get
             {
@@ -40,31 +69,19 @@ namespace Goniometer
             }
         }
 
-        public double horizontalStrayResolution
+        public double HorizontalStrayResolution
         {
             get
             {
                 double value;
-                if (Double.TryParse(txtHorizontalResolution.Text, out value))
+                if (Double.TryParse(txtHorizontalStrayResolution.Text, out value))
                     return value;
                 else
                     return 0;
             }
         }
 
-        public double verticalResolution
-        {
-            get
-            {
-                double value;
-                if (Double.TryParse(txtVerticalResolution.Text, out value))
-                    return value;
-                else
-                    return 0;
-            }
-        }
-
-        public double verticalStrayResolution
+        public double VerticalResolution
         {
             get
             {
@@ -76,7 +93,19 @@ namespace Goniometer
             }
         }
 
-        public VerticalSymmetryEnum verticalSymmetry
+        public double VerticalStrayResolution
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtVerticalStrayResolution.Text, out value))
+                    return value;
+                else
+                    return 0;
+            }
+        }
+
+        public VerticalSymmetryEnum VerticalSymmetry
         {
             get
             {
@@ -89,7 +118,7 @@ namespace Goniometer
             }
         }
 
-        public HorizontalSymmetryEnum horizontalSymmetry
+        public HorizontalSymmetryEnum HorizontalSymmetry
         {
             get
             {
@@ -108,8 +137,18 @@ namespace Goniometer
         #region range calculations
         public double[] CalculateHorizontalRange()
         {
+            return CalculateHorizontalRange(HorizontalResolution);
+        }
+
+        public double[] CalculateStrayHorizontalRange()
+        {
+            return CalculateHorizontalRange(HorizontalStrayResolution);
+        }
+
+        private double[] CalculateHorizontalRange(double resolution)
+        {
             int hRange = 0;  //total range in degrees
-            switch(horizontalSymmetry)
+            switch(HorizontalSymmetry)
             {
                 case HorizontalSymmetryEnum.Full:
                     hRange = 360;
@@ -127,69 +166,83 @@ namespace Goniometer
                     return new double[] { 0 };
             }
 
-            if (horizontalResolution <= 0 || horizontalResolution > hRange)
+            if (resolution <= 0 || resolution > hRange)
                 return new double[] { 0, hRange };
 
-            return ReportUtils.Range(horizontalResolution, 0, hRange);
-        }
-
-        public double[] CalculateStrayHorizontalRange()
-        {
-            return CalculateHorizontalRange();
+            return ReportUtils.Range(resolution, 0, hRange);
         }
 
         public double[] CalculateVerticalRange()
         {
-            int vRangeStart = 0;     //start of range in degrees
-            int vRangeStop = 180;     //stop of range in degrees
-
-            if (verticalSymmetry == VerticalSymmetryEnum.TopOnly)
-                vRangeStart = 90;
-            else if (verticalSymmetry == VerticalSymmetryEnum.BottomOnly)
-                vRangeStop = 90;
-
-            if (verticalResolution <= 0 || verticalResolution > vRangeStop - vRangeStart)
-                return new double[] { vRangeStart, vRangeStop };
-
-            return ReportUtils.Range(verticalResolution, vRangeStart, vRangeStop);
+            return CalculateVerticalRange(VerticalResolution);
         }
 
         public double[] CalculateStrayVerticalRange()
         {
-            return CalculateVerticalRange();
+            return CalculateVerticalRange(VerticalStrayResolution);
+        }
+        private double[] CalculateVerticalRange(double resolution)
+        {
+            int vRangeStart = 0;     //start of range in degrees
+            int vRangeStop = 180;     //stop of range in degrees
+
+            if (VerticalSymmetry == VerticalSymmetryEnum.TopOnly)
+                vRangeStart = 90;
+            else if (VerticalSymmetry == VerticalSymmetryEnum.BottomOnly)
+                vRangeStop = 90;
+
+            if (resolution <= 0 || resolution > vRangeStop - vRangeStart)
+                return new double[] { vRangeStart, vRangeStop };
+
+            return ReportUtils.Range(resolution, vRangeStart, vRangeStop);
         }
         #endregion
 
         #region resolution textboxes
         private void txtHorizontalResolution_TextChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("horizontalResolution");
+            NotifyPropertyChanged("HorizontalResolution");
             UpdateEstimate();
         }
 
         private void txtVerticalResolution_TextChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("verticalResolution");
+            NotifyPropertyChanged("VerticalResolution");
             UpdateEstimate();
+        }
+
+        private void cboStrayResolution_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtVerticalStrayResolution_TextChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("HorizontalStrayResolution");
+        }
+
+        private void txtHorizontalStrayResolution_TextChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("VerticalStrayResolution");
         }
         #endregion
 
         #region vertical radios
         private void radVerticalFull_CheckedChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("verticalSymmetry");
+            NotifyPropertyChanged("VerticalSymmetry");
             UpdateEstimate();
         }
 
         private void radVerticalTop_CheckedChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("verticalSymmetry");
+            NotifyPropertyChanged("VerticalSymmetry");
             UpdateEstimate();
         }
 
         private void radVerticalBottom_CheckedChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("verticalSymmetry");
+            NotifyPropertyChanged("VerticalSymmetry");
             UpdateEstimate();
         }
         #endregion
@@ -199,7 +252,7 @@ namespace Goniometer
         {
             txtHorizontalResolution.Enabled = true;
 
-            NotifyPropertyChanged("horizontalSymmetry");
+            NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
         }
 
@@ -207,7 +260,7 @@ namespace Goniometer
         {
             txtHorizontalResolution.Enabled = true;
 
-            NotifyPropertyChanged("horizontalSymmetry");
+            NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
         }
 
@@ -215,7 +268,7 @@ namespace Goniometer
         {
             txtHorizontalResolution.Enabled = true;
             
-            NotifyPropertyChanged("horizontalSymmetry");
+            NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
         }
 
@@ -224,7 +277,7 @@ namespace Goniometer
             txtHorizontalResolution.Enabled = false;
             txtHorizontalResolution.Text = String.Format("{0}", 0);
             
-            NotifyPropertyChanged("horizontalSymmetry");
+            NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
         }
         #endregion
@@ -232,6 +285,14 @@ namespace Goniometer
         private void chkEmail_CheckedChanged(object sender, EventArgs e)
         {
             txtEmail.Enabled = chkEmail.Checked;
+        }
+
+        private void btnDataFolder_Click(object sender, EventArgs e)
+        {
+            var result = folderBrowserDialog.ShowDialog();
+            
+            if (result == DialogResult.OK)
+                txtDataFolder.Text = folderBrowserDialog.SelectedPath;
         }
 
         #region INotifyPropertyChanged
@@ -246,6 +307,9 @@ namespace Goniometer
         }
         #endregion
 
+        /// <summary>
+        /// set the estimate label based on horizontal and vertical steps
+        /// </summary>
         private void UpdateEstimate()
         {
             try
@@ -281,7 +345,14 @@ namespace Goniometer
             if (controlSensorSetup.Sensor == null)
                 return false;
 
+            if (String.IsNullOrEmpty(txtDataFolder.Text))
+                return false;
+
             return true;
         }
+
+        
+
+        
     }
 }

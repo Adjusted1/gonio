@@ -74,6 +74,7 @@
     <Compile Include="Models\CandlePowerMeasurement.cs" />
     <Compile Include="Models\ChrominanceReading.cs" />
     <Compile Include="Models\ChrominanceReadingCollection.cs" />
+    <Compile Include="Models\Exceptions.cs" />
     <Compile Include="Models\MeasurementBase.cs" />
     <Compile Include="Models\MeasurementKeys.cs" />
     <Compile Include="Motors\BaseMotor.cs" />

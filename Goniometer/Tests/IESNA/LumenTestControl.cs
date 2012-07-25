@@ -15,7 +15,7 @@ using Goniometer_Controller.Sensors;
 
 namespace Goniometer.Tests.IESNA
 {
-    public partial class LumenTestControl : UserControl, INotifyPropertyChanged
+    public partial class LumenTestControl : UserControl, INotifyPropertyChanged, IDisposable
     {
         public LumenTestControl()
         {
@@ -25,6 +25,7 @@ namespace Goniometer.Tests.IESNA
         private void LumenTestControl_Load(object sender, EventArgs e)
         {
             setupControl.PropertyChanged += new PropertyChangedEventHandler(setupControl_PropertyChanged);
+            progressControl.TestCompleted += new EventHandler(progressControl_TestCompleted);
         }
 
         #region setup page
@@ -41,8 +42,8 @@ namespace Goniometer.Tests.IESNA
                 return;
 
             //pass values to other tab
-            progressControl.chkEmail.Checked = setupControl.chkEmail.Checked;
-            progressControl.txtEmail.Text    = setupControl.txtEmail.Text;
+            progressControl.EmailNotifications = setupControl.EmailNotifications;
+            progressControl.Email              = setupControl.Email;
 
             double[] hRange =          setupControl.CalculateHorizontalRange();
             double[] vRange =          setupControl.CalculateVerticalRange();
@@ -56,52 +57,34 @@ namespace Goniometer.Tests.IESNA
         }
 
         #region setup values
-        public double? horizontalResolution
+        public double HorizontalResolution
         {
-            get
-            {
-                return setupControl.horizontalResolution;
-            }
+            get { return setupControl.HorizontalResolution; }
         }
 
-        public double? horizontalStrayResolution
+        public double HorizontalStrayResolution
         {
-            get
-            {
-                return setupControl.horizontalStrayResolution;
-            }
+            get { return setupControl.HorizontalStrayResolution; }
         }
 
-        public double? verticalResolution
+        public double VerticalResolution
         {
-            get
-            {
-                return setupControl.verticalResolution;
-            }
+            get { return setupControl.VerticalResolution; }
         }
 
-        public double? verticalStrayResolution
+        public double VerticalStrayResolution
         {
-            get
-            {
-                return setupControl.verticalStrayResolution;
-            }
+            get { return setupControl.VerticalStrayResolution; }
         }
 
-        public VerticalSymmetryEnum? verticalSymmetry
+        public VerticalSymmetryEnum VerticalSymmetry
         {
-            get
-            {
-                return setupControl.verticalSymmetry;
-            }
+            get { return setupControl.VerticalSymmetry; }
         }
 
-        public HorizontalSymmetryEnum? horizontalSymmetry
+        public HorizontalSymmetryEnum HorizontalSymmetry
         {
-            get
-            {
-                return setupControl.horizontalSymmetry;
-            }
+            get { return setupControl.HorizontalSymmetry; }
         }
         #endregion
         #endregion
@@ -112,8 +95,8 @@ namespace Goniometer.Tests.IESNA
             progressControl.CancelTestAsync();
 
             //pass values to other tab
-            setupControl.chkEmail.Checked = progressControl.chkEmail.Checked;
-            setupControl.txtEmail.Text    = progressControl.txtEmail.Text;
+            setupControl.EmailNotifications = progressControl.EmailNotifications;
+            setupControl.Email              = progressControl.Email;
 
             wizard.SelectedTab = tabCompletion;
         }
@@ -133,6 +116,13 @@ namespace Goniometer.Tests.IESNA
                 paused = true;
                 progressControl.UnpauseTestAsync();
             }
+        }
+
+        private void progressControl_TestCompleted(object sender, EventArgs e)
+        {
+            wizard.SelectedTab = tabCompletion;
+
+            //this is where report generation should occur
         }
         #endregion
 
@@ -166,6 +156,22 @@ namespace Goniometer.Tests.IESNA
             if (notify != null)
             {
                 notify(sender, e);
+            }
+        }
+        #endregion
+
+        #region IDisposable
+        public void Dispose()
+        {
+            try
+            {
+                if (setupControl.Sensor != null)
+                {
+                    setupControl.Sensor.Disconnect();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         #endregion

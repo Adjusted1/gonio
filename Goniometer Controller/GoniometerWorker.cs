@@ -20,11 +20,9 @@ namespace Goniometer_Controller
         private double[] _hRange;
         private double[] _vRange;
         private MeasurementCollection _data = new MeasurementCollection();
+
         private DateTime _startTime;
         private DateTime _stopTime;
-
-        private bool _running = false;
-        private bool _paused = false;
 
         public GoniometerWorker(double[] hRange, double[] vRange, MinoltaBaseSensor sensor)
         {
@@ -40,6 +38,10 @@ namespace Goniometer_Controller
 
             _sensor = sensor;
         }
+
+        #region state methods
+        private bool _running = false;
+        private bool _paused = false;
 
         /// <summary>
         /// Requests termination of goniometer process
@@ -79,6 +81,7 @@ namespace Goniometer_Controller
 
             _worker.RunWorkerAsync();
         }
+        #endregion
 
         #region worker methods
         private void DoWork(object sender, DoWorkEventArgs e)
@@ -113,7 +116,7 @@ namespace Goniometer_Controller
                         _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
                         MotorController.SetVerticalAngleAndWait(_vRange[v]);
 
-                        //collect and validate measurements before continuing
+                        //collect measurements
                         _worker.ReportProgress(progress, "Taking Measurements");
                         var measurements = _sensor.CollectMeasurements(_hRange[h], _vRange[v]);
 
@@ -121,31 +124,33 @@ namespace Goniometer_Controller
                         var measurement = measurements.FirstOrDefault(m => m.key == MeasurementKeys.IlluminanceEv);
                         if (measurement != null && measurement.value < 0.01)
                         {
-                            var args = new GonioErrorEventArgs();
-                            OnError(this, args);
-
-                            if (args.stop)
-                            {
-                                //halt test
-                                e.Cancel = true;
-                                return;
-                            }
-                            else if (!args.skip)
-                            {
-                                //go back one step and start over
-                                h--;
-                                continue;
-                            }
+                            throw new InvalidMeasurementException(measurement);
                         }
 
                         //measurements validated, add to collection
                         _data.AddRange(measurements);
 
+                        //notify subscribes about measurements
+                        var measureArgs = new MeasurementEventArgs(measurements);
+                        OnMeasurementTaken(this, measureArgs);
                     }
                     catch (Exception ex)
                     {
-                        var args = new GonioErrorEventArgs();
+                        var args = new GonioErrorEventArgs(ex);
                         OnError(this, args);
+
+                        if (args.Stop)
+                        {
+                            //halt test
+                            e.Cancel = true;
+                            return;
+                        }
+                        else if (!args.Skip)
+                        {
+                            //go back one step and start over
+                            h--;
+                            continue; //forloop
+                        }
                     }
                 }
             }
@@ -185,11 +190,28 @@ namespace Goniometer_Controller
             if (temp != null)
                 temp(this, e);
         }
-
+        
+        /// <summary>
+        /// Receive notification of error.
+        /// 
+        /// set e.stop to indicate if this error should be considered critical
+        /// set e.skip to indicate if we should skip or retry the previous angle
+        /// </summary>
         public event EventHandler<GonioErrorEventArgs> Error;
         protected virtual void OnError(object sender, GonioErrorEventArgs e)
         {
             var temp = Error;
+            if (temp != null)
+                temp(this, e);
+        }
+
+        /// <summary>
+        /// Receive notification that successful measurement occured
+        /// </summary>
+        public event EventHandler MeasurementTaken;
+        protected virtual void OnMeasurementTaken(object sender, MeasurementEventArgs e)
+        {
+            var temp = MeasurementTaken;
             if (temp != null)
                 temp(this, e);
         }
@@ -209,17 +231,36 @@ namespace Goniometer_Controller
             /// indicates that failure is unrecoverable and the test should halt
             /// set to false if test should continue
             /// </summary>
-            public bool stop = true;
+            public bool Stop = true;
 
             /// <summary>
             /// indicates that failure is recoverable and the test should continue at next datapoint
             /// set to true if datapoint should recollect
             /// </summary>
-            public bool skip = true;
+            public bool Skip = true;
 
-            public GonioErrorEventArgs() : base()
+            /// <summary>
+            /// contains the exception caught during Gonio process
+            /// </summary>
+            public Exception Exception;
+
+            public GonioErrorEventArgs(Exception exception)
             {
-            
+                this.Exception = exception;
+            }
+        }
+
+        public class MeasurementEventArgs : EventArgs
+        {
+            /// <summary>
+            /// list of measurements collected during this event
+            /// </summary>
+            public List<MeasurementBase> Measurements;
+
+            public MeasurementEventArgs(IEnumerable<MeasurementBase> measurements)
+                : base()
+            {
+                this.Measurements = measurements.ToList();
             }
         }
     }

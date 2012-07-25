@@ -65,6 +65,7 @@ namespace Goniometer.Reports
                 //TODO implement max column lengths of 256 char including /n
 
                 sw.Write(report.ToString());
+                sw.Flush();
             }
 
             return fileName;
@@ -72,31 +73,31 @@ namespace Goniometer.Reports
 
         public override string ToString()
         {
-            string report = "";
-
-            report += "IESNA:LM-63-2002\n";
-            report += "[TEST]"          + test                                 + "\n";
-            report += "[TESTLAB]"       + testlab                              + "\n";
-            report += "[ISSUEDATE]"     + issueDate.ToString("dd-MMM-YYYY")    + "\n";
-            report += "[MANUFAC]"       + manufacture                          + "\n";
-            report += "[LUMCAT]"        + lumcat                               + "\n";
-            report += "[LUMINAIRE]"     + luminaire                            + "\n";
-            report += "[LAMPCAT]"       + lampcat                              + "\n";
-            report += "[LAMP]"          + lamp                                 + "\n";
-            report += "[BALLASTCAT]"    + ballastcat                           + "\n";
-            report += "[BALLAST]"       + ballast                              + "\n";
-            report += "[MAINTCAT]"      + maintcat                             + "\n";
-            report += "[OTHER]"         + other                                + "\n";
-            report += "[MORE]"          + more                                 + "\n";
-            report += "[LAMPPOSITION]"  + lampPosition                         + "\n";
-            report += "[SEARCH]"        + search                               + "\n";
+            StringBuilder sb = new StringBuilder();
+            
+            sb.AppendLine("IESNA:LM-63-2002");
+            sb.AppendLine("[TEST]"          + test                                );
+            sb.AppendLine("[TESTLAB]"       + testlab                             );
+            sb.AppendLine("[ISSUEDATE]"     + issueDate.ToString("dd-MMM-YYYY")   );
+            sb.AppendLine("[MANUFAC]"       + manufacture                         );
+            sb.AppendLine("[LUMCAT]"        + lumcat                              );
+            sb.AppendLine("[LUMINAIRE]"     + luminaire                           );
+            sb.AppendLine("[LAMPCAT]"       + lampcat                             );
+            sb.AppendLine("[LAMP]"          + lamp                                );
+            sb.AppendLine("[BALLASTCAT]"    + ballastcat                          );
+            sb.AppendLine("[BALLAST]"       + ballast                             );
+            sb.AppendLine("[MAINTCAT]"      + maintcat                            );
+            sb.AppendLine("[OTHER]"         + other                               );
+            sb.AppendLine("[MORE]"          + more                                );
+            sb.AppendLine("[LAMPPOSITION]"  + lampPosition                        );
+            sb.AppendLine("[SEARCH]"        + search                              );
 
             if (comments != null && comments.Count > 0)
                 foreach (var key in comments.Keys)
-                    report += String.Format("[_{0}] {1}", key.ToUpper(), comments[key]);
+                    sb.AppendLine(String.Format("[_{0}] {1}", key.ToUpper(), comments[key]));
 
-            report += "TILT=NONE\n";
-            report += "1";
+            sb.AppendLine("TILT=NONE");
+            sb.AppendLine("1");
 
             //fetch all candle readings
             var candles = _data.FindAll(MeasurementKeys.IlluminanceEv)
@@ -105,24 +106,24 @@ namespace Goniometer.Reports
 
             //lumen reading
             double lumen =  LightMath.CalculateLumens(candles);
-            report += lumen + '\n';
+            sb.AppendLine(String.Format("{0}",lumen));
 
             //horizontal values
             double[] hRange = _data.GetPhiRange();
-            report += String.Join(" ", hRange) + '\n';
+            sb.AppendLine(String.Join(" ", hRange));
 
             //vertical values
             double[] vRange = _data.GetThetaRange();
-            report += String.Join(" ", vRange) + '\n';
+            sb.AppendLine(String.Join(" ", vRange));
 
             //raw values
             for (int v = 0; v < vRange.Length; v++)
             {
                 double[] values = _data.FindAll(MeasurementKeys.IlluminanceEv, vRange[v]).Select(m => m.value).ToArray();
-                report += String.Join(" ", values) + '\n';
+                sb.AppendLine(String.Join(" ", values));
             }
 
-            return report;
+            return sb.ToString();
         }
     }
 }

@@ -112,7 +112,17 @@ namespace Goniometer_Controller.Sensors
             if (bcc != res.Substring(28, 2))
                 throw new Exception("Message Malformed");
 
-            //error informaiton
+            ErrorCheckChar(res);
+
+            receptor = Int32.Parse(res.Substring(1, 2));
+            command = Int32.Parse(res.Substring(3, 2));
+
+            return res.Substring(5, res.Length - 5);
+        }
+
+        protected void ErrorCheckChar(string res)
+        {
+            //error information
             switch (res.Substring(6, 1))
             {
                 case " ":
@@ -146,11 +156,6 @@ namespace Goniometer_Controller.Sensors
                 default:
                     throw new Exception("Unknown Error");
             }
-
-            receptor = Int32.Parse(res.Substring(1, 2));
-            command = Int32.Parse(res.Substring(3, 2));
-
-            return res.Substring(5, res.Length - 5);
         }
 
         /// <summary>

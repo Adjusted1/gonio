@@ -5,18 +5,14 @@ using System.Text;
 
 namespace Goniometer_Controller.Models
 {
-    public class CandlePowerMeasurement : MeasurementBase
+    public class CandlePowerMeasurementFunctions
     {
-        public CandlePowerMeasurement(double theta, double phi, double value)
-            : base(theta, phi, MeasurementKeys.CandlePower, value)
-        {
-        }
-
-        public static CandlePowerMeasurement Create(double theta, double phi, double value)
-        {
-            return new CandlePowerMeasurement(theta, phi, value);
-        }
-
+        /// <summary>
+        /// for each reading, subtract the estimate reading from the stray readings collection
+        /// </summary>
+        /// <param name="readings"></param>
+        /// <param name="strayReadings"></param>
+        /// <returns>a new collection with only the calculated illuminance values</returns>
         public static MeasurementCollection RemoveStrayLight(MeasurementCollection readings, MeasurementCollection strayReadings)
         {
             var key = MeasurementKeys.IlluminanceEv;
@@ -32,6 +28,12 @@ namespace Goniometer_Controller.Models
             return results;
         }
 
+        /// <summary>
+        /// for each reading, multiply by the factor
+        /// </summary>
+        /// <param name="readings"></param>
+        /// <param name="factor"></param>
+        /// <returns>a new collection with only the offset illuminance values</returns>
         public static MeasurementCollection ApplyOffsetFactor(MeasurementCollection readings, double factor)
         {
             var key = MeasurementKeys.IlluminanceEv;

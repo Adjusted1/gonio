@@ -7,8 +7,6 @@ namespace Goniometer_Controller.Models
 {
     public class MeasurementKeys
     {
-        public const string CandlePower = "Candle Power";
-
         public const string ColorX = "Color - X";
         public const string ColorY = "Color - Y";
         public const string ColorZ = "Color - Z";

@@ -230,7 +230,7 @@ namespace Goniometer_Controller.Sensors
                 Thread.Sleep(_refreshRate);
             }
 
-            return MeasurementBase.Create(theta, phi, MeasurementKeys.CandlePower, reading);
+            return MeasurementBase.Create(theta, phi, MeasurementKeys.IlluminanceEv, reading);
         }
     }
 }

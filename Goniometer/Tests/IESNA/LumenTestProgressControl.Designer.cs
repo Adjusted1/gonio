@@ -88,9 +88,9 @@
             this.chkEmail.AutoSize = true;
             this.chkEmail.Location = new System.Drawing.Point(6, 279);
             this.chkEmail.Name = "chkEmail";
-            this.chkEmail.Size = new System.Drawing.Size(135, 17);
+            this.chkEmail.Size = new System.Drawing.Size(112, 17);
             this.chkEmail.TabIndex = 2;
-            this.chkEmail.Text = "Email Upon Completion";
+            this.chkEmail.Text = "Email Notifications";
             this.chkEmail.UseVisualStyleBackColor = true;
             // 
             // progressbar
@@ -152,11 +152,11 @@
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCompletionTime;
-        public System.Windows.Forms.TextBox txtEmail;
-        public System.Windows.Forms.CheckBox chkEmail;
         private System.Windows.Forms.ProgressBar progressbar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblElapsed;
         private System.Windows.Forms.Timer timerElapsed;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.CheckBox chkEmail;
     }
 }

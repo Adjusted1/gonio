@@ -126,7 +126,7 @@ namespace Goniometer
                 if (control == null)
                     return;
 
-                if (e.PropertyName == "horizontalResolution" | e.PropertyName == "horizontalSymmetry")
+                if (e.PropertyName == "HorizontalResolution" | e.PropertyName == "HorizontalSymmetry")
                 {
                     gaugeHorizontal.RangeFills.Clear();
 
@@ -138,7 +138,7 @@ namespace Goniometer
                     NationalInstruments.UI.ScaleRangeFill fill = new NationalInstruments.UI.ScaleRangeFill(range);
                     gaugeHorizontal.RangeFills.Add(fill);
                 }
-                else if (e.PropertyName == "verticalResolution" | e.PropertyName == "verticalSymmetry")
+                else if (e.PropertyName == "VerticalResolution" | e.PropertyName == "VerticalSymmetry")
                 {
                     gaugeVertical.RangeFills.Clear();
 
