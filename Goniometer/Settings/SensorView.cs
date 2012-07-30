@@ -64,19 +64,16 @@ namespace Goniometer
                 return;
             }
 
+            MinoltaSensorProvider.ConfigureControllers(portName);
+
             //setup sensor and timer
             controllerUpdate = null;
             if (radSensorTypeT10.Checked)
             {
-                MinoltaT10Provider.SetPortName(portName);
-
                 controllerUpdate = ReadT10values;
             }
             else if (radSensorTypeCL200.Checked)
             {
-                MinoltaCL200Provider.SetPortName(portName);
-                _cl200 = MinoltaCL200Provider.GetController();
-                _cl200.Connect();
 
                 controllerUpdate = ReadCL200Values;
             }
@@ -96,27 +93,9 @@ namespace Goniometer
         #endregion
 
         #region cl200
-        private MinoltaCL200Controller _cl200;
         private void ReadCL200Values()
         {
-            if (_cl200 == null)
-                return;
-
-            double Ev, x, y;
-
-            _cl200.TakeMeasurement();
-            _cl200.ReadEvXY(0, false, MinoltaCL200Controller.CalibrationModeEnum.NORM, out Ev, out x, out y);
-
-            DataTable table = new DataTable();
             
-            table.Columns.Add("Reading");
-            table.Columns.Add("value");
-
-            table.Rows.Add("Ev", Ev);
-            table.Rows.Add("x", x);
-            table.Rows.Add("y", y);
-
-            gridReadings.DataSource = table;
         }
         #endregion
 

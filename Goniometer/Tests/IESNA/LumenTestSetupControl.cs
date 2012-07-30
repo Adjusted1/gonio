@@ -295,6 +295,15 @@ namespace Goniometer
                 txtDataFolder.Text = folderBrowserDialog.SelectedPath;
         }
 
+        private void txtNumberOfLamps_KeyDown(object sender, KeyEventArgs e)
+        {
+            //only digits valid
+            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
+                return;
+
+            e.SuppressKeyPress = true;
+        }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String info)
@@ -312,28 +321,21 @@ namespace Goniometer
         /// </summary>
         private void UpdateEstimate()
         {
-            try
-            {
-                lblTime.Text = "00:00:00";
+            lblTime.Text = "00:00:00";
 
-                //regular test
-                double[] hRange = CalculateHorizontalRange();
-                double[] vRange = CalculateVerticalRange();
-                TimeSpan test = ReportUtils.TimeEstimate(hRange.Length, vRange.Length);
+            //regular test
+            double[] hRange = CalculateHorizontalRange();
+            double[] vRange = CalculateVerticalRange();
+            TimeSpan test = ReportUtils.TimeEstimate(hRange.Length, vRange.Length);
 
-                //stray test
-                double[] hStrayRange = CalculateStrayHorizontalRange();
-                double[] vStrayRange = CalculateStrayVerticalRange();
-                TimeSpan stray = ReportUtils.TimeEstimate(hStrayRange.Length, vStrayRange.Length);
+            //stray test
+            double[] hStrayRange = CalculateStrayHorizontalRange();
+            double[] vStrayRange = CalculateStrayVerticalRange();
+            TimeSpan stray = ReportUtils.TimeEstimate(hStrayRange.Length, vStrayRange.Length);
 
-                var result = test + stray;
+            var result = test + stray;
 
-                lblTime.Text = String.Format("{0:hh\\:mm\\:ss}", result);
-            }
-            catch
-            {
-                //omnomnom
-            }
+            lblTime.Text = String.Format("{0:hh\\:mm\\:ss}", result);
         }
 
         /// <summary>
@@ -348,11 +350,25 @@ namespace Goniometer
             if (String.IsNullOrEmpty(txtDataFolder.Text))
                 return false;
 
+            if (String.IsNullOrEmpty(txtTestNumber.Text))
+                return false;
+
+            if (String.IsNullOrEmpty(txtManufacturer.Text))
+                return false;
+
+            if (this.HorizontalResolution <= 0)
+                return false;
+
+            if (this.VerticalResolution <= 0)
+                return false;
+
+            if (this.HorizontalStrayResolution <= 0)
+                return false;
+
+            if (this.VerticalStrayResolution <= 0)
+                return false;
+
             return true;
         }
-
-        
-
-        
     }
 }

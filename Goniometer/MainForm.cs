@@ -23,25 +23,32 @@ namespace Goniometer
     {
         public MainForm()
         {
-            try
-            {
-                string address = ConfigurationManager.AppSettings["motor.ip"];
-                MotorController.Connect(IPAddress.Parse(address));
-
-                //string portName = ConfigurationManager.AppSettings["sensor.port"];
-                //MinoltaTTenControllerFactory.SetPortName(portName);
-            }
-            catch (Exception ex)
-            {
-            }
-
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //load main content
-            LoadTestListControl();
+            try
+            {
+                //load main content
+                LoadTestListControl();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                string address = ConfigurationManager.AppSettings["motor.ip"];
+                MotorController.Connect(IPAddress.Parse(address));
+            }
+            catch (Exception)
+            {
+                //controller failed to connect
+            }
         }
 
         #region menu items
@@ -300,5 +307,7 @@ namespace Goniometer
         {
             MotorController.EmergencyStop();
         }
+
+
     }
 }

@@ -25,19 +25,7 @@ namespace Goniometer_Controller.Sensors
         private uint _measureCount = 0;
 
         #region construction
-        internal MinoltaT10Controller(string portName)
-        {
-            base._port = new SerialPort(portName);
-            base._port.BaudRate = 9600;
-            base._port.DataBits = 7;
-            base._port.StopBits = StopBits.One;
-            base._port.Parity = Parity.Even;
-
-            base._port.ReadTimeout = 100;
-            base._port.WriteTimeout = 100;
-        }
-
-        internal MinoltaT10Controller(SerialPort port)
+        public MinoltaT10Controller(SerialPort port)
             : base(port)
         { }
 

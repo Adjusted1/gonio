@@ -109,9 +109,9 @@ namespace Goniometer.Setup
                 this.Sensor = sensor;
                 lblMessage.Text = "Success";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                lblMessage.Text = "Error";
+                lblMessage.Text = String.Format("Error. Wrong Type/Port?\n{0}", ex.Message);
             }
         }
     }

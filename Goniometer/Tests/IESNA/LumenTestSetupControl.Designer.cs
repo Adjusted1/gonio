@@ -39,6 +39,9 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.radHorizontalFull = new System.Windows.Forms.RadioButton();
             this.groupVerticalSymetry = new System.Windows.Forms.GroupBox();
+            this.radVerticalFull = new System.Windows.Forms.RadioButton();
+            this.radVerticalBottom = new System.Windows.Forms.RadioButton();
+            this.radVerticalTop = new System.Windows.Forms.RadioButton();
             this.radHorizontalSingle = new System.Windows.Forms.RadioButton();
             this.radHorizontalQuarter = new System.Windows.Forms.RadioButton();
             this.radHorizontalHalf = new System.Windows.Forms.RadioButton();
@@ -47,26 +50,23 @@
             this.chkEmail = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupResolution = new System.Windows.Forms.GroupBox();
-            this.radVerticalFull = new System.Windows.Forms.RadioButton();
-            this.radVerticalBottom = new System.Windows.Forms.RadioButton();
-            this.radVerticalTop = new System.Windows.Forms.RadioButton();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtHorizontalStrayResolution = new System.Windows.Forms.TextBox();
+            this.txtVerticalStrayResolution = new System.Windows.Forms.TextBox();
+            this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
+            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.txtDataFolder = new System.Windows.Forms.TextBox();
             this.btnDataFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
-            this.cboStrayResolution = new System.Windows.Forms.ComboBox();
-            this.txtHorizontalStrayResolution = new System.Windows.Forms.TextBox();
-            this.txtVerticalStrayResolution = new System.Windows.Forms.TextBox();
             this.groupHorizontalSymetry = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.grpLamp.SuspendLayout();
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
@@ -76,8 +76,6 @@
             // 
             // grpLamp
             // 
-            this.grpLamp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.grpLamp.Controls.Add(this.txtNumberOfLamps);
             this.grpLamp.Controls.Add(this.label6);
             this.grpLamp.Controls.Add(this.txtManufacturer);
@@ -97,6 +95,7 @@
             this.txtNumberOfLamps.Name = "txtNumberOfLamps";
             this.txtNumberOfLamps.Size = new System.Drawing.Size(100, 20);
             this.txtNumberOfLamps.TabIndex = 3;
+            this.txtNumberOfLamps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNumberOfLamps_KeyDown);
             // 
             // label6
             // 
@@ -164,7 +163,7 @@
             this.radHorizontalFull.Location = new System.Drawing.Point(6, 19);
             this.radHorizontalFull.Name = "radHorizontalFull";
             this.radHorizontalFull.Size = new System.Drawing.Size(51, 17);
-            this.radHorizontalFull.TabIndex = 9;
+            this.radHorizontalFull.TabIndex = 10;
             this.radHorizontalFull.TabStop = true;
             this.radHorizontalFull.Text = "None";
             this.radHorizontalFull.UseVisualStyleBackColor = true;
@@ -182,13 +181,48 @@
             this.groupVerticalSymetry.TabStop = false;
             this.groupVerticalSymetry.Text = "Vertical Symetry";
             // 
+            // radVerticalFull
+            // 
+            this.radVerticalFull.AutoSize = true;
+            this.radVerticalFull.Checked = true;
+            this.radVerticalFull.Location = new System.Drawing.Point(6, 20);
+            this.radVerticalFull.Name = "radVerticalFull";
+            this.radVerticalFull.Size = new System.Drawing.Size(111, 17);
+            this.radVerticalFull.TabIndex = 9;
+            this.radVerticalFull.TabStop = true;
+            this.radVerticalFull.Text = "Both Hemispheres";
+            this.radVerticalFull.UseVisualStyleBackColor = true;
+            this.radVerticalFull.CheckedChanged += new System.EventHandler(this.radVerticalFull_CheckedChanged);
+            // 
+            // radVerticalBottom
+            // 
+            this.radVerticalBottom.AutoSize = true;
+            this.radVerticalBottom.Location = new System.Drawing.Point(6, 66);
+            this.radVerticalBottom.Name = "radVerticalBottom";
+            this.radVerticalBottom.Size = new System.Drawing.Size(141, 17);
+            this.radVerticalBottom.TabIndex = 9;
+            this.radVerticalBottom.Text = "Bottom Hemisphere Only";
+            this.radVerticalBottom.UseVisualStyleBackColor = true;
+            this.radVerticalBottom.CheckedChanged += new System.EventHandler(this.radVerticalBottom_CheckedChanged);
+            // 
+            // radVerticalTop
+            // 
+            this.radVerticalTop.AutoSize = true;
+            this.radVerticalTop.Location = new System.Drawing.Point(6, 43);
+            this.radVerticalTop.Name = "radVerticalTop";
+            this.radVerticalTop.Size = new System.Drawing.Size(127, 17);
+            this.radVerticalTop.TabIndex = 9;
+            this.radVerticalTop.Text = "Top Hemisphere Only";
+            this.radVerticalTop.UseVisualStyleBackColor = true;
+            this.radVerticalTop.CheckedChanged += new System.EventHandler(this.radVerticalTop_CheckedChanged);
+            // 
             // radHorizontalSingle
             // 
             this.radHorizontalSingle.AutoSize = true;
             this.radHorizontalSingle.Location = new System.Drawing.Point(6, 88);
             this.radHorizontalSingle.Name = "radHorizontalSingle";
             this.radHorizontalSingle.Size = new System.Drawing.Size(146, 17);
-            this.radHorizontalSingle.TabIndex = 12;
+            this.radHorizontalSingle.TabIndex = 10;
             this.radHorizontalSingle.Text = "Full (Single Measurement)";
             this.radHorizontalSingle.UseVisualStyleBackColor = true;
             this.radHorizontalSingle.CheckedChanged += new System.EventHandler(this.radHorizontalSingle_CheckedChanged);
@@ -199,7 +233,7 @@
             this.radHorizontalQuarter.Location = new System.Drawing.Point(6, 65);
             this.radHorizontalQuarter.Name = "radHorizontalQuarter";
             this.radHorizontalQuarter.Size = new System.Drawing.Size(84, 17);
-            this.radHorizontalQuarter.TabIndex = 11;
+            this.radHorizontalQuarter.TabIndex = 10;
             this.radHorizontalQuarter.Text = "Quadrilateral";
             this.radHorizontalQuarter.UseVisualStyleBackColor = true;
             this.radHorizontalQuarter.CheckedChanged += new System.EventHandler(this.radHorizontalQuarter_CheckedChanged);
@@ -220,25 +254,26 @@
             this.txtHorizontalResolution.Location = new System.Drawing.Point(63, 45);
             this.txtHorizontalResolution.Name = "txtHorizontalResolution";
             this.txtHorizontalResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtHorizontalResolution.TabIndex = 8;
+            this.txtHorizontalResolution.TabIndex = 5;
             this.txtHorizontalResolution.TextChanged += new System.EventHandler(this.txtHorizontalResolution_TextChanged);
             // 
             // txtEmail
             // 
             this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtEmail.Location = new System.Drawing.Point(3, 445);
+            this.txtEmail.Enabled = false;
+            this.txtEmail.Location = new System.Drawing.Point(9, 445);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(135, 20);
-            this.txtEmail.TabIndex = 15;
+            this.txtEmail.TabIndex = 13;
             // 
             // chkEmail
             // 
             this.chkEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkEmail.AutoSize = true;
-            this.chkEmail.Location = new System.Drawing.Point(3, 421);
+            this.chkEmail.Location = new System.Drawing.Point(9, 422);
             this.chkEmail.Name = "chkEmail";
             this.chkEmail.Size = new System.Drawing.Size(112, 17);
-            this.chkEmail.TabIndex = 14;
+            this.chkEmail.TabIndex = 12;
             this.chkEmail.Text = "Email Notifications";
             this.chkEmail.UseVisualStyleBackColor = true;
             this.chkEmail.CheckedChanged += new System.EventHandler(this.chkEmail_CheckedChanged);
@@ -275,38 +310,84 @@
             this.groupResolution.TabStop = false;
             this.groupResolution.Text = "Resolution";
             // 
-            // radVerticalFull
+            // label11
             // 
-            this.radVerticalFull.AutoSize = true;
-            this.radVerticalFull.Location = new System.Drawing.Point(6, 20);
-            this.radVerticalFull.Name = "radVerticalFull";
-            this.radVerticalFull.Size = new System.Drawing.Size(111, 17);
-            this.radVerticalFull.TabIndex = 5;
-            this.radVerticalFull.Text = "Both Hemispheres";
-            this.radVerticalFull.UseVisualStyleBackColor = true;
-            this.radVerticalFull.CheckedChanged += new System.EventHandler(this.radVerticalFull_CheckedChanged);
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(77, 90);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Stray Resolutions";
             // 
-            // radVerticalBottom
+            // label10
             // 
-            this.radVerticalBottom.AutoSize = true;
-            this.radVerticalBottom.Location = new System.Drawing.Point(6, 66);
-            this.radVerticalBottom.Name = "radVerticalBottom";
-            this.radVerticalBottom.Size = new System.Drawing.Size(141, 17);
-            this.radVerticalBottom.TabIndex = 7;
-            this.radVerticalBottom.Text = "Bottom Hemisphere Only";
-            this.radVerticalBottom.UseVisualStyleBackColor = true;
-            this.radVerticalBottom.CheckedChanged += new System.EventHandler(this.radVerticalBottom_CheckedChanged);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 165);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Horizontal";
             // 
-            // radVerticalTop
+            // label9
             // 
-            this.radVerticalTop.AutoSize = true;
-            this.radVerticalTop.Location = new System.Drawing.Point(6, 43);
-            this.radVerticalTop.Name = "radVerticalTop";
-            this.radVerticalTop.Size = new System.Drawing.Size(127, 17);
-            this.radVerticalTop.TabIndex = 6;
-            this.radVerticalTop.Text = "Top Hemisphere Only";
-            this.radVerticalTop.UseVisualStyleBackColor = true;
-            this.radVerticalTop.CheckedChanged += new System.EventHandler(this.radVerticalTop_CheckedChanged);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(15, 139);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 13);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "Vertical";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(15, 112);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Presets";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Horizontal";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Vertical";
+            // 
+            // txtHorizontalStrayResolution
+            // 
+            this.txtHorizontalStrayResolution.Location = new System.Drawing.Point(63, 162);
+            this.txtHorizontalStrayResolution.Name = "txtHorizontalStrayResolution";
+            this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
+            this.txtHorizontalStrayResolution.TabIndex = 8;
+            this.txtHorizontalStrayResolution.TextChanged += new System.EventHandler(this.txtHorizontalStrayResolution_TextChanged);
+            // 
+            // txtVerticalStrayResolution
+            // 
+            this.txtVerticalStrayResolution.Location = new System.Drawing.Point(63, 136);
+            this.txtVerticalStrayResolution.Name = "txtVerticalStrayResolution";
+            this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
+            this.txtVerticalStrayResolution.TabIndex = 7;
+            this.txtVerticalStrayResolution.TextChanged += new System.EventHandler(this.txtVerticalStrayResolution_TextChanged);
+            // 
+            // cboStrayResolution
+            // 
+            this.cboStrayResolution.FormattingEnabled = true;
+            this.cboStrayResolution.Location = new System.Drawing.Point(63, 109);
+            this.cboStrayResolution.Name = "cboStrayResolution";
+            this.cboStrayResolution.Size = new System.Drawing.Size(125, 21);
+            this.cboStrayResolution.TabIndex = 6;
+            this.cboStrayResolution.SelectedIndexChanged += new System.EventHandler(this.cboStrayResolution_SelectedIndexChanged);
             // 
             // groupSensor
             // 
@@ -316,14 +397,25 @@
             this.groupSensor.Controls.Add(this.controlSensorSetup);
             this.groupSensor.Location = new System.Drawing.Point(404, 145);
             this.groupSensor.Name = "groupSensor";
-            this.groupSensor.Size = new System.Drawing.Size(190, 267);
+            this.groupSensor.Size = new System.Drawing.Size(190, 261);
             this.groupSensor.TabIndex = 25;
             this.groupSensor.TabStop = false;
             this.groupSensor.Text = "Sensor";
             // 
+            // controlSensorSetup
+            // 
+            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
+            this.controlSensorSetup.Name = "controlSensorSetup";
+            this.controlSensorSetup.Size = new System.Drawing.Size(177, 237);
+            this.controlSensorSetup.TabIndex = 11;
+            // 
             // groupCalibration
             // 
-            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupCalibration.Location = new System.Drawing.Point(404, 31);
             this.groupCalibration.Name = "groupCalibration";
             this.groupCalibration.Size = new System.Drawing.Size(190, 108);
@@ -357,41 +449,6 @@
             this.label1.TabIndex = 27;
             this.label1.Text = "Data Folder:";
             // 
-            // controlSensorSetup
-            // 
-            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
-            this.controlSensorSetup.Name = "controlSensorSetup";
-            this.controlSensorSetup.Size = new System.Drawing.Size(177, 243);
-            this.controlSensorSetup.TabIndex = 13;
-            // 
-            // cboStrayResolution
-            // 
-            this.cboStrayResolution.FormattingEnabled = true;
-            this.cboStrayResolution.Location = new System.Drawing.Point(63, 109);
-            this.cboStrayResolution.Name = "cboStrayResolution";
-            this.cboStrayResolution.Size = new System.Drawing.Size(125, 21);
-            this.cboStrayResolution.TabIndex = 13;
-            this.cboStrayResolution.SelectedIndexChanged += new System.EventHandler(this.cboStrayResolution_SelectedIndexChanged);
-            // 
-            // txtHorizontalStrayResolution
-            // 
-            this.txtHorizontalStrayResolution.Location = new System.Drawing.Point(63, 162);
-            this.txtHorizontalStrayResolution.Name = "txtHorizontalStrayResolution";
-            this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtHorizontalStrayResolution.TabIndex = 14;
-            this.txtHorizontalStrayResolution.TextChanged += new System.EventHandler(this.txtHorizontalStrayResolution_TextChanged);
-            // 
-            // txtVerticalStrayResolution
-            // 
-            this.txtVerticalStrayResolution.Location = new System.Drawing.Point(63, 136);
-            this.txtVerticalStrayResolution.Name = "txtVerticalStrayResolution";
-            this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtVerticalStrayResolution.TabIndex = 14;
-            this.txtVerticalStrayResolution.TextChanged += new System.EventHandler(this.txtVerticalStrayResolution_TextChanged);
-            // 
             // groupHorizontalSymetry
             // 
             this.groupHorizontalSymetry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -406,60 +463,6 @@
             this.groupHorizontalSymetry.TabIndex = 30;
             this.groupHorizontalSymetry.TabStop = false;
             this.groupHorizontalSymetry.Text = "Horizontal Symetry";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(42, 13);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Vertical";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 47);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(54, 13);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Horizontal";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(15, 112);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(42, 13);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Presets";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 139);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 13);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "Vertical";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 165);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 13);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Horizontal";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(77, 90);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 13);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "Stray Resolutions";
             // 
             // LumenTestSetupControl
             // 

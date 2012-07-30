@@ -15,7 +15,7 @@ using Goniometer_Controller.Sensors;
 
 namespace Goniometer.Tests.IESNA
 {
-    public partial class LumenTestControl : UserControl, INotifyPropertyChanged, IDisposable
+    public partial class LumenTestControl : UserControl, INotifyPropertyChanged
     {
         public LumenTestControl()
         {
@@ -160,20 +160,5 @@ namespace Goniometer.Tests.IESNA
         }
         #endregion
 
-        #region IDisposable
-        public void Dispose()
-        {
-            try
-            {
-                if (setupControl.Sensor != null)
-                {
-                    setupControl.Sensor.Disconnect();
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
     }
 }

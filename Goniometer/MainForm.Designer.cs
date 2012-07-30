@@ -30,19 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision14 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision15 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision16 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision17 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision18 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision19 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision20 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision21 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision22 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision23 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision24 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision25 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision26 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision1 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision2 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision3 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision4 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision5 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision6 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision7 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision8 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision9 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision10 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision11 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision12 = new NationalInstruments.UI.ScaleCustomDivision();
+            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision13 = new NationalInstruments.UI.ScaleCustomDivision();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -247,30 +247,30 @@
             // 
             // gaugeHorizontal
             // 
-            scaleCustomDivision14.Text = "0";
-            scaleCustomDivision15.Text = "45";
-            scaleCustomDivision15.Value = 45D;
-            scaleCustomDivision16.Text = "90";
-            scaleCustomDivision16.Value = 90D;
-            scaleCustomDivision17.Text = "135";
-            scaleCustomDivision17.Value = 135D;
-            scaleCustomDivision18.Text = "180";
-            scaleCustomDivision18.Value = 180D;
-            scaleCustomDivision19.Text = "225";
-            scaleCustomDivision19.Value = 225D;
-            scaleCustomDivision20.Text = "270";
-            scaleCustomDivision20.Value = 270D;
-            scaleCustomDivision21.Text = "315";
-            scaleCustomDivision21.Value = 315D;
+            scaleCustomDivision1.Text = "0";
+            scaleCustomDivision2.Text = "45";
+            scaleCustomDivision2.Value = 45D;
+            scaleCustomDivision3.Text = "90";
+            scaleCustomDivision3.Value = 90D;
+            scaleCustomDivision4.Text = "135";
+            scaleCustomDivision4.Value = 135D;
+            scaleCustomDivision5.Text = "180";
+            scaleCustomDivision5.Value = 180D;
+            scaleCustomDivision6.Text = "225";
+            scaleCustomDivision6.Value = 225D;
+            scaleCustomDivision7.Text = "270";
+            scaleCustomDivision7.Value = 270D;
+            scaleCustomDivision8.Text = "315";
+            scaleCustomDivision8.Value = 315D;
             this.gaugeHorizontal.CustomDivisions.AddRange(new NationalInstruments.UI.ScaleCustomDivision[] {
-            scaleCustomDivision14,
-            scaleCustomDivision15,
-            scaleCustomDivision16,
-            scaleCustomDivision17,
-            scaleCustomDivision18,
-            scaleCustomDivision19,
-            scaleCustomDivision20,
-            scaleCustomDivision21});
+            scaleCustomDivision1,
+            scaleCustomDivision2,
+            scaleCustomDivision3,
+            scaleCustomDivision4,
+            scaleCustomDivision5,
+            scaleCustomDivision6,
+            scaleCustomDivision7,
+            scaleCustomDivision8});
             this.gaugeHorizontal.Location = new System.Drawing.Point(3, 19);
             this.gaugeHorizontal.MajorDivisions.LabelVisible = false;
             this.gaugeHorizontal.MajorDivisions.TickVisible = false;
@@ -283,21 +283,21 @@
             // 
             // gaugeVertical
             // 
-            scaleCustomDivision22.Text = "0";
-            scaleCustomDivision23.Text = "45";
-            scaleCustomDivision23.Value = 45D;
-            scaleCustomDivision24.Text = "90";
-            scaleCustomDivision24.Value = 90D;
-            scaleCustomDivision25.Text = "135";
-            scaleCustomDivision25.Value = 135D;
-            scaleCustomDivision26.Text = "180";
-            scaleCustomDivision26.Value = 180D;
+            scaleCustomDivision9.Text = "0";
+            scaleCustomDivision10.Text = "45";
+            scaleCustomDivision10.Value = 45D;
+            scaleCustomDivision11.Text = "90";
+            scaleCustomDivision11.Value = 90D;
+            scaleCustomDivision12.Text = "135";
+            scaleCustomDivision12.Value = 135D;
+            scaleCustomDivision13.Text = "180";
+            scaleCustomDivision13.Value = 180D;
             this.gaugeVertical.CustomDivisions.AddRange(new NationalInstruments.UI.ScaleCustomDivision[] {
-            scaleCustomDivision22,
-            scaleCustomDivision23,
-            scaleCustomDivision24,
-            scaleCustomDivision25,
-            scaleCustomDivision26});
+            scaleCustomDivision9,
+            scaleCustomDivision10,
+            scaleCustomDivision11,
+            scaleCustomDivision12,
+            scaleCustomDivision13});
             this.gaugeVertical.Location = new System.Drawing.Point(3, 233);
             this.gaugeVertical.MajorDivisions.LabelVisible = false;
             this.gaugeVertical.MajorDivisions.TickVisible = false;
@@ -339,6 +339,7 @@
             this.Text = "Goniometer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.panelStatus.ResumeLayout(false);
