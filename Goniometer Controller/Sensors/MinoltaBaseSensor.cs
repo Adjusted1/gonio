@@ -96,18 +96,16 @@ namespace Goniometer_Controller.Sensors
             if (bcc != res.Substring(28, 2))
                 throw new Exception("Message Malformed");
 
-            ErrorCheckChar(res);
-
             receptor = Int32.Parse(res.Substring(1, 2));
             command = Int32.Parse(res.Substring(3, 2));
 
             return res.Substring(5, res.Length - 5);
         }
 
-        protected void ErrorCheckChar(string res)
+        protected virtual void ErrorCheckChar(string error)
         {
             //error information
-            switch (res.Substring(6, 1))
+            switch (error)
             {
                 case " ":
                     //normal operation
@@ -127,7 +125,7 @@ namespace Goniometer_Controller.Sensors
                     break;
 
                 case "5":
-                    throw new Exception("Measurement over value error");
+                    throw new Exception("Measurement over Value error");
 
                 case "6":
                     //normal operation

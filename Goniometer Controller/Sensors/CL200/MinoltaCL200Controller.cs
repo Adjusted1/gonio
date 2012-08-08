@@ -81,15 +81,29 @@ namespace Goniometer_Controller.Sensors
         public void ReadEvXY(int receptor, bool useCF, CalibrationModeEnum mode,
             out double Ev, out double x, out double y)
         {
-            int command = 2;
-            ReadMeasurement(receptor, command, useCF, mode, out Ev, out x, out y);
+            try
+            {
+                int command = 2;
+                ReadMeasurement(receptor, command, useCF, mode, out Ev, out x, out y);
+            }
+            catch (LowIlluminanceException)
+            {
+                Ev = x = y = 0;
+            }
         }
 
         public void ReadEvUV(int receptor, bool useCF, CalibrationModeEnum mode,
             out double Ev, out double u, out double v)
         {
-            int command = 3;
-            ReadMeasurement(receptor, command, useCF, mode, out Ev, out u, out v);
+            try
+            {
+                int command = 3;
+                ReadMeasurement(receptor, command, useCF, mode, out Ev, out u, out v);
+            }
+            catch (LowIlluminanceException)
+            {
+                Ev = u = v = 0;
+            }
         }
 
         public void ReadEvTcpUV(int receptor, bool useCF, CalibrationModeEnum mode,
@@ -128,49 +142,133 @@ namespace Goniometer_Controller.Sensors
             SendCommand(receptor, command, data);
             string res = ReadResponse(out receptor, out command);
 
-            //res.Substring(0, 1); "1" or "5"
-            //string error = res.Substring(1, 1);
-            //string range = res.Substring(2, 1);
-            //string batLv = res.Substring(3, 1);   //battery level, 0 == normal
+            res.Substring(0, 1);                    //"1" or "5"
+            string error = res.Substring(1, 1);
+            string range = res.Substring(2, 1);
+            string batLv = res.Substring(3, 1);     //battery level, 0 == normal
+
+            //check error code
+            ErrorCheckChar(error);
+
+            //measurement out of range
+            if (range == "0")
+                throw new Exception("Range not determined");
+
+            if (range == "6")
+                throw new Exception("Out of Range Error");
 
             r1 = ParseReadingValue(res.Substring(4, 6));
             r2 = ParseReadingValue(res.Substring(10, 6));
             r3 = ParseReadingValue(res.Substring(16, 6));
-        } 
+        }
+
+        protected override void ErrorCheckChar(string error)
+        {
+            //error information
+            switch (error)
+            {
+                case " ":
+                    //normal operation
+                    break;
+
+                case "1":
+                    throw new Exception("Receptor Head Off");
+
+                case "2":
+                    throw new Exception("EEPROM Error 1");
+
+                case "3":
+                    throw new Exception("EEPROM Error 2");
+
+                case "4":
+                    throw new Exception("EXT Error");
+
+                case "5":
+                    throw new Exception("Measurement over Value Error");
+
+                case "6":
+                    throw new LowIlluminanceException();
+
+                case "7":
+                    throw new Exception("Value out of range Error");
+
+                default:
+                    throw new Exception("Unknown Error");
+            }
+        }
         #endregion
 
         public override List<MeasurementBase> CollectMeasurements(double theta, double phi)
         {
+            //timeout values
+            TimeSpan timeout = new TimeSpan(0, 1, 0);
+            DateTime startTime = DateTime.Now;
+
+            //failure rates
+            int fails = 0;
+            int maxFails = 2;
+
+            //reading values
             double eps = 0.02;
             bool useCF = false;
             CalibrationModeEnum mode = CalibrationModeEnum.NORM;
 
-            //Take two measurements. Make sure they are similar within some epsilon. Return the first measurement
+            //Take two measurements. Make sure they are similar within some epsilon. Return the second measurement
             //If the measurements differ significantly, start over
-            List<MeasurementBase> m1, m2;
+            List<MeasurementBase> m1, m2 = null;
             bool valid;
 
             do
             {
-                //start over!
                 valid = true;
-                m1 = CollectMeasurements(theta, phi, 0, useCF, mode);
-                m2 = CollectMeasurements(theta, phi, 0, useCF, mode);
 
-                //compare for each key
-                foreach(string key in m1.Select(m => m.key))
+                //check if we've taken too long
+                if (DateTime.Now - startTime > timeout)
+                    throw new TimeoutException("CollectMeasurements timed out.");
+
+                //ignore first few exceptions
+                try
                 {
-                    double v1 = m1.First(m => m.key == key).value;
-                    double v2 = m2.First(m => m.key == key).value;
+                    //rotate m2 => m1, take new measurements
+                    m1 = m2;
+                    m2 = CollectMeasurements(theta, phi, 0, useCF, mode);
 
-                    //validate measurement within some epsilon
-                    if (Math.Abs(v1 - v2) > eps)
+                    //if this is the first iteration, m1 will be null
+                    if (m1 == null || m2 == null)
+                    {
                         valid = false;
+                        continue;
+                    }
+
+                    //compare for each Key
+                    foreach (string key in m1.Select(m => m.Key))
+                    {
+                        double v1 = m1.First(m => m.Key == key).Value;
+                        double v2 = m2.First(m => m.Key == key).Value;
+
+                        //validate measurement within some epsilon
+                        if (Math.Abs(v1 - v2) > eps)
+                            valid = false;
+                    }
+                }
+                catch (Exception)
+                {
+                    if (fails < maxFails)
+                    {
+                        valid = false;
+                        fails++;
+                        continue;
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             
             } while (!valid);
 
-            return m1;
+            //measurements validated, return most recent measurement
+            return m2;
         }
 
         private List<MeasurementBase> CollectMeasurements(double theta, double phi, int receptor, bool useCF, CalibrationModeEnum mode)
@@ -196,6 +294,13 @@ namespace Goniometer_Controller.Sensors
         {
             NORM,
             MULTI,
+        }
+
+        /// <summary>
+        /// Throw when the reading is below the Detectable Limit
+        /// </summary>
+        public class LowIlluminanceException : Exception
+        {
         }
     }
 }

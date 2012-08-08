@@ -20,9 +20,9 @@ namespace Goniometer_Controller.Models
         public void Add(MeasurementBase measurement)
         {
             var existing = _values.FirstOrDefault(m => 
-                      m.theta == measurement.theta 
-                    & m.phi   == measurement.phi
-                    & m.key   == measurement.key);
+                      m.Theta == measurement.Theta 
+                    & m.Phi   == measurement.Phi
+                    & m.Key   == measurement.Key);
 
             if (existing != null)
                 throw new Exception();
@@ -44,56 +44,56 @@ namespace Goniometer_Controller.Models
         /// <summary>
         /// Get all measurement of a certain type
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="Key"></param>
         /// <returns></returns>
         public IEnumerable<MeasurementBase> FindAll(string key)
         {
-            return _values.Where(m => m.key == key);
+            return _values.Where(m => m.Key == key);
         }
 
         /// <summary>
-        /// Get all measurements for a certain type and theta angle
+        /// Get all measurements for a certain type and Theta angle
         /// </summary>
-        /// <param name="theta"></param>
+        /// <param name="Theta"></param>
         /// <returns></returns>
         public IEnumerable<MeasurementBase> FindAll(string key, double theta)
         {
             return _values.Where(m =>
-                      m.key   == key
-                    & m.theta == theta);
+                      m.Key   == key
+                    & m.Theta == theta);
         }
 
         /// <summary>
-        /// Get all measurements for a theat and phi angle
+        /// Get all measurements for a theat and Phi angle
         /// </summary>
-        /// <param name="theta"></param>
-        /// <param name="phi"></param>
+        /// <param name="Theta"></param>
+        /// <param name="Phi"></param>
         /// <returns></returns>
         public IEnumerable<MeasurementBase> FindAll(double theta, double phi)
         {
             return _values.Where(m => 
-                      m.theta == theta 
-                    & m.phi   == phi);
+                      m.Theta == theta 
+                    & m.Phi   == phi);
         }
 
         /// <summary>
         /// Get specific measurement
         /// </summary>
-        /// <param name="theta"></param>
-        /// <param name="phi"></param>
-        /// <param name="key"></param>
+        /// <param name="Theta"></param>
+        /// <param name="Phi"></param>
+        /// <param name="Key"></param>
         /// <returns></returns>
         public MeasurementBase Find(string key, double theta, double phi)
         {
             return _values.FirstOrDefault(m => 
-                      m.key   == key
-                    & m.theta == theta 
-                    & m.phi   == phi);
+                      m.Key   == key
+                    & m.Theta == theta 
+                    & m.Phi   == phi);
         }
 
         public string[] GetKeys()
         {
-            return _values.Select(m => m.key).Distinct().ToArray();
+            return _values.Select(m => m.Key).Distinct().ToArray();
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Goniometer_Controller.Models
         /// <returns></returns>
         public double[] GetThetaRange()
         {
-            return _values.Select(m => m.theta).Distinct().ToArray();
+            return _values.Select(m => m.Theta).Distinct().ToArray();
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Goniometer_Controller.Models
         /// <returns></returns>
         public double[] GetPhiRange()
         {
-            return _values.Select(m => m.phi).Distinct().ToArray();
+            return _values.Select(m => m.Phi).Distinct().ToArray();
         }
 
         public MeasurementBase GetEstimateReading(string key, double theta, double phi)
@@ -125,26 +125,26 @@ namespace Goniometer_Controller.Models
             var vMatches = this.FindAll(key, theta);
             if (vMatches.Count() > 0)
             {
-                //split points into those above and below vAngle, already proved there is not value at exact vAngle
-                var above = vMatches.Where(t => t.theta > theta).ToList();
-                var below = vMatches.Where(t => t.theta < theta).ToList();
+                //split points into those above and below vAngle, already proved there is not Value at exact vAngle
+                var above = vMatches.Where(t => t.Theta > theta).ToList();
+                var below = vMatches.Where(t => t.Theta < theta).ToList();
 
                 if (above.Count == 0)
                 {
                     //all values are below, return closest one
-                    return below.OrderByDescending(t => t.theta).First();
+                    return below.OrderByDescending(t => t.Theta).First();
                 }
                 else if (below.Count == 0)
                 {
                     //all values are above, return closest one
-                    return above.OrderBy(t => t.theta).First();
+                    return above.OrderBy(t => t.Theta).First();
                 }
                 else
                 {
-                    var top = below.OrderByDescending(t => t.theta).First();
-                    var bot = above.OrderBy(t => t.theta).First();
+                    var top = below.OrderByDescending(t => t.Theta).First();
+                    var bot = above.OrderBy(t => t.Theta).First();
 
-                    double estimate = LightMath.LinearExtrapolation(Tuple.Create(top.theta, top.value), Tuple.Create(bot.theta, top.value), theta);
+                    double estimate = LightMath.LinearExtrapolation(Tuple.Create(top.Theta, top.Value), Tuple.Create(bot.Theta, top.Value), theta);
                     return MeasurementBase.Create(theta, phi, key, estimate);
                 }
             }
@@ -155,34 +155,25 @@ namespace Goniometer_Controller.Models
         }
         #endregion
 
-        public string GetRaw()
+        public static string ToCSV(MeasurementCollection collection)
         {
-            string s = "";
-            foreach (var value in _values)
+            StringBuilder sb = new StringBuilder();
+            foreach (var value in collection._values)
             {
-                s += value.theta + ",";
-                s += value.phi   + ",";
-                s += value.key   + ",";
-                s += value.value + "\n";
+                sb.AppendLine(MeasurementBase.ToCSV(value));
             }
-            return s;
+            return sb.ToString();
         }
 
-        public static MeasurementCollection FromRaw(string s)
+        public static MeasurementCollection FromCSV(string s)
         {
             var collection = new MeasurementCollection();
 
             string[] lines = s.Split('\n');
             foreach (string line in lines)
             {
-                string[] values = line.Split(',');
-                
-                double theta = Double.Parse(values[0]);
-                double phi   = Double.Parse(values[1]);
-                string key   = values[2];
-                double value = Double.Parse(values[3]);
-
-                collection.Add(MeasurementBase.Create(theta, phi, key, value));
+                var measurement = MeasurementBase.FromCSV(line);
+                collection.Add(measurement);
             }
             return collection;
         }

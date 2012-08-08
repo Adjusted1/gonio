@@ -8,3 +8,5 @@
 /Goniometer Tests/obj
 /TestResults
 *.testsettings
+/Goniometer Setup/Release
+/Goniometer Setup/Debug

@@ -101,7 +101,7 @@ namespace Goniometer.Reports
 
             //fetch all candle readings
             var candles = _data.FindAll(MeasurementKeys.IlluminanceEv)
-                               .Select(m => Tuple.Create(m.theta, m.phi, m.value))
+                               .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
                                .ToList();
 
             //lumen reading
@@ -119,7 +119,7 @@ namespace Goniometer.Reports
             //raw values
             for (int v = 0; v < vRange.Length; v++)
             {
-                double[] values = _data.FindAll(MeasurementKeys.IlluminanceEv, vRange[v]).Select(m => m.value).ToArray();
+                double[] values = _data.FindAll(MeasurementKeys.IlluminanceEv, vRange[v]).Select(m => m.Value).ToArray();
                 sb.AppendLine(String.Join(" ", values));
             }
 

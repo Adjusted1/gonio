@@ -20,9 +20,9 @@ namespace Goniometer_Controller.Models
             
             foreach(var m in readings.FindAll(key))
             {
-                var stray = strayReadings.GetEstimateReading(key, m.theta, m.phi);
+                var stray = strayReadings.GetEstimateReading(key, m.Theta, m.Phi);
 
-                results.Add(MeasurementBase.Create(m.theta, m.phi, key, m.value - stray.value));
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, key, m.Value - stray.Value));
             }
 
             return results;
@@ -41,7 +41,7 @@ namespace Goniometer_Controller.Models
             
             foreach(var m in readings.FindAll(key))
             {
-                results.Add(MeasurementBase.Create(m.theta, m.phi, key, m.value * factor));
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, key, m.Value * factor));
             }
 
             return results;

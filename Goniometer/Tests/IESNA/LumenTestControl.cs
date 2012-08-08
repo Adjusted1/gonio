@@ -44,6 +44,7 @@ namespace Goniometer.Tests.IESNA
             //pass values to other tab
             progressControl.EmailNotifications = setupControl.EmailNotifications;
             progressControl.Email              = setupControl.Email;
+            progressControl.DataFolder         = setupControl.DataFolder;
 
             double[] hRange =          setupControl.CalculateHorizontalRange();
             double[] vRange =          setupControl.CalculateVerticalRange();

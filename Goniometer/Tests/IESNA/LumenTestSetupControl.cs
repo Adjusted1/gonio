@@ -225,6 +225,78 @@ namespace Goniometer
         {
             NotifyPropertyChanged("VerticalStrayResolution");
         }
+
+        private void txtVerticalResolution_KeyDown(object sender, KeyEventArgs e)
+        {
+            //only digits, period valid
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
+                return;
+
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
+                return;
+
+            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
+                return;
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void txtHorizontalResolution_KeyDown(object sender, KeyEventArgs e)
+        {
+            //only digits, period valid
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
+                return;
+
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
+                return;
+
+            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
+                return;
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void txtVerticalStrayResolution_KeyDown(object sender, KeyEventArgs e)
+        {
+            //only digits, period valid
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
+                return;
+
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
+                return;
+
+            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
+                return;
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void txtHorizontalStrayResolution_KeyDown(object sender, KeyEventArgs e)
+        {
+            //only digits, period valid
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
+                return;
+
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
+                return;
+
+            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
+                return;
+
+            e.SuppressKeyPress = true;
+        }
         #endregion
 
         #region vertical radios
@@ -251,6 +323,7 @@ namespace Goniometer
         private void radHorizontalFull_CheckedChanged(object sender, EventArgs e)
         {
             txtHorizontalResolution.Enabled = true;
+            txtHorizontalStrayResolution.Enabled = true;
 
             NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
@@ -259,6 +332,7 @@ namespace Goniometer
         private void radHorizontalHalf_CheckedChanged(object sender, EventArgs e)
         {
             txtHorizontalResolution.Enabled = true;
+            txtHorizontalStrayResolution.Enabled = true;
 
             NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
@@ -267,6 +341,7 @@ namespace Goniometer
         private void radHorizontalQuarter_CheckedChanged(object sender, EventArgs e)
         {
             txtHorizontalResolution.Enabled = true;
+            txtHorizontalStrayResolution.Enabled = true;
             
             NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
@@ -276,6 +351,9 @@ namespace Goniometer
         {
             txtHorizontalResolution.Enabled = false;
             txtHorizontalResolution.Text = String.Format("{0}", 0);
+
+            txtHorizontalStrayResolution.Enabled = false;
+            txtHorizontalStrayResolution.Text = String.Format("{0}", 0);
             
             NotifyPropertyChanged("HorizontalSymmetry");
             UpdateEstimate();
@@ -298,7 +376,15 @@ namespace Goniometer
         private void txtNumberOfLamps_KeyDown(object sender, KeyEventArgs e)
         {
             //only digits valid
-            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
+            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
+                return;
+
+            //only digits valid
+            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
+                return;
+
+            //delete/backspace valid
+            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
                 return;
 
             e.SuppressKeyPress = true;

@@ -63,6 +63,12 @@ namespace Goniometer
             get { return txtEmail.Text; }
             set { txtEmail.Text = value; }
         }
+
+        public string DataFolder
+        {
+            get { return lblDataFolder.Text; }
+            set { lblDataFolder.Text = value; }
+        }
         #endregion
 
         #region public methods
@@ -136,7 +142,9 @@ namespace Goniometer
             _strayWorker.ProgressChanged += OnProgressChanged;
             _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
             _strayWorker.Error += OnError;
+            _strayWorker.MeasurementTaken += OnMeasurementTaken;
         }
+
 
         private void BeginStrayTestAsync()
         {
@@ -203,6 +211,7 @@ namespace Goniometer
             _lightWorker.ProgressChanged += OnProgressChanged;
             _lightWorker.RunWorkerCompleted += OnLightTestFinished;
             _lightWorker.Error += OnError;
+            _lightWorker.MeasurementTaken += OnMeasurementTaken;
         }
 
         private void BeginStandardTestAsync()
@@ -249,7 +258,6 @@ namespace Goniometer
                 if (_lightData != null)
                 {
                     reportFilepath = GenerateReport();
-                    WriteRawData(); //write out raw data!
 
                     if (chkEmail.Checked)
                     {
@@ -271,7 +279,20 @@ namespace Goniometer
         #region interface methods
         private void OnError(object sender, GoniometerWorker.GonioErrorEventArgs e)
         {
-            var result = MessageBox.Show("Measurement Error Occured. Stop Test (Abort), Retest (Retry), or Skip Reading (Ignore)", "Measurement Error", MessageBoxButtons.AbortRetryIgnore);
+            string message = String.Empty;
+
+            var measurementExc = e.Exception as InvalidMeasurementException;
+            if (measurementExc != null && measurementExc.Measurement != null)
+            {
+                var measurement = measurementExc.Measurement;
+                message = String.Format("Measurement Error Occured. Stop Test (Abort), Retest (Retry), or Skip Reading (Ignore)\nMeasurement:\n{0}:{1}", measurement.Key, measurement.Value);
+            }
+            else
+            {
+                message = String.Format("Error Occured. Stop Test (Abort), Retest (Retry), or Skip Reading (Ignore)?");
+            }
+
+            var result = MessageBox.Show(message, "Gonio Error", MessageBoxButtons.AbortRetryIgnore);
 
             if (result == DialogResult.Abort)
             {
@@ -337,24 +358,19 @@ namespace Goniometer
             return fullpath;
         }
 
-        private void WriteRawData()
+        private void OnMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
         {
-            DateTime now = DateTime.Now;
-            string filepath = ConfigurationManager.AppSettings["reportFolder"];
+            var measurements = e.Measurements;
 
-            string standard_fullpath = filepath + String.Format("//raw_standard_{0:yyyyMMddHHmmss}.csv", now);
-            using (FileStream fs = new FileStream(standard_fullpath, FileMode.CreateNew))
-            using (StreamWriter sw = new StreamWriter(fs))
+            //write out recorded measurement immediately
+            string filePath = DataFolder + "//raw.csv";
+            using (StreamWriter sw = new StreamWriter(filePath, true))
             {
-                sw.Write(_lightData.GetRaw());
-                sw.Flush();
-            }
+                foreach (var measurement in measurements)
+                {
+                    sw.WriteLine(MeasurementBase.ToCSV(measurement));
+                }
 
-            string stray_fullpath    = filepath + String.Format("//raw_stray_{0:yyyyMMddHHmmss}.csv",    now);
-            using (FileStream fs = new FileStream(stray_fullpath, FileMode.CreateNew))
-            using (StreamWriter sw = new StreamWriter(fs))
-            {
-                sw.Write(_strayData.GetRaw());
                 sw.Flush();
             }
         }

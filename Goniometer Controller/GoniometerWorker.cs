@@ -86,78 +86,95 @@ namespace Goniometer_Controller
         #region worker methods
         private void DoWork(object sender, DoWorkEventArgs e)
         {
-            _worker.ReportProgress(0, "Test Started");
-
-            for (int h = 0; h < _hRange.Length; h++)
+            try
             {
-                //update progress, move horizontal motor
-                _worker.ReportProgress((int)h / _hRange.Length, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
-                MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+                _worker.ReportProgress(0, "Test Started");
 
-                for (int v = 0; v < _vRange.Length; v++)
+                for (int h = 0; h < _hRange.Length; h++)
                 {
-                    try
+                    //update progress, move horizontal motor
+                    _worker.ReportProgress((int)h / _hRange.Length, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
+                    MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+
+                    for (int v = 0; v < _vRange.Length; v++)
                     {
-                        //loop if paused
-                        do
+                        try
                         {
-                            //check for cancel
-                            Thread.Sleep(100);
-                            if (_worker.CancellationPending)
+                            //loop if paused
+                            do
                             {
+                                //check for cancel
+                                Thread.Sleep(100);
+                                if (_worker.CancellationPending)
+                                {
+                                    e.Cancel = true;
+                                    return;
+                                }
+
+                            } while (_paused);
+
+                            //update progress, move vertical arm
+                            int progress = (int)(h + 1 / _hRange.Length) * (v / _vRange.Length);
+                            _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
+                            MotorController.SetVerticalAngleAndWait(_vRange[v]);
+
+                            //collect measurements
+                            _worker.ReportProgress(progress, "Taking Measurements");
+                            var measurements = _sensor.CollectMeasurements(_hRange[h], _vRange[v]);
+
+                            //validate measurements
+                            var measurement = measurements.FirstOrDefault(m => m.Key == MeasurementKeys.IlluminanceEv);
+                            if (measurement != null && measurement.Value <= 0)
+                            {
+                                throw new InvalidMeasurementException(measurement);
+                            }
+
+                            //measurements validated, add to collection
+                            _data.AddRange(measurements);
+
+                            //notify subscribes about measurements
+                            var measureArgs = new MeasurementEventArgs(measurements);
+                            OnMeasurementTaken(this, measureArgs);
+                        }
+                        catch (Exception ex)
+                        {
+                            var args = new GonioErrorEventArgs(ex);
+                            OnError(this, args);
+
+                            if (args.Stop)
+                            {
+                                //halt test
                                 e.Cancel = true;
                                 return;
                             }
-
-                        } while (_paused);
-
-                        //update progress, move vertical arm
-                        int progress = (int)(h + 1 / _hRange.Length) * (v / _vRange.Length);
-                        _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
-                        MotorController.SetVerticalAngleAndWait(_vRange[v]);
-
-                        //collect measurements
-                        _worker.ReportProgress(progress, "Taking Measurements");
-                        var measurements = _sensor.CollectMeasurements(_hRange[h], _vRange[v]);
-
-                        //validate measurements
-                        var measurement = measurements.FirstOrDefault(m => m.key == MeasurementKeys.IlluminanceEv);
-                        if (measurement != null && measurement.value < 0.01)
-                        {
-                            throw new InvalidMeasurementException(measurement);
+                            else if (!args.Skip)
+                            {
+                                //go back one step and start over
+                                v--;
+                                continue; //vertical for loop
+                            }
                         }
+                    } //vertical for loop
+                } //horizontal for loop
 
-                        //measurements validated, add to collection
-                        _data.AddRange(measurements);
+                //return mirror to start point
+                MotorController.SetVerticalAngleAndWait(0);
+                MotorController.SetHorizontalAngleAndWait(0);
 
-                        //notify subscribes about measurements
-                        var measureArgs = new MeasurementEventArgs(measurements);
-                        OnMeasurementTaken(this, measureArgs);
-                    }
-                    catch (Exception ex)
-                    {
-                        var args = new GonioErrorEventArgs(ex);
-                        OnError(this, args);
+                _worker.ReportProgress(100, "Test Complete");
 
-                        if (args.Stop)
-                        {
-                            //halt test
-                            e.Cancel = true;
-                            return;
-                        }
-                        else if (!args.Skip)
-                        {
-                            //go back one step and start over
-                            h--;
-                            continue; //forloop
-                        }
-                    }
-                }
+                e.Result = _data;
             }
-
-            _worker.ReportProgress(100, "Test Complete");
-
-            e.Result = _data;
+            catch (Exception ex)
+            {
+                var args = new GonioErrorEventArgs(ex);
+                OnError(this, args);
+            }
+            finally
+            {
+                MotorController.SetVerticalAngle(0);
+                MotorController.SetHorizontalAngle(0);
+            }
         }
 
         /// <summary>
@@ -208,7 +225,7 @@ namespace Goniometer_Controller
         /// <summary>
         /// Receive notification that successful measurement occured
         /// </summary>
-        public event EventHandler MeasurementTaken;
+        public event EventHandler<MeasurementEventArgs> MeasurementTaken;
         protected virtual void OnMeasurementTaken(object sender, MeasurementEventArgs e)
         {
             var temp = MeasurementTaken;

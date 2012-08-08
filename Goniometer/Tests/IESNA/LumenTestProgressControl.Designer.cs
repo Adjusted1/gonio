@@ -38,6 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblElapsed = new System.Windows.Forms.Label();
             this.timerElapsed = new System.Windows.Forms.Timer(this.components);
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblDataFolder = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtStatus
@@ -50,7 +52,7 @@
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtStatus.Size = new System.Drawing.Size(392, 237);
+            this.txtStatus.Size = new System.Drawing.Size(392, 214);
             this.txtStatus.TabIndex = 1;
             // 
             // label1
@@ -127,10 +129,31 @@
             // 
             this.timerElapsed.Tick += new System.EventHandler(this.timerElapsed_Tick);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(5, 249);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Data Folder:";
+            // 
+            // lblDataFolder
+            // 
+            this.lblDataFolder.AutoSize = true;
+            this.lblDataFolder.Location = new System.Drawing.Point(83, 249);
+            this.lblDataFolder.Name = "lblDataFolder";
+            this.lblDataFolder.Size = new System.Drawing.Size(22, 13);
+            this.lblDataFolder.TabIndex = 24;
+            this.lblDataFolder.Text = "C:\\";
+            // 
             // LumenTestProgressControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblDataFolder);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.lblElapsed);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtStatus);
@@ -158,5 +181,7 @@
         private System.Windows.Forms.Timer timerElapsed;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.CheckBox chkEmail;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblDataFolder;
     }
 }

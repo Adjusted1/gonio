@@ -36,7 +36,6 @@ namespace Goniometer.Setup
         {
             Sensor = null;
             lblMessage.Text = "Pick a Sensor";
-            gridData.Visible = false;
 
             RefreshPortList();
             RefreshSensorList();
@@ -85,6 +84,9 @@ namespace Goniometer.Setup
         {
             try
             {
+                //clear out current readings
+                measurementGridView.DataSource = null;
+
                 //check sensorName
                 if (cboSensor.SelectedItem == null || String.IsNullOrEmpty(cboSensor.SelectedItem.ToString()))
                     return;
@@ -101,10 +103,8 @@ namespace Goniometer.Setup
                 sensor.Connect();
 
                 //test the read method on the sensor
-                var source = new BindingSource();
-                source.DataSource = sensor.CollectMeasurements(0,0);
-                gridData.DataSource = source;
-                gridData.Visible = true;
+                var measurements = sensor.CollectMeasurements(0,0);
+                measurementGridView.DataSource = measurements;
 
                 this.Sensor = sensor;
                 lblMessage.Text = "Success";

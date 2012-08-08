@@ -145,6 +145,7 @@
             this.txtVerticalResolution.Size = new System.Drawing.Size(125, 20);
             this.txtVerticalResolution.TabIndex = 4;
             this.txtVerticalResolution.TextChanged += new System.EventHandler(this.txtVerticalResolution_TextChanged);
+            this.txtVerticalResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerticalResolution_KeyDown);
             // 
             // lblTime
             // 
@@ -256,6 +257,7 @@
             this.txtHorizontalResolution.Size = new System.Drawing.Size(125, 20);
             this.txtHorizontalResolution.TabIndex = 5;
             this.txtHorizontalResolution.TextChanged += new System.EventHandler(this.txtHorizontalResolution_TextChanged);
+            this.txtHorizontalResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHorizontalResolution_KeyDown);
             // 
             // txtEmail
             // 
@@ -371,6 +373,7 @@
             this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
             this.txtHorizontalStrayResolution.TabIndex = 8;
             this.txtHorizontalStrayResolution.TextChanged += new System.EventHandler(this.txtHorizontalStrayResolution_TextChanged);
+            this.txtHorizontalStrayResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHorizontalStrayResolution_KeyDown);
             // 
             // txtVerticalStrayResolution
             // 
@@ -379,6 +382,7 @@
             this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
             this.txtVerticalStrayResolution.TabIndex = 7;
             this.txtVerticalStrayResolution.TextChanged += new System.EventHandler(this.txtVerticalStrayResolution_TextChanged);
+            this.txtVerticalStrayResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerticalStrayResolution_KeyDown);
             // 
             // cboStrayResolution
             // 

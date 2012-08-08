@@ -171,6 +171,9 @@
     <Compile Include="Tests\TestListControl.Designer.cs">
       <DependentUpon>TestListControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\MeasurementGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>

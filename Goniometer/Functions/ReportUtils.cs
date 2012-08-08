@@ -25,7 +25,7 @@ namespace Goniometer.Functions
         /// <param name="start">inclusive</param>
         /// <param name="stop">inclusive</param>
         /// <returns></returns>
-        public static double[] Range(double step, int start, int stop)
+        public static double[] Range(double step, double start, double stop)
         {
             if (step == 0)
                 throw new ArgumentException("step cannot be zero");
@@ -44,7 +44,10 @@ namespace Goniometer.Functions
                 range[i] = start + (step * i);
             }
 
-           return range;
+            //set last to stop (in case it went over)
+            range[range.Length - 1] = stop;
+
+            return range;
         }
 
         public static void EmailResults(string subject, string body, string to, Attachment attachment)

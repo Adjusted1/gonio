@@ -200,7 +200,7 @@ namespace Goniometer_Controller.Sensors
                 m1 = CollectMeasurement(theta, phi);
                 m2 = CollectMeasurement(theta, phi);
 
-                if (Math.Abs(m1.value - m2.value) > eps)
+                if (Math.Abs(m1.Value - m2.Value) > eps)
                     valid = false;
 
             } while (!valid);

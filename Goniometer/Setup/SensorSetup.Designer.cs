@@ -32,8 +32,8 @@
             this.cboPort = new System.Windows.Forms.ComboBox();
             this.lblMessage = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
-            this.gridData = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
+            this.measurementGridView = new Goniometer.Views.MeasurementGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // cboSensor
@@ -79,23 +79,22 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
-            // gridData
+            // measurementGridView
             // 
-            this.gridData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.measurementGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridData.Location = new System.Drawing.Point(0, 86);
-            this.gridData.Name = "gridData";
-            this.gridData.Size = new System.Drawing.Size(168, 116);
-            this.gridData.TabIndex = 6;
-            this.gridData.Visible = false;
+            this.measurementGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.measurementGridView.Location = new System.Drawing.Point(3, 86);
+            this.measurementGridView.Name = "measurementGridView";
+            this.measurementGridView.Size = new System.Drawing.Size(162, 113);
+            this.measurementGridView.TabIndex = 5;
             // 
             // SensorSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gridData);
+            this.Controls.Add(this.measurementGridView);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.cboPort);
@@ -103,7 +102,7 @@
             this.Name = "SensorSetup";
             this.Size = new System.Drawing.Size(168, 202);
             this.Load += new System.EventHandler(this.SensorSetup_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gridData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,6 +114,6 @@
         private System.Windows.Forms.ComboBox cboPort;
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.DataGridView gridData;
+        private Views.MeasurementGridView measurementGridView;
     }
 }
