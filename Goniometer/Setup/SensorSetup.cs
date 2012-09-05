@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Goniometer_Controller;
 using Goniometer_Controller.Sensors;
-using System.IO.Ports;
 
 namespace Goniometer.Setup
 {
     public partial class SensorSetup : UserControl
     {
-        public MinoltaBaseSensor Sensor;
+        private MinoltaBaseSensor _sensor;
 
         public SensorSetup()
         {
@@ -34,7 +35,8 @@ namespace Goniometer.Setup
 
         private void ResetControl()
         {
-            Sensor = null;
+            _sensor = null;
+
             lblMessage.Text = "Pick a Sensor";
 
             RefreshPortList();
@@ -98,21 +100,26 @@ namespace Goniometer.Setup
                 lblMessage.Text = "Connecting";
 
                 //prepare sensor in local variable before assigning to member
-                MinoltaSensorProvider.ConfigureControllers(cboPort.SelectedItem.ToString());
-                var sensor = this.Sensor = MinoltaSensorProvider.GetSensorByName(cboSensor.SelectedItem.ToString());
+                var port = SerialPortProvider.GetPort(cboPort.SelectedItem.ToString());
+                var sensor = this._sensor = MinoltaSensorProvider.GetSensorByName(cboSensor.SelectedItem.ToString(), port);
                 sensor.Connect();
 
                 //test the read method on the sensor
                 var measurements = sensor.CollectMeasurements(0,0);
                 measurementGridView.DataSource = measurements;
 
-                this.Sensor = sensor;
+                this._sensor = sensor;
                 lblMessage.Text = "Success";
             }
             catch (Exception ex)
             {
                 lblMessage.Text = String.Format("Error. Wrong Type/Port?\n{0}", ex.Message);
             }
+        }
+
+        public IEnumerable<MinoltaBaseSensor> GetSensors()
+        {
+            return new List<MinoltaBaseSensor> { _sensor };
         }
     }
 }

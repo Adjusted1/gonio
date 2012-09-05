@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param sensorname="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -195,7 +195,6 @@
             this.txtHorizontalAngle.TabIndex = 3;
             this.txtHorizontalAngle.Text = "0";
             this.txtHorizontalAngle.TextChanged += new System.EventHandler(this.txtHorizontalAngle_TextChanged);
-            this.txtHorizontalAngle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHorizontalAngle_KeyDown);
             // 
             // lblHorizontalAngle
             // 
@@ -214,7 +213,6 @@
             this.txtVerticalAngle.TabIndex = 4;
             this.txtVerticalAngle.Text = "0";
             this.txtVerticalAngle.TextChanged += new System.EventHandler(this.txtVerticalAngle_TextChanged);
-            this.txtVerticalAngle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerticalAngle_KeyDown);
             // 
             // btnSettings
             // 

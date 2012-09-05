@@ -36,6 +36,11 @@ namespace Goniometer_Controller.Models
                 Add(measurement);
         }
 
+        public void AddRange(MeasurementCollection collection)
+        {
+            this.AddRange(collection._values);
+        }
+
         public void Remove(MeasurementBase measurement)
         {
             _values.Remove(measurement);
@@ -44,7 +49,7 @@ namespace Goniometer_Controller.Models
         /// <summary>
         /// Get all measurement of a certain type
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param sensorname="Key"></param>
         /// <returns></returns>
         public IEnumerable<MeasurementBase> FindAll(string key)
         {
@@ -54,7 +59,7 @@ namespace Goniometer_Controller.Models
         /// <summary>
         /// Get all measurements for a certain type and Theta angle
         /// </summary>
-        /// <param name="Theta"></param>
+        /// <param sensorname="Theta"></param>
         /// <returns></returns>
         public IEnumerable<MeasurementBase> FindAll(string key, double theta)
         {
@@ -66,8 +71,8 @@ namespace Goniometer_Controller.Models
         /// <summary>
         /// Get all measurements for a theat and Phi angle
         /// </summary>
-        /// <param name="Theta"></param>
-        /// <param name="Phi"></param>
+        /// <param sensorname="Theta"></param>
+        /// <param sensorname="Phi"></param>
         /// <returns></returns>
         public IEnumerable<MeasurementBase> FindAll(double theta, double phi)
         {
@@ -79,9 +84,9 @@ namespace Goniometer_Controller.Models
         /// <summary>
         /// Get specific measurement
         /// </summary>
-        /// <param name="Theta"></param>
-        /// <param name="Phi"></param>
-        /// <param name="Key"></param>
+        /// <param sensorname="Theta"></param>
+        /// <param sensorname="Phi"></param>
+        /// <param sensorname="Key"></param>
         /// <returns></returns>
         public MeasurementBase Find(string key, double theta, double phi)
         {

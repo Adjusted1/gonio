@@ -10,7 +10,7 @@
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param sensorname="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -62,6 +62,12 @@
             this.groupSensor = new System.Windows.Forms.GroupBox();
             this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
+            this.txtDistance = new Goniometer.NumberTextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtKTheta = new Goniometer.NumberTextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtKCal = new Goniometer.NumberTextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.txtDataFolder = new System.Windows.Forms.TextBox();
             this.btnDataFolder = new System.Windows.Forms.Button();
@@ -71,6 +77,7 @@
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
             this.groupSensor.SuspendLayout();
+            this.groupCalibration.SuspendLayout();
             this.groupHorizontalSymetry.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,7 +102,6 @@
             this.txtNumberOfLamps.Name = "txtNumberOfLamps";
             this.txtNumberOfLamps.Size = new System.Drawing.Size(100, 20);
             this.txtNumberOfLamps.TabIndex = 3;
-            this.txtNumberOfLamps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNumberOfLamps_KeyDown);
             // 
             // label6
             // 
@@ -145,13 +151,12 @@
             this.txtVerticalResolution.Size = new System.Drawing.Size(125, 20);
             this.txtVerticalResolution.TabIndex = 4;
             this.txtVerticalResolution.TextChanged += new System.EventHandler(this.txtVerticalResolution_TextChanged);
-            this.txtVerticalResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerticalResolution_KeyDown);
             // 
             // lblTime
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(545, 448);
+            this.lblTime.Location = new System.Drawing.Point(686, 448);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(49, 13);
             this.lblTime.TabIndex = 23;
@@ -257,7 +262,6 @@
             this.txtHorizontalResolution.Size = new System.Drawing.Size(125, 20);
             this.txtHorizontalResolution.TabIndex = 5;
             this.txtHorizontalResolution.TextChanged += new System.EventHandler(this.txtHorizontalResolution_TextChanged);
-            this.txtHorizontalResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHorizontalResolution_KeyDown);
             // 
             // txtEmail
             // 
@@ -284,7 +288,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(463, 448);
+            this.label3.Location = new System.Drawing.Point(604, 448);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 17;
@@ -292,8 +296,8 @@
             // 
             // groupResolution
             // 
-            this.groupResolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupResolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.groupResolution.Controls.Add(this.label11);
             this.groupResolution.Controls.Add(this.label10);
             this.groupResolution.Controls.Add(this.label9);
@@ -373,7 +377,6 @@
             this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
             this.txtHorizontalStrayResolution.TabIndex = 8;
             this.txtHorizontalStrayResolution.TextChanged += new System.EventHandler(this.txtHorizontalStrayResolution_TextChanged);
-            this.txtHorizontalStrayResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHorizontalStrayResolution_KeyDown);
             // 
             // txtVerticalStrayResolution
             // 
@@ -382,7 +385,6 @@
             this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
             this.txtVerticalStrayResolution.TabIndex = 7;
             this.txtVerticalStrayResolution.TextChanged += new System.EventHandler(this.txtVerticalStrayResolution_TextChanged);
-            this.txtVerticalStrayResolution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerticalStrayResolution_KeyDown);
             // 
             // cboStrayResolution
             // 
@@ -395,37 +397,91 @@
             // 
             // groupSensor
             // 
-            this.groupSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupSensor.Controls.Add(this.controlSensorSetup);
             this.groupSensor.Location = new System.Drawing.Point(404, 145);
             this.groupSensor.Name = "groupSensor";
-            this.groupSensor.Size = new System.Drawing.Size(190, 261);
+            this.groupSensor.Size = new System.Drawing.Size(331, 261);
             this.groupSensor.TabIndex = 25;
             this.groupSensor.TabStop = false;
             this.groupSensor.Text = "Sensor";
             // 
             // controlSensorSetup
             // 
-            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
             this.controlSensorSetup.Name = "controlSensorSetup";
-            this.controlSensorSetup.Size = new System.Drawing.Size(177, 237);
+            this.controlSensorSetup.Size = new System.Drawing.Size(318, 237);
             this.controlSensorSetup.TabIndex = 11;
             // 
             // groupCalibration
             // 
-            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupCalibration.Controls.Add(this.txtDistance);
+            this.groupCalibration.Controls.Add(this.label14);
+            this.groupCalibration.Controls.Add(this.txtKTheta);
+            this.groupCalibration.Controls.Add(this.label13);
+            this.groupCalibration.Controls.Add(this.txtKCal);
+            this.groupCalibration.Controls.Add(this.label12);
             this.groupCalibration.Location = new System.Drawing.Point(404, 31);
             this.groupCalibration.Name = "groupCalibration";
-            this.groupCalibration.Size = new System.Drawing.Size(190, 108);
+            this.groupCalibration.Size = new System.Drawing.Size(331, 108);
             this.groupCalibration.TabIndex = 26;
             this.groupCalibration.TabStop = false;
             this.groupCalibration.Text = "Calibration";
+            // 
+            // txtDistance
+            // 
+            this.txtDistance.Location = new System.Drawing.Point(80, 71);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.Size = new System.Drawing.Size(141, 20);
+            this.txtDistance.TabIndex = 5;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(20, 74);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(49, 13);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Distance";
+            // 
+            // txtKTheta
+            // 
+            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
+            this.txtKTheta.Name = "txtKTheta";
+            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
+            this.txtKTheta.TabIndex = 3;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(20, 48);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(44, 13);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "K_theta";
+            // 
+            // txtKCal
+            // 
+            this.txtKCal.Location = new System.Drawing.Point(80, 19);
+            this.txtKCal.Name = "txtKCal";
+            this.txtKCal.Size = new System.Drawing.Size(141, 20);
+            this.txtKCal.TabIndex = 1;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(20, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "K_cal";
             // 
             // txtDataFolder
             // 
@@ -455,8 +511,8 @@
             // 
             // groupHorizontalSymetry
             // 
-            this.groupHorizontalSymetry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupHorizontalSymetry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalSingle);
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalQuarter);
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalFull);
@@ -485,9 +541,9 @@
             this.Controls.Add(this.chkEmail);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupResolution);
-            this.MinimumSize = new System.Drawing.Size(411, 376);
+            this.MinimumSize = new System.Drawing.Size(620, 471);
             this.Name = "LumenTestSetupControl";
-            this.Size = new System.Drawing.Size(608, 471);
+            this.Size = new System.Drawing.Size(749, 471);
             this.grpLamp.ResumeLayout(false);
             this.grpLamp.PerformLayout();
             this.groupVerticalSymetry.ResumeLayout(false);
@@ -495,6 +551,8 @@
             this.groupResolution.ResumeLayout(false);
             this.groupResolution.PerformLayout();
             this.groupSensor.ResumeLayout(false);
+            this.groupCalibration.ResumeLayout(false);
+            this.groupCalibration.PerformLayout();
             this.groupHorizontalSymetry.ResumeLayout(false);
             this.groupHorizontalSymetry.PerformLayout();
             this.ResumeLayout(false);
@@ -543,5 +601,11 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label12;
+        private NumberTextBox txtDistance;
+        private System.Windows.Forms.Label label14;
+        private NumberTextBox txtKTheta;
+        private System.Windows.Forms.Label label13;
+        private NumberTextBox txtKCal;
     }
 }

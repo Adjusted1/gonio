@@ -65,6 +65,15 @@ namespace Goniometer_Controller.Motors
             }
         }
 
+        public static int GetMotorPosition(short axis)
+        {
+            lock (_lock)
+            {
+                CheckSocketStatus();
+                return _socket.get_MotorPos(axis);
+            }
+        }
+
         private static bool CheckSocketStatus()
         {
             if (_socket == null)

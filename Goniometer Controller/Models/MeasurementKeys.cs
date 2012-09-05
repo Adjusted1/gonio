@@ -16,6 +16,7 @@ namespace Goniometer_Controller.Models
         public const string ColorTemp = "Color - CorrelatedTemp";
         public const string ColorDiff = "Color - DeltaUV";
 
-        public const string IlluminanceEv = "Illuminance - Ev";
+        public const string Illuminance = "Illuminance - Ev, fcd";
+        public const string LuminousIntensity = "LuminousIntensity - cd";
     }
 }

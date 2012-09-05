@@ -15,7 +15,7 @@ namespace Goniometer_Controller
     {
         private BackgroundWorker _worker;
 
-        private MinoltaBaseSensor _sensor;
+        private List<MinoltaBaseSensor> _sensors;
 
         private double[] _hRange;
         private double[] _vRange;
@@ -24,7 +24,7 @@ namespace Goniometer_Controller
         private DateTime _startTime;
         private DateTime _stopTime;
 
-        public GoniometerWorker(double[] hRange, double[] vRange, MinoltaBaseSensor sensor)
+        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<MinoltaBaseSensor> sensors)
         {
             _hRange = hRange;
             _vRange = vRange;
@@ -36,7 +36,7 @@ namespace Goniometer_Controller
             _worker.ProgressChanged    += OnProgressChanged;
             _worker.RunWorkerCompleted += OnRunWorkerCompleted;
 
-            _sensor = sensor;
+            _sensors = sensors.ToList();
         }
 
         #region state methods
@@ -120,10 +120,10 @@ namespace Goniometer_Controller
 
                             //collect measurements
                             _worker.ReportProgress(progress, "Taking Measurements");
-                            var measurements = _sensor.CollectMeasurements(_hRange[h], _vRange[v]);
+                            var measurements = _sensors.SelectMany(s => s.CollectMeasurements(_hRange[h], _vRange[v]));
 
                             //validate measurements
-                            var measurement = measurements.FirstOrDefault(m => m.Key == MeasurementKeys.IlluminanceEv);
+                            var measurement = measurements.FirstOrDefault(m => m.Key == MeasurementKeys.Illuminance);
                             if (measurement != null && measurement.Value <= 0)
                             {
                                 throw new InvalidMeasurementException(measurement);

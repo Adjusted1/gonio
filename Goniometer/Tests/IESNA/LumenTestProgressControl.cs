@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net.Mail;
 using System.Windows.Forms;
 
@@ -36,9 +38,11 @@ namespace Goniometer
         private double[] _hStrayRange;
         private double[] _vStrayRange;
 
-        private double _k;
+        private double _kCal;
+        private double _kTheta;
+        private double _distance;
 
-        private MinoltaBaseSensor _sensor;
+        private List<MinoltaBaseSensor> _sensors;
         #endregion
 
         #region results variables
@@ -72,28 +76,34 @@ namespace Goniometer
         #endregion
 
         #region public methods
-        public void BeginTestAsync(MinoltaBaseSensor sensor, double[] hRange, double[] vRange, double[] hStrayRange, double[] vStrayRange, double k)
+        public void BeginTestAsync(IEnumerable<MinoltaBaseSensor> sensors, 
+            double[] hRange, double[] vRange, 
+            double[] hStrayRange, double[] vStrayRange, 
+            double kCal, double kTheta, double distance)
         {
             _hRange = hRange;
             _vRange = vRange;
             _hStrayRange = hStrayRange;
             _vStrayRange = vStrayRange;
-            _k = k;
 
-            _sensor = sensor;
+            _kCal = kCal;
+            _kTheta = kTheta;
+            _distance = distance;
+
+            _sensors = sensors.ToList();
 
             //setup workers
-            SetupStrayTest();
             SetupStandardTest();
+            SetupStrayTest();
 
-            //schedule the standard test when the stray is finished
-            StrayTestFinished += new EventHandler((o, e) => BeginStandardTestAsync());
+            //schedule test finalization when the stray test is finished
+            LightTestFinished += new EventHandler((o, e) => BeginStandardTestAsync());
 
-            //schedule test finalization when the light test is finished
-            LightTestFinished += new EventHandler((o, e) => FinalizeTest());
+            //schedule the stray test when the standard is finished
+            StrayTestFinished += new EventHandler((o, e) => FinalizeTest());
 
             //start with stray test
-            BeginStrayTestAsync();
+            BeginStandardTestAsync();
 
             _startTime = DateTime.Now;
             timerElapsed.Enabled = true;
@@ -138,7 +148,7 @@ namespace Goniometer
         #region stray lumen test
         private void SetupStrayTest()
         {
-            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensor);
+            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors);
             _strayWorker.ProgressChanged += OnProgressChanged;
             _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
             _strayWorker.Error += OnError;
@@ -207,7 +217,7 @@ namespace Goniometer
         #region standard lumen test
         private void SetupStandardTest()
         {
-            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensor);
+            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors);
             _lightWorker.ProgressChanged += OnProgressChanged;
             _lightWorker.RunWorkerCompleted += OnLightTestFinished;
             _lightWorker.Error += OnError;
@@ -346,6 +356,18 @@ namespace Goniometer
 
         private string GenerateReport()
         {
+            //convert any candle values to candelas
+            _lightData.AddRange(CandlePowerMeasurementFunctions.CalculateIntensity(_lightData, _distance));
+            _strayData.AddRange(CandlePowerMeasurementFunctions.CalculateIntensity(_strayData, _distance));
+
+            //adjust values by calibration factor
+            _lightData = CandlePowerMeasurementFunctions.ApplyOffsetFactor(_lightData, _kCal);
+            _strayData = CandlePowerMeasurementFunctions.ApplyOffsetFactor(_strayData, _kCal);
+
+            //adjust values by theta factor
+            _lightData = CandlePowerMeasurementFunctions.ApplyOffsetFactor(_lightData, _kTheta);
+            _strayData = CandlePowerMeasurementFunctions.ApplyOffsetFactor(_strayData, _kTheta);
+
             //calculate corrected values from stray
             var correctedData = CandlePowerMeasurementFunctions.RemoveStrayLight(_lightData, _strayData);
 

@@ -52,8 +52,8 @@ namespace Goniometer.Reports
         /// <summary>
         /// write report to file according to ansi standards
         /// </summary>
-        /// <param name="report"></param>
-        /// <param name="filefolder"></param>
+        /// <param sensorname="report"></param>
+        /// <param sensorname="filefolder"></param>
         /// <returns>fullpath to created file</returns>
         public static string WriteToFile(iesna report, string fileFolder)
         {

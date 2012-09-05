@@ -55,6 +55,11 @@ namespace Goniometer_Controller.Sensors
             status = "Starting Measurement";
             _updateTimer = new Timer(UpdateReading, this, 0, _refreshRate);
         }
+
+        public override bool TestStatus()
+        {
+            return true;
+        }
         #endregion
 
         private double Read()
@@ -191,6 +196,9 @@ namespace Goniometer_Controller.Sensors
             MeasurementBase m1, m2;
             bool valid;
 
+            //wait for signal to stabilize
+            Thread.Sleep(500);
+
             //Take two measurements. Make sure they are similar within some epsilon. Return the first measurement
             //If the measurements differ significantly, start over
             do
@@ -218,7 +226,7 @@ namespace Goniometer_Controller.Sensors
                 Thread.Sleep(_refreshRate);
             }
 
-            return MeasurementBase.Create(theta, phi, MeasurementKeys.IlluminanceEv, reading);
+            return MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, reading, this.GetName(), this._port.PortName);
         }
     }
 }

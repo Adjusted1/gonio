@@ -21,9 +21,9 @@ namespace Goniometer.Functions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="step"></param>
-        /// <param name="start">inclusive</param>
-        /// <param name="stop">inclusive</param>
+        /// <param sensorname="step"></param>
+        /// <param sensorname="start">inclusive</param>
+        /// <param sensorname="stop">inclusive</param>
         /// <returns></returns>
         public static double[] Range(double step, double start, double stop)
         {

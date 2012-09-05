@@ -51,7 +51,7 @@ namespace Goniometer
             {
                 //omnomnom, (connectivity problems)
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

@@ -62,10 +62,10 @@ namespace Goniometer
 
         private void sensorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var view = new SensorView())
-            {
-                view.ShowDialog();
-            }
+            //using (var view = new SensorView())
+            //{
+            //    view.ShowDialog();
+            //}
         }
         #endregion
 
@@ -199,7 +199,7 @@ namespace Goniometer
             {
                 //omnomnom, (connectivity problems)
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -227,25 +227,6 @@ namespace Goniometer
             }
         }
 
-        private void txtHorizontalAngle_KeyDown(object sender, KeyEventArgs e)
-        {
-            //valid keys: 0-9 and .(dot)
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            if (e.KeyCode == Keys.OemPeriod)
-                return;
-
-            //back/delete also valid
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            if (e.KeyCode == Keys.Enter | e.KeyCode == Keys.Return)
-                ExecuteMotor();
-
-            e.SuppressKeyPress = true;
-        }
-
         private void txtHorizontalAngle_TextChanged(object sender, EventArgs e)
         {
             double d;
@@ -256,25 +237,6 @@ namespace Goniometer
                 picHorizontalAngleValid.Visible = true;
 
             picHorizontalAngleValid.Visible = false;
-        }
-
-        private void txtVerticalAngle_KeyDown(object sender, KeyEventArgs e)
-        {
-            //valid keys: 0-9 and .(dot)
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            if (e.KeyCode == Keys.OemPeriod)
-                return;
-
-            //back/delete also valid
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            if (e.KeyCode == Keys.Enter | e.KeyCode == Keys.Return)
-                ExecuteMotor();
-
-            e.SuppressKeyPress = true;
         }
 
         private void txtVerticalAngle_TextChanged(object sender, EventArgs e)

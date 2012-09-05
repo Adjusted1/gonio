@@ -21,7 +21,7 @@ namespace Goniometer_Controller.Functions
         /// <summary>
         /// Gives the width between the midpoint of each sequential pair of values.
         /// </summary>
-        /// <param name="values">sorted list</param>
+        /// <param sensorname="values">sorted list</param>
         /// <returns></returns>
         public static double[] WidthOnCenter(double[] values)
         {
@@ -50,9 +50,9 @@ namespace Goniometer_Controller.Functions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="p1">x1, y1</param>
-        /// <param name="p2">x2, y2</param>
-        /// <param name="x">x0</param>
+        /// <param sensorname="p1">x1, y1</param>
+        /// <param sensorname="p2">x2, y2</param>
+        /// <param sensorname="x">x0</param>
         /// <returns>y0</returns>
         public static double LinearExtrapolation(Tuple<double, double> p1, Tuple<double, double> p2, double x)
         {
@@ -72,9 +72,9 @@ namespace Goniometer_Controller.Functions
         #endregion
 
         /// <summary>
-        /// Calculate the Lumen value of a vertical array and weight them by horizontal angle
+        /// Calculate the Lumen Value of a vertical array and weight them by horizontal angle
         /// </summary>
-        /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
+        /// <param sensorname="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
         /// <returns></returns>
         public static double CalculateLumensByVertical(List<Tuple<double, double, double>> data)
         {
@@ -102,7 +102,7 @@ namespace Goniometer_Controller.Functions
         /// <summary>
         /// Average weighted horizontal readings, then calculate along surface angle
         /// </summary>
-        /// <param name="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
+        /// <param sensorname="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
         /// <returns></returns>
         public static double CalculateLumens(List<Tuple<double, double, double>> data)
         {
@@ -138,7 +138,7 @@ namespace Goniometer_Controller.Functions
         /// <summary>
         /// Calculate Lumen data from angular data
         /// </summary>
-        /// <param name="data">Units: degrees, footcandles</param>
+        /// <param sensorname="data">Units: degrees, footcandles</param>
         /// <returns></returns>
         public static double CalculateLumens(List<Tuple<double, double>> data)
         {

@@ -113,6 +113,9 @@
   <ItemGroup>
     <Compile Include="Functions\Extensions.cs" />
     <Compile Include="Functions\ReportUtils.cs" />
+    <Compile Include="Controls\NumberTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Setup\SensorSetup.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,12 +161,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\iesna.cs" />
-    <Compile Include="Settings\SensorView.cs">
+    <None Include="Settings\SensorView.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Settings\SensorView.Designer.cs">
+    </None>
+    <None Include="Settings\SensorView.Designer.cs">
       <DependentUpon>SensorView.cs</DependentUpon>
-    </Compile>
+    </None>
     <Compile Include="SymmetryEnum.cs" />
     <Compile Include="Tests\TestListControl.cs">
       <SubType>UserControl</SubType>
@@ -171,10 +174,10 @@
     <Compile Include="Tests\TestListControl.Designer.cs">
       <DependentUpon>TestListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\MeasurementGrid.cs">
+    <Compile Include="Controls\MeasurementGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WizardControl.cs">
+    <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="Setup\SensorSetup.resx">

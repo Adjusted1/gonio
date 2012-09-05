@@ -29,16 +29,18 @@ namespace Goniometer_Controller.Sensors
         {
             if (!_port.IsOpen)
                 _port.Open();
-        } 
+        }
+
+        public abstract bool TestStatus();
         #endregion
 
         #region communication
         /// <summary>
         /// Send Command to sensor
         /// </summary>
-        /// <param name="receptor"></param>
-        /// <param name="command"></param>
-        /// <param name="data"></param>
+        /// <param sensorname="receptor"></param>
+        /// <param sensorname="command"></param>
+        /// <param sensorname="data"></param>
         protected void SendCommand(int receptor, int command, string data)
         {
             if (!_port.IsOpen)
@@ -62,8 +64,8 @@ namespace Goniometer_Controller.Sensors
         /// <summary>
         /// Read Response from sensor
         /// </summary>
-        /// <param name="receptor"></param>
-        /// <param name="command"></param>
+        /// <param sensorname="receptor"></param>
+        /// <param sensorname="command"></param>
         /// <returns></returns>
         protected string ReadResponse(out int receptor, out int command)
         {
@@ -143,7 +145,7 @@ namespace Goniometer_Controller.Sensors
         /// <summary>
         /// Block Check Character
         /// </summary>
-        /// <param name="payload">string to checksum</param>
+        /// <param sensorname="payload">string to checksum</param>
         /// <returns>checksum byte, in hex, as a string</returns>
         protected string BlockCheckChar(string payload)
         {
@@ -163,7 +165,7 @@ namespace Goniometer_Controller.Sensors
         /// <summary>
         /// Parse Minolta Long-Communication Number-Format
         /// </summary>
-        /// <param name="payload">Value to Parse</param>
+        /// <param sensorname="payload">Value to Parse</param>
         /// <returns></returns>
         protected double ParseReadingValue(string payload)
         {

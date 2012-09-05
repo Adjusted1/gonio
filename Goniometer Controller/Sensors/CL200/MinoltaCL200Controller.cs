@@ -16,6 +16,7 @@ namespace Goniometer_Controller.Sensors
             return MinoltaCL200Controller.Name;
         }
 
+        #region construction
         public MinoltaCL200Controller(SerialPort port)
             : base(port)
         {
@@ -56,6 +57,12 @@ namespace Goniometer_Controller.Sensors
             //TODO: check error code
             _port.ReadLine();
         }
+
+        public override bool TestStatus()
+        {
+            return true;
+        }
+        #endregion
 
         #region measurement methods
         /// <summary>
@@ -273,19 +280,22 @@ namespace Goniometer_Controller.Sensors
 
         private List<MeasurementBase> CollectMeasurements(double theta, double phi, int receptor, bool useCF, CalibrationModeEnum mode)
         {
+            string name = this.GetName();
+            string port = this._port.PortName;
+
             var measurements = new List<MeasurementBase>();
             TakeMeasurement();
 
             double Ev1, u, v;
             ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.IlluminanceEv, Ev1));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU,          u, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV,          v, name, port));
 
             double Ev2, Tcp, Duv;
             ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
 
             return measurements;
         }

@@ -10,18 +10,23 @@ namespace Goniometer_Controller.Motors
 {
     internal class BaseMotor
     {
-        public readonly double accuracy = 0.02; //scaled units
+        protected readonly double _accuracy = 0.5; //scaled units
 
-        private short _axisNumber;
-        private double _scale;
+        protected short _axisNumber;
+        protected double _scale;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="axisNumber">zero indexed</param>
+        /// <param name="scale"></param>
         public BaseMotor(short axisNumber, double scale)
         {
             this._axisNumber = axisNumber;
             this._scale = scale;
         }
 
-        public double GetAngle()
+        public virtual double GetAngle()
         {
             //string cmd = "!";
             //cmd += _axisNumber + 1; //controller is 1-indexed
@@ -37,9 +42,9 @@ namespace Goniometer_Controller.Motors
         }
 
         /// <summary>
-        /// Set motor encoder offset value to zero
+        /// Set motor encoder offset Value to zero
         /// </summary>
-        public void ZeroMotor()
+        public virtual void ZeroMotor()
         {
             string cmd = "pset";
             cmd += ','.Multiply(_axisNumber);
@@ -53,14 +58,17 @@ namespace Goniometer_Controller.Motors
         #endregion
 
         #region motion commands
-        public void Move(double distance, double velocity, double acceleration, bool absolute)
+        /// <summary>
+        /// Instruct Motor to move
+        /// This method makes no guarantee that the motor will reach its destination
+        /// in a timely manner (or at all)
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="velocity"></param>
+        /// <param name="acceleration"></param>
+        public virtual void Move(double distance, double velocity, double acceleration)
         {
             string cmd = "";
-
-            ////stop current movement
-            //cmd += "!s";
-            //cmd += '0'.Multiply(_axisNumber);
-            //cmd += "1:";
 
             //enable drive
             cmd += "drive";
@@ -105,14 +113,21 @@ namespace Goniometer_Controller.Motors
             MotorSocketProvider.Write(cmd); 
         }
 
-        public void MoveAndWait(double distance, double velocity, double acceleration, bool absolute)
+        /// <summary>
+        /// Instruct Motor to move, return when completed within some epsilon
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="velocity"></param>
+        /// <param name="acceleration"></param>
+        /// <exception cref="TimeoutException">Throw if the motor does not reach it's destination in a timely manner</exception>
+        public virtual void MoveAndWait(double distance, double velocity, double acceleration)
         {
             TimeSpan timeout = new TimeSpan(0, 1, 0);
 
-            Move(distance, velocity, acceleration, absolute);
+            Move(distance, velocity, acceleration);
 
             DateTime startTime = DateTime.Now;
-            while (Math.Abs(GetAngle() - distance) > accuracy)
+            while (Math.Abs(GetAngle() - distance) > _accuracy)
             {
                 if (DateTime.Now - startTime > timeout)
                     //we've exceeded our alloted time

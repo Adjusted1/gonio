@@ -24,9 +24,8 @@ namespace Goniometer_Controller.Motors
         #region configuration and initialization
         static MotorController()
         {
-            _horizontalMotor = new BaseMotor(1, 2222.2);
-
-            _verticalMotor   = new BaseMotor(0, 9102.2);
+            _horizontalMotor = new DualFeedbackMotor(1, 2222.2, 3, 1);
+            _verticalMotor   = new DualFeedbackMotor(0, 9102.2, 2, 1);
         }
 
         public static void Connect(IPAddress address)
@@ -40,8 +39,7 @@ namespace Goniometer_Controller.Motors
             InitializeHorizontalMotor();
 
             //Global Controller Commands
-            MotorSocketProvider.Write("scale11");   //set all axis to scale mode
-
+            MotorSocketProvider.Write("scale1");    //set all axis to scale mode
             MotorSocketProvider.Write("!comexc1:"); //set continuous execution mode
 
             //Default not zeroing!
@@ -52,7 +50,7 @@ namespace Goniometer_Controller.Motors
         {
             //encoder resolution not necessary?
             _horizontalMotor.SendCommand("eres",    "8000");    //encoder resolution * 4 = 8000 counts per rev
-            //_horizontalMotor.SendCommand("lh",      "0");     //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
+            _horizontalMotor.SendCommand("lh",      "0");       //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
 
             //scale factors: 100:1 gear reducer = 800,000 counts per rev / 360deg = 2222.222 counts per degree
             _horizontalMotor.SendCommand("scla",    "2222");    //Acceleration Scale Factor [rev/sec/sec]
@@ -68,7 +66,7 @@ namespace Goniometer_Controller.Motors
         private static void InitializeVerticalMotor()
         {
             _verticalMotor.SendCommand("eres", "8192");         //encoder resolution * 4 = 8192 counts per rev
-            //_verticalMotor.SendCommand("lh",    "0");         //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
+            _verticalMotor.SendCommand("lh",   "0");            //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
 
             //scale factors: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.222 counts per degree
             _verticalMotor.SendCommand("scla",  "9102");        //Acceleration Scale Factor [rev/sec/sec]
@@ -79,9 +77,6 @@ namespace Goniometer_Controller.Motors
             _verticalMotor.SendCommand("smper", "4");           //Maximum Allowable Position Error
             _verticalMotor.SendCommand("sgp",   "20");          //Proportional Feedback Gain [microvolts/step]
             _verticalMotor.SendCommand("sgv",   "3");           //Velocity Feedback Gain     [microvolts/step/sec]
-            //cause occillation errors
-            //_verticalMotor.SendCommand("sgi", "0.1");        //Integral Feedback Gain    [microvolts/sec*sec]
-            //_verticalMotor.SendCommand("sgilim", "2");       //Integral Windup Limit
         }
         #endregion
 
@@ -100,24 +95,24 @@ namespace Goniometer_Controller.Motors
         #region set angles
         public static void SetHorizontalAngle(double angle)
         {
-            _horizontalMotor.Move(angle, 10, 5, true);
+            _horizontalMotor.Move(angle, 10, 5);
         }
 
         public static void SetVerticalAngle(double angle)
         {
             angle *= -1;
-            _verticalMotor.Move(angle, 5, 3, true);
+            _verticalMotor.Move(angle, 5, 3);
         }
 
         public static void SetHorizontalAngleAndWait(double angle)
         {
-            _horizontalMotor.MoveAndWait(angle, 10, 10, true);
+            _horizontalMotor.MoveAndWait(angle, 10, 10);
         }
 
         public static void SetVerticalAngleAndWait(double angle)
         {
             angle *= -1;
-            _verticalMotor.MoveAndWait(angle, 5, 3, true);
+            _verticalMotor.MoveAndWait(angle, 5, 3);
         }
         #endregion
 
@@ -125,7 +120,8 @@ namespace Goniometer_Controller.Motors
         private static bool _zeroing;        
         public static void EnterZeroingMode()
         {
-            MotorSocketProvider.Write("ma00:");     //set all axis to incremental mode (not absolute)
+            //set all axis to incremental mode (not absolute)
+            MotorSocketProvider.Write("ma00:");     
             _zeroing = true;
         }
 
@@ -147,7 +143,8 @@ namespace Goniometer_Controller.Motors
 
         public static void ExitZeroingMode()
         {
-            MotorSocketProvider.Write("ma11:");     //set all axis to absolute mode (not incremental)
+            //set all axis to absolute mode (not incremental)
+            MotorSocketProvider.Write("ma11:");     
             _zeroing = false;
         }
         #endregion

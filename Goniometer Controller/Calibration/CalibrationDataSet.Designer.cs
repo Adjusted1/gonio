@@ -1751,7 +1751,7 @@ namespace Goniometer_Controller.Calibration {
                         return ((string)(this[this.tableLamps.NameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Name\' in table \'Lamps\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The Value for column \'Name\' in table \'Lamps\' is DBNull.", e);
                     }
                 }
                 set {
@@ -1767,7 +1767,7 @@ namespace Goniometer_Controller.Calibration {
                         return ((string)(this[this.tableLamps.DescriptionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Description\' in table \'Lamps\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The Value for column \'Description\' in table \'Lamps\' is DBNull.", e);
                     }
                 }
                 set {
@@ -1783,7 +1783,7 @@ namespace Goniometer_Controller.Calibration {
                         return ((string)(this[this.tableLamps.ManufactureColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Manufacture\' in table \'Lamps\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The Value for column \'Manufacture\' in table \'Lamps\' is DBNull.", e);
                     }
                 }
                 set {
@@ -1905,7 +1905,7 @@ namespace Goniometer_Controller.Calibration {
                         return ((string)(this[this.tableUsage_Log.NoteColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Note\' in table \'Usage_Log\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The Value for column \'Note\' in table \'Usage_Log\' is DBNull.", e);
                     }
                 }
                 set {

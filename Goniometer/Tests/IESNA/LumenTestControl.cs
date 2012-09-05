@@ -50,10 +50,16 @@ namespace Goniometer.Tests.IESNA
             double[] vRange =          setupControl.CalculateVerticalRange();
             double[] hStrayRange =     setupControl.CalculateStrayHorizontalRange();
             double[] vStrayRange =     setupControl.CalculateStrayVerticalRange();
-            MinoltaBaseSensor sensor = setupControl.Sensor;
+
+            double kCal     = setupControl.KCal;
+            double kTheta   = setupControl.KTheta;
+            double distance = setupControl.Distance;
+            
+            //fetch a list of active sensors
+            var sensors = setupControl.GetSensors();
             
             //start test
-            progressControl.BeginTestAsync(setupControl.Sensor, hRange, vRange, hStrayRange, vStrayRange, 1);
+            progressControl.BeginTestAsync(sensors, hRange, vRange, hStrayRange, vStrayRange, kCal, kTheta, distance);
             wizard.SelectedTab = tabProgress;
         }
 
@@ -160,6 +166,5 @@ namespace Goniometer.Tests.IESNA
             }
         }
         #endregion
-
     }
 }

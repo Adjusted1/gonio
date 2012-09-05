@@ -20,25 +20,35 @@ namespace Goniometer_Controller.Models
         private readonly double _value;
         public double Value { get { return _value; } }
 
-        public MeasurementBase(double theta, double phi, string key, double value)
+        private readonly string _sensorname;
+        public string SensorName { get { return _sensorname; } }
+
+        private readonly string _portname;
+        public string PortName { get { return _portname; } }
+
+        public MeasurementBase(double theta, double phi, string key, double value, string sensorname = "", string portname = "")
         {
             this._theta = theta;
             this._phi = phi;
             this._key = key;
             this._value = value;
+            this._sensorname = sensorname;
+            this._portname = portname;
         }
 
-        public static MeasurementBase Create(double theta, double phi, string key, double value)
+        public static MeasurementBase Create(double theta, double phi, string key, double value, string sensorname = "", string portname = "")
         {
-            return new MeasurementBase(theta, phi, key, value);
+            return new MeasurementBase(theta, phi, key, value, sensorname, portname);
         }
 
         public static string ToCSV(MeasurementBase measurement)
         {
             string s = "";
-            s += measurement.Theta + ",";
-            s += measurement.Phi   + ",";
-            s += measurement.Key   + ",";
+            s += measurement.SensorName + ",";
+            s += measurement.PortName   + ",";
+            s += measurement.Theta      + ",";
+            s += measurement.Phi        + ",";
+            s += measurement.Key        + ",";
             s += measurement.Value;
             return s;
         }
@@ -46,15 +56,17 @@ namespace Goniometer_Controller.Models
         public static MeasurementBase FromCSV(string measurement)
         {
             string[] values = measurement.Split(',');
-            if (values.Length != 4)
+            if (values.Length != 6)
                 throw new ArgumentException("Expected comma separated string with 4 values");
 
-            double theta = Double.Parse(values[0]);
-            double phi   = Double.Parse(values[1]);
-            string key   = values[2];
-            double value = Double.Parse(values[3]);
+            string sensorname = values[0];
+            string portname   = values[1];
+            double theta      = Double.Parse(values[2]);
+            double phi        = Double.Parse(values[3]);
+            string key        = values[4];
+            double value      = Double.Parse(values[5]);
 
-            return MeasurementBase.Create(theta, phi, key, value);
+            return MeasurementBase.Create(theta, phi, key, value, sensorname, portname);
         }
     }
 }

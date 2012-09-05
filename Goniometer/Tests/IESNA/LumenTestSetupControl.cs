@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
@@ -17,12 +18,17 @@ namespace Goniometer
         public LumenTestSetupControl()
         {
             InitializeComponent();
+
+            //setup default values
+            txtKCal.Text     = ConfigurationManager.AppSettings["default.correction.calibration"];
+            txtKTheta.Text   = ConfigurationManager.AppSettings["default.correction.theta"];
+            txtDistance.Text = ConfigurationManager.AppSettings["default.distance"];
         }
 
         #region public values
-        public MinoltaBaseSensor Sensor
+        public IEnumerable<MinoltaBaseSensor> GetSensors()
         {
-            get { return controlSensorSetup.Sensor; }
+            return controlSensorSetup.GetSensors();
         }
 
         public string DataFolder
@@ -42,6 +48,7 @@ namespace Goniometer
             set { txtEmail.Text = value; }
         }
 
+        #region IESNA Values
         public string TestNumber
         {
             get { return txtTestNumber.Text; }
@@ -55,7 +62,46 @@ namespace Goniometer
         public int NumberOfLamps
         {
             get { return Int32.Parse(txtNumberOfLamps.Text); }
+        } 
+        #endregion
+
+        #region Calibration Values
+        public double KCal
+        {
+            get 
+            { 
+                double value;
+                if (Double.TryParse(txtKCal.Text, out value))
+                    return value;
+                else
+                    return 1;
+            }
         }
+
+        public double KTheta
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtKTheta.Text, out value))
+                    return value;
+                else
+                    return 1;
+            }
+        }
+
+        public double Distance
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtDistance.Text, out value))
+                    return value;
+                else
+                    return 1;
+            }
+        }
+        #endregion
 
         public double HorizontalResolution
         {
@@ -225,78 +271,6 @@ namespace Goniometer
         {
             NotifyPropertyChanged("VerticalStrayResolution");
         }
-
-        private void txtVerticalResolution_KeyDown(object sender, KeyEventArgs e)
-        {
-            //only digits, period valid
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
-                return;
-
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
-                return;
-
-            e.SuppressKeyPress = true;
-        }
-
-        private void txtHorizontalResolution_KeyDown(object sender, KeyEventArgs e)
-        {
-            //only digits, period valid
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
-                return;
-
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
-                return;
-
-            e.SuppressKeyPress = true;
-        }
-
-        private void txtVerticalStrayResolution_KeyDown(object sender, KeyEventArgs e)
-        {
-            //only digits, period valid
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
-                return;
-
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
-                return;
-
-            e.SuppressKeyPress = true;
-        }
-
-        private void txtHorizontalStrayResolution_KeyDown(object sender, KeyEventArgs e)
-        {
-            //only digits, period valid
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
-                return;
-
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            if (e.KeyCode == Keys.OemPeriod | e.KeyCode == Keys.Decimal)
-                return;
-
-            e.SuppressKeyPress = true;
-        }
         #endregion
 
         #region vertical radios
@@ -373,23 +347,6 @@ namespace Goniometer
                 txtDataFolder.Text = folderBrowserDialog.SelectedPath;
         }
 
-        private void txtNumberOfLamps_KeyDown(object sender, KeyEventArgs e)
-        {
-            //only digits valid
-            if (e.KeyCode >= Keys.D0 & e.KeyCode <= Keys.D9)
-                return;
-
-            //only digits valid
-            if (e.KeyCode >= Keys.NumPad0 & e.KeyCode <= Keys.NumPad9)
-                return;
-
-            //delete/backspace valid
-            if (e.KeyCode == Keys.Delete | e.KeyCode == Keys.Back)
-                return;
-
-            e.SuppressKeyPress = true;
-        }
-
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String info)
@@ -430,7 +387,11 @@ namespace Goniometer
         /// <returns></returns>
         public bool IsValid()
         {
-            if (controlSensorSetup.Sensor == null)
+            var sensors = this.GetSensors();
+            if (sensors.Count() == 0)
+                return false;
+
+            if (sensors.First() == null)
                 return false;
 
             if (String.IsNullOrEmpty(txtDataFolder.Text))

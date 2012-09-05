@@ -8,9 +8,6 @@ namespace Goniometer_Controller.Sensors
 {
     public static class MinoltaSensorProvider
     {
-        private static object _lock = new object();
-        private static SerialPort _port;
-
         public static string[] GetSensorNames()
         {
             return new string[]
@@ -20,59 +17,47 @@ namespace Goniometer_Controller.Sensors
             };
         }
 
-        public static List<MinoltaBaseSensor> GetSensors()
+        public static IEnumerable<MinoltaBaseSensor> GetSensors()
         {
-            var result = new List<MinoltaBaseSensor>();
+            List<MinoltaBaseSensor> sensors = new List<MinoltaBaseSensor>();
 
-            foreach (var name in GetSensorNames())
-            {
+            string[] portnames = SerialPort.GetPortNames();
+            string[] sensornames = GetSensorNames();
+
+            //iterate every known sensor type for all available ports
+            foreach (string portname in portnames)
+            foreach (string sensorname in sensornames)
+            {   
                 try
                 {
-                    result.Add(GetSensorByName(name));
+                    SerialPort port = SerialPortProvider.GetPort(portname);
+                    MinoltaBaseSensor sensor = GetSensorByName(sensorname, port);
+
+                    if (sensor.TestStatus())
+                        sensors.Add(sensor);
                 }
-                catch (InvalidOperationException) { /*uninitialized controller*/ }
-            }
-
-            return result;
-        }
-
-        public static MinoltaBaseSensor GetSensorByName(string name)
-        {
-            lock (_lock)
-            {
-                if (_port == null)
-                    throw new InvalidOperationException("PortName is null or empty. Configure the factory before requesting an instance");
-
-                switch (name)
+                catch (Exception)
                 {
-                    case (MinoltaT10Controller.Name):
-                        return new MinoltaT10Controller(_port);
-
-                    case (MinoltaCL200Controller.Name):
-                        return new MinoltaCL200Controller(_port);
-
-                    default:
-                        throw new ArgumentException("Unknown Sensor by that name");
-                } 
+                    //unknown failure, move onto the next type
+                }
             }
+
+            return sensors;
         }
 
-        public static void ConfigureControllers(string portname)
+        public static MinoltaBaseSensor GetSensorByName(string name, SerialPort port)
         {
-            lock (_lock)
+            switch (name)
             {
-                if (_port != null)
-                    _port.Dispose();
+                case (MinoltaT10Controller.Name):
+                    return new MinoltaT10Controller(port);
 
-                _port = new SerialPort(portname);
-                _port.BaudRate = 9600;
-                _port.DataBits = 7;
-                _port.StopBits = StopBits.One;
-                _port.Parity = Parity.Even;
+                case (MinoltaCL200Controller.Name):
+                    return new MinoltaCL200Controller(port);
 
-                _port.ReadTimeout = 100;
-                _port.WriteTimeout = 100;
-            }
+                default:
+                    throw new ArgumentException("Unknown Sensor by that sensorname");
+            } 
         }
     }
 }
