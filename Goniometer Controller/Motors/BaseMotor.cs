@@ -26,18 +26,10 @@ namespace Goniometer_Controller.Motors
             this._scale = scale;
         }
 
-        public virtual double GetAngle()
+        public virtual double GetMotorPosition()
         {
-            //string cmd = "!";
-            //cmd += _axisNumber + 1; //controller is 1-indexed
-            //cmd += "tpe:";
-
-            //string res = MotorSocketProvider.WriteForResponse(cmd);
-
-            //return Double.Parse(res); 
-
             short axis = (short) (_axisNumber + 1);
-            int pos = MotorSocketProvider.GetEncoderPosition(axis);
+            int pos = MotorSocketProvider.GetMotorPosition(axis);
             return pos / _scale;
         }
 
@@ -68,6 +60,11 @@ namespace Goniometer_Controller.Motors
         /// <param name="acceleration"></param>
         public virtual void Move(double distance, double velocity, double acceleration)
         {
+            ////apply scaling factors
+            //distance     *= _scale;
+            //velocity     *= _scale;
+            //acceleration *= _scale;
+
             string cmd = "";
 
             //enable drive
@@ -127,7 +124,7 @@ namespace Goniometer_Controller.Motors
             Move(distance, velocity, acceleration);
 
             DateTime startTime = DateTime.Now;
-            while (Math.Abs(GetAngle() - distance) > _accuracy)
+            while (Math.Abs(GetMotorPosition() - distance) > _accuracy)
             {
                 if (DateTime.Now - startTime > timeout)
                     //we've exceeded our alloted time

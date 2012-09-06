@@ -29,23 +29,23 @@ namespace Goniometer
         {
             try
             {
-                double hAngle = MotorController.GetHorizontalAngle();
-                lblHorizontalAngle.Text = hAngle.ToString("0.##");
-                if (hAngle < gaugeHorizontal.Range.Minimum)
+                double horizontalMotorAngle = MotorController.GetHorizontalAngle();
+                lblHorizontalMotorAngle.Text = horizontalMotorAngle.ToString("0.##");
+                if (horizontalMotorAngle < gaugeHorizontal.Range.Minimum)
                     gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
-                else if (hAngle > gaugeHorizontal.Range.Maximum)
+                else if (horizontalMotorAngle > gaugeHorizontal.Range.Maximum)
                     gaugeHorizontal.Value = gaugeHorizontal.Range.Maximum;
                 else
-                    gaugeHorizontal.Value = hAngle;
+                    gaugeHorizontal.Value = horizontalMotorAngle;
                 
-                double vAngle = MotorController.GetVerticalAngle();
-                lblVerticalAngle.Text = vAngle.ToString("0.##");
-                if (vAngle < gaugeVertical.Range.Minimum)
+                double verticalMotorAngle = MotorController.GetVerticalAngle();
+                lblVerticalMotorAngle.Text = verticalMotorAngle.ToString("0.##");
+                if (verticalMotorAngle < gaugeVertical.Range.Minimum)
                     gaugeVertical.Value = gaugeVertical.Range.Minimum;
-                else if (vAngle > gaugeVertical.Range.Maximum)
+                else if (verticalMotorAngle > gaugeVertical.Range.Maximum)
                     gaugeVertical.Value = gaugeVertical.Range.Maximum;
                 else
-                    gaugeVertical.Value = vAngle;
+                    gaugeVertical.Value = verticalMotorAngle;
             }
             catch (InvalidOperationException)
             {
@@ -243,7 +243,5 @@ namespace Goniometer
             }
         }
         #endregion
-
-        
     }
 }

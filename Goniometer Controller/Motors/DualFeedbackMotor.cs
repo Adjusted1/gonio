@@ -34,7 +34,7 @@ namespace Goniometer_Controller.Motors
      * 
      **/
 
-    public class DualFeedbackMotor : BaseMotor
+    internal class DualFeedbackMotor : BaseMotor
     {
         private short _encoderAxisNumber;
         private double _encoderScale;
@@ -53,21 +53,17 @@ namespace Goniometer_Controller.Motors
             this._encoderScale = encoderScale;
         }
 
-        public override double GetAngle()
+        public override double GetMotorPosition()
         {
-            return GetLoadAngle();
+            //override the motor position with the load position instead
+            return GetLoadPosition();
         }
 
-        public double GetLoadAngle()
+        public double GetLoadPosition()
         {
             short axis = (short)(_encoderAxisNumber + 1);
             int pos = MotorSocketProvider.GetEncoderPosition(axis);
             return pos / _encoderScale;
-        }
-
-        public double GetMotorAngle()
-        {
-            return base.GetAngle();
         }
 
         public override void ZeroMotor()
@@ -104,10 +100,10 @@ namespace Goniometer_Controller.Motors
                 else
                 {
                     //recalculate difference
-                    distance = distance - GetLoadAngle() + GetMotorAngle();
+                    distance = distance - this.GetLoadPosition() + base.GetMotorPosition();
                 }
             //check if we are close enough
-            } while (Math.Abs(GetLoadAngle() - distance) > _accuracy);
+            } while (Math.Abs(GetLoadPosition() - distance) > _accuracy);
         }
     }
 }

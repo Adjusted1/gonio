@@ -155,9 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="arp.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="arp-motor.bat" />
     <None Include="Calibration\CalibrationDataSet.xsc">
       <DependentUpon>CalibrationDataSet.xsd</DependentUpon>
     </None>

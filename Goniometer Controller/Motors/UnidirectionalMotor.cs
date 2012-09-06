@@ -27,10 +27,10 @@ namespace Goniometer_Controller.Motors
             this._circumference = circumference;
         }
 
-        public override double GetAngle()
+        public override double GetMotorPosition()
         {
             //always report angle as the mod for the max angle (circumference)
-            double value = base.GetAngle();
+            double value = base.GetMotorPosition();
             return value % _circumference;
         }
 
@@ -43,7 +43,7 @@ namespace Goniometer_Controller.Motors
         public override void Move(double distance, double velocity, double acceleration)
         {
             //check current location (mod adjusted)
-            double current = this.GetAngle();
+            double current = this.GetMotorPosition();
 
             //calculate incremental movement
             distance -= current;
