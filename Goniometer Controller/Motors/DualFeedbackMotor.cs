@@ -53,13 +53,7 @@ namespace Goniometer_Controller.Motors
             this._encoderScale = encoderScale;
         }
 
-        public override double GetMotorPosition()
-        {
-            //override the motor position with the load position instead
-            return GetLoadPosition();
-        }
-
-        public double GetLoadPosition()
+        public override double GetEncoderPosition()
         {
             short axis = (short)(_encoderAxisNumber + 1);
             int pos = MotorSocketProvider.GetEncoderPosition(axis);
@@ -100,10 +94,10 @@ namespace Goniometer_Controller.Motors
                 else
                 {
                     //recalculate difference
-                    distance = distance - this.GetLoadPosition() + base.GetMotorPosition();
+                    distance = distance - this.GetEncoderPosition() + base.GetMotorPosition();
                 }
             //check if we are close enough
-            } while (Math.Abs(GetLoadPosition() - distance) > _accuracy);
+            } while (Math.Abs(GetEncoderPosition() - distance) > _accuracy);
         }
     }
 }

@@ -33,6 +33,13 @@ namespace Goniometer_Controller.Motors
             return pos / _scale;
         }
 
+        public virtual double GetEncoderPosition()
+        {
+            short axis = (short)(_axisNumber + 1);
+            int pos = MotorSocketProvider.GetEncoderPosition(axis);
+            return pos / _scale;
+        }
+
         /// <summary>
         /// Set motor encoder offset Value to zero
         /// </summary>

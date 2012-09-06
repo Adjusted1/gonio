@@ -177,7 +177,7 @@ namespace Goniometer
         {
             try
             {
-                double hAngle = MotorController.GetHorizontalAngle();
+                double hAngle = MotorController.GetHorizontalMotorPosition();
                 lblHorizontalAngle.Text = hAngle.ToString("0.##");
                 if (hAngle < gaugeHorizontal.Range.Minimum)
                     gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
@@ -186,7 +186,7 @@ namespace Goniometer
                 else
                     gaugeHorizontal.Value = hAngle;
                 
-                double vAngle = MotorController.GetVerticalAngle();
+                double vAngle = MotorController.GetVerticalMotorPosition();
                 lblVerticalAngle.Text = vAngle.ToString("0.##");
                 if (vAngle < gaugeVertical.Range.Minimum)
                     gaugeVertical.Value = gaugeVertical.Range.Minimum;

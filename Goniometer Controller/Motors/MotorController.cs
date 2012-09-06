@@ -106,14 +106,24 @@ namespace Goniometer_Controller.Motors
         #endregion
 
         #region get angles
-        public static double GetHorizontalAngle()
+        public static double GetHorizontalMotorPosition()
         {
             return _horizontalMotor.GetMotorPosition();
         }
 
-        public static double GetVerticalAngle()
+        public static double GetHorizontalEncoderPosition()
+        {
+            return _horizontalMotor.GetEncoderPosition();
+        }
+
+        public static double GetVerticalMotorPosition()
         {
             return _verticalMotor.GetMotorPosition() *-1;
+        }
+
+        public static double GetVerticalEncoderPosition()
+        {
+            return _verticalMotor.GetEncoderPosition();
         }
         #endregion
 

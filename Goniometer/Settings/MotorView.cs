@@ -29,23 +29,37 @@ namespace Goniometer
         {
             try
             {
-                double horizontalMotorAngle = MotorController.GetHorizontalAngle();
+                //set label on motor position
+                double horizontalMotorAngle = MotorController.GetHorizontalMotorPosition();
                 lblHorizontalMotorAngle.Text = horizontalMotorAngle.ToString("0.##");
-                if (horizontalMotorAngle < gaugeHorizontal.Range.Minimum)
+
+                //set label on encoder/load position
+                double horizontalEncoderAngle = MotorController.GetHorizontalEncoderPosition();
+                lblHorizontalLoadAngle.Text = horizontalEncoderAngle.ToString("0.##");
+
+                //set gauge to encoder location
+                if (horizontalEncoderAngle < gaugeHorizontal.Range.Minimum)
                     gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
-                else if (horizontalMotorAngle > gaugeHorizontal.Range.Maximum)
+                else if (horizontalEncoderAngle > gaugeHorizontal.Range.Maximum)
                     gaugeHorizontal.Value = gaugeHorizontal.Range.Maximum;
                 else
-                    gaugeHorizontal.Value = horizontalMotorAngle;
-                
-                double verticalMotorAngle = MotorController.GetVerticalAngle();
+                    gaugeHorizontal.Value = horizontalEncoderAngle;
+
+                //set label on motor position
+                double verticalMotorAngle = MotorController.GetVerticalMotorPosition();
                 lblVerticalMotorAngle.Text = verticalMotorAngle.ToString("0.##");
-                if (verticalMotorAngle < gaugeVertical.Range.Minimum)
+
+                //set label on encoder/load posotion
+                double verticalEncoderAngle = MotorController.GetVerticalEncoderPosition();
+                lblVerticalLoadAngle.Text = verticalEncoderAngle.ToString("0.##");
+
+                //set gauge to encoder location
+                if (verticalEncoderAngle < gaugeVertical.Range.Minimum)
                     gaugeVertical.Value = gaugeVertical.Range.Minimum;
-                else if (verticalMotorAngle > gaugeVertical.Range.Maximum)
+                else if (verticalEncoderAngle > gaugeVertical.Range.Maximum)
                     gaugeVertical.Value = gaugeVertical.Range.Maximum;
                 else
-                    gaugeVertical.Value = verticalMotorAngle;
+                    gaugeVertical.Value = verticalEncoderAngle;
             }
             catch (InvalidOperationException)
             {
