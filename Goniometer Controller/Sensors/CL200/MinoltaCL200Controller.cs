@@ -283,21 +283,28 @@ namespace Goniometer_Controller.Sensors
             string name = this.GetName();
             string port = this._port.PortName;
 
-            var measurements = new List<MeasurementBase>();
-            TakeMeasurement();
+            try
+            {
+                var measurements = new List<MeasurementBase>();
+                TakeMeasurement();
 
-            double Ev1, u, v;
-            ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU,          u, name, port));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV,          v, name, port));
+                double Ev1, u, v;
+                ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
+                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
+                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
+                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
 
-            double Ev2, Tcp, Duv;
-            ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
+                double Ev2, Tcp, Duv;
+                ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
+                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
+                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
 
-            return measurements;
+                return measurements;
+            }
+            catch (LowIlluminanceException)
+            {
+                return new List<MeasurementBase> { MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, 0, name, port) };
+            }
         }
 
         public enum CalibrationModeEnum
