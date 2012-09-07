@@ -37,9 +37,8 @@ namespace Goniometer_Controller.Motors
             //motor scale factor: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.2... counts per degree
             //load  scale factor:         no reducer =    10,000 counts per rev / 360deg = 27.7...
 
-            //motor encoder runs negative numbers
-            _verticalMotor   = new DualFeedbackMotor(vertMotor, -9102.2, vertEncod, 27.777);
-            //_verticalMotor = new BaseMotor(0, 9102.2);
+            //both encoders runs negative numbers
+            _verticalMotor   = new DualFeedbackMotor(vertMotor, -9102.2, vertEncod, -27.777);
 
             //motor encoder resolution * 4 = 8000 counts per rev
             //load  encoder resolution * 4 = 5000 counts per rev
@@ -48,8 +47,8 @@ namespace Goniometer_Controller.Motors
             //motor scale factor: 100:1 gear reducer = 800,000 counts per rev / 360deg = 2222.222 counts per degree
             //load  scale factor:         no reducer =    5000 counts per rev / 360deg = 13.8...
 
-            //motor encoder runs negative numbers
-            _horizontalMotor = new DualFeedbackMotor(horzMotor, -2222.2, horzEncod, 13.888);
+            //load encoder runs negative numbers
+            _horizontalMotor = new DualFeedbackMotor(horzMotor, 2222.2, horzEncod, -13.888);
         }
 
         public static void Connect(IPAddress address)
@@ -118,7 +117,7 @@ namespace Goniometer_Controller.Motors
 
         public static double GetVerticalMotorPosition()
         {
-            return _verticalMotor.GetMotorPosition() *-1;
+            return _verticalMotor.GetMotorPosition();
         }
 
         public static double GetVerticalEncoderPosition()
@@ -135,7 +134,6 @@ namespace Goniometer_Controller.Motors
 
         public static void SetVerticalAngle(double angle)
         {
-            angle *= -1;
             _verticalMotor.Move(angle, 5, 3);
         }
 
@@ -146,7 +144,6 @@ namespace Goniometer_Controller.Motors
 
         public static void SetVerticalAngleAndWait(double angle)
         {
-            angle *= -1;
             _verticalMotor.MoveAndWait(angle, 5, 3);
         }
         #endregion

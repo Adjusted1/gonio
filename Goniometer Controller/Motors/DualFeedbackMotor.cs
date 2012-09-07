@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -75,7 +76,6 @@ namespace Goniometer_Controller.Motors
 
         public override void MoveAndWait(double distance, double velocity, double acceleration)
         {
-            TimeSpan timeout = new TimeSpan(0, 1, 0);
             int attempt = 0;
             int maxAttempts = 2;
 
@@ -94,10 +94,13 @@ namespace Goniometer_Controller.Motors
                 else
                 {
                     //recalculate difference
-                    distance = distance - this.GetEncoderPosition() + base.GetMotorPosition();
+                    double encoderPosition = this.GetEncoderPosition();
+                    double motorPosition   = this.GetMotorPosition();
+
+                    distance = distance - encoderPosition + motorPosition;
                 }
             //check if we are close enough
-            } while (Math.Abs(GetEncoderPosition() - distance) > _accuracy);
+            } while (Math.Abs(this.GetEncoderPosition() - distance) > _accuracy);
         }
     }
 }

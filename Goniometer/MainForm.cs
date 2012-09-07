@@ -177,7 +177,7 @@ namespace Goniometer
         {
             try
             {
-                double hAngle = MotorController.GetHorizontalMotorPosition();
+                double hAngle = MotorController.GetHorizontalEncoderPosition();
                 lblHorizontalAngle.Text = hAngle.ToString("0.##");
                 if (hAngle < gaugeHorizontal.Range.Minimum)
                     gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
@@ -186,7 +186,7 @@ namespace Goniometer
                 else
                     gaugeHorizontal.Value = hAngle;
                 
-                double vAngle = MotorController.GetVerticalMotorPosition();
+                double vAngle = MotorController.GetVerticalEncoderPosition();
                 lblVerticalAngle.Text = vAngle.ToString("0.##");
                 if (vAngle < gaugeVertical.Range.Minimum)
                     gaugeVertical.Value = gaugeVertical.Range.Minimum;
@@ -206,25 +206,34 @@ namespace Goniometer
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
-            ExecuteMotor();
+            ExecuteMotorDelegate em = ExecuteMotor;
+            IAsyncResult ar = em.BeginInvoke(MotorMoveFinished, null);
         }
 
+        private delegate void ExecuteMotorDelegate();
+        private delegate void ExecuteMotorCallback();
         private void ExecuteMotor()
         {
             try
             {
-                double h;
-                if (Double.TryParse(txtHorizontalAngle.Text, out h))
-                    MotorController.SetHorizontalAngle(h);
-
+                //set vertical first, as it is usually faster
                 double v;
                 if (Double.TryParse(txtVerticalAngle.Text, out v))
-                    MotorController.SetVerticalAngle(v);
+                    MotorController.SetVerticalAngleAndWait(v);
+
+                double h;
+                if (Double.TryParse(txtHorizontalAngle.Text, out h))
+                    MotorController.SetHorizontalAngleAndWait(h);
             }
             catch (InvalidOperationException)
             {
                 //omnomnom, (connectivity problems)
             }
+        }
+
+        private void MotorMoveFinished(IAsyncResult result)
+        {
+            btnExecute.Text = "Execute";
         }
 
         private void txtHorizontalAngle_TextChanged(object sender, EventArgs e)

@@ -72,6 +72,9 @@ namespace Goniometer_Controller.Motors
             //velocity     *= _scale;
             //acceleration *= _scale;
 
+            if (_scale < 0)
+                distance *= -1;
+
             string cmd = "";
 
             //enable drive
