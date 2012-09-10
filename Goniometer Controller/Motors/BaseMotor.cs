@@ -131,17 +131,27 @@ namespace Goniometer_Controller.Motors
         {
             TimeSpan timeout = new TimeSpan(0, 1, 0);
 
+            double lastPosition = GetMotorPosition();
             Move(distance, velocity, acceleration);
 
             DateTime startTime = DateTime.Now;
             while (Math.Abs(GetMotorPosition() - distance) > _accuracy)
             {
                 if (DateTime.Now - startTime > timeout)
+                {
                     //we've exceeded our alloted time
                     throw new TimeoutException();
+                }
+                else if (Math.Abs(GetMotorPosition() - lastPosition) < _accuracy)
+                {
+                    //movement has stopped 
+                    throw new MotorStoppedException();
+                }
                 else
+                {
                     //sleep then check again
                     Thread.Sleep(100);
+                }
             } 
         }
 
@@ -161,6 +171,13 @@ namespace Goniometer_Controller.Motors
             cmd += data + ":";
 
             MotorSocketProvider.Write(cmd); 
+        }
+
+        /// <summary>
+        /// indicates that the motor has not moved when movement was expected
+        /// </summary>
+        public class MotorStoppedException : Exception
+        {
         }
     }
 }

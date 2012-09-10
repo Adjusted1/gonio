@@ -77,10 +77,11 @@ namespace Goniometer_Controller.Motors
         public override void MoveAndWait(double distance, double velocity, double acceleration)
         {
             int attempt = 0;
-            int maxAttempts = 2;
+            int maxAttempts = 3;
             double adjustedDistance = distance;
 
-            do
+            //check if we are close enough (or even need to move)
+            while (Math.Abs(this.GetEncoderPosition() - distance) > _accuracy)
             {
                 //first or adjusted move
                 base.MoveAndWait(adjustedDistance, velocity, acceleration);
@@ -100,8 +101,7 @@ namespace Goniometer_Controller.Motors
 
                     adjustedDistance = distance - encoderPosition + motorPosition;
                 }
-            //check if we are close enough
-            } while (Math.Abs(this.GetEncoderPosition() - distance) > _accuracy);
+            }
         }
     }
 }
