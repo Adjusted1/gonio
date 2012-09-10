@@ -78,18 +78,19 @@ namespace Goniometer_Controller.Motors
         {
             int attempt = 0;
             int maxAttempts = 2;
+            double adjustedDistance = distance;
 
             do
             {
                 //first or adjusted move
-                base.MoveAndWait(distance, velocity, acceleration);
+                base.MoveAndWait(adjustedDistance, velocity, acceleration);
 
                 //record attempts
                 attempt++;
                 if (attempt > maxAttempts)
                 {
-                    //max attempts, exit loop
-                    continue;
+                    //max attempts, exit
+                    return;
                 }
                 else
                 {
@@ -97,7 +98,7 @@ namespace Goniometer_Controller.Motors
                     double encoderPosition = this.GetEncoderPosition();
                     double motorPosition   = this.GetMotorPosition();
 
-                    distance = distance - encoderPosition + motorPosition;
+                    adjustedDistance = distance - encoderPosition + motorPosition;
                 }
             //check if we are close enough
             } while (Math.Abs(this.GetEncoderPosition() - distance) > _accuracy);
