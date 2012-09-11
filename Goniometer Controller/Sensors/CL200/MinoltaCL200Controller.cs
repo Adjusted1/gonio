@@ -194,7 +194,8 @@ namespace Goniometer_Controller.Sensors
                     throw new Exception("Measurement over Value Error");
 
                 case "6":
-                    throw new LowIlluminanceException();
+                    break;
+                    //throw new LowIlluminanceException();
 
                 case "7":
                     throw new Exception("Value out of range Error");

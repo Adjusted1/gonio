@@ -96,10 +96,10 @@ namespace Goniometer
             SetupStandardTest();
             SetupStrayTest();
 
-            //schedule test finalization when the stray test is finished
-            LightTestFinished += new EventHandler((o, e) => BeginStandardTestAsync());
-
             //schedule the stray test when the standard is finished
+            LightTestFinished += new EventHandler((o, e) => BeginStrayTestAsync());
+
+            //schedule test finalization when the stray test is finished
             StrayTestFinished += new EventHandler((o, e) => FinalizeTest());
 
             //start with stray test
@@ -155,7 +155,6 @@ namespace Goniometer
             _strayWorker.MeasurementTaken += OnMeasurementTaken;
         }
 
-
         private void BeginStrayTestAsync()
         {
             var result = MessageBox.Show("Please ensure that the mirror is properly covered");
@@ -194,17 +193,16 @@ namespace Goniometer
                 }
             }
             else
-            {
-                //record results
-                _strayData = e.Result as MeasurementCollection;
 
-                //inform user
-                if (chkEmail.Checked)
-                {
-                    string subject = "Goniometer Lumen Test Requires Attention!";
-                    string body = "The Goniometer Lumen Test requires your input to continue";
-                    ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
-                }
+            //record results
+            _strayData = e.Result as MeasurementCollection;
+
+            //inform user
+            if (chkEmail.Checked)
+            {
+                string subject = "Goniometer Lumen Test Requires Attention!";
+                string body = "The Goniometer Lumen Test requires your input to continue";
+                ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
             }
 
             //test completed
@@ -258,25 +256,16 @@ namespace Goniometer
                     ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
                 }
             }
-            else
-            {
-                //record results
-                _lightData = e.Result as MeasurementCollection;
-                
-                //if successful, generate report
-                string reportFilepath = "";
-                if (_lightData != null)
-                {
-                    reportFilepath = GenerateReport();
 
-                    if (chkEmail.Checked)
-                    {
-                        string subject = "Goniometer Lumen Test Completed";
-                        string body = "The Goniometer Lumen Test has completed";
-                        Attachment attachment = new Attachment(reportFilepath);
-                        ReportUtils.EmailResults(subject, body, txtEmail.Text, attachment);
-                    }
-                }
+            //record results
+            _lightData = e.Result as MeasurementCollection;
+
+            //inform user
+            if (chkEmail.Checked)
+            {
+                string subject = "Goniometer Lumen Test Requires Attention!";
+                string body = "The Goniometer Lumen Test requires your input to continue";
+                ReportUtils.EmailResults(subject, body, txtEmail.Text, null);
             }
 
             //test completed
@@ -348,6 +337,21 @@ namespace Goniometer
         {
             timerElapsed.Enabled = false;
             progressbar.Value = progressbar.Maximum;
+
+            //if successful, generate report
+            string reportFilepath = "";
+            if (_lightData != null && _strayData != null)
+            {
+                reportFilepath = GenerateReport();
+
+                if (chkEmail.Checked)
+                {
+                    string subject = "Goniometer Lumen Test Completed";
+                    string body = "The Goniometer Lumen Test has completed";
+                    Attachment attachment = new Attachment(reportFilepath);
+                    ReportUtils.EmailResults(subject, body, txtEmail.Text, attachment);
+                }
+            }
 
             var temp = TestCompleted;
             if (TestCompleted != null)

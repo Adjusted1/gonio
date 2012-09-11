@@ -127,14 +127,21 @@ namespace Goniometer_Controller.Motors
         /// <param name="velocity"></param>
         /// <param name="acceleration"></param>
         /// <exception cref="TimeoutException">Throw if the motor does not reach it's destination in a timely manner</exception>
+        /// <exception cref="MotorStoppedException">Throw is the motor stops moving unexpectedly</exception>
         public virtual void MoveAndWait(double distance, double velocity, double acceleration)
         {
+            //set maximum time for a full movement
             TimeSpan timeout = new TimeSpan(0, 1, 0);
-
-            double lastPosition = GetMotorPosition();
-            Move(distance, velocity, acceleration);
-
             DateTime startTime = DateTime.Now;
+
+            //record current position
+            double lastPosition = GetMotorPosition();
+            
+            //command motor to move, then wait some time
+            Move(distance, velocity, acceleration);
+            Thread.Sleep(500);
+            
+            //have we arrived at our destination yet?
             while (Math.Abs(GetMotorPosition() - distance) > _accuracy)
             {
                 if (DateTime.Now - startTime > timeout)
@@ -147,11 +154,12 @@ namespace Goniometer_Controller.Motors
                     //movement has stopped 
                     throw new MotorStoppedException();
                 }
-                else
-                {
-                    //sleep then check again
-                    Thread.Sleep(100);
-                }
+
+                //record new current position
+                lastPosition = GetMotorPosition();
+
+                //sleep then check again
+                Thread.Sleep(500);
             } 
         }
 
