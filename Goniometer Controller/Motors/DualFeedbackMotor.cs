@@ -85,16 +85,19 @@ namespace Goniometer_Controller.Motors
             {
                 try
                 {
+                    //record attempts
+                    attempt++;
+
                     //first or adjusted move
                     base.MoveAndWait(adjustedDistance, velocity, acceleration);
                 }
                 catch (MotorStoppedException)
                 {
                     //ignore, probably a bad SMPER setting 
+                    //possibly stalled. stop motor motion and restart
+                    this.EmergencyStop();
                 }
 
-                //record attempts
-                attempt++;
                 if (attempt > maxAttempts)
                 {
                     //max attempts, exit
@@ -104,7 +107,7 @@ namespace Goniometer_Controller.Motors
                 {
                     //recalculate difference
                     double encoderPosition = this.GetEncoderPosition();
-                    double motorPosition   = this.GetMotorPosition();
+                    double motorPosition = this.GetMotorPosition();
 
                     adjustedDistance = distance - encoderPosition + motorPosition;
                 }
