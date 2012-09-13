@@ -1,0 +1,40 @@
+Minolta CL200,COM4,0,40,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,0,40,Color - U,0.2413,
+Minolta CL200,COM4,0,40,Color - V,0.5173,
+Minolta CL200,COM4,0,40,Color - CorrelatedTemp,3274,
+Minolta CL200,COM4,0,40,Color - DeltaUV,0.0011,
+Minolta CL200,COM4,0,60,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,0,60,Color - U,0.2407,
+Minolta CL200,COM4,0,60,Color - V,0.5163,
+Minolta CL200,COM4,0,60,Color - CorrelatedTemp,3298,
+Minolta CL200,COM4,0,60,Color - DeltaUV,0.0007,
+Minolta CL200,COM4,0,80,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,0,80,Color - U,0.2407,
+Minolta CL200,COM4,0,80,Color - V,0.5163,
+Minolta CL200,COM4,0,80,Color - CorrelatedTemp,3298,
+Minolta CL200,COM4,0,80,Color - DeltaUV,0.0007,
+Minolta CL200,COM4,0,90,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,0,90,Color - U,0.2371,
+Minolta CL200,COM4,0,90,Color - V,0.5176,
+Minolta CL200,COM4,0,90,Color - CorrelatedTemp,3392,
+Minolta CL200,COM4,0,90,Color - DeltaUV,0.003,
+Minolta CL200,COM4,180,40,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,180,40,Color - U,0.2457,
+Minolta CL200,COM4,180,40,Color - V,0.5151,
+Minolta CL200,COM4,180,40,Color - CorrelatedTemp,3169,
+Minolta CL200,COM4,180,40,Color - DeltaUV,-0.002,
+Minolta CL200,COM4,180,60,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,180,60,Color - U,0.2412,
+Minolta CL200,COM4,180,60,Color - V,0.5155,
+Minolta CL200,COM4,180,60,Color - CorrelatedTemp,3293,
+Minolta CL200,COM4,180,60,Color - DeltaUV,0,
+Minolta CL200,COM4,180,80,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,180,80,Color - U,0.2407,
+Minolta CL200,COM4,180,80,Color - V,0.5163,
+Minolta CL200,COM4,180,80,Color - CorrelatedTemp,3298,
+Minolta CL200,COM4,180,80,Color - DeltaUV,0.0007,
+Minolta CL200,COM4,180,90,Illuminance - Ev (fcd),0.01
+Minolta CL200,COM4,180,90,Color - U,0.2407,
+Minolta CL200,COM4,180,90,Color - V,0.5163,
+Minolta CL200,COM4,180,90,Color - CorrelatedTemp,3298,
+Minolta CL200,COM4,180,90,Color - DeltaUV,0.0007,

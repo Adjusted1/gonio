@@ -121,6 +121,15 @@ namespace Goniometer_Controller.Models
 
         public MeasurementBase GetEstimateReading(string key, double theta, double phi)
         {
+            //find closest vertical band
+            double closeTheta = this.FindAll(key).MinSelectMember(t => Math.Abs(t.Theta - theta)).Theta;
+
+            //find closest member
+            return this.FindAll(key, closeTheta).MinSelectMember(t => Math.Abs(t.Phi - phi));
+        }
+
+        public MeasurementBase GetEstimateReading_Extrapolation(string key, double theta, double phi)
+        {
             //try for an exact match:
             var match = this.Find(key, theta, phi);
             if (match != null)
