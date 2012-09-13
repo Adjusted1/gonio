@@ -186,6 +186,9 @@ namespace Goniometer_Controller.Models
             string[] lines = s.Split('\n');
             foreach (string line in lines)
             {
+                if (String.IsNullOrWhiteSpace(line))
+                    continue;
+
                 var measurement = MeasurementBase.FromCSV(line);
                 collection.Add(measurement);
             }

@@ -57,7 +57,7 @@ namespace Goniometer_Controller.Models
         {
             string[] values = measurement.Split(',');
             if (values.Length != 6)
-                throw new ArgumentException("Expected comma separated string with 4 values");
+                throw new ArgumentException("Expected comma separated string with 6 values");
 
             string sensorname = values[0];
             string portname   = values[1];

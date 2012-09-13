@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Goniometer_Controller.Functions;
 using System.IO;
 using System.Reflection;
+
+using Goniometer_Controller.Functions;
 
 namespace Goniometer_Tests
 {
