@@ -6,8 +6,6 @@ using System.Reflection;
 
 namespace Goniometer_Tests
 {
-    
-    
     /// <summary>
     ///This is a test class for MeasurementCollectionTest and is intended
     ///to contain all MeasurementCollectionTest Unit Tests
@@ -15,74 +13,70 @@ namespace Goniometer_Tests
     [TestClass()]
     public class MeasurementCollectionTest
     {
-
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         /// <summary>
         ///A test for FromCSV
         ///</summary>
         [TestMethod()]
         public void FromCSVTest()
         {
-            string testfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string[] testfiles = { "raw.csv" };
+            MeasurementCollection actual = GetRaw();
+            Assert.IsNotNull(actual);
+        }
 
-            MeasurementCollection actual;
-            foreach (string testfile in testfiles)
+        /// <summary>
+        ///A test for FromCSV
+        ///</summary>
+        [TestMethod()]
+        public void FromCSVStrayTest()
+        {
+            MeasurementCollection actual = GetRawStray();
+            Assert.IsNotNull(actual);
+        }
+
+        /// <summary>
+        ///A test for GetEstimateReading
+        ///</summary>
+        [TestMethod()]
+        public void GetEstimateReadingTest()
+        {
+            MeasurementCollection target = GetRawStray();
+            string key = MeasurementKeys.Illuminance;
+            double theta = 0F; 
+            double phi = 0F; 
+
+            //based on values found in raw_stray
+            double expectedTheta = 0;
+            double expectedPhi = 40;
+            double expectedValue = 0.01;
+
+            MeasurementBase actual;
+            actual = MeasurementCollection.GetEstimateReading(target, key, theta, phi);
+
+            Assert.AreEqual(key,            actual.Key);
+            Assert.AreEqual(expectedTheta,  actual.Theta);
+            Assert.AreEqual(expectedPhi,    actual.Phi);
+            Assert.AreEqual(expectedValue,  actual.Value);
+        }
+
+        public static MeasurementCollection GetRaw()
+        {
+            string testfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string testfile = "Example Data\\raw.csv";
+
+            using (var sr = new StreamReader(testfolder + "\\" + testfile))
             {
-                using (var sr = new StreamReader(testfolder + "\\" + testfile))
-                {
-                    actual = MeasurementCollection.FromCSV(sr.ReadToEnd());
-                    Assert.IsNotNull(actual);
-                }
+                return MeasurementCollection.FromCSV(sr.ReadToEnd());
+            }
+        }
+
+        public static MeasurementCollection GetRawStray()
+        {
+            string testfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string testfile = "Example Data\\raw_stray.csv";
+
+            using (var sr = new StreamReader(testfolder + "\\" + testfile))
+            {
+                return MeasurementCollection.FromCSV(sr.ReadToEnd());
             }
         }
     }

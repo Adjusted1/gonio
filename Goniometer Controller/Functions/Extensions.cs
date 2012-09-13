@@ -79,7 +79,11 @@ namespace Goniometer_Controller
                 empty = false;
 
                 if (selector(t) <= min)
+                {
+                    //record new min and member
+                    min = selector(t);
                     minSource = t;
+                }
             }
 
             if (empty)

@@ -118,25 +118,53 @@ namespace Goniometer_Controller.Models
         {
             return _values.Select(m => m.Phi).Distinct().ToArray();
         }
+        #endregion
 
-        public MeasurementBase GetEstimateReading(string key, double theta, double phi)
+        #region operators
+        public static MeasurementCollection SubtractFrom(MeasurementCollection source, MeasurementCollection estimates)
         {
-            //find closest vertical band
-            double closeTheta = this.FindAll(key).MinSelectMember(t => Math.Abs(t.Theta - theta)).Theta;
+            MeasurementCollection results = new MeasurementCollection();
 
-            //find closest member
-            return this.FindAll(key, closeTheta).MinSelectMember(t => Math.Abs(t.Phi - phi));
+            foreach (var m in source._values)
+            {
+                double estimate = MeasurementCollection.GetEstimateReading(estimates, m.Key, m.Theta, m.Phi).Value;
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value - estimate, m.SensorName, m.PortName));
+            }
+
+            return results;
         }
 
-        public MeasurementBase GetEstimateReading_Extrapolation(string key, double theta, double phi)
+        public static MeasurementCollection MultiplyBy(MeasurementCollection source, double value)
+        {
+            MeasurementCollection results = new MeasurementCollection();
+
+            foreach (var m in source._values)
+            {
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value * value, m.SensorName, m.PortName));
+            }
+
+            return results;
+        }
+        #endregion
+
+        public static MeasurementBase GetEstimateReading(MeasurementCollection source, string key, double theta, double phi)
+        {
+            //find closest vertical band
+            double closeTheta = source.FindAll(key).MinSelectMember(t => Math.Abs(t.Theta - theta)).Theta;
+
+            //find closest member
+            return source.FindAll(key, closeTheta).MinSelectMember(t => Math.Abs(t.Phi - phi));
+        }
+
+        public static MeasurementBase GetEstimateReading_Extrapolation(MeasurementCollection source, string key, double theta, double phi)
         {
             //try for an exact match:
-            var match = this.Find(key, theta, phi);
+            var match = source.Find(key, theta, phi);
             if (match != null)
                 return match;
 
             //if any vertical angles are valid, use them for linear extrapoliation
-            var vMatches = this.FindAll(key, theta);
+            var vMatches = source.FindAll(key, theta);
             if (vMatches.Count() > 0)
             {
                 //split points into those above and below vAngle, already proved there is not Value at exact vAngle
@@ -167,7 +195,6 @@ namespace Goniometer_Controller.Models
             throw new NotImplementedException();
             //or not
         }
-        #endregion
 
         public static string ToCSV(MeasurementCollection collection)
         {
