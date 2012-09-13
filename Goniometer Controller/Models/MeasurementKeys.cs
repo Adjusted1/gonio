@@ -7,6 +7,9 @@ namespace Goniometer_Controller.Models
 {
     public class MeasurementKeys
     {
+        /* Don't use commas in these strings as they are used in CSV Files
+         * */
+
         public const string ColorX = "Color - X";
         public const string ColorY = "Color - Y";
         public const string ColorZ = "Color - Z";
@@ -16,7 +19,7 @@ namespace Goniometer_Controller.Models
         public const string ColorTemp = "Color - CorrelatedTemp";
         public const string ColorDiff = "Color - DeltaUV";
 
-        public const string Illuminance = "Illuminance - Ev, fcd";
+        public const string Illuminance = "Illuminance - Ev (fcd)";
         public const string LuminousIntensity = "LuminousIntensity - cd";
     }
 }
