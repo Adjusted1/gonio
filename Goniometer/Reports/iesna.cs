@@ -100,13 +100,14 @@ namespace Goniometer.Reports
             sb.AppendLine("1");
 
             //fetch all candle readings
-            var candles = _data.FindAll(MeasurementKeys.Illuminance)
+            string mKey = MeasurementKeys.LuminousIntensity;
+            var candles = _data.FindAll(mKey)
                                .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
                                .ToList();
 
             //lumen reading
             double lumen =  LightMath.CalculateLumens(candles);
-            sb.AppendLine(String.Format("{0}",lumen));
+            sb.AppendLine(String.Format("{0:0.##}",lumen));
 
             //horizontal values
             double[] hRange = _data.GetPhiRange();
@@ -119,7 +120,7 @@ namespace Goniometer.Reports
             //raw values
             for (int v = 0; v < vRange.Length; v++)
             {
-                double[] values = _data.FindAll(MeasurementKeys.Illuminance, vRange[v]).Select(m => m.Value).ToArray();
+                string[] values = _data.FindAll(mKey, vRange[v]).Select(m => m.Value.ToString("0.##")).ToArray();
                 sb.AppendLine(String.Join(" ", values));
             }
 

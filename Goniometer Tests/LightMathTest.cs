@@ -56,11 +56,27 @@ namespace Goniometer_Tests
         [TestMethod()]
         public void CalculateLumensTest()
         {
+            MeasurementCollection source = GetLuminousData();
+
+            string key = MeasurementKeys.LuminousIntensity;
+            var target = source.FindAll(key)
+                                .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
+                                .ToList();
+
+            double lumens = LightMath.CalculateLumens(target);
+            
+            double actual = 439;
+            double delta = actual * 0.04; // 4.0% accuracy requirement
+            Assert.AreEqual(actual, lumens, delta);
+        }
+
+        public static MeasurementCollection GetLuminousData()
+        {
             MeasurementCollection lightData = MeasurementCollectionTest.GetRaw();
             MeasurementCollection strayData = MeasurementCollectionTest.GetRawStray();
 
             double distance = 19.3333;
-            double kCal = 1.02;
+            double kCal = 0.97484;
             double kTheta = 1.09313;
 
             //convert any candle values to candelas
@@ -76,19 +92,9 @@ namespace Goniometer_Tests
             strayData = MeasurementCollection.MultiplyBy(strayData, kTheta);
 
             //calculate corrected values from stray
-            var correctedData = MeasurementCollection.SubtractFrom(lightData, strayData);
-
-            string key = MeasurementKeys.LuminousIntensity;
-            var target = correctedData.FindAll(key)
-                                .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
-                                .ToList();
-
-            double lumens = LightMath.CalculateLumens(target);
-            
-            double actual = 439;
-            double delta = actual * 0.04; // 4.0% accuracy requirement
-            Assert.AreEqual(actual, lumens, delta);
+            return MeasurementCollection.SubstractStray(lightData, strayData);
         }
+
 
         private List<Tuple<double, double, double>> GenerateData(string filename, out double lumens)
         {

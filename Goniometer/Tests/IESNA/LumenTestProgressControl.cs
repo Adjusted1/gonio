@@ -373,10 +373,13 @@ namespace Goniometer
             _strayData = MeasurementCollection.MultiplyBy(_strayData,_kTheta);
 
             //calculate corrected values from stray
-            var correctedData = MeasurementCollection.SubtractFrom(_lightData, _strayData);
+            var correctedData = MeasurementCollection.SubstractStray(_lightData, _strayData);
+
+            //
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
+            report.manufacture
 
             //generate report file
             string filepath = ConfigurationManager.AppSettings["reportFolder"];

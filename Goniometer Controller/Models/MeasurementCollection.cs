@@ -121,7 +121,22 @@ namespace Goniometer_Controller.Models
         #endregion
 
         #region operators
-        public static MeasurementCollection SubtractFrom(MeasurementCollection source, MeasurementCollection estimates)
+        public static MeasurementCollection SubstractStray(MeasurementCollection source, MeasurementCollection estimates)
+        {
+            MeasurementCollection results = new MeasurementCollection();
+
+            foreach (var m in source._values)
+            {
+                double estimate = MeasurementCollection.GetEstimateReading(estimates, m.Key, m.Theta, m.Phi).Value;
+                double value = (m.Value - estimate < 0) ? 0 : (m.Value - estimate);
+
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, value, m.SensorName, m.PortName));
+            }
+
+            return results;
+        }
+
+        private static MeasurementCollection SubtractFrom(MeasurementCollection source, MeasurementCollection estimates)
         {
             MeasurementCollection results = new MeasurementCollection();
 
