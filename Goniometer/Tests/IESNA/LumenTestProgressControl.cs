@@ -383,8 +383,7 @@ namespace Goniometer
             var report = new iesna(correctedData);
 
             //generate report file
-            string filepath = ConfigurationManager.AppSettings["reportFolder"];
-            string fullpath = iesna.WriteToFile(report, filepath);
+            string fullpath = iesna.WriteToFile(report, DataFolder);
             return fullpath;
         }
 
