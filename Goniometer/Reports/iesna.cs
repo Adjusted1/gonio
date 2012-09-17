@@ -96,31 +96,66 @@ namespace Goniometer.Reports
                 foreach (var key in comments.Keys)
                     sb.AppendLine(String.Format("[_{0}] {1}", key.ToUpper(), comments[key]));
 
+            //tilt factor
             sb.AppendLine("TILT=NONE");
             sb.AppendLine("1");
-
+            
             //fetch all candle readings
-            string mKey = MeasurementKeys.LuminousIntensity;
-            var candles = _data.FindAll(mKey)
+            string candleKey = MeasurementKeys.LuminousIntensity;
+            var candles = _data.Where(m => m.Key == candleKey)
                                .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
                                .ToList();
 
             //lumen reading
-            double lumen =  LightMath.CalculateLumens(candles);
-            sb.AppendLine(String.Format("{0:0.##}",lumen));
+            double lumen = LightMath.CalculateLumens(candles);
+            sb.AppendLine(String.Format("{0:0.##}", lumen));
 
-            //horizontal values
-            double[] hRange = _data.GetPhiRange();
-            sb.AppendLine(String.Join(" ", hRange));
+            //scaling factor
+            sb.AppendLine("1.000001");
 
+            //vertical step count
+            double[] vRange = _data
+                .Select(m => m.Phi)
+                .Distinct()
+                .OrderBy(v => v)
+                .ToArray();
+            sb.AppendLine(vRange.Length.ToString());
+
+            //horizontal step count
+            double[] hRange = _data
+                .Select(m => m.Theta)
+                .Distinct()
+                .OrderBy(h => h)
+                .ToArray();
+            sb.AppendLine(hRange.Length.ToString());
+
+            //unknown, always 1
+            sb.AppendLine("1");
+
+            //units 1:feet, 2:meters
+            sb.AppendLine("1");
+
+            //fixture size, length, width, height
+            sb.AppendLine("0 0 0");
+
+            //ballast factor, ballast-lamp photomateric factor, input watts
+            //for absolute photometer: 1
+            sb.AppendLine("1 1");
+            
             //vertical values
-            double[] vRange = _data.GetThetaRange();
             sb.AppendLine(String.Join(" ", vRange));
 
+            //horizontal values
+            sb.AppendLine(String.Join(" ", hRange));
+
             //raw values
-            for (int v = 0; v < vRange.Length; v++)
+            for (int h = 0; h < hRange.Length; h++)
             {
-                string[] values = _data.FindAll(mKey, vRange[v]).Select(m => m.Value.ToString("0.##")).ToArray();
+                string[] values = _data
+                    .Where(m => m.Key == candleKey & m.Theta == hRange[h])
+                    .Select(m => m.Value.ToString("0.##"))
+                    .ToArray();
+
                 sb.AppendLine(String.Join(" ", values));
             }
 

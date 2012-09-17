@@ -361,25 +361,26 @@ namespace Goniometer
         private string GenerateReport()
         {
             //convert any candle values to candelas
-            _lightData = CandlePowerMeasurementFunctions.CalculateIntensity(_lightData, _distance);
-            _strayData = CandlePowerMeasurementFunctions.CalculateIntensity(_strayData, _distance);
+            _lightData = _lightData.CalculateIntensity(_distance);
+            _strayData = _strayData.CalculateIntensity(_distance);
 
             //adjust values by calibration factor
-            _lightData = MeasurementCollection.MultiplyBy(_lightData,_kCal);
-            _strayData = MeasurementCollection.MultiplyBy(_strayData,_kCal);
+            _lightData = _lightData.MultiplyBy(_kCal);
+            _strayData = _strayData.MultiplyBy(_kCal);
 
             //adjust values by theta factor
-            _lightData = MeasurementCollection.MultiplyBy(_lightData,_kTheta);
-            _strayData = MeasurementCollection.MultiplyBy(_strayData,_kTheta);
+            _lightData = _lightData.MultiplyBy(_kTheta);
+            _strayData = _strayData.MultiplyBy(_kTheta);
+
+            //average NADIR
+            _lightData = _lightData.AveragePoles();
+            _strayData = _strayData.AveragePoles();
 
             //calculate corrected values from stray
-            var correctedData = MeasurementCollection.SubstractStray(_lightData, _strayData);
-
-            //
+            var correctedData = _lightData.SubstractStray(_strayData);
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
-            report.manufacture
 
             //generate report file
             string filepath = ConfigurationManager.AppSettings["reportFolder"];

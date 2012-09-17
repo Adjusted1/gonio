@@ -111,7 +111,6 @@
     </Compile>
     <Compile Include="Functions\LightMath.cs" />
     <Compile Include="GoniometerWorker.cs" />
-    <Compile Include="Models\CandlePowerMeasurement.cs" />
     <Compile Include="Models\ChrominanceReading.cs" />
     <Compile Include="Models\ChrominanceReadingCollection.cs" />
     <Compile Include="Models\Exceptions.cs" />

@@ -59,9 +59,10 @@ namespace Goniometer_Tests
             MeasurementCollection source = GetLuminousData();
 
             string key = MeasurementKeys.LuminousIntensity;
-            var target = source.FindAll(key)
-                                .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
-                                .ToList();
+            var target = source
+                .Where(m => m.Key == key)
+                .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
+                .ToList();
 
             double lumens = LightMath.CalculateLumens(target);
             
@@ -80,19 +81,23 @@ namespace Goniometer_Tests
             double kTheta = 1.09313;
 
             //convert any candle values to candelas
-            lightData = CandlePowerMeasurementFunctions.CalculateIntensity(lightData, distance);
-            strayData = CandlePowerMeasurementFunctions.CalculateIntensity(strayData, distance);
+            lightData = lightData.CalculateIntensity(distance);
+            strayData = strayData.CalculateIntensity(distance);
 
             //adjust values by calibration factor
-            lightData = MeasurementCollection.MultiplyBy(lightData, kCal);
-            strayData = MeasurementCollection.MultiplyBy(strayData, kCal);
+            lightData = lightData.MultiplyBy(kCal);
+            strayData = strayData.MultiplyBy(kCal);
 
             //adjust values by theta factor
-            lightData = MeasurementCollection.MultiplyBy(lightData, kTheta);
-            strayData = MeasurementCollection.MultiplyBy(strayData, kTheta);
+            lightData = lightData.MultiplyBy(kTheta);
+            strayData = strayData.MultiplyBy(kTheta);
+
+            //average nadir
+            lightData = lightData.AveragePoles();
+            strayData = strayData.AveragePoles();
 
             //calculate corrected values from stray
-            return MeasurementCollection.SubstractStray(lightData, strayData);
+            return lightData.SubstractStray(strayData);
         }
 
 

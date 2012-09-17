@@ -21,8 +21,8 @@ namespace Goniometer_Tests
         {
             MeasurementCollection readings = MeasurementCollectionTest.GetRaw();
             double distance = 19.3333;
-            
-            MeasurementCollection actual = CandlePowerMeasurementFunctions.CalculateIntensity(readings, distance);
+
+            MeasurementCollection actual = readings.CalculateIntensity(distance);
             Assert.IsNotNull(actual);
         }
     }
