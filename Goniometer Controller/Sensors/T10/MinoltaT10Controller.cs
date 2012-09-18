@@ -22,7 +22,7 @@ namespace Goniometer_Controller.Sensors
 
         private int _refreshRate = 100; //milliseconds
         private Timer _updateTimer;
-        private uint _measureCount = 0;
+        private Int64 _measureCount = 0;
 
         #region construction
         public MinoltaT10Controller(SerialPort port)
@@ -178,6 +178,10 @@ namespace Goniometer_Controller.Sensors
                 {
                     reading = Read();
                     _measureCount++;
+
+                    //check for rollover
+                    if (_measureCount < 0)
+                        _measureCount = 0;
                 }
                 catch (Exception ex)
                 {
@@ -218,12 +222,18 @@ namespace Goniometer_Controller.Sensors
 
         private MeasurementBase CollectMeasurement(double theta, double phi)
         {
-            //save current count
-            uint before = _measureCount;
+            //timeout
+            TimeSpan timeout = new TimeSpan(0, 1, 0);
+            DateTime start = DateTime.Now;
 
+            //save current count
+            var before = _measureCount;
             while (before == _measureCount)
             {
                 Thread.Sleep(_refreshRate);
+
+                if (DateTime.Now > start + timeout)
+                    throw new TimeoutException(String.Format("Waiting on new measurement for {0} on {1} took too long.", this.GetName(), this._port.PortName));
             }
 
             return MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, reading, this.GetName(), this._port.PortName);
