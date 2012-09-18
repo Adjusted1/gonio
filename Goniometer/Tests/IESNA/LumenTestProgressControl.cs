@@ -401,6 +401,7 @@ namespace Goniometer
                 }
 
                 sw.Flush();
+                sw.Close();
             }
         }
     }

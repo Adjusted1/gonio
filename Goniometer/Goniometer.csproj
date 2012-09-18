@@ -232,13 +232,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Simpler Logger\SimpleLogger.csproj">
-      <Project>{34F34C09-CF20-4B9F-8156-CAE10774B19D}</Project>
-      <Name>SimpleLogger</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goniometer Controller\Goniometer Controller.csproj">
       <Project>{B6359573-6312-46D7-89B4-BFC4DDF986EF}</Project>
       <Name>Goniometer Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simpler Logger\SimpleLogger.csproj">
+      <Project>{34F34C09-CF20-4B9F-8156-CAE10774B19D}</Project>
+      <Name>SimpleLogger</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

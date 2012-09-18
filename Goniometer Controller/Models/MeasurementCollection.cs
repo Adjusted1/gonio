@@ -135,7 +135,7 @@ namespace Goniometer_Controller.Models
 
             foreach (var m in source)
             {
-                double estimate = source.GetEstimateReading(m.Key, m.Theta, m.Phi).Value;
+                double estimate = stray.GetEstimateReading(m.Key, m.Theta, m.Phi).Value;
                 double value = (m.Value - estimate < 0) ? 0 : (m.Value - estimate);
 
                 results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, value, m.SensorName, m.PortName));
@@ -175,8 +175,15 @@ namespace Goniometer_Controller.Models
 
             foreach (string key in source.Select(m => m.Key).Distinct())
             {
-                double north = source.Where(m => m.Key == key & m.Phi == 180).Average(m => m.Value);
-                double south = source.Where(m => m.Key == key & m.Phi ==   0).Average(m => m.Value);
+                double north = 0;
+                var norths = source.Where(m => m.Key == key & m.Phi == 180);
+                if (norths.Count() > 0)
+                    north = norths.Average(m => m.Value);
+
+                double south = 0;
+                var souths = source.Where(m => m.Key == key & m.Phi == 0);
+                if (souths.Count() > 0)
+                    south = souths.Average(m => m.Value);
 
                 foreach (var m in source.Where(m => m.Key == key))
                 {
