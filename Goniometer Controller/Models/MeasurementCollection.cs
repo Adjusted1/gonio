@@ -7,19 +7,14 @@ using Goniometer_Controller.Functions;
 
 namespace Goniometer_Controller.Models
 {
-    public class MeasurementCollection
+    public class MeasurementCollection : IEnumerable<MeasurementBase>
     {
-        private List<MeasurementBase> _values;
-
-        public MeasurementCollection()
-        {
-            _values = new List<MeasurementBase>();
-        }
+        List<MeasurementBase> _values = new List<MeasurementBase>();
 
         #region get/set
         public void Add(MeasurementBase measurement)
         {
-            var existing = _values.FirstOrDefault(m => 
+            var existing = this.FirstOrDefault(m => 
                       m.Theta == measurement.Theta 
                     & m.Phi   == measurement.Phi
                     & m.Key   == measurement.Key);
@@ -35,151 +30,72 @@ namespace Goniometer_Controller.Models
             foreach (var measurement in measurements)
                 Add(measurement);
         }
+        #endregion
 
-        public void AddRange(MeasurementCollection collection)
+        #region string manipulation
+        public string ToCSV()
         {
-            this.AddRange(collection._values);
+            StringBuilder sb = new StringBuilder();
+            foreach (var value in this)
+            {
+                sb.AppendLine(MeasurementBase.ToCSV(value));
+            }
+            return sb.ToString();
         }
 
-        public void Remove(MeasurementBase measurement)
+        public static MeasurementCollection FromCSV(string s)
         {
-            _values.Remove(measurement);
-        }
+            var collection = new MeasurementCollection();
 
-        /// <summary>
-        /// Get all measurement of a certain type
-        /// </summary>
-        /// <param sensorname="Key"></param>
-        /// <returns></returns>
-        public IEnumerable<MeasurementBase> FindAll(string key)
-        {
-            return _values.Where(m => m.Key == key);
-        }
+            string[] lines = s.Split('\n');
+            foreach (string line in lines)
+            {
+                if (String.IsNullOrWhiteSpace(line))
+                    continue;
 
-        /// <summary>
-        /// Get all measurements for a certain type and Theta angle
-        /// </summary>
-        /// <param sensorname="Theta"></param>
-        /// <returns></returns>
-        public IEnumerable<MeasurementBase> FindAll(string key, double theta)
-        {
-            return _values.Where(m =>
-                      m.Key   == key
-                    & m.Theta == theta);
-        }
-
-        /// <summary>
-        /// Get all measurements for a theat and Phi angle
-        /// </summary>
-        /// <param sensorname="Theta"></param>
-        /// <param sensorname="Phi"></param>
-        /// <returns></returns>
-        public IEnumerable<MeasurementBase> FindAll(double theta, double phi)
-        {
-            return _values.Where(m => 
-                      m.Theta == theta 
-                    & m.Phi   == phi);
-        }
-
-        /// <summary>
-        /// Get specific measurement
-        /// </summary>
-        /// <param sensorname="Theta"></param>
-        /// <param sensorname="Phi"></param>
-        /// <param sensorname="Key"></param>
-        /// <returns></returns>
-        public MeasurementBase Find(string key, double theta, double phi)
-        {
-            return _values.FirstOrDefault(m => 
-                      m.Key   == key
-                    & m.Theta == theta 
-                    & m.Phi   == phi);
-        }
-
-        public string[] GetKeys()
-        {
-            return _values.Select(m => m.Key).Distinct().ToArray();
-        }
-
-        /// <summary>
-        /// Array of distinct Theta values in collection
-        /// </summary>
-        /// <returns></returns>
-        public double[] GetThetaRange()
-        {
-            return _values.Select(m => m.Theta).Distinct().ToArray();
-        }
-
-        /// <summary>
-        /// Array of distinct Phi values in collection
-        /// </summary>
-        /// <returns></returns>
-        public double[] GetPhiRange()
-        {
-            return _values.Select(m => m.Phi).Distinct().ToArray();
+                var measurement = MeasurementBase.FromCSV(line);
+                collection.Add(measurement);
+            }
+            return collection;
         }
         #endregion
 
-        #region operators
-        public static MeasurementCollection SubstractStray(MeasurementCollection source, MeasurementCollection estimates)
+        IEnumerator<MeasurementBase> IEnumerable<MeasurementBase>.GetEnumerator()
         {
-            MeasurementCollection results = new MeasurementCollection();
-
-            foreach (var m in source._values)
-            {
-                double estimate = MeasurementCollection.GetEstimateReading(estimates, m.Key, m.Theta, m.Phi).Value;
-                double value = (m.Value - estimate < 0) ? 0 : (m.Value - estimate);
-
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, value, m.SensorName, m.PortName));
-            }
-
-            return results;
+            return _values.GetEnumerator();
         }
 
-        private static MeasurementCollection SubtractFrom(MeasurementCollection source, MeasurementCollection estimates)
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            MeasurementCollection results = new MeasurementCollection();
-
-            foreach (var m in source._values)
-            {
-                double estimate = MeasurementCollection.GetEstimateReading(estimates, m.Key, m.Theta, m.Phi).Value;
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value - estimate, m.SensorName, m.PortName));
-            }
-
-            return results;
+            return _values.GetEnumerator();
         }
+    }
 
-        public static MeasurementCollection MultiplyBy(MeasurementCollection source, double value)
-        {
-            MeasurementCollection results = new MeasurementCollection();
-
-            foreach (var m in source._values)
-            {
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value * value, m.SensorName, m.PortName));
-            }
-
-            return results;
-        }
-        #endregion
-
-        public static MeasurementBase GetEstimateReading(MeasurementCollection source, string key, double theta, double phi)
+    public static class MeasurementCollectionExtensions
+    {
+        #region estimates
+        public static MeasurementBase GetEstimateReading(this MeasurementCollection source, string key, double theta, double phi)
         {
             //find closest vertical band
-            double closeTheta = source.FindAll(key).MinSelectMember(t => Math.Abs(t.Theta - theta)).Theta;
+            double closeTheta = source
+                .Where(m => m.Key == key)
+                .MinSelectMember(m => Math.Abs(m.Theta - theta)).Theta;
 
             //find closest member
-            return source.FindAll(key, closeTheta).MinSelectMember(t => Math.Abs(t.Phi - phi));
+            return source
+                .Where(m => m.Key == key & m.Theta == closeTheta)
+                .MinSelectMember(t => Math.Abs(t.Phi - phi));
         }
 
-        public static MeasurementBase GetEstimateReading_Extrapolation(MeasurementCollection source, string key, double theta, double phi)
+        public static MeasurementBase GetEstimateReading_Extrapolation(this MeasurementCollection source, string key, double theta, double phi)
         {
             //try for an exact match:
-            var match = source.Find(key, theta, phi);
+            var match = source.FirstOrDefault(m => m.Key == key & m.Theta == theta & m.Phi == phi);
             if (match != null)
                 return match;
 
             //if any vertical angles are valid, use them for linear extrapoliation
-            var vMatches = source.FindAll(key, theta);
+            var vMatches = source.Where(m => m.Key == key & m.Theta == theta);
             if (vMatches.Count() > 0)
             {
                 //split points into those above and below vAngle, already proved there is not Value at exact vAngle
@@ -210,31 +126,89 @@ namespace Goniometer_Controller.Models
             throw new NotImplementedException();
             //or not
         }
+        #endregion
 
-        public static string ToCSV(MeasurementCollection collection)
+        #region operators
+        public static MeasurementCollection SubstractStray(this MeasurementCollection source, MeasurementCollection stray)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var value in collection._values)
+            MeasurementCollection results = new MeasurementCollection();
+
+            foreach (var m in source)
             {
-                sb.AppendLine(MeasurementBase.ToCSV(value));
+                double estimate = source.GetEstimateReading(m.Key, m.Theta, m.Phi).Value;
+                double value = (m.Value - estimate < 0) ? 0 : (m.Value - estimate);
+
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, value, m.SensorName, m.PortName));
             }
-            return sb.ToString();
+
+            return results;
         }
 
-        public static MeasurementCollection FromCSV(string s)
+        private static MeasurementCollection SubtractFrom(this MeasurementCollection source, MeasurementCollection estimates)
         {
-            var collection = new MeasurementCollection();
+            MeasurementCollection results = new MeasurementCollection();
 
-            string[] lines = s.Split('\n');
-            foreach (string line in lines)
+            foreach (var m in source)
             {
-                if (String.IsNullOrWhiteSpace(line))
-                    continue;
-
-                var measurement = MeasurementBase.FromCSV(line);
-                collection.Add(measurement);
+                double estimate = source.GetEstimateReading(m.Key, m.Theta, m.Phi).Value;
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value - estimate, m.SensorName, m.PortName));
             }
-            return collection;
+
+            return results;
         }
+
+        public static MeasurementCollection MultiplyBy(this MeasurementCollection source, double value)
+        {
+            MeasurementCollection results = new MeasurementCollection();
+
+            foreach (var m in source)
+            {
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value * value, m.SensorName, m.PortName));
+            }
+
+            return results;
+        }
+
+        public static MeasurementCollection AveragePoles(this MeasurementCollection source)
+        {
+            MeasurementCollection results = new MeasurementCollection();
+
+            foreach (string key in source.Select(m => m.Key).Distinct())
+            {
+                double north = source.Where(m => m.Key == key & m.Phi == 180).Average(m => m.Value);
+                double south = source.Where(m => m.Key == key & m.Phi ==   0).Average(m => m.Value);
+
+                foreach (var m in source.Where(m => m.Key == key))
+                {
+                    if (m.Phi == 180)
+                        results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, north, m.SensorName, m.PortName));
+                    else if (m.Phi == 0)
+                        results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key ,south, m.SensorName, m.PortName));
+                    else
+                        results.Add(m);
+                }
+            }
+
+            return results;
+        }
+        #endregion
+
+        #region conversions
+        public static MeasurementCollection CalculateIntensity(this MeasurementCollection source, double distance)
+        {
+            string oldUnit = MeasurementKeys.Illuminance;
+            string newUnit = MeasurementKeys.LuminousIntensity;
+
+            MeasurementCollection results = new MeasurementCollection();
+
+            foreach (var m in source.Where(m => m.Key == oldUnit))
+            {
+                double value = m.Value * Math.Pow(distance, 2);
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, newUnit, value, m.SensorName, m.PortName));
+            }
+
+            return results;
+        }
+        #endregion
     }
 }

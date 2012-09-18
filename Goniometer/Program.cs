@@ -13,6 +13,9 @@ namespace Goniometer
         [STAThread]
         static void Main()
         {
+            //rotate the old logs each run
+            SimpleLogger.Logging.RotateLogFile();
+
             try
             {
                 Application.EnableVisualStyles();

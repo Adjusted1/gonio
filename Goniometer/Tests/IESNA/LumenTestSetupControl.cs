@@ -23,6 +23,8 @@ namespace Goniometer
             txtKCal.Text     = ConfigurationManager.AppSettings["default.correction.calibration"];
             txtKTheta.Text   = ConfigurationManager.AppSettings["default.correction.theta"];
             txtDistance.Text = ConfigurationManager.AppSettings["default.distance"];
+
+            txtDataFolder.Text = ConfigurationManager.AppSettings["default.reportFolder"];
         }
 
         #region public values

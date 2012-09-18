@@ -46,11 +46,11 @@ namespace Goniometer_Tests
 
             //based on values found in raw_stray
             double expectedTheta = 0;
-            double expectedPhi = 40;
-            double expectedValue = 0.01;
+            double expectedPhi = 0;
+            double expectedValue = 0.008;
 
             MeasurementBase actual;
-            actual = MeasurementCollection.GetEstimateReading(target, key, theta, phi);
+            actual = target.GetEstimateReading(key, theta, phi);
 
             Assert.AreEqual(key,            actual.Key);
             Assert.AreEqual(expectedTheta,  actual.Theta);
