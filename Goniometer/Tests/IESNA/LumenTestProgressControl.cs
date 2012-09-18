@@ -379,7 +379,6 @@ namespace Goniometer
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
-            report.manufacture
 
             //generate report file
             string filepath = ConfigurationManager.AppSettings["reportFolder"];
