@@ -28,5 +28,27 @@ namespace Goniometer_Tests
             string actual = target.ToString();
             Assert.IsFalse(String.IsNullOrEmpty(actual));
         }
+
+        public void ToStringTestRaw()
+        {
+            MeasurementCollection data = LightMathTest.GetLuminousData();
+            iesna target = new iesna(data);
+            target.test = "Test - Manually Validate Lumen Summation";
+            target.manufacture = "Philips";
+
+            string actual = target.ToString();
+            Assert.IsFalse(String.IsNullOrEmpty(actual));
+        }
+
+        public void ToStringTestRawStray()
+        {
+            MeasurementCollection data = LightMathTest.GetLuminousData();
+            iesna target = new iesna(data);
+            target.test = "Test - Manually Validate Lumen Summation";
+            target.manufacture = "Philips";
+
+            string actual = target.ToString();
+            Assert.IsFalse(String.IsNullOrEmpty(actual));
+        }
     }
 }

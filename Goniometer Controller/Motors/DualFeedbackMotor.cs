@@ -77,7 +77,7 @@ namespace Goniometer_Controller.Motors
         public override void MoveAndWait(double distance, double velocity, double acceleration)
         {
             int attempt = 0;
-            int maxAttempts = 3;
+            int maxAttempts = 10; //set to arbitrarly large amount
             double adjustedDistance = distance;
 
             //check if we are close enough (or even need to move)
@@ -101,7 +101,7 @@ namespace Goniometer_Controller.Motors
                 if (attempt > maxAttempts)
                 {
                     //max attempts, exit
-                    return;
+                    throw new MotorUnstableException();
                 }
                 else
                 {

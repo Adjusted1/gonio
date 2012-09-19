@@ -10,7 +10,7 @@ namespace Goniometer_Controller.Motors
 {
     internal class BaseMotor
     {
-        protected readonly double _accuracy = 0.1; //scaled units
+        protected readonly double _accuracy = 0.05; //scaled units
 
         protected short _axisNumber;
         protected double _scale;
@@ -121,7 +121,7 @@ namespace Goniometer_Controller.Motors
         }
 
         /// <summary>
-        /// Instruct Motor to move, return when completed within some epsilon
+        /// Instruct Motor to move, return when motion stopped
         /// </summary>
         /// <param name="distance"></param>
         /// <param name="velocity"></param>
@@ -130,6 +130,10 @@ namespace Goniometer_Controller.Motors
         /// <exception cref="MotorStoppedException">Throw is the motor stops moving unexpectedly</exception>
         public virtual void MoveAndWait(double distance, double velocity, double acceleration)
         {
+            //is motion even required?
+            if (Math.Abs(GetMotorPosition() - distance) < _accuracy)
+                return;
+
             //set maximum time for a full movement
             TimeSpan timeout = new TimeSpan(0, 1, 0);
             DateTime startTime = DateTime.Now;
@@ -141,26 +145,35 @@ namespace Goniometer_Controller.Motors
             Move(distance, velocity, acceleration);
             Thread.Sleep(500);
             
-            //have we arrived at our destination yet?
-            while (Math.Abs(GetMotorPosition() - distance) > _accuracy)
+            //check for stalled motor (we already know that motion is required)
+            if (Math.Abs(GetMotorPosition() - lastPosition) < _accuracy)
+                throw new MotorStoppedException();
+
+            //has the motor stopped moving?
+            while (Math.Abs(GetMotorPosition() - lastPosition) > _accuracy)
             {
+                //we've exceeded our alloted time
                 if (DateTime.Now - startTime > timeout)
-                {
-                    //we've exceeded our alloted time
-                    throw new TimeoutException();
-                }
-                else if (Math.Abs(GetMotorPosition() - lastPosition) < _accuracy)
-                {
-                    //movement has stopped 
-                    throw new MotorStoppedException();
-                }
+                    throw new TimeoutException("The motor hasn't stabilized in a reasonable time");
 
                 //record new current position
                 lastPosition = GetMotorPosition();
 
                 //sleep then check again
                 Thread.Sleep(500);
-            } 
+            }
+
+            //halt motion at destination
+            StopMotion();
+        }
+
+        public void StopMotion()
+        {
+            string cmd = "s";
+            cmd += '0'.Multiply(_axisNumber);
+            cmd += "1:";
+
+            MotorSocketProvider.Write(cmd);
         }
 
         public void EmergencyStop()
@@ -187,5 +200,9 @@ namespace Goniometer_Controller.Motors
         public class MotorStoppedException : Exception
         {
         }
+
+        public class MotorUnstableException : Exception
+        {
+        }|
     }
 }
