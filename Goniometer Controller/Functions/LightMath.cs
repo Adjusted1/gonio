@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Goniometer_Controller.Models;
+
 namespace Goniometer_Controller.Functions
 {
     public static class LightMath
@@ -71,6 +73,7 @@ namespace Goniometer_Controller.Functions
         }
         #endregion
 
+        #region summation methods
         /// <summary>
         /// Calculate the Lumen Value of a vertical array and weight them by horizontal angle
         /// </summary>
@@ -78,13 +81,13 @@ namespace Goniometer_Controller.Functions
         /// <returns></returns>
         public static double CalculateLumensByVertical(List<Tuple<double, double, double>> data)
         {
-            double totalLumens = 0;            
-            
+            double totalLumens = 0;
+
             double[] hAngles = data.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
             double[] hWidths = WidthOnCenter(hAngles);
             double hRange = hAngles[hAngles.Length - 1] - hAngles[0];
 
-            for(int h = 0; h < hAngles.Length; h++)
+            for (int h = 0; h < hAngles.Length; h++)
             {
                 var vData = data.Where((item) => item.Item1 == hAngles[h])
                                 .Select((item) => Tuple.Create(item.Item2, item.Item3))
@@ -98,7 +101,7 @@ namespace Goniometer_Controller.Functions
 
             return totalLumens;
         }
-        
+
         /// <summary>
         /// Average weighted horizontal readings, then calculate along surface angle
         /// </summary>
@@ -113,13 +116,13 @@ namespace Goniometer_Controller.Functions
             for (int v = 0; v < vRange.Length; v++)
             {
                 //select just those values in the vertical range
-                var cross = data.Where((item) => item.Item2 == vRange[v]).ToList(); 
+                var cross = data.Where((item) => item.Item2 == vRange[v]).ToList();
 
                 double averageCandles = 0;
-                
+
                 double[] hAngles = cross.Select((item) => item.Item1).Distinct().OrderBy(a => a).ToArray();
                 double[] hWidths = hAngles.Length == 1 ? new double[] { 360 } : WidthOnCenter(hAngles);
-                double   hRange  = hAngles.Length == 1 ? 360                  : hAngles[hAngles.Length - 1] - hAngles[0];
+                double hRange = hAngles.Length == 1 ? 360 : hAngles[hAngles.Length - 1] - hAngles[0];
 
                 for (int h = 0; h < hAngles.Length; h++)
                 {
@@ -171,6 +174,27 @@ namespace Goniometer_Controller.Functions
             }
 
             return total;
+        } 
+        #endregion
+
+        #region luminous preparations
+        //this really needs a better name
+        public static MeasurementCollection PrepareLuminousMeasurements(MeasurementCollection source, double distance, double kCal, double kTheta)
+        {
+            //convert any candle values to candelas
+            source = source.CalculateIntensity(distance);
+
+            //adjust values by calibration factor
+            source = source.MultiplyBy(kCal);
+
+            //adjust values by theta factor
+            source = source.MultiplyBy(kTheta);
+
+            //average nadir
+            source = source.AveragePoles();
+
+            return source;
         }
+        #endregion
     }
 }

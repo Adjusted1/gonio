@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.IO;
 using System.Reflection;
@@ -13,6 +14,23 @@ namespace Goniometer_Tests
     [TestClass()]
     public class LightMathTest
     {
+        #region lumen calibration values
+        public static double Distance
+        {
+            get { return Double.Parse(ConfigurationManager.AppSettings["default.distance"]); }
+        }
+
+        public static double KCal
+        {
+            get { return Double.Parse(ConfigurationManager.AppSettings["default.correction.calibration"]); }
+        }
+
+        public static double KTheta
+        {
+            get { return Double.Parse(ConfigurationManager.AppSettings["default.correction.theta"]); }
+        }
+        #endregion
+
         /// <summary>
         ///A test for CalculateLumensByHorizontalAverage
         ///</summary>
@@ -71,35 +89,28 @@ namespace Goniometer_Tests
             Assert.AreEqual(actual, lumens, delta);
         }
 
+        #region example data
         public static MeasurementCollection GetLuminousData()
         {
-            MeasurementCollection lightData = MeasurementCollectionTest.GetRaw();
-            MeasurementCollection strayData = MeasurementCollectionTest.GetRawStray();
-
-            double distance = 19.3333;
-            double kCal = 0.97484;
-            double kTheta = 1.09313;
-
-            //convert any candle values to candelas
-            lightData = lightData.CalculateIntensity(distance);
-            strayData = strayData.CalculateIntensity(distance);
-
-            //adjust values by calibration factor
-            lightData = lightData.MultiplyBy(kCal);
-            strayData = strayData.MultiplyBy(kCal);
-
-            //adjust values by theta factor
-            lightData = lightData.MultiplyBy(kTheta);
-            strayData = strayData.MultiplyBy(kTheta);
-
-            //average nadir
-            lightData = lightData.AveragePoles();
-            strayData = strayData.AveragePoles();
+            var lightData = GetLuminousRawData();
+            var strayData = GetLuminousStrayRawData();
 
             //calculate corrected values from stray
             return lightData.SubstractStray(strayData);
         }
 
+        public static MeasurementCollection GetLuminousRawData()
+        {
+            var lightData = MeasurementCollectionTest.GetRaw();
+            return LightMath.PrepareLuminousMeasurements(lightData, Distance, KCal, KTheta);
+        }
+
+        public static MeasurementCollection GetLuminousStrayRawData()
+        {
+            var strayData = MeasurementCollectionTest.GetRawStray();
+            return LightMath.PrepareLuminousMeasurements(strayData, Distance, KCal, KTheta);
+        } 
+        #endregion
 
         private List<Tuple<double, double, double>> GenerateData(string filename, out double lumens)
         {
