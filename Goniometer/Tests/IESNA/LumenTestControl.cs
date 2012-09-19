@@ -38,7 +38,7 @@ namespace Goniometer.Tests.IESNA
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (!setupControl.Validate())
+            if (!setupControl.IsValid())
                 return;
 
             //pass values to other tab
@@ -46,10 +46,19 @@ namespace Goniometer.Tests.IESNA
             progressControl.Email              = setupControl.Email;
             progressControl.DataFolder         = setupControl.DataFolder;
 
-            double[] hRange =          setupControl.CalculateHorizontalRange();
-            double[] vRange =          setupControl.CalculateVerticalRange();
-            double[] hStrayRange =     setupControl.CalculateStrayHorizontalRange();
-            double[] vStrayRange =     setupControl.CalculateStrayVerticalRange();
+            //iesna report values
+            progressControl.Manufacturer = setupControl.Manufacturer;
+            progressControl.Model        = setupControl.Model;
+            progressControl.Wattage      = setupControl.Wattage;
+            progressControl.Length       = setupControl.Length;
+            progressControl.Width        = setupControl.Width;
+            progressControl.Height       = setupControl.Height;
+
+            //running values
+            double[] hRange      = setupControl.CalculateHorizontalRange();
+            double[] vRange      = setupControl.CalculateVerticalRange();
+            double[] hStrayRange = setupControl.CalculateStrayHorizontalRange();
+            double[] vStrayRange = setupControl.CalculateStrayVerticalRange();
 
             double kCal     = setupControl.KCal;
             double kTheta   = setupControl.KTheta;
@@ -166,5 +175,6 @@ namespace Goniometer.Tests.IESNA
             }
         }
         #endregion
+
     }
 }

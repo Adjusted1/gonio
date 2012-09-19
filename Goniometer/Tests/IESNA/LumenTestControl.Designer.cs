@@ -47,16 +47,16 @@
             // 
             // wizard
             // 
-            this.wizard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.wizard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.wizard.Controls.Add(this.tabSetup);
             this.wizard.Controls.Add(this.tabProgress);
             this.wizard.Controls.Add(this.tabCompletion);
             this.wizard.Location = new System.Drawing.Point(3, 3);
             this.wizard.Name = "wizard";
             this.wizard.SelectedIndex = 0;
-            this.wizard.Size = new System.Drawing.Size(626, 528);
+            this.wizard.Size = new System.Drawing.Size(957, 679);
             this.wizard.TabIndex = 0;
             // 
             // tabSetup
@@ -67,26 +67,28 @@
             this.tabSetup.Location = new System.Drawing.Point(4, 22);
             this.tabSetup.Name = "tabSetup";
             this.tabSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSetup.Size = new System.Drawing.Size(618, 502);
+            this.tabSetup.Size = new System.Drawing.Size(949, 653);
             this.tabSetup.TabIndex = 0;
             this.tabSetup.Text = "Setup";
             this.tabSetup.UseVisualStyleBackColor = true;
             // 
             // setupControl
             // 
-            this.setupControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.setupControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.setupControl.Email = "";
+            this.setupControl.EmailNotifications = false;
             this.setupControl.Location = new System.Drawing.Point(6, 6);
             this.setupControl.MinimumSize = new System.Drawing.Size(411, 430);
             this.setupControl.Name = "setupControl";
-            this.setupControl.Size = new System.Drawing.Size(606, 461);
+            this.setupControl.Size = new System.Drawing.Size(937, 612);
             this.setupControl.TabIndex = 2;
             // 
             // btnBack
             // 
             this.btnBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnBack.Location = new System.Drawing.Point(6, 473);
+            this.btnBack.Location = new System.Drawing.Point(6, 624);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 23);
             this.btnBack.TabIndex = 1;
@@ -97,7 +99,7 @@
             // btnStart
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStart.Location = new System.Drawing.Point(537, 473);
+            this.btnStart.Location = new System.Drawing.Point(868, 624);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
@@ -113,26 +115,29 @@
             this.tabProgress.Location = new System.Drawing.Point(4, 22);
             this.tabProgress.Name = "tabProgress";
             this.tabProgress.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProgress.Size = new System.Drawing.Size(618, 502);
+            this.tabProgress.Size = new System.Drawing.Size(949, 653);
             this.tabProgress.TabIndex = 1;
             this.tabProgress.Text = "Progress";
             this.tabProgress.UseVisualStyleBackColor = true;
             // 
             // progressControl
             // 
-            this.progressControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressControl.DataFolder = "C:\\";
+            this.progressControl.Email = "";
+            this.progressControl.EmailNotifications = false;
             this.progressControl.Location = new System.Drawing.Point(6, 6);
             this.progressControl.MinimumSize = new System.Drawing.Size(270, 327);
             this.progressControl.Name = "progressControl";
-            this.progressControl.Size = new System.Drawing.Size(606, 461);
+            this.progressControl.Size = new System.Drawing.Size(937, 612);
             this.progressControl.TabIndex = 4;
             // 
             // btnPause
             // 
             this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPause.Location = new System.Drawing.Point(-315, -383);
+            this.btnPause.Location = new System.Drawing.Point(868, 624);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
             this.btnPause.TabIndex = 3;
@@ -143,7 +148,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.Location = new System.Drawing.Point(6, 473);
+            this.btnCancel.Location = new System.Drawing.Point(6, 624);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -157,7 +162,7 @@
             this.tabCompletion.Location = new System.Drawing.Point(4, 22);
             this.tabCompletion.Name = "tabCompletion";
             this.tabCompletion.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCompletion.Size = new System.Drawing.Size(618, 502);
+            this.tabCompletion.Size = new System.Drawing.Size(949, 653);
             this.tabCompletion.TabIndex = 2;
             this.tabCompletion.Text = "Completion";
             this.tabCompletion.UseVisualStyleBackColor = true;
@@ -165,7 +170,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(537, 473);
+            this.btnClose.Location = new System.Drawing.Point(868, 624);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -179,7 +184,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.wizard);
             this.Name = "LumenTestControl";
-            this.Size = new System.Drawing.Size(632, 534);
+            this.Size = new System.Drawing.Size(963, 685);
             this.Load += new System.EventHandler(this.LumenTestControl_Load);
             this.wizard.ResumeLayout(false);
             this.tabSetup.ResumeLayout(false);

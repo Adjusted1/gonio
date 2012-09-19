@@ -12,6 +12,7 @@ using Goniometer.Reports;
 using Goniometer_Controller;
 using Goniometer_Controller.Models;
 using Goniometer_Controller.Sensors;
+using Goniometer_Controller.Functions;
 
 namespace Goniometer
 {
@@ -50,6 +51,7 @@ namespace Goniometer
         private MeasurementCollection _strayData;
         #endregion
 
+
         public LumenTestProgressControl()
         {
             InitializeComponent();
@@ -73,6 +75,25 @@ namespace Goniometer
             get { return lblDataFolder.Text; }
             set { lblDataFolder.Text = value; }
         }
+
+        #region lamp information
+        public string TestNumber { get; set; }
+
+        public string Manufacturer { get; set; }
+
+        public string Model { get; set; }
+
+        public int NumberofLamps { get; set; }
+
+        public double Wattage { get; set; }
+
+        //lumonous opening dimensions
+        public double Length { get; set; }
+
+        public double Width { get; set; }
+
+        public double Height { get; set; }
+        #endregion
         #endregion
 
         #region public methods
@@ -361,26 +382,21 @@ namespace Goniometer
         private string GenerateReport()
         {
             //convert any candle values to candelas
-            _lightData = _lightData.CalculateIntensity(_distance);
-            _strayData = _strayData.CalculateIntensity(_distance);
-
-            //adjust values by calibration factor
-            _lightData = _lightData.MultiplyBy(_kCal);
-            _strayData = _strayData.MultiplyBy(_kCal);
-
-            //adjust values by theta factor
-            _lightData = _lightData.MultiplyBy(_kTheta);
-            _strayData = _strayData.MultiplyBy(_kTheta);
-
-            //average NADIR
-            _lightData = _lightData.AveragePoles();
-            _strayData = _strayData.AveragePoles();
+            _lightData = LightMath.PrepareLuminousMeasurements(_lightData, _distance, _kCal, _kTheta);
+            _strayData = LightMath.PrepareLuminousMeasurements(_strayData, _distance, _kCal, _kTheta);
 
             //calculate corrected values from stray
             var correctedData = _lightData.SubstractStray(_strayData);
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
+            report.TestNumber   = this.TestNumber;
+            report.Manufacturer = this.Manufacturer;
+            report.Model        = this.Model;
+            report.Wattage      = this.Wattage;
+            report.Length       = this.Length;
+            report.Width        = this.Width;
+            report.Height       = this.Height;
 
             //generate report file
             string fullpath = iesna.WriteToFile(report, DataFolder);

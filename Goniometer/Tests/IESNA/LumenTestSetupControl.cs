@@ -35,7 +35,7 @@ namespace Goniometer
 
         public string DataFolder
         {
-            get { return txtDataFolder.Text; }
+            get { return String.Format("{0}\\{1:yyyyMMdd} {2} {3}",txtDataFolder.Text, DateTime.Now, this.Manufacturer, this.Model); }
         }
 
         public bool EmailNotifications
@@ -50,7 +50,7 @@ namespace Goniometer
             set { txtEmail.Text = value; }
         }
 
-        #region IESNA Values
+        #region Lamp Information
         public string TestNumber
         {
             get { return txtTestNumber.Text; }
@@ -65,6 +65,31 @@ namespace Goniometer
         {
             get { return Int32.Parse(txtNumberOfLamps.Text); }
         } 
+
+        public string Model
+        {
+            get { return txtModel.Text; }
+        }
+
+        public double Wattage
+        {
+            get { return Double.Parse(txtWattage.Text); }
+        }
+
+        public double Length
+        {
+            get { return Double.Parse(txtLength.Text); }
+        }
+
+        public double Width
+        {
+            get { return Double.Parse(txtWidth.Text); }
+        }
+
+        public double Height
+        {
+            get { return Double.Parse(txtHeight.Text); }
+        }
         #endregion
 
         #region Calibration Values
@@ -344,9 +369,11 @@ namespace Goniometer
         private void btnDataFolder_Click(object sender, EventArgs e)
         {
             var result = folderBrowserDialog.ShowDialog();
-            
+
             if (result == DialogResult.OK)
+            {
                 txtDataFolder.Text = folderBrowserDialog.SelectedPath;
+            }
         }
 
         #region INotifyPropertyChanged
@@ -405,6 +432,9 @@ namespace Goniometer
             if (String.IsNullOrEmpty(txtManufacturer.Text))
                 return false;
 
+            if (String.IsNullOrEmpty(txtModel.Text))
+                return false;
+
             if (this.HorizontalResolution <= 0)
                 return false;
 
@@ -418,6 +448,11 @@ namespace Goniometer
                 return false;
 
             return true;
+        }
+
+        private void txtModel_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

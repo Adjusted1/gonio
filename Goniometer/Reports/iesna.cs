@@ -17,10 +17,15 @@ namespace Goniometer.Reports
     public class iesna
     {
         #region required keywords
-        public string test;
-        public string testlab;
-        public DateTime issueDate;
-        public string manufacture;
+        public string TestNumber;
+        public string TestLab;
+        public DateTime IssueDate;
+        public string Manufacturer;
+        public string Model;
+        public double Wattage;
+        public double Length;
+        public double Width;
+        public double Height;
         #endregion
 
         #region optional keywords
@@ -76,10 +81,10 @@ namespace Goniometer.Reports
             StringBuilder sb = new StringBuilder();
             
             sb.AppendLine("IESNA:LM-63-2002");
-            sb.AppendLine("[TEST]"          + test                                );
-            sb.AppendLine("[TESTLAB]"       + testlab                             );
-            sb.AppendLine("[ISSUEDATE]"     + issueDate.ToString("dd-MMM-YYYY")   );
-            sb.AppendLine("[MANUFAC]"       + manufacture                         );
+            sb.AppendLine("[TEST]"          + TestNumber                                );
+            sb.AppendLine("[TESTLAB]"       + TestLab                             );
+            sb.AppendLine("[ISSUEDATE]"     + IssueDate.ToString("dd-MMM-YYYY")   );
+            sb.AppendLine("[MANUFAC]"       + Manufacturer                         );
             sb.AppendLine("[LUMCAT]"        + lumcat                              );
             sb.AppendLine("[LUMINAIRE]"     + luminaire                           );
             sb.AppendLine("[LAMPCAT]"       + lampcat                             );
@@ -136,11 +141,11 @@ namespace Goniometer.Reports
             sb.AppendLine("1");
 
             //fixture size, length, width, height
-            sb.AppendLine("0 0 0");
+            sb.AppendLine(String.Format("{0} {1} {2}", Length, Width, Height));
 
             //ballast factor, ballast-lamp photomateric factor, input watts
             //for absolute photometer: 1
-            sb.AppendLine("1 1");
+            sb.AppendLine(String.Format("1 1 {0}", Wattage));
             
             //vertical values
             sb.AppendLine(String.Join(" ", vRange));
