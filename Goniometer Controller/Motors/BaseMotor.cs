@@ -203,6 +203,6 @@ namespace Goniometer_Controller.Motors
 
         public class MotorUnstableException : Exception
         {
-        }|
+        }
     }
 }
