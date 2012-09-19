@@ -147,12 +147,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Simpler Logger\SimpleLogger.csproj">
-      <Project>{34F34C09-CF20-4B9F-8156-CAE10774B19D}</Project>
-      <Name>SimpleLogger</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="arp-motor.bat" />
     <None Include="Calibration\CalibrationDataSet.xsc">
@@ -202,6 +196,12 @@
     <Content Include="Calibration\Calibration.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simpler Logger\SimpleLogger.csproj">
+      <Project>{34F34C09-CF20-4B9F-8156-CAE10774B19D}</Project>
+      <Name>SimpleLogger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goniometer Controller", "Go
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goniometer", "Goniometer\Goniometer.csproj", "{A9181E00-C563-44C5-B9B9-4465017199A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLogger", "..\Simpler Logger\SimpleLogger.csproj", "{34F34C09-CF20-4B9F-8156-CAE10774B19D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goniometer Tests", "Goniometer Tests\Goniometer Tests.csproj", "{A970266D-D2FA-4BF3-85D4-4D85BB52816F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5A021BA1-CD56-4F61-8943-7037C9A5F6A1}"
@@ -19,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Goniometer Setup", "Goniometer Setup\Goniometer Setup.vdproj", "{521B3111-8BB0-420B-B02D-6B24EB29B35B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLogger", "Simpler Logger\SimpleLogger.csproj", "{34F34C09-CF20-4B9F-8156-CAE10774B19D}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -65,21 +65,6 @@ Global
 		{A9181E00-C563-44C5-B9B9-4465017199A3}.Release|x64.Build.0 = Release|x64
 		{A9181E00-C563-44C5-B9B9-4465017199A3}.Release|x86.ActiveCfg = Release|x86
 		{A9181E00-C563-44C5-B9B9-4465017199A3}.Release|x86.Build.0 = Release|x86
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x64.ActiveCfg = Debug|x64
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x64.Build.0 = Debug|x64
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x64.ActiveCfg = Release|x64
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x64.Build.0 = Release|x64
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x86.ActiveCfg = Release|x86
-		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x86.Build.0 = Release|x86
 		{A970266D-D2FA-4BF3-85D4-4D85BB52816F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A970266D-D2FA-4BF3-85D4-4D85BB52816F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A970266D-D2FA-4BF3-85D4-4D85BB52816F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -104,6 +89,22 @@ Global
 		{521B3111-8BB0-420B-B02D-6B24EB29B35B}.Release|x64.ActiveCfg = Release
 		{521B3111-8BB0-420B-B02D-6B24EB29B35B}.Release|x86.ActiveCfg = Release
 		{521B3111-8BB0-420B-B02D-6B24EB29B35B}.Release|x86.Build.0 = Release
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x64.ActiveCfg = Debug|x64
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x64.Build.0 = Debug|x64
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x86.ActiveCfg = Debug|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Debug|x86.Build.0 = Debug|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|Mixed Platforms.Build.0 = Release|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x64.ActiveCfg = Release|x64
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x64.Build.0 = Release|x64
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x86.ActiveCfg = Release|x86
+		{34F34C09-CF20-4B9F-8156-CAE10774B19D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
