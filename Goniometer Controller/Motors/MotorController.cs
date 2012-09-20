@@ -18,37 +18,14 @@ namespace Goniometer_Controller.Motors
 
     public static class MotorController
     {
-        private static BaseMotor _horizontalMotor;
-        private static BaseMotor _verticalMotor;
+        private static HorizontalMotor _horizontalMotor;
+        private static VerticalMotor _verticalMotor;
 
         #region configuration and initialization
         static MotorController()
         {
-            //axis positions
-            short vertMotor = 0;
-            short horzMotor = 1;
-            short horzEncod = 2;
-            short vertEncod = 3;
-
-            //motor encoder resolution * 4 = 8192 counts per rev
-            //load  encoder resolution * 4 = 10000 counts per rev
-
-            //scale factors:
-            //motor scale factor: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.2... counts per degree
-            //load  scale factor:         no reducer =    10,000 counts per rev / 360deg = 27.7...
-
-            //both encoders runs negative numbers
-            _verticalMotor   = new DualFeedbackMotor(vertMotor, -9102.2, vertEncod, -27.777);
-
-            //motor encoder resolution * 4 = 8000 counts per rev
-            //load  encoder resolution * 4 = 5000 counts per rev
-
-            //scale factors:
-            //motor scale factor: 100:1 gear reducer = 800,000 counts per rev / 360deg = 2222.222 counts per degree
-            //load  scale factor:         no reducer =    5000 counts per rev / 360deg = 13.8...
-
-            //load encoder runs negative numbers
-            _horizontalMotor = new DualFeedbackMotor(horzMotor, 2222.2, horzEncod, -13.888);
+            _verticalMotor   = new VerticalMotor();
+            _horizontalMotor = new HorizontalMotor();
         }
 
         public static void Connect(IPAddress address)
@@ -75,9 +52,9 @@ namespace Goniometer_Controller.Motors
             _verticalMotor.SendCommand("lh",   "0");            //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
 
             //scale factors: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.222 counts per degree
-            _verticalMotor.SendCommand("scla", "9102");        //Acceleration Scale Factor [rev/sec/sec]
-            _verticalMotor.SendCommand("sclv", "9102");        //Velocity Scale Factor     [rev/sec]
-            _verticalMotor.SendCommand("scld", "9102");      //Distance Scale Factor     [rev]
+            _verticalMotor.SendCommand("scla",  "9102");        //Acceleration Scale Factor [rev/sec/sec]
+            _verticalMotor.SendCommand("sclv",  "9102");        //Velocity Scale Factor     [rev/sec]
+            _verticalMotor.SendCommand("scld",  "9102");        //Distance Scale Factor     [rev]
 
             //feedback values
             _verticalMotor.SendCommand("smper", "4");           //Maximum Allowable Position Error
@@ -93,9 +70,9 @@ namespace Goniometer_Controller.Motors
             _horizontalMotor.SendCommand("lh",      "0");       //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
 
             //scale factors: 100:1 gear reducer = 800,000 counts per rev / 360deg = 2222.222 counts per degree
-            _horizontalMotor.SendCommand("scla", "2222");    //Acceleration Scale Factor [rev/sec/sec]
-            _horizontalMotor.SendCommand("sclv", "2222");    //Velocity Scale Factor     [rev/sec]
-            _horizontalMotor.SendCommand("scld", "2222");    //Distance Scale Factor     [rev]
+            _horizontalMotor.SendCommand("scla",    "2222");    //Acceleration Scale Factor [rev/sec/sec]
+            _horizontalMotor.SendCommand("sclv",    "2222");    //Velocity Scale Factor     [rev/sec]
+            _horizontalMotor.SendCommand("scld",    "2222");    //Distance Scale Factor     [rev]
 
             //feedback values
             _horizontalMotor.SendCommand("smper",   "15");      //Maximum Allowable Position Error
@@ -129,22 +106,22 @@ namespace Goniometer_Controller.Motors
         #region set angles
         public static void SetHorizontalAngle(double angle)
         {
-            _horizontalMotor.Move(angle, 5, 3);
+            _horizontalMotor.Move(angle);
         }
 
         public static void SetVerticalAngle(double angle)
         {
-            _verticalMotor.Move(angle, 5, 3);
+            _verticalMotor.Move(angle);
         }
 
         public static void SetHorizontalAngleAndWait(double angle)
         {
-            _horizontalMotor.MoveAndWait(angle, 5, 3);
+            _horizontalMotor.MoveAndWait(angle);
         }
 
         public static void SetVerticalAngleAndWait(double angle)
         {
-            _verticalMotor.MoveAndWait(angle, 5, 3);
+            _verticalMotor.MoveAndWait(angle);
         }
         #endregion
 
