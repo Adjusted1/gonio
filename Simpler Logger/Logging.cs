@@ -57,6 +57,12 @@ namespace SimpleLogger
                 lock (locker)
                 {
                     FileInfo fi = new FileInfo(logFile);
+
+                    //check directory existance
+                    if (!fi.Directory.Exists)
+                        fi.Directory.Create();
+
+                    //check file size
                     if (fi.Exists && fi.Length > 1024 * logFileSize)
                         RotateLogFile();
 

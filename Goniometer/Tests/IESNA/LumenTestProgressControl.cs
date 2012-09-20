@@ -407,6 +407,10 @@ namespace Goniometer
         {
             var measurements = e.Measurements;
 
+            //check directory existance
+            if (!Directory.Exists(DataFolder))
+                Directory.CreateDirectory(DataFolder);
+
             //write out recorded measurement immediately
             string filePath = DataFolder + "//raw.csv";
             using (StreamWriter sw = new StreamWriter(filePath, true))

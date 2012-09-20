@@ -435,16 +435,16 @@ namespace Goniometer
             if (String.IsNullOrEmpty(txtModel.Text))
                 return false;
 
-            if (this.HorizontalResolution <= 0)
+            if (this.HorizontalResolution < 0)
                 return false;
 
-            if (this.VerticalResolution <= 0)
+            if (this.VerticalResolution < 0)
                 return false;
 
-            if (this.HorizontalStrayResolution <= 0)
+            if (this.HorizontalStrayResolution < 0)
                 return false;
 
-            if (this.VerticalStrayResolution <= 0)
+            if (this.VerticalStrayResolution < 0)
                 return false;
 
             return true;
