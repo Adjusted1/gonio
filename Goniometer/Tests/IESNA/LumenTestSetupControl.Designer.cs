@@ -29,11 +29,22 @@
         private void InitializeComponent()
         {
             this.grpLamp = new System.Windows.Forms.GroupBox();
+            this.txtWattage = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtWidth = new System.Windows.Forms.TextBox();
+            this.txtHeight = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtLength = new System.Windows.Forms.TextBox();
+            this.txtModel = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.txtNumberOfLamps = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtManufacturer = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtTestNumber = new System.Windows.Forms.TextBox();
+            this.txtTestName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtVerticalResolution = new System.Windows.Forms.TextBox();
             this.lblTime = new System.Windows.Forms.Label();
@@ -60,30 +71,19 @@
             this.txtVerticalStrayResolution = new System.Windows.Forms.TextBox();
             this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
+            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
+            this.txtDistance = new Goniometer.NumberTextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.txtKTheta = new Goniometer.NumberTextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.txtKCal = new Goniometer.NumberTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.txtDataFolder = new System.Windows.Forms.TextBox();
             this.btnDataFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupHorizontalSymetry = new System.Windows.Forms.GroupBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txtModel = new System.Windows.Forms.TextBox();
-            this.txtLength = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtHeight = new System.Windows.Forms.TextBox();
-            this.txtWidth = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtDistance = new Goniometer.NumberTextBox();
-            this.txtKTheta = new Goniometer.NumberTextBox();
-            this.txtKCal = new Goniometer.NumberTextBox();
-            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
-            this.txtWattage = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
             this.grpLamp.SuspendLayout();
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
@@ -109,7 +109,7 @@
             this.grpLamp.Controls.Add(this.label6);
             this.grpLamp.Controls.Add(this.txtManufacturer);
             this.grpLamp.Controls.Add(this.label5);
-            this.grpLamp.Controls.Add(this.txtTestNumber);
+            this.grpLamp.Controls.Add(this.txtTestName);
             this.grpLamp.Controls.Add(this.label2);
             this.grpLamp.Location = new System.Drawing.Point(3, 31);
             this.grpLamp.Name = "grpLamp";
@@ -117,6 +117,99 @@
             this.grpLamp.TabIndex = 24;
             this.grpLamp.TabStop = false;
             this.grpLamp.Text = "Lamp Information";
+            // 
+            // txtWattage
+            // 
+            this.txtWattage.Location = new System.Drawing.Point(288, 71);
+            this.txtWattage.Name = "txtWattage";
+            this.txtWattage.Size = new System.Drawing.Size(100, 20);
+            this.txtWattage.TabIndex = 5;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(234, 74);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(48, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Wattage";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(244, 230);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(38, 13);
+            this.label19.TabIndex = 27;
+            this.label19.Text = "Height";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(247, 204);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(35, 13);
+            this.label18.TabIndex = 26;
+            this.label18.Text = "Width";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(242, 178);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(40, 13);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "Length";
+            // 
+            // txtWidth
+            // 
+            this.txtWidth.Location = new System.Drawing.Point(288, 201);
+            this.txtWidth.Name = "txtWidth";
+            this.txtWidth.Size = new System.Drawing.Size(100, 20);
+            this.txtWidth.TabIndex = 7;
+            this.txtWidth.Text = "0";
+            // 
+            // txtHeight
+            // 
+            this.txtHeight.Location = new System.Drawing.Point(288, 227);
+            this.txtHeight.Name = "txtHeight";
+            this.txtHeight.Size = new System.Drawing.Size(100, 20);
+            this.txtHeight.TabIndex = 8;
+            this.txtHeight.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(232, 159);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(156, 13);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Lumonous Opening Dimensions";
+            // 
+            // txtLength
+            // 
+            this.txtLength.Location = new System.Drawing.Point(288, 175);
+            this.txtLength.Name = "txtLength";
+            this.txtLength.Size = new System.Drawing.Size(100, 20);
+            this.txtLength.TabIndex = 6;
+            this.txtLength.Text = "0";
+            // 
+            // txtModel
+            // 
+            this.txtModel.Location = new System.Drawing.Point(288, 45);
+            this.txtModel.Name = "txtModel";
+            this.txtModel.Size = new System.Drawing.Size(100, 20);
+            this.txtModel.TabIndex = 4;
+            this.txtModel.TextChanged += new System.EventHandler(this.txtModel_TextChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(246, 48);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(36, 13);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "Model";
             // 
             // txtNumberOfLamps
             // 
@@ -128,7 +221,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 74);
+            this.label6.Location = new System.Drawing.Point(25, 74);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(60, 13);
             this.label6.TabIndex = 18;
@@ -150,28 +243,28 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "Manufacturer";
             // 
-            // txtTestNumber
+            // txtTestName
             // 
-            this.txtTestNumber.Location = new System.Drawing.Point(91, 19);
-            this.txtTestNumber.Name = "txtTestNumber";
-            this.txtTestNumber.Size = new System.Drawing.Size(100, 20);
-            this.txtTestNumber.TabIndex = 1;
+            this.txtTestName.Location = new System.Drawing.Point(91, 19);
+            this.txtTestName.Name = "txtTestName";
+            this.txtTestName.Size = new System.Drawing.Size(100, 20);
+            this.txtTestName.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 22);
+            this.label2.Location = new System.Drawing.Point(26, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 14;
-            this.label2.Text = "Test Number";
+            this.label2.Text = "Test Name";
             // 
             // txtVerticalResolution
             // 
             this.txtVerticalResolution.Location = new System.Drawing.Point(63, 19);
             this.txtVerticalResolution.Name = "txtVerticalResolution";
             this.txtVerticalResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtVerticalResolution.TabIndex = 4;
+            this.txtVerticalResolution.TabIndex = 9;
             this.txtVerticalResolution.TextChanged += new System.EventHandler(this.txtVerticalResolution_TextChanged);
             // 
             // lblTime
@@ -282,7 +375,7 @@
             this.txtHorizontalResolution.Location = new System.Drawing.Point(63, 45);
             this.txtHorizontalResolution.Name = "txtHorizontalResolution";
             this.txtHorizontalResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtHorizontalResolution.TabIndex = 5;
+            this.txtHorizontalResolution.TabIndex = 10;
             this.txtHorizontalResolution.TextChanged += new System.EventHandler(this.txtHorizontalResolution_TextChanged);
             // 
             // txtEmail
@@ -397,7 +490,7 @@
             this.txtHorizontalStrayResolution.Location = new System.Drawing.Point(63, 162);
             this.txtHorizontalStrayResolution.Name = "txtHorizontalStrayResolution";
             this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtHorizontalStrayResolution.TabIndex = 8;
+            this.txtHorizontalStrayResolution.TabIndex = 13;
             this.txtHorizontalStrayResolution.TextChanged += new System.EventHandler(this.txtHorizontalStrayResolution_TextChanged);
             // 
             // txtVerticalStrayResolution
@@ -405,7 +498,7 @@
             this.txtVerticalStrayResolution.Location = new System.Drawing.Point(63, 136);
             this.txtVerticalStrayResolution.Name = "txtVerticalStrayResolution";
             this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtVerticalStrayResolution.TabIndex = 7;
+            this.txtVerticalStrayResolution.TabIndex = 12;
             this.txtVerticalStrayResolution.TextChanged += new System.EventHandler(this.txtVerticalStrayResolution_TextChanged);
             // 
             // cboStrayResolution
@@ -414,7 +507,7 @@
             this.cboStrayResolution.Location = new System.Drawing.Point(63, 109);
             this.cboStrayResolution.Name = "cboStrayResolution";
             this.cboStrayResolution.Size = new System.Drawing.Size(125, 21);
-            this.cboStrayResolution.TabIndex = 6;
+            this.cboStrayResolution.TabIndex = 11;
             this.cboStrayResolution.SelectedIndexChanged += new System.EventHandler(this.cboStrayResolution_SelectedIndexChanged);
             // 
             // groupSensor
@@ -429,6 +522,16 @@
             this.groupSensor.TabIndex = 25;
             this.groupSensor.TabStop = false;
             this.groupSensor.Text = "Sensor";
+            // 
+            // controlSensorSetup
+            // 
+            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
+            this.controlSensorSetup.Name = "controlSensorSetup";
+            this.controlSensorSetup.Size = new System.Drawing.Size(318, 337);
+            this.controlSensorSetup.TabIndex = 11;
             // 
             // groupCalibration
             // 
@@ -447,6 +550,13 @@
             this.groupCalibration.TabStop = false;
             this.groupCalibration.Text = "Calibration";
             // 
+            // txtDistance
+            // 
+            this.txtDistance.Location = new System.Drawing.Point(80, 71);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.Size = new System.Drawing.Size(141, 20);
+            this.txtDistance.TabIndex = 5;
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -456,6 +566,13 @@
             this.label14.TabIndex = 4;
             this.label14.Text = "Distance";
             // 
+            // txtKTheta
+            // 
+            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
+            this.txtKTheta.Name = "txtKTheta";
+            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
+            this.txtKTheta.TabIndex = 3;
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -464,6 +581,13 @@
             this.label13.Size = new System.Drawing.Size(44, 13);
             this.label13.TabIndex = 2;
             this.label13.Text = "K_theta";
+            // 
+            // txtKCal
+            // 
+            this.txtKCal.Location = new System.Drawing.Point(80, 19);
+            this.txtKCal.Name = "txtKCal";
+            this.txtKCal.Size = new System.Drawing.Size(141, 20);
+            this.txtKCal.TabIndex = 1;
             // 
             // label12
             // 
@@ -479,7 +603,7 @@
             this.txtDataFolder.Location = new System.Drawing.Point(77, 5);
             this.txtDataFolder.Name = "txtDataFolder";
             this.txtDataFolder.Size = new System.Drawing.Size(381, 20);
-            this.txtDataFolder.TabIndex = 28;
+            this.txtDataFolder.TabIndex = 0;
             // 
             // btnDataFolder
             // 
@@ -514,130 +638,6 @@
             this.groupHorizontalSymetry.TabIndex = 30;
             this.groupHorizontalSymetry.TabStop = false;
             this.groupHorizontalSymetry.Text = "Horizontal Symetry";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(246, 48);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(36, 13);
-            this.label15.TabIndex = 19;
-            this.label15.Text = "Model";
-            // 
-            // txtModel
-            // 
-            this.txtModel.Location = new System.Drawing.Point(288, 45);
-            this.txtModel.Name = "txtModel";
-            this.txtModel.Size = new System.Drawing.Size(100, 20);
-            this.txtModel.TabIndex = 20;
-            this.txtModel.TextChanged += new System.EventHandler(this.txtModel_TextChanged);
-            // 
-            // txtLength
-            // 
-            this.txtLength.Location = new System.Drawing.Point(288, 175);
-            this.txtLength.Name = "txtLength";
-            this.txtLength.Size = new System.Drawing.Size(100, 20);
-            this.txtLength.TabIndex = 21;
-            this.txtLength.Text = "0";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(232, 159);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(156, 13);
-            this.label16.TabIndex = 22;
-            this.label16.Text = "Lumonous Opening Dimensions";
-            // 
-            // txtHeight
-            // 
-            this.txtHeight.Location = new System.Drawing.Point(288, 227);
-            this.txtHeight.Name = "txtHeight";
-            this.txtHeight.Size = new System.Drawing.Size(100, 20);
-            this.txtHeight.TabIndex = 23;
-            this.txtHeight.Text = "0";
-            // 
-            // txtWidth
-            // 
-            this.txtWidth.Location = new System.Drawing.Point(288, 201);
-            this.txtWidth.Name = "txtWidth";
-            this.txtWidth.Size = new System.Drawing.Size(100, 20);
-            this.txtWidth.TabIndex = 24;
-            this.txtWidth.Text = "0";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(242, 178);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(40, 13);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "Length";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(247, 204);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(35, 13);
-            this.label18.TabIndex = 26;
-            this.label18.Text = "Width";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(244, 230);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(38, 13);
-            this.label19.TabIndex = 27;
-            this.label19.Text = "Height";
-            // 
-            // txtDistance
-            // 
-            this.txtDistance.Location = new System.Drawing.Point(80, 71);
-            this.txtDistance.Name = "txtDistance";
-            this.txtDistance.Size = new System.Drawing.Size(141, 20);
-            this.txtDistance.TabIndex = 5;
-            // 
-            // txtKTheta
-            // 
-            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
-            this.txtKTheta.Name = "txtKTheta";
-            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
-            this.txtKTheta.TabIndex = 3;
-            // 
-            // txtKCal
-            // 
-            this.txtKCal.Location = new System.Drawing.Point(80, 19);
-            this.txtKCal.Name = "txtKCal";
-            this.txtKCal.Size = new System.Drawing.Size(141, 20);
-            this.txtKCal.TabIndex = 1;
-            // 
-            // controlSensorSetup
-            // 
-            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
-            this.controlSensorSetup.Name = "controlSensorSetup";
-            this.controlSensorSetup.Size = new System.Drawing.Size(318, 337);
-            this.controlSensorSetup.TabIndex = 11;
-            // 
-            // txtWattage
-            // 
-            this.txtWattage.Location = new System.Drawing.Point(288, 71);
-            this.txtWattage.Name = "txtWattage";
-            this.txtWattage.Size = new System.Drawing.Size(100, 20);
-            this.txtWattage.TabIndex = 29;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(234, 74);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(48, 13);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "Wattage";
             // 
             // LumenTestSetupControl
             // 
@@ -682,7 +682,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtManufacturer;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtTestNumber;
+        private System.Windows.Forms.TextBox txtTestName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtVerticalResolution;
         private System.Windows.Forms.Label lblTime;

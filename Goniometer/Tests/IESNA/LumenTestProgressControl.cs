@@ -77,7 +77,7 @@ namespace Goniometer
         }
 
         #region lamp information
-        public string TestNumber { get; set; }
+        public string TestName { get; set; }
 
         public string Manufacturer { get; set; }
 
@@ -390,13 +390,14 @@ namespace Goniometer
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);
-            report.TestNumber   = this.TestNumber;
+            report.TestName     = this.TestName;
             report.Manufacturer = this.Manufacturer;
             report.Model        = this.Model;
             report.Wattage      = this.Wattage;
             report.Length       = this.Length;
             report.Width        = this.Width;
             report.Height       = this.Height;
+            report.IssueDate    = DateTime.Now;
 
             //generate report file
             string fullpath = iesna.WriteToFile(report, DataFolder);
@@ -408,11 +409,11 @@ namespace Goniometer
             var measurements = e.Measurements;
 
             //check directory existance
-            if (!Directory.Exists(DataFolder))
-                Directory.CreateDirectory(DataFolder);
+            if (!Directory.Exists(this.DataFolder))
+                Directory.CreateDirectory(this.DataFolder);
 
             //write out recorded measurement immediately
-            string filePath = DataFolder + "//raw.csv";
+            string filePath = String.Format("{0}/{1:yyyyMMdd} {2} {3}_raw.csv", this.DataFolder, DateTime.Now, this.TestName, this.Model);
             using (StreamWriter sw = new StreamWriter(filePath, true))
             {
                 foreach (var measurement in measurements)

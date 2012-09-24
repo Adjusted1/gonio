@@ -35,7 +35,7 @@ namespace Goniometer
 
         public string DataFolder
         {
-            get { return String.Format("{0}\\{1:yyyyMMdd} {2} {3}",txtDataFolder.Text, DateTime.Now, this.Manufacturer, this.Model); }
+            get { return String.Format("{0}/{1:yyyyMMdd} {2} {3}",txtDataFolder.Text, DateTime.Now, this.TestName, this.Model); }
         }
 
         public bool EmailNotifications
@@ -51,9 +51,9 @@ namespace Goniometer
         }
 
         #region Lamp Information
-        public string TestNumber
+        public string TestName
         {
-            get { return txtTestNumber.Text; }
+            get { return txtTestName.Text; }
         }
 
         public string Manufacturer
@@ -426,7 +426,7 @@ namespace Goniometer
             if (String.IsNullOrEmpty(txtDataFolder.Text))
                 return false;
 
-            if (String.IsNullOrEmpty(txtTestNumber.Text))
+            if (String.IsNullOrEmpty(txtTestName.Text))
                 return false;
 
             if (String.IsNullOrEmpty(txtManufacturer.Text))

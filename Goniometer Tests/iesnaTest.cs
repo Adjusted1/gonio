@@ -22,7 +22,7 @@ namespace Goniometer_Tests
         {
             MeasurementCollection data = LightMathTest.GetLuminousData();
             iesna target = new iesna(data);
-            target.TestNumber = "Test - Manually Validate Lumen Summation";
+            target.TestName = "Test - Manually Validate Lumen Summation";
             target.Manufacturer = "Philips";
 
             string actual = target.ToString();
@@ -34,7 +34,7 @@ namespace Goniometer_Tests
         {
             MeasurementCollection data = LightMathTest.GetLuminousRawData();
             iesna target = new iesna(data);
-            target.TestNumber = "Test - Manually Validate Lumen Summation";
+            target.TestName = "Test - Manually Validate Lumen Summation";
             target.Manufacturer = "Philips";
 
             string actual = target.ToString();
@@ -46,7 +46,7 @@ namespace Goniometer_Tests
         {
             MeasurementCollection data = LightMathTest.GetLuminousStrayRawData();
             iesna target = new iesna(data);
-            target.TestNumber = "Test - Manually Validate Lumen Summation";
+            target.TestName = "Test - Manually Validate Lumen Summation";
             target.Manufacturer = "Philips";
 
             string actual = target.ToString();

@@ -47,6 +47,7 @@ namespace Goniometer.Tests.IESNA
             progressControl.DataFolder         = setupControl.DataFolder;
 
             //iesna report values
+            progressControl.TestName     = setupControl.TestName;
             progressControl.Manufacturer = setupControl.Manufacturer;
             progressControl.Model        = setupControl.Model;
             progressControl.Wattage      = setupControl.Wattage;

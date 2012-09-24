@@ -17,7 +17,7 @@ namespace Goniometer.Reports
     public class iesna
     {
         #region required keywords
-        public string TestNumber;
+        public string TestName;
         public string TestLab;
         public DateTime IssueDate;
         public string Manufacturer;
@@ -62,7 +62,7 @@ namespace Goniometer.Reports
         /// <returns>fullpath to created file</returns>
         public static string WriteToFile(iesna report, string fileFolder)
         {
-            string fileName = fileFolder + String.Format("//iesna_{0:yyyyMMddHHmmss}.ies", DateTime.Now);
+            string fileName = fileFolder + String.Format("/iesna_{0:yyyyMMdd} {1} {2}.ies", DateTime.Now, report.TestName, report.Model);
 
             using (var fs = new FileStream(fileName, FileMode.CreateNew))   //never overwrite a previous file
             using (var sw = new StreamWriter(fs, Encoding.ASCII))           //standard requires ansii
@@ -81,10 +81,10 @@ namespace Goniometer.Reports
             StringBuilder sb = new StringBuilder();
             
             sb.AppendLine("IESNA:LM-63-2002");
-            sb.AppendLine("[TEST]"          + TestNumber                                );
+            sb.AppendLine("[TEST]"          + TestName                            );
             sb.AppendLine("[TESTLAB]"       + TestLab                             );
-            sb.AppendLine("[ISSUEDATE]"     + IssueDate.ToString("dd-MMM-YYYY")   );
-            sb.AppendLine("[MANUFAC]"       + Manufacturer                         );
+            sb.AppendLine("[ISSUEDATE]"     + IssueDate.ToString("dd-MMM-yyyy")   );
+            sb.AppendLine("[MANUFAC]"       + Manufacturer                        );
             sb.AppendLine("[LUMCAT]"        + lumcat                              );
             sb.AppendLine("[LUMINAIRE]"     + luminaire                           );
             sb.AppendLine("[LAMPCAT]"       + lampcat                             );
