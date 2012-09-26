@@ -447,10 +447,7 @@ namespace Goniometer
             return true;
         }
 
-        private void txtModel_TextChanged(object sender, EventArgs e)
-        {
-        }
-
+        #region Calibration Factors
         private void txtKCal_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             using (var view = new CalibrationView())
@@ -493,6 +490,7 @@ namespace Goniometer
             txtKCal.Text = String.Format("0.####", CalibrationModel.KCal);
             txtKTheta.Text = String.Format("0.####", CalibrationModel.KTheta);
             txtDistance.Text = String.Format("0.####", CalibrationModel.Distance);
-        }
+        } 
+        #endregion
     }
 }
