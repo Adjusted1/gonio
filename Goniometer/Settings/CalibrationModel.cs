@@ -8,7 +8,7 @@ namespace Goniometer.Settings
 {
     public static class CalibrationModel
     {
-        public CalibrationModel()
+        static CalibrationModel()
         {
             CalibrationModel.KCal     = Double.Parse(ConfigurationManager.AppSettings["default.correction.calibration"]);
             CalibrationModel.KTheta   = Double.Parse(ConfigurationManager.AppSettings["default.correction.theta"]);

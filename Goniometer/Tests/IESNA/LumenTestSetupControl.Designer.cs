@@ -200,7 +200,6 @@
             this.txtModel.Name = "txtModel";
             this.txtModel.Size = new System.Drawing.Size(100, 20);
             this.txtModel.TabIndex = 4;
-            this.txtModel.TextChanged += new System.EventHandler(this.txtModel_TextChanged);
             // 
             // label15
             // 

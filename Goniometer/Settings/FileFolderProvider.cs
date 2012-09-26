@@ -8,7 +8,7 @@ namespace Goniometer.Settings
 {
     public static class FileFolderProvider
     {
-        public FileFolderProvider()
+        static FileFolderProvider()
         {
             FileFolderProvider.DefaultDataFolder = ConfigurationManager.AppSettings["default.reportFolder"];
         }
