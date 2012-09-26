@@ -554,8 +554,10 @@
             // 
             this.txtDistance.Location = new System.Drawing.Point(80, 71);
             this.txtDistance.Name = "txtDistance";
+            this.txtDistance.ReadOnly = true;
             this.txtDistance.Size = new System.Drawing.Size(141, 20);
             this.txtDistance.TabIndex = 5;
+            this.txtDistance.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDistance_MouseDoubleClick);
             // 
             // label14
             // 
@@ -570,8 +572,10 @@
             // 
             this.txtKTheta.Location = new System.Drawing.Point(80, 45);
             this.txtKTheta.Name = "txtKTheta";
+            this.txtKTheta.ReadOnly = true;
             this.txtKTheta.Size = new System.Drawing.Size(141, 20);
             this.txtKTheta.TabIndex = 3;
+            this.txtKTheta.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKTheta_MouseDoubleClick);
             // 
             // label13
             // 
@@ -586,8 +590,10 @@
             // 
             this.txtKCal.Location = new System.Drawing.Point(80, 19);
             this.txtKCal.Name = "txtKCal";
+            this.txtKCal.ReadOnly = true;
             this.txtKCal.Size = new System.Drawing.Size(141, 20);
             this.txtKCal.TabIndex = 1;
+            this.txtKCal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKCal_MouseDoubleClick);
             // 
             // label12
             // 
