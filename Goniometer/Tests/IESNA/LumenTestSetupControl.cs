@@ -450,7 +450,7 @@ namespace Goniometer
         #region Calibration Factors
         private void txtKCal_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            using (var view = new CalibrationView())
+            using (var view = new CalibrationView("txtKCal"))
             {
                 var result = view.ShowDialog();
                 if (result == DialogResult.OK)
@@ -462,7 +462,7 @@ namespace Goniometer
 
         private void txtKTheta_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            using (var view = new CalibrationView())
+            using (var view = new CalibrationView("txtKTheta"))
             {
                 var result = view.ShowDialog();
                 if (result == DialogResult.OK)
@@ -474,7 +474,7 @@ namespace Goniometer
 
         private void txtDistance_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            using (var view = new CalibrationView())
+            using (var view = new CalibrationView("txtDistance"))
             {
                 var result = view.ShowDialog();
                 if (result == DialogResult.OK)

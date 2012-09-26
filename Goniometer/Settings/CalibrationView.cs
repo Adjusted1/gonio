@@ -16,6 +16,22 @@ namespace Goniometer.Settings
             InitializeComponent();
         }
 
+        public CalibrationView(string controlSelect)
+        {
+            InitializeComponent();
+
+            try
+            {
+                var control = this.Controls[controlSelect];
+                if (control != null)
+                    control.Select();
+            }
+            catch (Exception ex)
+            {
+                //omnomnom
+            }
+        }
+
         private void CalibrationView_Load(object sender, EventArgs e)
         {
             txtKCal.Text     = String.Format("{0:0.####}", CalibrationModel.KCal);

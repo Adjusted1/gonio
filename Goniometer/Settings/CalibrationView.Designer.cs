@@ -28,25 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtDistance = new Goniometer.NumberTextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtKTheta = new Goniometer.NumberTextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtKCal = new Goniometer.NumberTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.txtDistance = new Goniometer.NumberTextBox();
+            this.txtKTheta = new Goniometer.NumberTextBox();
+            this.txtKCal = new Goniometer.NumberTextBox();
             this.SuspendLayout();
-            // 
-            // txtDistance
-            // 
-            this.txtDistance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDistance.Location = new System.Drawing.Point(72, 58);
-            this.txtDistance.Name = "txtDistance";
-            this.txtDistance.Size = new System.Drawing.Size(179, 20);
-            this.txtDistance.TabIndex = 11;
-            this.txtDistance.TextChanged += new System.EventHandler(this.txtDistance_TextChanged);
             // 
             // label14
             // 
@@ -57,16 +47,6 @@
             this.label14.TabIndex = 10;
             this.label14.Text = "Distance";
             // 
-            // txtKTheta
-            // 
-            this.txtKTheta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtKTheta.Location = new System.Drawing.Point(72, 32);
-            this.txtKTheta.Name = "txtKTheta";
-            this.txtKTheta.Size = new System.Drawing.Size(179, 20);
-            this.txtKTheta.TabIndex = 9;
-            this.txtKTheta.TextChanged += new System.EventHandler(this.txtKTheta_TextChanged);
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -75,16 +55,6 @@
             this.label13.Size = new System.Drawing.Size(44, 13);
             this.label13.TabIndex = 8;
             this.label13.Text = "K_theta";
-            // 
-            // txtKCal
-            // 
-            this.txtKCal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtKCal.Location = new System.Drawing.Point(72, 6);
-            this.txtKCal.Name = "txtKCal";
-            this.txtKCal.Size = new System.Drawing.Size(179, 20);
-            this.txtKCal.TabIndex = 7;
-            this.txtKCal.TextChanged += new System.EventHandler(this.txtKCal_TextChanged);
             // 
             // label12
             // 
@@ -101,7 +71,7 @@
             this.btnOK.Location = new System.Drawing.Point(107, 114);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 12;
+            this.btnOK.TabIndex = 4;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -113,10 +83,40 @@
             this.btnCancel.Location = new System.Drawing.Point(188, 114);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 13;
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // txtDistance
+            // 
+            this.txtDistance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDistance.Location = new System.Drawing.Point(72, 58);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.Size = new System.Drawing.Size(179, 20);
+            this.txtDistance.TabIndex = 3;
+            this.txtDistance.TextChanged += new System.EventHandler(this.txtDistance_TextChanged);
+            // 
+            // txtKTheta
+            // 
+            this.txtKTheta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtKTheta.Location = new System.Drawing.Point(72, 32);
+            this.txtKTheta.Name = "txtKTheta";
+            this.txtKTheta.Size = new System.Drawing.Size(179, 20);
+            this.txtKTheta.TabIndex = 2;
+            this.txtKTheta.TextChanged += new System.EventHandler(this.txtKTheta_TextChanged);
+            // 
+            // txtKCal
+            // 
+            this.txtKCal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtKCal.Location = new System.Drawing.Point(72, 6);
+            this.txtKCal.Name = "txtKCal";
+            this.txtKCal.Size = new System.Drawing.Size(179, 20);
+            this.txtKCal.TabIndex = 1;
+            this.txtKCal.TextChanged += new System.EventHandler(this.txtKCal_TextChanged);
             // 
             // CalibrationView
             // 
