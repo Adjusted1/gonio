@@ -486,9 +486,8 @@ namespace Goniometer
 
         private void SetCalibrationFactors()
         {
-            //setup default values
-            txtKCal.Text = String.Format("0.####", CalibrationModel.KCal);
-            txtKTheta.Text = String.Format("0.####", CalibrationModel.KTheta);
+            txtKCal.Text     = String.Format("0.####", CalibrationModel.KCal);
+            txtKTheta.Text   = String.Format("0.####", CalibrationModel.KTheta);
             txtDistance.Text = String.Format("0.####", CalibrationModel.Distance);
         } 
         #endregion
