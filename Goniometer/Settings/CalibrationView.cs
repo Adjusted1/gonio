@@ -11,6 +11,8 @@ namespace Goniometer.Settings
 {
     public partial class CalibrationView : Form
     {
+        private string _controlSelect;
+
         public CalibrationView()
         {
             InitializeComponent();
@@ -19,17 +21,7 @@ namespace Goniometer.Settings
         public CalibrationView(string controlSelect)
         {
             InitializeComponent();
-
-            try
-            {
-                var control = this.Controls[controlSelect];
-                if (control != null)
-                    control.Select();
-            }
-            catch (Exception ex)
-            {
-                //omnomnom
-            }
+            this._controlSelect = controlSelect;
         }
 
         private void CalibrationView_Load(object sender, EventArgs e)
@@ -37,6 +29,18 @@ namespace Goniometer.Settings
             txtKCal.Text     = String.Format("{0:0.####}", CalibrationModel.KCal);
             txtKTheta.Text   = String.Format("{0:0.####}", CalibrationModel.KTheta);
             txtDistance.Text = String.Format("{0:0.####}", CalibrationModel.Distance);
+
+            if (!String.IsNullOrEmpty(_controlSelect))
+            {
+                try
+                {
+                    var control = this.Controls[_controlSelect];
+                    if (control != null)
+                        control.Select();
+                }
+                catch (Exception) { /*omnomnom*/ }
+            }
+
         }
 
         private void txtKCal_TextChanged(object sender, EventArgs e)

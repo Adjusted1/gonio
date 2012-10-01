@@ -18,9 +18,11 @@ namespace Goniometer
         public LumenTestSetupControl()
         {
             InitializeComponent();
+        }
 
+        private void LumenTestSetupControl_Load(object sender, EventArgs e)
+        {
             SetCalibrationFactors();
-
             txtDataFolder.Text = FileFolderProvider.DefaultDataFolder;
         }
 
@@ -491,5 +493,7 @@ namespace Goniometer
             txtDistance.Text = String.Format("{0:0.####}", CalibrationModel.Distance);
         } 
         #endregion
+
+        
     }
 }

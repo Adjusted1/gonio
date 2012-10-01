@@ -10,9 +10,16 @@ namespace Goniometer.Settings
     {
         static CalibrationModel()
         {
-            CalibrationModel.KCal     = Double.Parse(ConfigurationManager.AppSettings["default.correction.calibration"]);
-            CalibrationModel.KTheta   = Double.Parse(ConfigurationManager.AppSettings["default.correction.theta"]);
-            CalibrationModel.Distance = Double.Parse(ConfigurationManager.AppSettings["default.distance"]);
+            try
+            {
+                CalibrationModel.KCal     = Double.Parse(ConfigurationManager.AppSettings["default.correction.calibration"]);
+                CalibrationModel.KTheta   = Double.Parse(ConfigurationManager.AppSettings["default.correction.theta"]);
+                CalibrationModel.Distance = Double.Parse(ConfigurationManager.AppSettings["default.distance"]);
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.Logging.WriteToLog(ex.Message);
+            }
         }
 
         public static double KCal { get; set; }
