@@ -13,8 +13,8 @@ namespace Goniometer_Controller.Models
         public const string ColorX = "Color - X";
         public const string ColorY = "Color - Y";
         public const string ColorZ = "Color - Z";
-        public const string ColorU = "Color - U";
-        public const string ColorV = "Color - V";
+        public const string ColorU = "Color - U'";
+        public const string ColorV = "Color - V'";
 
         public const string ColorTemp = "Color - CorrelatedTemp";
         public const string ColorDiff = "Color - DeltaUV";

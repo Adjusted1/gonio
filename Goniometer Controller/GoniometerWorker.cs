@@ -90,14 +90,20 @@ namespace Goniometer_Controller
             {
                 _worker.ReportProgress(0, "Test Started");
 
-                for (int h = 0; h < _hRange.Length; h++)
+                for (int v = 0; v < _vRange.Length; v++)
                 {
-                    //update progress, move horizontal motor
-                    _worker.ReportProgress((int)h / _hRange.Length, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
-                    MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+                    //update progress, move vertical arm
+                    int progress = (int)(v / _vRange.Length);
+                    _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
+                    MotorController.SetVerticalAngleAndWait(_vRange[v]);
 
-                    for (int v = 0; v < _vRange.Length; v++)
+                    for (int h = 0; h < _hRange.Length; h++)
                     {
+                        //update progress, move horizontal motor
+                        progress = (int)((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
+                        _worker.ReportProgress((int)h / _hRange.Length, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
+                        MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+
                         try
                         {
                             //loop if paused
@@ -112,11 +118,6 @@ namespace Goniometer_Controller
                                 }
 
                             } while (_paused);
-
-                            //update progress, move vertical arm
-                            int progress = (int)(h + 1 / _hRange.Length) * (v / _vRange.Length);
-                            _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
-                            MotorController.SetVerticalAngleAndWait(_vRange[v]);
 
                             //collect measurements
                             _worker.ReportProgress(progress, "Taking Measurements");

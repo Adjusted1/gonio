@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Goniometer.Functions;
+using Goniometer.Settings;
 using Goniometer_Controller.Sensors;
 
 namespace Goniometer
@@ -18,13 +18,12 @@ namespace Goniometer
         public LumenTestSetupControl()
         {
             InitializeComponent();
+        }
 
-            //setup default values
-            txtKCal.Text     = ConfigurationManager.AppSettings["default.correction.calibration"];
-            txtKTheta.Text   = ConfigurationManager.AppSettings["default.correction.theta"];
-            txtDistance.Text = ConfigurationManager.AppSettings["default.distance"];
-
-            txtDataFolder.Text = ConfigurationManager.AppSettings["default.reportFolder"];
+        private void LumenTestSetupControl_Load(object sender, EventArgs e)
+        {
+            SetCalibrationFactors();
+            txtDataFolder.Text = FileFolderProvider.DefaultDataFolder;
         }
 
         #region public values
@@ -450,9 +449,51 @@ namespace Goniometer
             return true;
         }
 
-        private void txtModel_TextChanged(object sender, EventArgs e)
+        #region Calibration Factors
+        private void txtKCal_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            using (var view = new CalibrationView("txtKCal"))
+            {
+                var result = view.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetCalibrationFactors();
+                }
+            }
         }
+
+        private void txtKTheta_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            using (var view = new CalibrationView("txtKTheta"))
+            {
+                var result = view.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetCalibrationFactors();
+                }
+            }
+        }
+
+        private void txtDistance_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            using (var view = new CalibrationView("txtDistance"))
+            {
+                var result = view.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetCalibrationFactors();
+                }
+            }
+        }
+
+        private void SetCalibrationFactors()
+        {
+            txtKCal.Text     = String.Format("{0:0.####}", CalibrationModel.KCal);
+            txtKTheta.Text   = String.Format("{0:0.####}", CalibrationModel.KTheta);
+            txtDistance.Text = String.Format("{0:0.####}", CalibrationModel.Distance);
+        } 
+        #endregion
+
+        
     }
 }

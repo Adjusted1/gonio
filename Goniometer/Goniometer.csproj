@@ -116,6 +116,14 @@
     <Compile Include="Controls\NumberTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Settings\CalibrationModel.cs" />
+    <Compile Include="Settings\CalibrationView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\CalibrationView.Designer.cs">
+      <DependentUpon>CalibrationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\FileFolderProvider.cs" />
     <Compile Include="Setup\SensorSetup.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -180,6 +188,9 @@
     <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Settings\CalibrationView.resx">
+      <DependentUpon>CalibrationView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setup\SensorSetup.resx">
       <DependentUpon>SensorSetup.cs</DependentUpon>
     </EmbeddedResource>

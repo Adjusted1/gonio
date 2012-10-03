@@ -51,12 +51,6 @@ namespace Goniometer
         private MeasurementCollection _strayData;
         #endregion
 
-
-        public LumenTestProgressControl()
-        {
-            InitializeComponent();
-        }
-
         #region public variables
         public bool EmailNotifications
         {
@@ -96,6 +90,11 @@ namespace Goniometer
         #endregion
         #endregion
 
+        public LumenTestProgressControl()
+        {
+            InitializeComponent();
+        }
+
         #region public methods
         public void BeginTestAsync(IEnumerable<MinoltaBaseSensor> sensors, 
             double[] hRange, double[] vRange, 
@@ -132,7 +131,7 @@ namespace Goniometer
 
         public void PauseTestAsync()
         {
-            txtStatus.Text += "Pausing\n";
+            txtStatus.AppendText("Pausing\n");
 
             if (_strayWorker != null)
                 _strayWorker.PauseAsync();
@@ -143,7 +142,7 @@ namespace Goniometer
 
         public void UnpauseTestAsync()
         {
-            txtStatus.Text += "Unpausing\n";
+            txtStatus.AppendText("Unpausing\n");
 
             if (_strayWorker != null)
                 _strayWorker.UnPauseAsync();
@@ -154,7 +153,7 @@ namespace Goniometer
 
         public void CancelTestAsync()
         {
-            txtStatus.Text += "Cancelling\n";
+            txtStatus.AppendText("Cancelling\n");
 
             if (_strayWorker != null)
                 _strayWorker.CancelAsync();
@@ -336,7 +335,7 @@ namespace Goniometer
         private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressbar.Value = e.ProgressPercentage;
-            txtStatus.Text += String.Format("{0:yyyy-MM-dd-HH:mm:ss} - {1}\n", DateTime.Now, e.UserState);
+            txtStatus.AppendText(String.Format("{0:yyyy-MM-dd-HH:mm:ss} - {1}\n", DateTime.Now, e.UserState));
 
             long time = ReportUtils.TimeEstimate(_hRange.Length, _vRange.Length).Ticks * ((100 - e.ProgressPercentage) / 100);
             lblCompletionTime.Text = String.Format("{0:hh\\:mm\\:ss}", new TimeSpan(time));

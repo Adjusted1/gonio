@@ -71,19 +71,19 @@
             this.txtVerticalStrayResolution = new System.Windows.Forms.TextBox();
             this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
-            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
-            this.txtDistance = new Goniometer.NumberTextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtKTheta = new Goniometer.NumberTextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtKCal = new Goniometer.NumberTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.txtDataFolder = new System.Windows.Forms.TextBox();
             this.btnDataFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupHorizontalSymetry = new System.Windows.Forms.GroupBox();
+            this.txtDistance = new Goniometer.NumberTextBox();
+            this.txtKTheta = new Goniometer.NumberTextBox();
+            this.txtKCal = new Goniometer.NumberTextBox();
+            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
             this.grpLamp.SuspendLayout();
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
@@ -114,7 +114,7 @@
             this.grpLamp.Location = new System.Drawing.Point(3, 31);
             this.grpLamp.Name = "grpLamp";
             this.grpLamp.Size = new System.Drawing.Size(394, 253);
-            this.grpLamp.TabIndex = 24;
+            this.grpLamp.TabIndex = 2;
             this.grpLamp.TabStop = false;
             this.grpLamp.Text = "Lamp Information";
             // 
@@ -123,7 +123,7 @@
             this.txtWattage.Location = new System.Drawing.Point(288, 71);
             this.txtWattage.Name = "txtWattage";
             this.txtWattage.Size = new System.Drawing.Size(100, 20);
-            this.txtWattage.TabIndex = 5;
+            this.txtWattage.TabIndex = 14;
             // 
             // label20
             // 
@@ -166,7 +166,7 @@
             this.txtWidth.Location = new System.Drawing.Point(288, 201);
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(100, 20);
-            this.txtWidth.TabIndex = 7;
+            this.txtWidth.TabIndex = 16;
             this.txtWidth.Text = "0";
             // 
             // txtHeight
@@ -174,7 +174,7 @@
             this.txtHeight.Location = new System.Drawing.Point(288, 227);
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(100, 20);
-            this.txtHeight.TabIndex = 8;
+            this.txtHeight.TabIndex = 17;
             this.txtHeight.Text = "0";
             // 
             // label16
@@ -191,7 +191,7 @@
             this.txtLength.Location = new System.Drawing.Point(288, 175);
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(100, 20);
-            this.txtLength.TabIndex = 6;
+            this.txtLength.TabIndex = 15;
             this.txtLength.Text = "0";
             // 
             // txtModel
@@ -199,8 +199,7 @@
             this.txtModel.Location = new System.Drawing.Point(288, 45);
             this.txtModel.Name = "txtModel";
             this.txtModel.Size = new System.Drawing.Size(100, 20);
-            this.txtModel.TabIndex = 4;
-            this.txtModel.TextChanged += new System.EventHandler(this.txtModel_TextChanged);
+            this.txtModel.TabIndex = 13;
             // 
             // label15
             // 
@@ -216,7 +215,7 @@
             this.txtNumberOfLamps.Location = new System.Drawing.Point(91, 71);
             this.txtNumberOfLamps.Name = "txtNumberOfLamps";
             this.txtNumberOfLamps.Size = new System.Drawing.Size(100, 20);
-            this.txtNumberOfLamps.TabIndex = 3;
+            this.txtNumberOfLamps.TabIndex = 12;
             // 
             // label6
             // 
@@ -232,7 +231,7 @@
             this.txtManufacturer.Location = new System.Drawing.Point(91, 45);
             this.txtManufacturer.Name = "txtManufacturer";
             this.txtManufacturer.Size = new System.Drawing.Size(100, 20);
-            this.txtManufacturer.TabIndex = 2;
+            this.txtManufacturer.TabIndex = 11;
             // 
             // label5
             // 
@@ -248,7 +247,7 @@
             this.txtTestName.Location = new System.Drawing.Point(91, 19);
             this.txtTestName.Name = "txtTestName";
             this.txtTestName.Size = new System.Drawing.Size(100, 20);
-            this.txtTestName.TabIndex = 1;
+            this.txtTestName.TabIndex = 10;
             // 
             // label2
             // 
@@ -264,7 +263,7 @@
             this.txtVerticalResolution.Location = new System.Drawing.Point(63, 19);
             this.txtVerticalResolution.Name = "txtVerticalResolution";
             this.txtVerticalResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtVerticalResolution.TabIndex = 9;
+            this.txtVerticalResolution.TabIndex = 21;
             this.txtVerticalResolution.TextChanged += new System.EventHandler(this.txtVerticalResolution_TextChanged);
             // 
             // lblTime
@@ -284,7 +283,7 @@
             this.radHorizontalFull.Location = new System.Drawing.Point(6, 19);
             this.radHorizontalFull.Name = "radHorizontalFull";
             this.radHorizontalFull.Size = new System.Drawing.Size(51, 17);
-            this.radHorizontalFull.TabIndex = 10;
+            this.radHorizontalFull.TabIndex = 33;
             this.radHorizontalFull.TabStop = true;
             this.radHorizontalFull.Text = "None";
             this.radHorizontalFull.UseVisualStyleBackColor = true;
@@ -298,7 +297,7 @@
             this.groupVerticalSymetry.Location = new System.Drawing.Point(204, 290);
             this.groupVerticalSymetry.Name = "groupVerticalSymetry";
             this.groupVerticalSymetry.Size = new System.Drawing.Size(194, 93);
-            this.groupVerticalSymetry.TabIndex = 22;
+            this.groupVerticalSymetry.TabIndex = 4;
             this.groupVerticalSymetry.TabStop = false;
             this.groupVerticalSymetry.Text = "Vertical Symetry";
             // 
@@ -309,7 +308,7 @@
             this.radVerticalFull.Location = new System.Drawing.Point(6, 20);
             this.radVerticalFull.Name = "radVerticalFull";
             this.radVerticalFull.Size = new System.Drawing.Size(111, 17);
-            this.radVerticalFull.TabIndex = 9;
+            this.radVerticalFull.TabIndex = 30;
             this.radVerticalFull.TabStop = true;
             this.radVerticalFull.Text = "Both Hemispheres";
             this.radVerticalFull.UseVisualStyleBackColor = true;
@@ -321,7 +320,7 @@
             this.radVerticalBottom.Location = new System.Drawing.Point(6, 66);
             this.radVerticalBottom.Name = "radVerticalBottom";
             this.radVerticalBottom.Size = new System.Drawing.Size(141, 17);
-            this.radVerticalBottom.TabIndex = 9;
+            this.radVerticalBottom.TabIndex = 32;
             this.radVerticalBottom.Text = "Bottom Hemisphere Only";
             this.radVerticalBottom.UseVisualStyleBackColor = true;
             this.radVerticalBottom.CheckedChanged += new System.EventHandler(this.radVerticalBottom_CheckedChanged);
@@ -332,7 +331,7 @@
             this.radVerticalTop.Location = new System.Drawing.Point(6, 43);
             this.radVerticalTop.Name = "radVerticalTop";
             this.radVerticalTop.Size = new System.Drawing.Size(127, 17);
-            this.radVerticalTop.TabIndex = 9;
+            this.radVerticalTop.TabIndex = 31;
             this.radVerticalTop.Text = "Top Hemisphere Only";
             this.radVerticalTop.UseVisualStyleBackColor = true;
             this.radVerticalTop.CheckedChanged += new System.EventHandler(this.radVerticalTop_CheckedChanged);
@@ -343,7 +342,7 @@
             this.radHorizontalSingle.Location = new System.Drawing.Point(6, 88);
             this.radHorizontalSingle.Name = "radHorizontalSingle";
             this.radHorizontalSingle.Size = new System.Drawing.Size(146, 17);
-            this.radHorizontalSingle.TabIndex = 10;
+            this.radHorizontalSingle.TabIndex = 36;
             this.radHorizontalSingle.Text = "Full (Single Measurement)";
             this.radHorizontalSingle.UseVisualStyleBackColor = true;
             this.radHorizontalSingle.CheckedChanged += new System.EventHandler(this.radHorizontalSingle_CheckedChanged);
@@ -354,7 +353,7 @@
             this.radHorizontalQuarter.Location = new System.Drawing.Point(6, 65);
             this.radHorizontalQuarter.Name = "radHorizontalQuarter";
             this.radHorizontalQuarter.Size = new System.Drawing.Size(84, 17);
-            this.radHorizontalQuarter.TabIndex = 10;
+            this.radHorizontalQuarter.TabIndex = 35;
             this.radHorizontalQuarter.Text = "Quadrilateral";
             this.radHorizontalQuarter.UseVisualStyleBackColor = true;
             this.radHorizontalQuarter.CheckedChanged += new System.EventHandler(this.radHorizontalQuarter_CheckedChanged);
@@ -365,7 +364,7 @@
             this.radHorizontalHalf.Location = new System.Drawing.Point(6, 42);
             this.radHorizontalHalf.Name = "radHorizontalHalf";
             this.radHorizontalHalf.Size = new System.Drawing.Size(62, 17);
-            this.radHorizontalHalf.TabIndex = 10;
+            this.radHorizontalHalf.TabIndex = 34;
             this.radHorizontalHalf.Text = "Bilateral";
             this.radHorizontalHalf.UseVisualStyleBackColor = true;
             this.radHorizontalHalf.CheckedChanged += new System.EventHandler(this.radHorizontalHalf_CheckedChanged);
@@ -375,7 +374,7 @@
             this.txtHorizontalResolution.Location = new System.Drawing.Point(63, 45);
             this.txtHorizontalResolution.Name = "txtHorizontalResolution";
             this.txtHorizontalResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtHorizontalResolution.TabIndex = 10;
+            this.txtHorizontalResolution.TabIndex = 22;
             this.txtHorizontalResolution.TextChanged += new System.EventHandler(this.txtHorizontalResolution_TextChanged);
             // 
             // txtEmail
@@ -385,7 +384,7 @@
             this.txtEmail.Location = new System.Drawing.Point(9, 545);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(135, 20);
-            this.txtEmail.TabIndex = 13;
+            this.txtEmail.TabIndex = 9;
             // 
             // chkEmail
             // 
@@ -394,7 +393,7 @@
             this.chkEmail.Location = new System.Drawing.Point(9, 522);
             this.chkEmail.Name = "chkEmail";
             this.chkEmail.Size = new System.Drawing.Size(112, 17);
-            this.chkEmail.TabIndex = 12;
+            this.chkEmail.TabIndex = 8;
             this.chkEmail.Text = "Email Notifications";
             this.chkEmail.UseVisualStyleBackColor = true;
             this.chkEmail.CheckedChanged += new System.EventHandler(this.chkEmail_CheckedChanged);
@@ -427,7 +426,7 @@
             this.groupResolution.Location = new System.Drawing.Point(3, 290);
             this.groupResolution.Name = "groupResolution";
             this.groupResolution.Size = new System.Drawing.Size(194, 216);
-            this.groupResolution.TabIndex = 21;
+            this.groupResolution.TabIndex = 3;
             this.groupResolution.TabStop = false;
             this.groupResolution.Text = "Resolution";
             // 
@@ -490,7 +489,7 @@
             this.txtHorizontalStrayResolution.Location = new System.Drawing.Point(63, 162);
             this.txtHorizontalStrayResolution.Name = "txtHorizontalStrayResolution";
             this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtHorizontalStrayResolution.TabIndex = 13;
+            this.txtHorizontalStrayResolution.TabIndex = 25;
             this.txtHorizontalStrayResolution.TextChanged += new System.EventHandler(this.txtHorizontalStrayResolution_TextChanged);
             // 
             // txtVerticalStrayResolution
@@ -498,7 +497,7 @@
             this.txtVerticalStrayResolution.Location = new System.Drawing.Point(63, 136);
             this.txtVerticalStrayResolution.Name = "txtVerticalStrayResolution";
             this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
-            this.txtVerticalStrayResolution.TabIndex = 12;
+            this.txtVerticalStrayResolution.TabIndex = 24;
             this.txtVerticalStrayResolution.TextChanged += new System.EventHandler(this.txtVerticalStrayResolution_TextChanged);
             // 
             // cboStrayResolution
@@ -507,7 +506,7 @@
             this.cboStrayResolution.Location = new System.Drawing.Point(63, 109);
             this.cboStrayResolution.Name = "cboStrayResolution";
             this.cboStrayResolution.Size = new System.Drawing.Size(125, 21);
-            this.cboStrayResolution.TabIndex = 11;
+            this.cboStrayResolution.TabIndex = 23;
             this.cboStrayResolution.SelectedIndexChanged += new System.EventHandler(this.cboStrayResolution_SelectedIndexChanged);
             // 
             // groupSensor
@@ -519,19 +518,9 @@
             this.groupSensor.Location = new System.Drawing.Point(404, 145);
             this.groupSensor.Name = "groupSensor";
             this.groupSensor.Size = new System.Drawing.Size(331, 361);
-            this.groupSensor.TabIndex = 25;
+            this.groupSensor.TabIndex = 7;
             this.groupSensor.TabStop = false;
             this.groupSensor.Text = "Sensor";
-            // 
-            // controlSensorSetup
-            // 
-            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
-            this.controlSensorSetup.Name = "controlSensorSetup";
-            this.controlSensorSetup.Size = new System.Drawing.Size(318, 337);
-            this.controlSensorSetup.TabIndex = 11;
             // 
             // groupCalibration
             // 
@@ -546,16 +535,9 @@
             this.groupCalibration.Location = new System.Drawing.Point(404, 31);
             this.groupCalibration.Name = "groupCalibration";
             this.groupCalibration.Size = new System.Drawing.Size(331, 108);
-            this.groupCalibration.TabIndex = 26;
+            this.groupCalibration.TabIndex = 6;
             this.groupCalibration.TabStop = false;
             this.groupCalibration.Text = "Calibration";
-            // 
-            // txtDistance
-            // 
-            this.txtDistance.Location = new System.Drawing.Point(80, 71);
-            this.txtDistance.Name = "txtDistance";
-            this.txtDistance.Size = new System.Drawing.Size(141, 20);
-            this.txtDistance.TabIndex = 5;
             // 
             // label14
             // 
@@ -566,13 +548,6 @@
             this.label14.TabIndex = 4;
             this.label14.Text = "Distance";
             // 
-            // txtKTheta
-            // 
-            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
-            this.txtKTheta.Name = "txtKTheta";
-            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
-            this.txtKTheta.TabIndex = 3;
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -581,13 +556,6 @@
             this.label13.Size = new System.Drawing.Size(44, 13);
             this.label13.TabIndex = 2;
             this.label13.Text = "K_theta";
-            // 
-            // txtKCal
-            // 
-            this.txtKCal.Location = new System.Drawing.Point(80, 19);
-            this.txtKCal.Name = "txtKCal";
-            this.txtKCal.Size = new System.Drawing.Size(141, 20);
-            this.txtKCal.TabIndex = 1;
             // 
             // label12
             // 
@@ -610,7 +578,7 @@
             this.btnDataFolder.Location = new System.Drawing.Point(464, 3);
             this.btnDataFolder.Name = "btnDataFolder";
             this.btnDataFolder.Size = new System.Drawing.Size(141, 23);
-            this.btnDataFolder.TabIndex = 29;
+            this.btnDataFolder.TabIndex = 1;
             this.btnDataFolder.Text = "Select Folder";
             this.btnDataFolder.UseVisualStyleBackColor = true;
             this.btnDataFolder.Click += new System.EventHandler(this.btnDataFolder_Click);
@@ -635,9 +603,49 @@
             this.groupHorizontalSymetry.Location = new System.Drawing.Point(204, 384);
             this.groupHorizontalSymetry.Name = "groupHorizontalSymetry";
             this.groupHorizontalSymetry.Size = new System.Drawing.Size(194, 122);
-            this.groupHorizontalSymetry.TabIndex = 30;
+            this.groupHorizontalSymetry.TabIndex = 5;
             this.groupHorizontalSymetry.TabStop = false;
             this.groupHorizontalSymetry.Text = "Horizontal Symetry";
+            // 
+            // txtDistance
+            // 
+            this.txtDistance.Location = new System.Drawing.Point(80, 71);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.ReadOnly = true;
+            this.txtDistance.Size = new System.Drawing.Size(141, 20);
+            this.txtDistance.TabIndex = 5;
+            this.txtDistance.TabStop = false;
+            this.txtDistance.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDistance_MouseDoubleClick);
+            // 
+            // txtKTheta
+            // 
+            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
+            this.txtKTheta.Name = "txtKTheta";
+            this.txtKTheta.ReadOnly = true;
+            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
+            this.txtKTheta.TabIndex = 3;
+            this.txtKTheta.TabStop = false;
+            this.txtKTheta.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKTheta_MouseDoubleClick);
+            // 
+            // txtKCal
+            // 
+            this.txtKCal.Location = new System.Drawing.Point(80, 19);
+            this.txtKCal.Name = "txtKCal";
+            this.txtKCal.ReadOnly = true;
+            this.txtKCal.Size = new System.Drawing.Size(141, 20);
+            this.txtKCal.TabIndex = 1;
+            this.txtKCal.TabStop = false;
+            this.txtKCal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKCal_MouseDoubleClick);
+            // 
+            // controlSensorSetup
+            // 
+            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
+            this.controlSensorSetup.Name = "controlSensorSetup";
+            this.controlSensorSetup.Size = new System.Drawing.Size(318, 337);
+            this.controlSensorSetup.TabIndex = 40;
             // 
             // LumenTestSetupControl
             // 
@@ -659,6 +667,7 @@
             this.MinimumSize = new System.Drawing.Size(749, 571);
             this.Name = "LumenTestSetupControl";
             this.Size = new System.Drawing.Size(749, 571);
+            this.Load += new System.EventHandler(this.LumenTestSetupControl_Load);
             this.grpLamp.ResumeLayout(false);
             this.grpLamp.PerformLayout();
             this.groupVerticalSymetry.ResumeLayout(false);
