@@ -10,15 +10,11 @@ namespace Goniometer_Controller.Sensors
 {
     public class MinoltaCL200Controller : MinoltaBaseSensor
     {
-        public const string Name = "Minolta CL200";
-        public override string GetName()
-        {
-            return MinoltaCL200Controller.Name;
-        }
+        public const string Type = "Minolta CL200";
 
         #region construction
-        public MinoltaCL200Controller(SerialPort port)
-            : base(port)
+        public MinoltaCL200Controller(string name, SerialPort port)
+            : base(name, port)
         {
         }
 
@@ -281,7 +277,7 @@ namespace Goniometer_Controller.Sensors
 
         private List<MeasurementBase> CollectMeasurements(double theta, double phi, int receptor, bool useCF, CalibrationModeEnum mode)
         {
-            string name = this.GetName();
+            string name = this.Name;
             string port = this._port.PortName;
 
             try

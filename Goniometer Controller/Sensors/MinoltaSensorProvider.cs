@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.IO.Ports;
@@ -8,56 +9,75 @@ namespace Goniometer_Controller.Sensors
 {
     public static class MinoltaSensorProvider
     {
-        public static string[] GetSensorNames()
+        private static object _sensorsLock = new object();
+        private static List<MinoltaBaseSensor> _sensors = new List<MinoltaBaseSensor>();
+        
+        static MinoltaSensorProvider()
         {
-            return new string[]
-            {
-                MinoltaT10Controller.Name,
-                MinoltaCL200Controller.Name
-            };
+            LoadSensorConfiguration();
         }
 
-        public static IEnumerable<MinoltaBaseSensor> GetSensors()
+        private static void LoadSensorConfiguration()
         {
-            List<MinoltaBaseSensor> sensors = new List<MinoltaBaseSensor>();
+            var config = GoniometerControllerConfigurationSection.GetConfigurationSection();
+            foreach (GoniometerControllerConfigurationSection.SensorConfigurationElement sensorInfo in config.Sensors)
+            {
+                var port = SerialPortProvider.GetPort(sensorInfo.Port);
+                var sensor = CreateSensor(sensorInfo.Name, sensorInfo.Type, port);
 
-            string[] portnames = SerialPort.GetPortNames();
-            string[] sensornames = GetSensorNames();
-
-            //iterate every known sensor type for all available ports
-            foreach (string portname in portnames)
-            foreach (string sensorname in sensornames)
-            {   
-                try
-                {
-                    SerialPort port = SerialPortProvider.GetPort(portname);
-                    MinoltaBaseSensor sensor = GetSensorByName(sensorname, port);
-
-                    if (sensor.TestStatus())
-                        sensors.Add(sensor);
-                }
-                catch (Exception)
-                {
-                    //unknown failure, move onto the next type
-                }
+                AddSensor(sensor);
             }
-
-            return sensors;
         }
 
-        public static MinoltaBaseSensor GetSensorByName(string name, SerialPort port)
+        public static void SaveSensorConfiguration()
         {
-            switch (name)
-            {
-                case (MinoltaT10Controller.Name):
-                    return new MinoltaT10Controller(port);
 
-                case (MinoltaCL200Controller.Name):
-                    return new MinoltaCL200Controller(port);
+        }
+
+        public static IEnumerable<string> GetSensorTypes()
+        {
+            var types = new List<string>();
+
+            types.Add(MinoltaT10Controller.Type);
+            types.Add(MinoltaCL200Controller.Type);
+
+            return types;
+        }
+
+        public static MinoltaBaseSensor CreateSensor(string name, string type, SerialPort port)
+        {
+            switch (type)
+            {
+                case (MinoltaT10Controller.Type):
+                    return new MinoltaT10Controller(name, port);
+
+                case (MinoltaCL200Controller.Type):
+                    return new MinoltaCL200Controller(name, port);
 
                 default:
                     throw new ArgumentException("Unknown Sensor by that sensorname");
             } 
+        }
+
+        public static void AddSensor(MinoltaBaseSensor sensor)
+        {
+            lock (_sensorsLock)
+            {
+                _sensors.Add(sensor);
+            }
+        }
+
+        public static bool RemoveSensor(MinoltaBaseSensor sensor)
+        {
+            lock (_sensorsLock)
+            {
+                return _sensors.Remove(sensor);
+            }
+        }
+
+        public static IEnumerable<MinoltaBaseSensor> GetSensors()
+        {
+            return _sensors.ToList();
         }
     }
 }

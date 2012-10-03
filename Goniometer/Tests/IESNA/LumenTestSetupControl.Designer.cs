@@ -72,18 +72,18 @@
             this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
+            this.txtDistance = new Goniometer.NumberTextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.txtKTheta = new Goniometer.NumberTextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.txtKCal = new Goniometer.NumberTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.txtDataFolder = new System.Windows.Forms.TextBox();
             this.btnDataFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupHorizontalSymetry = new System.Windows.Forms.GroupBox();
-            this.txtDistance = new Goniometer.NumberTextBox();
-            this.txtKTheta = new Goniometer.NumberTextBox();
-            this.txtKCal = new Goniometer.NumberTextBox();
-            this.controlSensorSetup = new Goniometer.Setup.SensorSetup();
+            this.listSensors = new System.Windows.Forms.CheckedListBox();
             this.grpLamp.SuspendLayout();
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
@@ -514,7 +514,7 @@
             this.groupSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupSensor.Controls.Add(this.controlSensorSetup);
+            this.groupSensor.Controls.Add(this.listSensors);
             this.groupSensor.Location = new System.Drawing.Point(404, 145);
             this.groupSensor.Name = "groupSensor";
             this.groupSensor.Size = new System.Drawing.Size(331, 361);
@@ -539,6 +539,16 @@
             this.groupCalibration.TabStop = false;
             this.groupCalibration.Text = "Calibration";
             // 
+            // txtDistance
+            // 
+            this.txtDistance.Location = new System.Drawing.Point(80, 71);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.ReadOnly = true;
+            this.txtDistance.Size = new System.Drawing.Size(141, 20);
+            this.txtDistance.TabIndex = 5;
+            this.txtDistance.TabStop = false;
+            this.txtDistance.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDistance_MouseDoubleClick);
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -548,6 +558,16 @@
             this.label14.TabIndex = 4;
             this.label14.Text = "Distance";
             // 
+            // txtKTheta
+            // 
+            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
+            this.txtKTheta.Name = "txtKTheta";
+            this.txtKTheta.ReadOnly = true;
+            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
+            this.txtKTheta.TabIndex = 3;
+            this.txtKTheta.TabStop = false;
+            this.txtKTheta.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKTheta_MouseDoubleClick);
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -556,6 +576,16 @@
             this.label13.Size = new System.Drawing.Size(44, 13);
             this.label13.TabIndex = 2;
             this.label13.Text = "K_theta";
+            // 
+            // txtKCal
+            // 
+            this.txtKCal.Location = new System.Drawing.Point(80, 19);
+            this.txtKCal.Name = "txtKCal";
+            this.txtKCal.ReadOnly = true;
+            this.txtKCal.Size = new System.Drawing.Size(141, 20);
+            this.txtKCal.TabIndex = 1;
+            this.txtKCal.TabStop = false;
+            this.txtKCal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKCal_MouseDoubleClick);
             // 
             // label12
             // 
@@ -607,45 +637,13 @@
             this.groupHorizontalSymetry.TabStop = false;
             this.groupHorizontalSymetry.Text = "Horizontal Symetry";
             // 
-            // txtDistance
+            // listSensors
             // 
-            this.txtDistance.Location = new System.Drawing.Point(80, 71);
-            this.txtDistance.Name = "txtDistance";
-            this.txtDistance.ReadOnly = true;
-            this.txtDistance.Size = new System.Drawing.Size(141, 20);
-            this.txtDistance.TabIndex = 5;
-            this.txtDistance.TabStop = false;
-            this.txtDistance.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDistance_MouseDoubleClick);
-            // 
-            // txtKTheta
-            // 
-            this.txtKTheta.Location = new System.Drawing.Point(80, 45);
-            this.txtKTheta.Name = "txtKTheta";
-            this.txtKTheta.ReadOnly = true;
-            this.txtKTheta.Size = new System.Drawing.Size(141, 20);
-            this.txtKTheta.TabIndex = 3;
-            this.txtKTheta.TabStop = false;
-            this.txtKTheta.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKTheta_MouseDoubleClick);
-            // 
-            // txtKCal
-            // 
-            this.txtKCal.Location = new System.Drawing.Point(80, 19);
-            this.txtKCal.Name = "txtKCal";
-            this.txtKCal.ReadOnly = true;
-            this.txtKCal.Size = new System.Drawing.Size(141, 20);
-            this.txtKCal.TabIndex = 1;
-            this.txtKCal.TabStop = false;
-            this.txtKCal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKCal_MouseDoubleClick);
-            // 
-            // controlSensorSetup
-            // 
-            this.controlSensorSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.controlSensorSetup.Location = new System.Drawing.Point(7, 18);
-            this.controlSensorSetup.Name = "controlSensorSetup";
-            this.controlSensorSetup.Size = new System.Drawing.Size(318, 337);
-            this.controlSensorSetup.TabIndex = 40;
+            this.listSensors.FormattingEnabled = true;
+            this.listSensors.Location = new System.Drawing.Point(7, 20);
+            this.listSensors.Name = "listSensors";
+            this.listSensors.Size = new System.Drawing.Size(318, 124);
+            this.listSensors.TabIndex = 0;
             // 
             // LumenTestSetupControl
             // 
@@ -707,7 +705,6 @@
         private System.Windows.Forms.RadioButton radVerticalTop;
         private System.Windows.Forms.RadioButton radHorizontalSingle;
         private System.Windows.Forms.GroupBox groupSensor;
-        private Setup.SensorSetup controlSensorSetup;
         private System.Windows.Forms.GroupBox groupCalibration;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.TextBox txtDataFolder;
@@ -742,5 +739,6 @@
         private System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.TextBox txtWattage;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckedListBox listSensors;
     }
 }

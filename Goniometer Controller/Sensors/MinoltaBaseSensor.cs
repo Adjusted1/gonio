@@ -11,14 +11,16 @@ namespace Goniometer_Controller.Sensors
 {
     public abstract class MinoltaBaseSensor : IDisposable
     {
+        protected string _name;
         protected SerialPort _port;
 
         #region construction
         public MinoltaBaseSensor()
         { }
 
-        public MinoltaBaseSensor(SerialPort port)
+        public MinoltaBaseSensor(string name, SerialPort port)
         {
+            _name = name;
             _port = port;
         }
 
@@ -199,7 +201,10 @@ namespace Goniometer_Controller.Sensors
         } 
         #endregion
 
-        public abstract string GetName();
+        public string Name
+        {
+            get { return _name; }
+        }
 
         public abstract List<MeasurementBase> CollectMeasurements(double theta, double phi);
 

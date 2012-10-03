@@ -24,12 +24,17 @@ namespace Goniometer
         {
             SetCalibrationFactors();
             txtDataFolder.Text = FileFolderProvider.DefaultDataFolder;
+            
+            listSensors.Items.Clear();
+            MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
         }
 
         #region public values
         public IEnumerable<MinoltaBaseSensor> GetSensors()
         {
-            return controlSensorSetup.GetSensors();
+            //filter by checked items
+            string[] values = listSensors.CheckedItems.OfType<string>().ToArray();
+            return MinoltaSensorProvider.GetSensors().WhereIn(s => s.Name, values);
         }
 
         public string DataFolder

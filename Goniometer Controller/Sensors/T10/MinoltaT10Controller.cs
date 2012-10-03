@@ -14,19 +14,15 @@ namespace Goniometer_Controller.Sensors
 {
     public class MinoltaT10Controller : MinoltaBaseSensor, INotifyPropertyChanged
     {
-        public const string Name = "Minolta T10";
-        public override string GetName()
-        {
-            return MinoltaT10Controller.Name;
-        }
+        public const string Type = "Minolta T10";
 
         private int _refreshRate = 100; //milliseconds
         private Timer _updateTimer;
         private Int64 _measureCount = 0;
 
         #region construction
-        public MinoltaT10Controller(SerialPort port)
-            : base(port)
+        public MinoltaT10Controller(string name, SerialPort port)
+            : base(name, port)
         { }
 
         public override void Connect()
@@ -241,10 +237,10 @@ namespace Goniometer_Controller.Sensors
                 Thread.Sleep(_refreshRate);
 
                 if (DateTime.Now > start + timeout)
-                    throw new TimeoutException(String.Format("Waiting on new measurement for {0} on {1} took too long.", this.GetName(), this._port.PortName));
+                    throw new TimeoutException(String.Format("Waiting on new measurement for {0} on {1} took too long.", this.Name, this._port.PortName));
             }
 
-            return MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, reading, this.GetName(), this._port.PortName);
+            return MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, reading, this.Name, this._port.PortName);
         }
     }
 }
