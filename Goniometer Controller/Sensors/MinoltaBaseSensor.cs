@@ -9,7 +9,7 @@ using Goniometer_Controller.Models;
 
 namespace Goniometer_Controller.Sensors
 {
-    public abstract class MinoltaBaseSensor
+    public abstract class MinoltaBaseSensor : IDisposable
     {
         protected SerialPort _port;
 
@@ -29,6 +29,10 @@ namespace Goniometer_Controller.Sensors
         {
             if (!_port.IsOpen)
                 _port.Open();
+        }
+
+        public virtual void Disconnect()
+        {
         }
 
         public abstract bool TestStatus();
@@ -198,5 +202,10 @@ namespace Goniometer_Controller.Sensors
         public abstract string GetName();
 
         public abstract List<MeasurementBase> CollectMeasurements(double theta, double phi);
+
+        void IDisposable.Dispose()
+        {
+            this.Disconnect();
+        }
     }
 }

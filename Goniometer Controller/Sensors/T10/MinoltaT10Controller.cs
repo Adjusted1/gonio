@@ -56,6 +56,14 @@ namespace Goniometer_Controller.Sensors
             _updateTimer = new Timer(UpdateReading, this, 0, _refreshRate);
         }
 
+        public override void Disconnect()
+        {
+            base.Disconnect();
+
+            if (_updateTimer != null)
+                _updateTimer.Dispose();
+        }
+
         public override bool TestStatus()
         {
             return true;

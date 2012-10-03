@@ -31,6 +31,9 @@ namespace Goniometer.Setup
         #region reset methods
         private void ResetControl()
         {
+            if (_sensor != null)
+                _sensor.Disconnect();
+
             _sensor = null;
             _sensors = new List<MinoltaBaseSensor>();
 
@@ -146,6 +149,9 @@ namespace Goniometer.Setup
             catch (Exception ex)
             {
                 lblMessage.Text = String.Format("Error. Wrong Type/Port?\n{0}", ex.Message);
+
+                if (this._sensor != null)
+                    this._sensor.Disconnect();
             }
         }
 
