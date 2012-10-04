@@ -151,7 +151,7 @@ namespace Goniometer_Controller
                             else if (!args.Skip)
                             {
                                 //go back one step and start over
-                                v--;
+                                h--;
                                 continue; //vertical for loop
                             }
                         }

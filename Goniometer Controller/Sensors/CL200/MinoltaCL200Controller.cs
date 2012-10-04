@@ -255,7 +255,7 @@ namespace Goniometer_Controller.Sensors
                         double v2 = m2.First(m => m.Key == key).Value;
 
                         //validate measurement within some epsilon
-                        if (Math.Abs(v1 - v2) > eps)
+                        if (Math.Abs((v1 - v2)/v2) < eps)
                             valid = false;
                     }
                 }
