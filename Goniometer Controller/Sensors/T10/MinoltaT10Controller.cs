@@ -21,8 +21,8 @@ namespace Goniometer_Controller.Sensors
         private Int64 _measureCount = 0;
 
         #region construction
-        public MinoltaT10Controller(string name, SerialPort port)
-            : base(name, port)
+        public MinoltaT10Controller(SerialPort port)
+            : base(port)
         { }
 
         public override void Connect()
@@ -198,7 +198,7 @@ namespace Goniometer_Controller.Sensors
             }
         }
 
-        public override List<MeasurementBase> CollectMeasurements(double theta, double phi)
+        public override IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi)
         {
             double eps = 0.02;
             MeasurementBase m1, m2;

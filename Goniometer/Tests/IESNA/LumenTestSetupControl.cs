@@ -5,10 +5,12 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 using Goniometer.Functions;
 using Goniometer.Settings;
+using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
 
 namespace Goniometer
@@ -22,9 +24,14 @@ namespace Goniometer
 
         private void LumenTestSetupControl_Load(object sender, EventArgs e)
         {
+            //start timer
+            timerSensors.Enabled = true;
+            
+            //setup default values
             SetCalibrationFactors();
             txtDataFolder.Text = FileFolderProvider.DefaultDataFolder;
             
+            //setup sensor control
             listSensors.Items.Clear();
             MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
         }
@@ -365,6 +372,80 @@ namespace Goniometer
         }
         #endregion
 
+        #region sensor timer
+        private object _timerLock = new object();
+
+        private void timerSensors_Tick(object sender, EventArgs e)
+        {
+            if (Monitor.TryEnter(_timerLock))
+            {
+                try
+                {
+                    double theta = MotorController.GetHorizontalMotorPosition();
+                    double phi = MotorController.GetVerticalMotorPosition();
+
+                    var sensors = this.GetSensors().ToList();
+                    var measurements = sensors.AsParallel().SelectMany(s => s.CollectMeasurements(theta, phi));
+
+                    measurementGridView.DataSource = measurements;
+                }
+                catch (Exception ex)
+                {
+                    SimpleLogger.Logging.WriteToLog(ex.Message);
+                }
+                finally
+                {
+                    Monitor.Exit(_timerLock);
+                }
+            }
+        }
+        #endregion
+
+        #region Calibration Factors
+        private void txtKCal_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            using (var view = new CalibrationView("txtKCal"))
+            {
+                var result = view.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetCalibrationFactors();
+                }
+            }
+        }
+
+        private void txtKTheta_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            using (var view = new CalibrationView("txtKTheta"))
+            {
+                var result = view.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetCalibrationFactors();
+                }
+            }
+        }
+
+        private void txtDistance_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            using (var view = new CalibrationView("txtDistance"))
+            {
+                var result = view.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetCalibrationFactors();
+                }
+            }
+        }
+
+        private void SetCalibrationFactors()
+        {
+            txtKCal.Text     = String.Format("{0:0.####}", CalibrationModel.KCal);
+            txtKTheta.Text   = String.Format("{0:0.####}", CalibrationModel.KTheta);
+            txtDistance.Text = String.Format("{0:0.####}", CalibrationModel.Distance);
+        } 
+        #endregion
+
         private void chkEmail_CheckedChanged(object sender, EventArgs e)
         {
             txtEmail.Enabled = chkEmail.Checked;
@@ -454,51 +535,5 @@ namespace Goniometer
             return true;
         }
 
-        #region Calibration Factors
-        private void txtKCal_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            using (var view = new CalibrationView("txtKCal"))
-            {
-                var result = view.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    SetCalibrationFactors();
-                }
-            }
-        }
-
-        private void txtKTheta_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            using (var view = new CalibrationView("txtKTheta"))
-            {
-                var result = view.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    SetCalibrationFactors();
-                }
-            }
-        }
-
-        private void txtDistance_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            using (var view = new CalibrationView("txtDistance"))
-            {
-                var result = view.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    SetCalibrationFactors();
-                }
-            }
-        }
-
-        private void SetCalibrationFactors()
-        {
-            txtKCal.Text     = String.Format("{0:0.####}", CalibrationModel.KCal);
-            txtKTheta.Text   = String.Format("{0:0.####}", CalibrationModel.KTheta);
-            txtDistance.Text = String.Format("{0:0.####}", CalibrationModel.Distance);
-        } 
-        #endregion
-
-        
     }
 }

@@ -6,10 +6,12 @@ using System.Data;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 using Goniometer_Controller;
 using Goniometer_Controller.Sensors;
+using Goniometer_Controller.Models;
 
 namespace Goniometer.Setup
 {
@@ -71,6 +73,8 @@ namespace Goniometer.Setup
 
         private void AddSensor()
         {
+            _sensor.Name = txtName.Text;
+
             MinoltaSensorProvider.AddSensor(_sensor);
             ResetSensorsList();
         }
@@ -105,13 +109,21 @@ namespace Goniometer.Setup
             if (cboPort.SelectedItem == null || String.IsNullOrEmpty(cboPort.SelectedItem.ToString()))
                 return;
 
-            Connect();
+            //start connection process
+            var connectAsync = new ConnectAsyncDelegate(Connect);
+            connectAsync.Invoke();
         }
 
+        private delegate void ConnectAsyncDelegate();
         private void Connect()
         {
             try
             {
+                //disable controls
+                cboSensor.Enabled = false;
+                cboPort.Enabled = false;
+                btnAdd.Enabled = false;
+
                 //clear out current readings
                 measurementGridView.DataSource = null;
 
@@ -122,7 +134,7 @@ namespace Goniometer.Setup
                 //check portName
                 if (cboPort.SelectedItem == null || String.IsNullOrEmpty(cboPort.SelectedItem.ToString()))
                     return;
-                
+
                 lblMessage.Text = "Connecting";
 
                 //prepare sensor in local variable before assigning to member
@@ -140,6 +152,13 @@ namespace Goniometer.Setup
             catch (Exception ex)
             {
                 lblMessage.Text = String.Format("Error. Wrong Type/Port?\n{0}", ex.Message);
+            }
+            finally
+            {
+                //re-enable controls
+                cboSensor.Enabled = true;
+                cboPort.Enabled = true;
+                btnAdd.Enabled = true;
             }
         }
     }

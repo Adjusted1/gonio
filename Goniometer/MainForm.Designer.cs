@@ -45,6 +45,7 @@
             NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision13 = new NationalInstruments.UI.ScaleCustomDivision();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openRawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.motorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sensorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +65,7 @@
             this.gaugeVertical = new NationalInstruments.UI.WindowsForms.Gauge();
             this.panelMain = new System.Windows.Forms.Panel();
             this.timerMotor = new System.Windows.Forms.Timer(this.components);
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip.SuspendLayout();
             this.panelStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVerticalAngleValid)).BeginInit();
@@ -85,9 +87,18 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openRawToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openRawToolStripMenuItem
+            // 
+            this.openRawToolStripMenuItem.Name = "openRawToolStripMenuItem";
+            this.openRawToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openRawToolStripMenuItem.Text = "Open Raw";
+            this.openRawToolStripMenuItem.Click += new System.EventHandler(this.openRawToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -101,21 +112,21 @@
             // motorToolStripMenuItem
             // 
             this.motorToolStripMenuItem.Name = "motorToolStripMenuItem";
-            this.motorToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.motorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.motorToolStripMenuItem.Text = "Motor";
             this.motorToolStripMenuItem.Click += new System.EventHandler(this.motorToolStripMenuItem_Click);
             // 
             // sensorToolStripMenuItem
             // 
             this.sensorToolStripMenuItem.Name = "sensorToolStripMenuItem";
-            this.sensorToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.sensorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sensorToolStripMenuItem.Text = "Sensor";
             this.sensorToolStripMenuItem.Click += new System.EventHandler(this.sensorToolStripMenuItem_Click);
             // 
             // btnPanic
             // 
-            this.btnPanic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPanic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.btnPanic.BackColor = System.Drawing.Color.Red;
             this.btnPanic.Location = new System.Drawing.Point(12, 28);
             this.btnPanic.Name = "btnPanic";
@@ -128,8 +139,8 @@
             // 
             // panelStatus
             // 
-            this.panelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelStatus.Controls.Add(this.picVerticalAngleValid);
             this.panelStatus.Controls.Add(this.picHorizontalAngleValid);
@@ -308,9 +319,9 @@
             // 
             // panelMain
             // 
-            this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelMain.Location = new System.Drawing.Point(106, 25);
             this.panelMain.Name = "panelMain";
@@ -321,6 +332,13 @@
             // 
             this.timerMotor.Enabled = true;
             this.timerMotor.Tick += new System.EventHandler(this.timerMotor_Tick);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "csv";
+            this.openFileDialog.FileName = "raw.csv";
+            this.openFileDialog.Filter = "All files|*.*|CSV Files|*.csv";
+            this.openFileDialog.FilterIndex = 2;
             // 
             // MainForm
             // 
@@ -374,5 +392,7 @@
         private System.Windows.Forms.PictureBox picVerticalAngleValid;
         private System.Windows.Forms.PictureBox picHorizontalAngleValid;
         private System.Windows.Forms.Timer timerMotor;
+        private System.Windows.Forms.ToolStripMenuItem openRawToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

@@ -116,6 +116,12 @@
     <Compile Include="Controls\NumberTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\RawDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reports\RawDataView.Designer.cs">
+      <DependentUpon>RawDataView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings\CalibrationModel.cs" />
     <Compile Include="Settings\CalibrationView.cs">
       <SubType>Form</SubType>
@@ -182,6 +188,9 @@
     <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Reports\RawDataView.resx">
+      <DependentUpon>RawDataView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Settings\CalibrationView.resx">
       <DependentUpon>CalibrationView.cs</DependentUpon>
     </EmbeddedResource>

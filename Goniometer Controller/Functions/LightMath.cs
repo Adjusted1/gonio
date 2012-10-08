@@ -105,6 +105,21 @@ namespace Goniometer_Controller.Functions
         /// <summary>
         /// Average weighted horizontal readings, then calculate along surface angle
         /// </summary>
+        /// <param name="measurements"></param>
+        /// <returns></returns>
+        public static double CalculateLumens(IEnumerable<MeasurementBase> measurements)
+        {
+            string candleKey = MeasurementKeys.LuminousIntensity;
+            var candles = measurements.Where(m => m.Key == candleKey)
+                            .Select(m => Tuple.Create(m.Theta, m.Phi, m.Value))
+                            .ToList();
+
+            return CalculateLumens(candles);
+        }
+
+        /// <summary>
+        /// Average weighted horizontal readings, then calculate along surface angle
+        /// </summary>
         /// <param sensorname="data">Units: hAngle degrees, vAngle degrees, footcandles</param>
         /// <returns></returns>
         public static double CalculateLumens(List<Tuple<double, double, double>> data)

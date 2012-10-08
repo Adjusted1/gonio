@@ -46,17 +46,24 @@ namespace Goniometer_Controller.Sensors
 
         public static MinoltaBaseSensor CreateSensor(string name, string type, SerialPort port)
         {
+            MinoltaBaseSensor sensor;
+
             switch (type)
             {
                 case (MinoltaT10Controller.Type):
-                    return new MinoltaT10Controller(name, port);
+                    sensor = new MinoltaT10Controller(port);
+                    break;
 
                 case (MinoltaCL200Controller.Type):
-                    return new MinoltaCL200Controller(name, port);
+                    sensor = new MinoltaCL200Controller(port);
+                    break;
 
                 default:
                     throw new ArgumentException("Unknown Sensor by that sensorname");
-            } 
+            }
+
+            sensor.Name = name;
+            return sensor;
         }
 
         public static void AddSensor(MinoltaBaseSensor sensor)

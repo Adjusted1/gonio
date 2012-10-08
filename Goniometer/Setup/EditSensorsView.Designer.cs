@@ -33,6 +33,10 @@
             this.lblMessage = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.measurementGridView = new Goniometer.Views.MeasurementGridView();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,6 +46,8 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.listSensors = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +86,7 @@
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(445, 57);
+            this.btnAdd.Location = new System.Drawing.Point(445, 326);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 3;
@@ -95,6 +101,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.measurementGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.measurementGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn7,
@@ -105,8 +115,36 @@
             this.dataGridViewTextBoxColumn4});
             this.measurementGridView.Location = new System.Drawing.Point(3, 86);
             this.measurementGridView.Name = "measurementGridView";
-            this.measurementGridView.Size = new System.Drawing.Size(517, 200);
+            this.measurementGridView.Size = new System.Drawing.Size(517, 234);
             this.measurementGridView.TabIndex = 5;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "SensorName";
+            this.dataGridViewTextBoxColumn9.HeaderText = "Sensor Name";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "PortName";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Port";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "Key";
+            this.dataGridViewTextBoxColumn11.HeaderText = "Key";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "Value";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -169,23 +207,41 @@
             this.listSensors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listSensors.FormattingEnabled = true;
-            this.listSensors.Location = new System.Drawing.Point(3, 292);
+            this.listSensors.Location = new System.Drawing.Point(3, 355);
             this.listSensors.Name = "listSensors";
             this.listSensors.Size = new System.Drawing.Size(517, 82);
             this.listSensors.TabIndex = 6;
             // 
-            // SensorSetup
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 331);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Name";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(44, 328);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(395, 20);
+            this.txtName.TabIndex = 8;
+            // 
+            // EditSensorsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.listSensors);
             this.Controls.Add(this.measurementGridView);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.cboPort);
             this.Controls.Add(this.cboSensor);
-            this.Name = "SensorSetup";
-            this.Size = new System.Drawing.Size(523, 377);
+            this.Name = "EditSensorsView";
+            this.Size = new System.Drawing.Size(523, 440);
             this.Load += new System.EventHandler(this.SensorSetup_Load);
             ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).EndInit();
             this.ResumeLayout(false);
@@ -209,5 +265,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtName;
     }
 }
