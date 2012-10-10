@@ -34,6 +34,11 @@ namespace Goniometer
             //setup sensor control
             listSensors.Items.Clear();
             MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
+            for (int i = 0; i < listSensors.Items.Count; i++)
+            {
+                //precheck all items
+                listSensors.SetItemChecked(i, true);
+            }
         }
 
         #region public values
