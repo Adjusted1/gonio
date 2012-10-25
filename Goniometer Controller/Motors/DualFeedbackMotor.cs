@@ -78,7 +78,12 @@ namespace Goniometer_Controller.Motors
         {
             int attempt = 0;
             int maxAttempts = 10; //set to arbitrarly large amount
-            double adjustedDistance = distance;
+            
+            //check offset immediately
+            double encoderPosition = this.GetEncoderPosition();
+            double motorPosition = this.GetMotorPosition();
+            double adjustedDistance = distance - encoderPosition + motorPosition;
+
 
             //check if we are close enough (or even need to move)
             while (Math.Abs(this.GetEncoderPosition() - distance) > _accuracy)
@@ -105,9 +110,12 @@ namespace Goniometer_Controller.Motors
                 }
                 else
                 {
+                    //wait for encoder to stabalize
+                    Thread.Sleep(500);
+
                     //recalculate difference
-                    double encoderPosition = this.GetEncoderPosition();
-                    double motorPosition = this.GetMotorPosition();
+                    encoderPosition = this.GetEncoderPosition();
+                    motorPosition = this.GetMotorPosition();
 
                     adjustedDistance = distance - encoderPosition + motorPosition;
                 }

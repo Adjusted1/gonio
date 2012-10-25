@@ -149,7 +149,7 @@ namespace Goniometer_Controller.Sensors
             SendCommand(receptor, command, data);
             string res = ReadResponse(out receptor, out command);
 
-            res.Substring(0, 1);                    //"1" or "5"
+            string unknw = res.Substring(0, 1);     //"1" or "5"
             string error = res.Substring(1, 1);
             string range = res.Substring(2, 1);
             string batLv = res.Substring(3, 1);     //battery level, 0 == normal
@@ -164,9 +164,23 @@ namespace Goniometer_Controller.Sensors
             if (range == "6")
                 throw new Exception("Out of Range Error");
 
-            r1 = ParseReadingValue(res.Substring(4, 6));
-            r2 = ParseReadingValue(res.Substring(10, 6));
-            r3 = ParseReadingValue(res.Substring(16, 6));
+            //reading 1
+            if (res.Substring(4, 6) == " ---- ")
+                throw new LowIlluminanceException();
+            else
+                r1 = ParseReadingValue(res.Substring(4, 6));
+
+            //reading 2
+            if (res.Substring(10, 6) == " ---- ")
+                throw new LowIlluminanceException();
+            else
+                r2 = ParseReadingValue(res.Substring(10, 6));
+
+            //reading 3
+            if (res.Substring(16, 6) == " ---- ")
+                throw new LowIlluminanceException();
+            else
+                r3 = ParseReadingValue(res.Substring(16, 6));
         }
 
         protected override void ErrorCheckChar(string error)
@@ -254,8 +268,13 @@ namespace Goniometer_Controller.Sensors
                         double v1 = m1.First(m => m.Key == key).Value;
                         double v2 = m2.First(m => m.Key == key).Value;
 
+                        //validate zero measurements must be identical
+                        //as we don't know what the scale is
+                        if (v1 == 0 && v2 != 0)
+                            valid = false;
+
                         //validate measurement within some epsilon
-                        if (Math.Abs((v1 - v2)/v2) < eps)
+                        if (v2 != 0 && Math.Abs((v1 - v2) / v2) > eps)
                             valid = false;
                     }
                 }

@@ -121,7 +121,9 @@ namespace Goniometer_Controller
 
                             //collect measurements
                             _worker.ReportProgress(progress, "Taking Measurements");
-                            var measurements = _sensors.AsParallel().SelectMany(s => s.CollectMeasurements(_hRange[h], _vRange[v]));
+                            var measurements = _sensors.AsParallel()
+                                .SelectMany(s => s.CollectMeasurements(_hRange[h], _vRange[v]))
+                                .ToList();                                                          //evaluate now
 
                             //validate measurements
                             var measurement = measurements.FirstOrDefault(m => m.Key == MeasurementKeys.Illuminance);

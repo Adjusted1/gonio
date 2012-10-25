@@ -20,7 +20,7 @@ namespace Goniometer_Controller.Models
                     & m.Key   == measurement.Key);
 
             if (existing != null)
-                throw new Exception();
+                throw new Exception("Datapoint already in collection");
 
             _values.Add(measurement);
         }

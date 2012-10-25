@@ -145,7 +145,10 @@ namespace Goniometer
                     NationalInstruments.UI.ScaleRangeFill fill = new NationalInstruments.UI.ScaleRangeFill(range);
                     gaugeHorizontal.RangeFills.Add(fill);
                 }
-                else if (e.PropertyName == "VerticalResolution" | e.PropertyName == "VerticalSymmetry")
+                else if (e.PropertyName == "VerticalResolution" 
+                       | e.PropertyName == "VerticalSymmetry" 
+                       | e.PropertyName == "VerticalStartRange" 
+                       | e.PropertyName == "VerticalStopRange")
                 {
                     gaugeVertical.RangeFills.Clear();
 

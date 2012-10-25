@@ -137,7 +137,7 @@ namespace Goniometer
                 if (Double.TryParse(txtHorizontalResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Goniometer
                 if (Double.TryParse(txtHorizontalStrayResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Goniometer
                 if (Double.TryParse(txtVerticalResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -173,7 +173,7 @@ namespace Goniometer
                 if (Double.TryParse(txtVerticalStrayResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -204,6 +204,30 @@ namespace Goniometer
                 return HorizontalSymmetryEnum.Single;
             }
         }
+
+        public double VerticalStartRange
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtVerticalStartRange.Text, out value))
+                    return value;
+                else
+                    return -1;
+            }
+        }
+
+        public double VerticalStopRange
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtVerticalStopRange.Text, out value))
+                    return value;
+                else
+                    return -1;
+            }
+        }
         #endregion
 
         #region range calculations
@@ -219,7 +243,7 @@ namespace Goniometer
 
         private double[] CalculateHorizontalRange(double resolution)
         {
-            int hRange = 0;  //total range in degrees
+            double hRange = 0;  //total range in degrees
             switch(HorizontalSymmetry)
             {
                 case HorizontalSymmetryEnum.Full:
@@ -255,13 +279,20 @@ namespace Goniometer
         }
         private double[] CalculateVerticalRange(double resolution)
         {
-            int vRangeStart = 0;     //start of range in degrees
-            int vRangeStop = 180;     //stop of range in degrees
+            double vRangeStart = 0;     //start of range in degrees
+            double vRangeStop = 180;     //stop of range in degrees
 
             if (VerticalSymmetry == VerticalSymmetryEnum.TopOnly)
                 vRangeStart = 90;
             else if (VerticalSymmetry == VerticalSymmetryEnum.BottomOnly)
                 vRangeStop = 90;
+
+            //hand entered values take precident
+            if (VerticalStartRange >= 0)
+                vRangeStart = VerticalStartRange;
+
+            if (VerticalStopRange >= 0)
+                vRangeStop = VerticalStopRange;
 
             if (resolution <= 0 || resolution > vRangeStop - vRangeStart)
                 return new double[] { vRangeStart, vRangeStop };
@@ -296,6 +327,16 @@ namespace Goniometer
         private void txtHorizontalStrayResolution_TextChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("VerticalStrayResolution");
+        }
+
+        private void txtVerticalStart_TextChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("VerticalStartRange");
+        }
+
+        private void txtVerticalStop_TextChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("VerticalStopRange");
         }
         #endregion
 
@@ -493,7 +534,5 @@ namespace Goniometer
             txtDistance.Text = String.Format("{0:0.####}", CalibrationModel.Distance);
         } 
         #endregion
-
-        
     }
 }
