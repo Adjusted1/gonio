@@ -45,8 +45,12 @@ namespace Goniometer
         {
             try
             {
+                //connect to motor
                 string address = ConfigurationManager.AppSettings["motor.ip"];
                 MotorController.Connect(IPAddress.Parse(address));
+
+                //connect to sensors
+                MinoltaSensorProvider.LoadSensorConfiguration();
             }
             catch (Exception)
             {
@@ -67,7 +71,7 @@ namespace Goniometer
                     if (!fi.Exists)
                         return;
 
-                    LoadDataControl(fi.FullName);
+                    //LoadDataControl(fi.FullName);
                 }
             }
             catch (Exception)
@@ -95,25 +99,25 @@ namespace Goniometer
         #region main panel context switching
 
         #region DataControl
-        private void LoadDataControl(string filePath)
-        {
-            //initialize and attach view
-            panelMain.Controls.Clear();
+        //private void LoadDataControl(string filePath)
+        //{
+        //    //initialize and attach view
+        //    panelMain.Controls.Clear();
 
-            var dataControl = new RawDataView();
-            dataControl.Size = panelMain.Size;
-            dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        //    var dataControl = new RawDataView();
+        //    dataControl.Size = panelMain.Size;
+        //    dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
-            panelMain.Controls.Add(dataControl);
+        //    panelMain.Controls.Add(dataControl);
 
-            //fetch data and bind it
-            using (StreamReader sr = new StreamReader(filePath))
-            {
-                string raw = sr.ReadToEnd();
-                var measurements = MeasurementCollection.FromCSV(raw);
-                dataControl.SetDataSource(measurements);
-            }
-        }
+        //    //fetch data and bind it
+        //    using (StreamReader sr = new StreamReader(filePath))
+        //    {
+        //        string raw = sr.ReadToEnd();
+        //        var measurements = MeasurementCollection.FromCSV(raw);
+        //        dataControl.SetDataSource(measurements);
+        //    }
+        //}
         #endregion
 
         #region TestListControl
@@ -258,8 +262,7 @@ namespace Goniometer
             IAsyncResult ar = em.BeginInvoke(MotorMoveFinished, null);
         }
 
-        private delegate void ExecuteMotorDelegate();
-        private delegate void ExecuteMotorCallback();
+        private delegate void ExecuteMotorDelegate();        
         private void ExecuteMotor()
         {
             try
