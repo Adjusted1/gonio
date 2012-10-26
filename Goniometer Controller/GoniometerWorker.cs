@@ -125,14 +125,7 @@ namespace Goniometer_Controller
                                 .SelectMany(s => s.CollectMeasurements(_hRange[h], _vRange[v]))
                                 .ToList();                                                          //evaluate now
 
-                            //validate measurements
-                            var measurement = measurements.FirstOrDefault(m => m.Key == MeasurementKeys.Illuminance);
-                            if (measurement != null && measurement.Value <= 0)
-                            {
-                                throw new InvalidMeasurementException(measurement);
-                            }
-
-                            //measurements validated, add to collection
+                            //add measurements to collection
                             _data.AddRange(measurements);
 
                             //notify subscribes about measurements

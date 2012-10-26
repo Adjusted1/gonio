@@ -116,8 +116,15 @@ namespace Goniometer_Controller.Sensors
         public void ReadEvTcpUV(int receptor, bool useCF, CalibrationModeEnum mode,
             out double Ev, out double Tcp, out double uv)
         {
-            int command = 8;
-            ReadMeasurement(receptor, command, useCF, mode, out Ev, out Tcp, out uv);
+            try
+            {
+                int command = 8;
+                ReadMeasurement(receptor, command, useCF, mode, out Ev, out Tcp, out uv);
+            }
+            catch (LowIlluminanceException)
+            {
+                Ev = Tcp = uv = 0;
+            }
         }
 
         public void ReadEvDWP(int receptor, bool useCF, CalibrationModeEnum mode,
@@ -303,28 +310,20 @@ namespace Goniometer_Controller.Sensors
             string name = this.GetName();
             string port = this._port.PortName;
 
-            try
-            {
-                var measurements = new List<MeasurementBase>();
-                TakeMeasurement();
+            var measurements = new List<MeasurementBase>();
+            TakeMeasurement();
 
-                double Ev1, u, v;
-                ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
-                //measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
+            double Ev1, u, v;
+            ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
 
-                double Ev2, Tcp, Duv;
-                ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
+            double Ev2, Tcp, Duv;
+            ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
 
-                return measurements;
-            }
-            catch (LowIlluminanceException)
-            {
-                return new List<MeasurementBase> { MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, 0, name, port) };
-            }
+            return measurements;
         }
 
         public enum CalibrationModeEnum
