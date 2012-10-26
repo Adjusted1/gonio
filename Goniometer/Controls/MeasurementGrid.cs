@@ -38,6 +38,28 @@ namespace Goniometer.Views
             };
             this.Columns.Add(portCol);
 
+            var thetaCell = new DataGridViewTextBoxCell();
+            var thetaCol = new DataGridViewTextBoxColumn()
+            {
+                CellTemplate = portCell,
+                Name = "Theta",
+                HeaderText = "Theta",
+                DataPropertyName = "Theta",
+                ReadOnly = true
+            };
+            this.Columns.Add(thetaCol);
+
+            var phiCell = new DataGridViewTextBoxCell();
+            var phiCol = new DataGridViewTextBoxColumn()
+            {
+                CellTemplate = portCell,
+                Name = "Phi",
+                HeaderText = "Phi",
+                DataPropertyName = "Phi",
+                ReadOnly = true
+            };
+            this.Columns.Add(phiCol);
+
             var keyCell = new DataGridViewTextBoxCell();
             var keyCol = new DataGridViewTextBoxColumn
             {

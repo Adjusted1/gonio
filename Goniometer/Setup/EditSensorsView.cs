@@ -6,19 +6,20 @@ using System.Data;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 using Goniometer_Controller;
 using Goniometer_Controller.Sensors;
+using Goniometer_Controller.Models;
 
 namespace Goniometer.Setup
 {
-    public partial class SensorSetup : UserControl
+    public partial class EditSensorsView : UserControl
     {
-        private List<MinoltaBaseSensor> _sensors = new List<MinoltaBaseSensor>();
         private MinoltaBaseSensor _sensor;
 
-        public SensorSetup()
+        public EditSensorsView()
         {
             InitializeComponent();
         }
@@ -35,7 +36,6 @@ namespace Goniometer.Setup
                 _sensor.Disconnect();
 
             _sensor = null;
-            _sensors = new List<MinoltaBaseSensor>();
 
             lblMessage.Text = "Pick a Sensor";
 
@@ -48,7 +48,7 @@ namespace Goniometer.Setup
         {
             cboSensor.SelectedItem = null;
             cboSensor.Items.Clear();
-            cboSensor.Items.AddRange(MinoltaSensorProvider.GetSensorNames());
+            cboSensor.Items.AddRange(MinoltaSensorProvider.GetSensorTypes().ToArray());
         }
 
         private void RefreshPortList()
@@ -61,9 +61,7 @@ namespace Goniometer.Setup
         private void ResetSensorsList()
         {
             listSensors.Items.Clear();
-            listSensors.Items.AddRange(
-                _sensors.Select(s => s.GetName()).ToArray()
-                );
+            MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
         }
         #endregion
 
@@ -75,17 +73,15 @@ namespace Goniometer.Setup
 
         private void AddSensor()
         {
-            _sensors.Add(_sensor);
+            _sensor.Name = txtName.Text;
+
+            MinoltaSensorProvider.AddSensor(_sensor);
             ResetSensorsList();
         }
         #endregion
 
         #region remove methods
-        private void RemoveSensor()
-        {
-            _sensors.Remove(_sensor);
-            ResetSensorsList();
-        }
+
         #endregion
 
         private void cboSensor_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,13 +109,21 @@ namespace Goniometer.Setup
             if (cboPort.SelectedItem == null || String.IsNullOrEmpty(cboPort.SelectedItem.ToString()))
                 return;
 
-            Connect();
+            //start connection process
+            var connectAsync = new ConnectAsyncDelegate(Connect);
+            connectAsync.Invoke();
         }
 
+        private delegate void ConnectAsyncDelegate();
         private void Connect()
         {
             try
             {
+                //disable controls
+                cboSensor.Enabled = false;
+                cboPort.Enabled = false;
+                btnAdd.Enabled = false;
+
                 //clear out current readings
                 measurementGridView.DataSource = null;
 
@@ -130,34 +134,32 @@ namespace Goniometer.Setup
                 //check portName
                 if (cboPort.SelectedItem == null || String.IsNullOrEmpty(cboPort.SelectedItem.ToString()))
                     return;
-                
+
                 lblMessage.Text = "Connecting";
 
                 //prepare sensor in local variable before assigning to member
                 var port = SerialPortProvider.GetPort(cboPort.SelectedItem.ToString());
-                var sensor = MinoltaSensorProvider.GetSensorByName(cboSensor.SelectedItem.ToString(), port);
-                sensor.Connect();
+                _sensor = MinoltaSensorProvider.CreateSensor("", cboSensor.SelectedItem.ToString(), port);
+                _sensor.Connect();
 
                 //test the read method on the sensor
-                var measurements = sensor.CollectMeasurements(0,0);
+                var measurements = _sensor.CollectMeasurements(0, 0);
                 measurementGridView.DataSource = measurements;
 
-                this._sensor = sensor;
                 lblMessage.Text = "Success";
                 btnAdd.Enabled = true;
             }
             catch (Exception ex)
             {
                 lblMessage.Text = String.Format("Error. Wrong Type/Port?\n{0}", ex.Message);
-
-                if (this._sensor != null)
-                    this._sensor.Disconnect();
             }
-        }
-
-        public IEnumerable<MinoltaBaseSensor> GetSensors()
-        {
-            return _sensors;
+            finally
+            {
+                //re-enable controls
+                cboSensor.Enabled = true;
+                cboPort.Enabled = true;
+                btnAdd.Enabled = true;
+            }
         }
     }
 }

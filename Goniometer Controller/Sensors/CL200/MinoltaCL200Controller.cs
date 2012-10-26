@@ -10,11 +10,7 @@ namespace Goniometer_Controller.Sensors
 {
     public class MinoltaCL200Controller : MinoltaBaseSensor
     {
-        public const string Name = "Minolta CL200";
-        public override string GetName()
-        {
-            return MinoltaCL200Controller.Name;
-        }
+        public const string Type = "Minolta CL200";
 
         #region construction
         public MinoltaCL200Controller(SerialPort port)
@@ -227,7 +223,7 @@ namespace Goniometer_Controller.Sensors
         }
         #endregion
 
-        public override List<MeasurementBase> CollectMeasurements(double theta, double phi)
+        public override IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi)
         {
             //timeout values
             TimeSpan timeout = new TimeSpan(0, 1, 0);
@@ -307,7 +303,7 @@ namespace Goniometer_Controller.Sensors
 
         private List<MeasurementBase> CollectMeasurements(double theta, double phi, int receptor, bool useCF, CalibrationModeEnum mode)
         {
-            string name = this.GetName();
+            string name = this.Name;
             string port = this._port.PortName;
 
             var measurements = new List<MeasurementBase>();

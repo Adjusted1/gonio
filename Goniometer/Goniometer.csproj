@@ -116,6 +116,12 @@
     <Compile Include="Controls\NumberTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\RawDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reports\RawDataView.Designer.cs">
+      <DependentUpon>RawDataView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings\CalibrationModel.cs" />
     <Compile Include="Settings\CalibrationView.cs">
       <SubType>Form</SubType>
@@ -124,11 +130,11 @@
       <DependentUpon>CalibrationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\FileFolderProvider.cs" />
-    <Compile Include="Setup\SensorSetup.cs">
+    <Compile Include="Setup\EditSensorsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\SensorSetup.Designer.cs">
-      <DependentUpon>SensorSetup.cs</DependentUpon>
+    <Compile Include="Setup\EditSensorsView.Designer.cs">
+      <DependentUpon>EditSensorsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\Calibration\CalibrationControl.cs">
       <SubType>UserControl</SubType>
@@ -169,12 +175,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\iesna.cs" />
-    <None Include="Settings\SensorView.cs">
-      <SubType>Form</SubType>
-    </None>
-    <None Include="Settings\SensorView.Designer.cs">
-      <DependentUpon>SensorView.cs</DependentUpon>
-    </None>
     <Compile Include="SymmetryEnum.cs" />
     <Compile Include="Tests\TestListControl.cs">
       <SubType>UserControl</SubType>
@@ -188,11 +188,14 @@
     <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Reports\RawDataView.resx">
+      <DependentUpon>RawDataView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Settings\CalibrationView.resx">
       <DependentUpon>CalibrationView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setup\SensorSetup.resx">
-      <DependentUpon>SensorSetup.cs</DependentUpon>
+    <EmbeddedResource Include="Setup\EditSensorsView.resx">
+      <DependentUpon>EditSensorsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\Calibration\CalibrationControl.resx">
       <DependentUpon>CalibrationControl.cs</DependentUpon>
@@ -220,9 +223,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Settings\SensorView.resx">
-      <DependentUpon>SensorView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Tests\IESNA\LumenTestControl.resx">
       <DependentUpon>LumenTestControl.cs</DependentUpon>
     </EmbeddedResource>

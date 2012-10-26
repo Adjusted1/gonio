@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.IO.Ports;
@@ -8,56 +9,82 @@ namespace Goniometer_Controller.Sensors
 {
     public static class MinoltaSensorProvider
     {
-        public static string[] GetSensorNames()
+        private static object _sensorsLock = new object();
+        private static List<MinoltaBaseSensor> _sensors = new List<MinoltaBaseSensor>();
+        
+        static MinoltaSensorProvider()
         {
-            return new string[]
+            LoadSensorConfiguration();
+        }
+
+        private static void LoadSensorConfiguration()
+        {
+            var config = GoniometerControllerConfigurationSection.GetConfigurationSection();
+            foreach (GoniometerControllerConfigurationSection.SensorConfigurationElement sensorInfo in config.Sensors)
             {
-                MinoltaT10Controller.Name,
-                MinoltaCL200Controller.Name
-            };
+                var port = SerialPortProvider.GetPort(sensorInfo.Port);
+                var sensor = CreateSensor(sensorInfo.Name, sensorInfo.Type, port);
+
+                AddSensor(sensor);
+            }
+        }
+
+        public static void SaveSensorConfiguration()
+        {
+
+        }
+
+        public static IEnumerable<string> GetSensorTypes()
+        {
+            var types = new List<string>();
+
+            types.Add(MinoltaT10Controller.Type);
+            types.Add(MinoltaCL200Controller.Type);
+
+            return types;
+        }
+
+        public static MinoltaBaseSensor CreateSensor(string name, string type, SerialPort port)
+        {
+            MinoltaBaseSensor sensor;
+
+            switch (type)
+            {
+                case (MinoltaT10Controller.Type):
+                    sensor = new MinoltaT10Controller(port);
+                    break;
+
+                case (MinoltaCL200Controller.Type):
+                    sensor = new MinoltaCL200Controller(port);
+                    break;
+
+                default:
+                    throw new ArgumentException("Unknown Sensor by that sensorname");
+            }
+
+            sensor.Name = name;
+            return sensor;
+        }
+
+        public static void AddSensor(MinoltaBaseSensor sensor)
+        {
+            lock (_sensorsLock)
+            {
+                _sensors.Add(sensor);
+            }
+        }
+
+        public static bool RemoveSensor(MinoltaBaseSensor sensor)
+        {
+            lock (_sensorsLock)
+            {
+                return _sensors.Remove(sensor);
+            }
         }
 
         public static IEnumerable<MinoltaBaseSensor> GetSensors()
         {
-            List<MinoltaBaseSensor> sensors = new List<MinoltaBaseSensor>();
-
-            string[] portnames = SerialPort.GetPortNames();
-            string[] sensornames = GetSensorNames();
-
-            //iterate every known sensor type for all available ports
-            foreach (string portname in portnames)
-            foreach (string sensorname in sensornames)
-            {   
-                try
-                {
-                    SerialPort port = SerialPortProvider.GetPort(portname);
-                    MinoltaBaseSensor sensor = GetSensorByName(sensorname, port);
-
-                    if (sensor.TestStatus())
-                        sensors.Add(sensor);
-                }
-                catch (Exception)
-                {
-                    //unknown failure, move onto the next type
-                }
-            }
-
-            return sensors;
-        }
-
-        public static MinoltaBaseSensor GetSensorByName(string name, SerialPort port)
-        {
-            switch (name)
-            {
-                case (MinoltaT10Controller.Name):
-                    return new MinoltaT10Controller(port);
-
-                case (MinoltaCL200Controller.Name):
-                    return new MinoltaCL200Controller(port);
-
-                default:
-                    throw new ArgumentException("Unknown Sensor by that sensorname");
-            } 
+            return _sensors.ToList();
         }
     }
 }

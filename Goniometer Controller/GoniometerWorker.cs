@@ -86,6 +86,8 @@ namespace Goniometer_Controller
         #region worker methods
         private void DoWork(object sender, DoWorkEventArgs e)
         {
+            int progress;
+
             try
             {
                 _worker.ReportProgress(0, "Test Started");
@@ -93,15 +95,15 @@ namespace Goniometer_Controller
                 for (int v = 0; v < _vRange.Length; v++)
                 {
                     //update progress, move vertical arm
-                    int progress = (int)(v / _vRange.Length);
+                    progress = (int) 100 * (v / _vRange.Length);
                     _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
                     MotorController.SetVerticalAngleAndWait(_vRange[v]);
 
                     for (int h = 0; h < _hRange.Length; h++)
                     {
                         //update progress, move horizontal motor
-                        progress = (int)((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
-                        _worker.ReportProgress((int)h / _hRange.Length, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
+                        progress = (int) 100 * ((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
+                        _worker.ReportProgress(progress, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
                         MotorController.SetHorizontalAngleAndWait(_hRange[h]);
 
                         try

@@ -1,99 +1,110 @@
-Minolta T10,COM1,0,0,Illuminance - Ev (fcd),0.144
-Minolta T10,COM1,0,20,Illuminance - Ev (fcd),0.143
-Minolta T10,COM1,0,40,Illuminance - Ev (fcd),0.142
-Minolta T10,COM1,0,60,Illuminance - Ev (fcd),0.135
-Minolta T10,COM1,0,80,Illuminance - Ev (fcd),0.133
-Minolta T10,COM1,0,90,Illuminance - Ev (fcd),0.135
-Minolta T10,COM1,45,0,Illuminance - Ev (fcd),0.167
-Minolta T10,COM1,45,20,Illuminance - Ev (fcd),0.167
-Minolta T10,COM1,45,40,Illuminance - Ev (fcd),0.164
-Minolta T10,COM1,45,60,Illuminance - Ev (fcd),0.152
-Minolta T10,COM1,45,80,Illuminance - Ev (fcd),0.147
-Minolta T10,COM1,45,90,Illuminance - Ev (fcd),0.15
-Minolta T10,COM1,90,0,Illuminance - Ev (fcd),0.168
-Minolta T10,COM1,90,20,Illuminance - Ev (fcd),0.169
-Minolta T10,COM1,90,40,Illuminance - Ev (fcd),0.168
-Minolta T10,COM1,90,60,Illuminance - Ev (fcd),0.161
-Minolta T10,COM1,90,80,Illuminance - Ev (fcd),0.152
-Minolta T10,COM1,90,90,Illuminance - Ev (fcd),0.155
-Minolta T10,COM1,135,0,Illuminance - Ev (fcd),0.131
-Minolta T10,COM1,135,20,Illuminance - Ev (fcd),0.132
-Minolta T10,COM1,135,40,Illuminance - Ev (fcd),0.133
-Minolta T10,COM1,135,60,Illuminance - Ev (fcd),0.132
-Minolta T10,COM1,135,80,Illuminance - Ev (fcd),0.131
-Minolta T10,COM1,135,90,Illuminance - Ev (fcd),0.131
-Minolta T10,COM1,180,0,Illuminance - Ev (fcd),0.073
-Minolta T10,COM1,180,20,Illuminance - Ev (fcd),0.075
-Minolta T10,COM1,180,40,Illuminance - Ev (fcd),0.076
-Minolta T10,COM1,180,60,Illuminance - Ev (fcd),0.076
-Minolta T10,COM1,180,80,Illuminance - Ev (fcd),0.075
-Minolta T10,COM1,180,90,Illuminance - Ev (fcd),0.075
-Minolta T10,COM1,225,0,Illuminance - Ev (fcd),0.071
-Minolta T10,COM1,225,20,Illuminance - Ev (fcd),0.071
-Minolta T10,COM1,225,40,Illuminance - Ev (fcd),0.069
-Minolta T10,COM1,225,60,Illuminance - Ev (fcd),0.064
-Minolta T10,COM1,225,80,Illuminance - Ev (fcd),0.062
-Minolta T10,COM1,225,90,Illuminance - Ev (fcd),0.064
-Minolta T10,COM1,270,0,Illuminance - Ev (fcd),0.081
-Minolta T10,COM1,270,20,Illuminance - Ev (fcd),0.081
-Minolta T10,COM1,270,40,Illuminance - Ev (fcd),0.079
-Minolta T10,COM1,270,60,Illuminance - Ev (fcd),0.07
-Minolta T10,COM1,270,80,Illuminance - Ev (fcd),0.067
-Minolta T10,COM1,270,90,Illuminance - Ev (fcd),0.069
-Minolta T10,COM1,315,0,Illuminance - Ev (fcd),0.182
-Minolta T10,COM1,315,20,Illuminance - Ev (fcd),0.182
-Minolta T10,COM1,315,40,Illuminance - Ev (fcd),0.18
-Minolta T10,COM1,315,60,Illuminance - Ev (fcd),0.172
-Minolta T10,COM1,315,80,Illuminance - Ev (fcd),0.167
-Minolta T10,COM1,315,90,Illuminance - Ev (fcd),0.17
-Minolta T10,COM1,360,0,Illuminance - Ev (fcd),0.143
-Minolta T10,COM1,360,20,Illuminance - Ev (fcd),0.143
-Minolta T10,COM1,360,40,Illuminance - Ev (fcd),0.141
-Minolta T10,COM1,360,60,Illuminance - Ev (fcd),0.134
-Minolta T10,COM1,360,80,Illuminance - Ev (fcd),0.132
-Minolta T10,COM1,360,90,Illuminance - Ev (fcd),0.135
-Minolta T10,COM1,0,110,Illuminance - Ev (fcd),0.144
-Minolta T10,COM1,0,130,Illuminance - Ev (fcd),0.147
-Minolta T10,COM1,0,150,Illuminance - Ev (fcd),0.147
-Minolta T10,COM1,0,170,Illuminance - Ev (fcd),0.147
-Minolta T10,COM1,0,180,Illuminance - Ev (fcd),0.147
-Minolta T10,COM1,45,110,Illuminance - Ev (fcd),0.16
-Minolta T10,COM1,45,130,Illuminance - Ev (fcd),0.169
-Minolta T10,COM1,45,150,Illuminance - Ev (fcd),0.169
-Minolta T10,COM1,45,170,Illuminance - Ev (fcd),0.169
-Minolta T10,COM1,45,180,Illuminance - Ev (fcd),0.169
-Minolta T10,COM1,90,110,Illuminance - Ev (fcd),0.165
-Minolta T10,COM1,90,130,Illuminance - Ev (fcd),0.17
-Minolta T10,COM1,90,150,Illuminance - Ev (fcd),0.17
-Minolta T10,COM1,90,170,Illuminance - Ev (fcd),0.17
-Minolta T10,COM1,90,180,Illuminance - Ev (fcd),0.17
-Minolta T10,COM1,135,110,Illuminance - Ev (fcd),0.133
-Minolta T10,COM1,135,130,Illuminance - Ev (fcd),0.134
-Minolta T10,COM1,135,150,Illuminance - Ev (fcd),0.134
-Minolta T10,COM1,135,170,Illuminance - Ev (fcd),0.134
-Minolta T10,COM1,135,180,Illuminance - Ev (fcd),0.133
-Minolta T10,COM1,180,110,Illuminance - Ev (fcd),0.076
-Minolta T10,COM1,180,130,Illuminance - Ev (fcd),0.077
-Minolta T10,COM1,180,150,Illuminance - Ev (fcd),0.077
-Minolta T10,COM1,180,170,Illuminance - Ev (fcd),0.077
-Minolta T10,COM1,180,180,Illuminance - Ev (fcd),0.077
-Minolta T10,COM1,225,110,Illuminance - Ev (fcd),0.071
-Minolta T10,COM1,225,130,Illuminance - Ev (fcd),0.074
-Minolta T10,COM1,225,150,Illuminance - Ev (fcd),0.075
-Minolta T10,COM1,225,170,Illuminance - Ev (fcd),0.075
-Minolta T10,COM1,225,180,Illuminance - Ev (fcd),0.075
-Minolta T10,COM1,270,110,Illuminance - Ev (fcd),0.076
-Minolta T10,COM1,270,130,Illuminance - Ev (fcd),0.084
-Minolta T10,COM1,270,150,Illuminance - Ev (fcd),0.084
-Minolta T10,COM1,270,170,Illuminance - Ev (fcd),0.084
-Minolta T10,COM1,270,180,Illuminance - Ev (fcd),0.084
-Minolta T10,COM1,315,110,Illuminance - Ev (fcd),0.181
-Minolta T10,COM1,315,130,Illuminance - Ev (fcd),0.185
-Minolta T10,COM1,315,150,Illuminance - Ev (fcd),0.185
-Minolta T10,COM1,315,170,Illuminance - Ev (fcd),0.185
-Minolta T10,COM1,315,180,Illuminance - Ev (fcd),0.185
-Minolta T10,COM1,360,110,Illuminance - Ev (fcd),0.142
-Minolta T10,COM1,360,130,Illuminance - Ev (fcd),0.146
-Minolta T10,COM1,360,150,Illuminance - Ev (fcd),0.146
-Minolta T10,COM1,360,170,Illuminance - Ev (fcd),0.146
-Minolta T10,COM1,360,180,Illuminance - Ev (fcd),0.146
+Minolta T10,COM1,0,0,Illuminance - Ev (fcd),0.017
+Minolta CL200,COM4,0,0,Color - U',0.2517
+Minolta CL200,COM4,0,0,Color - V',0.5207
+Minolta CL200,COM4,0,0,Color - CorrelatedTemp,2975
+Minolta CL200,COM4,0,0,Color - DeltaUV,-0.0007
+Minolta T10,COM1,180,0,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,0,Color - U',0.2501
+Minolta CL200,COM4,180,0,Color - V',0.5213
+Minolta CL200,COM4,180,0,Color - CorrelatedTemp,3011
+Minolta CL200,COM4,180,0,Color - DeltaUV,0.0002
+Minolta T10,COM1,0,20,Illuminance - Ev (fcd),0.017
+Minolta CL200,COM4,0,20,Color - U',0.2463
+Minolta CL200,COM4,0,20,Color - V',0.52
+Minolta CL200,COM4,0,20,Color - CorrelatedTemp,3117
+Minolta CL200,COM4,0,20,Color - DeltaUV,0.0007
+Minolta T10,COM1,180,20,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,20,Color - U',0.25
+Minolta CL200,COM4,180,20,Color - V',0.5198
+Minolta CL200,COM4,180,20,Color - CorrelatedTemp,3023
+Minolta CL200,COM4,180,20,Color - DeltaUV,-0.0007
+Minolta T10,COM1,0,40,Illuminance - Ev (fcd),0.017
+Minolta CL200,COM4,0,40,Color - U',0.2464
+Minolta CL200,COM4,0,40,Color - V',0.5215
+Minolta CL200,COM4,0,40,Color - CorrelatedTemp,3104
+Minolta CL200,COM4,0,40,Color - DeltaUV,0.0016
+Minolta T10,COM1,180,40,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,40,Color - U',0.2473
+Minolta CL200,COM4,180,40,Color - V',0.5202
+Minolta CL200,COM4,180,40,Color - CorrelatedTemp,3090
+Minolta CL200,COM4,180,40,Color - DeltaUV,0.0005
+Minolta T10,COM1,0,60,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,0,60,Color - U',0.2501
+Minolta CL200,COM4,0,60,Color - V',0.5213
+Minolta CL200,COM4,0,60,Color - CorrelatedTemp,3011
+Minolta CL200,COM4,0,60,Color - DeltaUV,0.0002
+Minolta T10,COM1,180,60,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,60,Color - U',0.2512
+Minolta CL200,COM4,180,60,Color - V',0.5216
+Minolta CL200,COM4,180,60,Color - CorrelatedTemp,2983
+Minolta CL200,COM4,180,60,Color - DeltaUV,0
+Minolta T10,COM1,0,80,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,0,80,Color - U',0.2505
+Minolta CL200,COM4,0,80,Color - V',0.5192
+Minolta CL200,COM4,0,80,Color - CorrelatedTemp,3015
+Minolta CL200,COM4,0,80,Color - DeltaUV,-0.0012
+Minolta T10,COM1,180,80,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,80,Color - U',0.2483
+Minolta CL200,COM4,180,80,Color - V',0.5204
+Minolta CL200,COM4,180,80,Color - CorrelatedTemp,3063
+Minolta CL200,COM4,180,80,Color - DeltaUV,0.0003
+Minolta T10,COM1,0,90,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,0,90,Color - U',0.2506
+Minolta CL200,COM4,0,90,Color - V',0.5207
+Minolta CL200,COM4,0,90,Color - CorrelatedTemp,3003
+Minolta CL200,COM4,0,90,Color - DeltaUV,-0.0003
+Minolta T10,COM1,180,90,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,90,Color - U',0.2484
+Minolta CL200,COM4,180,90,Color - V',0.522
+Minolta CL200,COM4,180,90,Color - CorrelatedTemp,3050
+Minolta CL200,COM4,180,90,Color - DeltaUV,0.0012
+Minolta T10,COM1,0,110,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,0,110,Color - U',0.2501
+Minolta CL200,COM4,0,110,Color - V',0.5213
+Minolta CL200,COM4,0,110,Color - CorrelatedTemp,3011
+Minolta CL200,COM4,0,110,Color - DeltaUV,0.0002
+Minolta T10,COM1,180,110,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,110,Color - U',0.2511
+Minolta CL200,COM4,180,110,Color - V',0.5201
+Minolta CL200,COM4,180,110,Color - CorrelatedTemp,2994
+Minolta CL200,COM4,180,110,Color - DeltaUV,-0.0009
+Minolta T10,COM1,0,130,Illuminance - Ev (fcd),0.017
+Minolta CL200,COM4,0,130,Color - U',0.2527
+Minolta CL200,COM4,0,130,Color - V',0.5195
+Minolta CL200,COM4,0,130,Color - CorrelatedTemp,2958
+Minolta CL200,COM4,0,130,Color - DeltaUV,-0.0018
+Minolta CL200,COM4,180,130,Color - U',0.2511
+Minolta CL200,COM4,180,130,Color - V',0.5201
+Minolta CL200,COM4,180,130,Color - CorrelatedTemp,2994
+Minolta CL200,COM4,180,130,Color - DeltaUV,-0.0009
+Minolta T10,COM1,180,130,Illuminance - Ev (fcd),0.016
+Minolta T10,COM1,0,150,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,0,150,Color - U',0.25
+Minolta CL200,COM4,0,150,Color - V',0.5198
+Minolta CL200,COM4,0,150,Color - CorrelatedTemp,3023
+Minolta CL200,COM4,0,150,Color - DeltaUV,-0.0007
+Minolta T10,COM1,180,150,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,150,Color - U',0.2451
+Minolta CL200,COM4,180,150,Color - V',0.5215
+Minolta CL200,COM4,180,150,Color - CorrelatedTemp,3139
+Minolta CL200,COM4,180,150,Color - DeltaUV,0.0021
+Minolta CL200,COM4,0,170,Color - U',0.2501
+Minolta CL200,COM4,0,170,Color - V',0.5213
+Minolta CL200,COM4,0,170,Color - CorrelatedTemp,3011
+Minolta CL200,COM4,0,170,Color - DeltaUV,0.0002
+Minolta T10,COM1,0,170,Illuminance - Ev (fcd),0.016
+Minolta T10,COM1,180,170,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,170,Color - U',0.2511
+Minolta CL200,COM4,180,170,Color - V',0.5201
+Minolta CL200,COM4,180,170,Color - CorrelatedTemp,2994
+Minolta CL200,COM4,180,170,Color - DeltaUV,-0.0009
+Minolta T10,COM1,0,180,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,0,180,Color - U',0.2506
+Minolta CL200,COM4,0,180,Color - V',0.5207
+Minolta CL200,COM4,0,180,Color - CorrelatedTemp,3003
+Minolta CL200,COM4,0,180,Color - DeltaUV,-0.0003
+Minolta T10,COM1,180,180,Illuminance - Ev (fcd),0.016
+Minolta CL200,COM4,180,180,Color - U',0.2484
+Minolta CL200,COM4,180,180,Color - V',0.522
+Minolta CL200,COM4,180,180,Color - CorrelatedTemp,3050
+Minolta CL200,COM4,180,180,Color - DeltaUV,0.0012

@@ -4,16 +4,19 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
+using Goniometer.Reports;
 using Goniometer.Tests;
 using Goniometer.Tests.Calibration;
 using Goniometer.Tests.IESNA;
 
 using Goniometer_Controller;
+using Goniometer_Controller.Models;
 using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
 
@@ -52,6 +55,26 @@ namespace Goniometer
         }
 
         #region menu items
+        private void openRawToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = openFileDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    FileInfo fi = new FileInfo(openFileDialog.FileName);
+                    if (!fi.Exists)
+                        return;
+
+                    LoadDataControl(fi.FullName);
+                }
+            }
+            catch (Exception)
+            { 
+            }
+        }
+
         private void motorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var view = new MotorView())
@@ -70,6 +93,28 @@ namespace Goniometer
         #endregion
 
         #region main panel context switching
+
+        #region DataControl
+        private void LoadDataControl(string filePath)
+        {
+            //initialize and attach view
+            panelMain.Controls.Clear();
+
+            var dataControl = new RawDataView();
+            dataControl.Size = panelMain.Size;
+            dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            panelMain.Controls.Add(dataControl);
+
+            //fetch data and bind it
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string raw = sr.ReadToEnd();
+                var measurements = MeasurementCollection.FromCSV(raw);
+                dataControl.SetDataSource(measurements);
+            }
+        }
+        #endregion
 
         #region TestListControl
         private void LoadTestListControl()
@@ -281,7 +326,5 @@ namespace Goniometer
         {
             MotorController.EmergencyStop();
         }
-
-
     }
 }
