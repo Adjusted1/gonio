@@ -23,10 +23,7 @@ namespace Goniometer
         }
 
         private void LumenTestSetupControl_Load(object sender, EventArgs e)
-        {
-            //start timer
-            //timerSensors.Enabled = true;
-            
+        {            
             //setup default values
             SetCalibrationFactors();
             txtDataFolder.Text = FileFolderProvider.DefaultDataFolder;
@@ -34,6 +31,13 @@ namespace Goniometer
             //setup sensor control
             listSensors.Items.Clear();
             MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
+
+            //check all items
+            for (int i = 0; i < listSensors.Items.Count; i++)
+                listSensors.SetItemChecked(i, true);
+
+            UpdateMeasurementsDelegate ud = updateMeasurementGrid;
+            IAsyncResult ar = ud.BeginInvoke(measurementGridUpdated, null);
         }
 
         #region public values
@@ -414,11 +418,19 @@ namespace Goniometer
         #endregion
 
         #region sensor timer
-        private object _timerLock = new object();
+        private delegate void UpdateMeasurementsDelegate();
 
-        private void timerSensors_Tick(object sender, EventArgs e)
+        private object _sensorLock = new object();
+
+        private void listSensors_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (Monitor.TryEnter(_timerLock))
+            UpdateMeasurementsDelegate ud = updateMeasurementGrid;
+            IAsyncResult ar = ud.BeginInvoke(measurementGridUpdated, null);
+        }
+
+        private void updateMeasurementGrid()
+        {
+            lock (_sensorLock)
             {
                 try
                 {
@@ -426,7 +438,9 @@ namespace Goniometer
                     double phi = MotorController.GetVerticalMotorPosition();
 
                     var sensors = this.GetSensors().ToList();
-                    var measurements = sensors.AsParallel().SelectMany(s => s.CollectMeasurements(theta, phi));
+                    var measurements = sensors.AsParallel()
+                        .SelectMany(s => s.CollectMeasurements(theta, phi))
+                        .ToList();
 
                     measurementGridView.DataSource = measurements;
                 }
@@ -434,11 +448,11 @@ namespace Goniometer
                 {
                     SimpleLogger.Logging.WriteToLog(ex.Message);
                 }
-                finally
-                {
-                    Monitor.Exit(_timerLock);
-                }
             }
+        }
+
+        private void measurementGridUpdated(IAsyncResult result)
+        {
         }
         #endregion
 
@@ -575,5 +589,7 @@ namespace Goniometer
 
             return true;
         }
+
+
     }
 }

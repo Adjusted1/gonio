@@ -24,6 +24,7 @@ namespace Goniometer_Controller.Sensors
             {
                 var port = SerialPortProvider.GetPort(sensorInfo.Port);
                 var sensor = CreateSensor(sensorInfo.Name, sensorInfo.Type, port);
+                sensor.Connect();
 
                 AddSensor(sensor);
             }
