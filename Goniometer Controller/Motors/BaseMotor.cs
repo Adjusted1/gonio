@@ -135,7 +135,7 @@ namespace Goniometer_Controller.Motors
                 return;
 
             //set maximum time for a full movement
-            TimeSpan timeout = new TimeSpan(0, 1, 0);
+            TimeSpan timeout = new TimeSpan(0, 2, 0);
             DateTime startTime = DateTime.Now;
 
             //record current position

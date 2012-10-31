@@ -246,13 +246,13 @@ namespace Goniometer_Controller
             /// indicates that failure is unrecoverable and the test should halt
             /// set to false if test should continue
             /// </summary>
-            public bool Stop = true;
+            public bool Stop = false;
 
             /// <summary>
             /// indicates that failure is recoverable and the test should continue at next datapoint
             /// set to true if datapoint should recollect
             /// </summary>
-            public bool Skip = true;
+            public bool Skip = false;
 
             /// <summary>
             /// contains the exception caught during Gonio process
