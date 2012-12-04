@@ -17,7 +17,7 @@ namespace Goniometer_Controller.Motors
         private static short _encoderAxis = 3;
 
         private static double _motorScale = -9102.2;
-        private static double _encoderScale = -27.777;
+        private static double _encoderScale = 27.777;
 
         //motor encoder resolution * 4 = 8192 counts per rev
         //load  encoder resolution * 4 = 10000 counts per rev

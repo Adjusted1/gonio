@@ -14,16 +14,19 @@ namespace Goniometer_Controller.Sensors
         
         static MinoltaSensorProvider()
         {
-            LoadSensorConfiguration();
         }
 
-        private static void LoadSensorConfiguration()
+        public static void LoadSensorConfiguration()
         {
+            //reload sensor list
+            _sensors = new List<MinoltaBaseSensor>();
             var config = GoniometerControllerConfigurationSection.GetConfigurationSection();
+
             foreach (GoniometerControllerConfigurationSection.SensorConfigurationElement sensorInfo in config.Sensors)
             {
                 var port = SerialPortProvider.GetPort(sensorInfo.Port);
                 var sensor = CreateSensor(sensorInfo.Name, sensorInfo.Type, port);
+                sensor.Connect();
 
                 AddSensor(sensor);
             }

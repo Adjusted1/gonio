@@ -121,16 +121,16 @@ namespace Goniometer.Tests.IESNA
         private bool paused = false;
         private void btnPause_Click(object sender, EventArgs e)
         {
-            if (paused)
+            if (!paused)
             {
-                btnPause.Text = "Pause";
-                paused = false;
+                btnPause.Text = "Unpause";
+                paused = true;
                 progressControl.PauseTestAsync();
             }
             else
             {
-                btnPause.Text = "Unpause";
-                paused = true;
+                btnPause.Text = "Pause";
+                paused = false;
                 progressControl.UnpauseTestAsync();
             }
         }

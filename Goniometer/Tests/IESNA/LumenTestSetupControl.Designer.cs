@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.grpLamp = new System.Windows.Forms.GroupBox();
             this.txtWattage = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -62,6 +61,11 @@
             this.chkEmail = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupResolution = new System.Windows.Forms.GroupBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtVerticalStopRange = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtVerticalStartRange = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -72,6 +76,7 @@
             this.txtVerticalStrayResolution = new System.Windows.Forms.TextBox();
             this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
+            this.measurementGridView = new Goniometer.Views.MeasurementGridView();
             this.listSensors = new System.Windows.Forms.CheckedListBox();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
             this.txtDistance = new Goniometer.NumberTextBox();
@@ -85,21 +90,19 @@
             this.btnDataFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupHorizontalSymetry = new System.Windows.Forms.GroupBox();
-            this.measurementGridView = new Goniometer.Views.MeasurementGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timerSensors = new System.Windows.Forms.Timer(this.components);
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpLamp.SuspendLayout();
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
             this.groupSensor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).BeginInit();
             this.groupCalibration.SuspendLayout();
             this.groupHorizontalSymetry.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // grpLamp
@@ -280,7 +283,7 @@
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(686, 548);
+            this.lblTime.Location = new System.Drawing.Point(686, 660);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(49, 13);
             this.lblTime.TabIndex = 23;
@@ -391,7 +394,7 @@
             // 
             this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtEmail.Enabled = false;
-            this.txtEmail.Location = new System.Drawing.Point(9, 545);
+            this.txtEmail.Location = new System.Drawing.Point(9, 657);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(135, 20);
             this.txtEmail.TabIndex = 9;
@@ -400,7 +403,7 @@
             // 
             this.chkEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkEmail.AutoSize = true;
-            this.chkEmail.Location = new System.Drawing.Point(9, 522);
+            this.chkEmail.Location = new System.Drawing.Point(9, 634);
             this.chkEmail.Name = "chkEmail";
             this.chkEmail.Size = new System.Drawing.Size(112, 17);
             this.chkEmail.TabIndex = 8;
@@ -412,7 +415,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(604, 548);
+            this.label3.Location = new System.Drawing.Point(604, 660);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 17;
@@ -420,8 +423,13 @@
             // 
             // groupResolution
             // 
-            this.groupResolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupResolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupResolution.Controls.Add(this.label23);
+            this.groupResolution.Controls.Add(this.label24);
+            this.groupResolution.Controls.Add(this.txtVerticalStopRange);
+            this.groupResolution.Controls.Add(this.label21);
+            this.groupResolution.Controls.Add(this.txtVerticalStartRange);
             this.groupResolution.Controls.Add(this.label11);
             this.groupResolution.Controls.Add(this.label10);
             this.groupResolution.Controls.Add(this.label9);
@@ -435,15 +443,58 @@
             this.groupResolution.Controls.Add(this.txtHorizontalResolution);
             this.groupResolution.Location = new System.Drawing.Point(3, 290);
             this.groupResolution.Name = "groupResolution";
-            this.groupResolution.Size = new System.Drawing.Size(194, 216);
+            this.groupResolution.Size = new System.Drawing.Size(194, 328);
             this.groupResolution.TabIndex = 3;
             this.groupResolution.TabStop = false;
             this.groupResolution.Text = "Resolution";
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(25, 208);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(29, 13);
+            this.label23.TabIndex = 33;
+            this.label23.Text = "Stop";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(25, 184);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(29, 13);
+            this.label24.TabIndex = 32;
+            this.label24.Text = "Start";
+            // 
+            // txtVerticalStopRange
+            // 
+            this.txtVerticalStopRange.Location = new System.Drawing.Point(60, 205);
+            this.txtVerticalStopRange.Name = "txtVerticalStopRange";
+            this.txtVerticalStopRange.Size = new System.Drawing.Size(125, 20);
+            this.txtVerticalStopRange.TabIndex = 28;
+            this.txtVerticalStopRange.TextChanged += new System.EventHandler(this.txtVerticalStop_TextChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(74, 163);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(82, 13);
+            this.label21.TabIndex = 27;
+            this.label21.Text = "Vertical Ranges";
+            // 
+            // txtVerticalStartRange
+            // 
+            this.txtVerticalStartRange.Location = new System.Drawing.Point(60, 179);
+            this.txtVerticalStartRange.Name = "txtVerticalStartRange";
+            this.txtVerticalStartRange.Size = new System.Drawing.Size(125, 20);
+            this.txtVerticalStartRange.TabIndex = 26;
+            this.txtVerticalStartRange.TextChanged += new System.EventHandler(this.txtVerticalStart_TextChanged);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(77, 90);
+            this.label11.Location = new System.Drawing.Point(74, 68);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(89, 13);
             this.label11.TabIndex = 20;
@@ -452,7 +503,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 165);
+            this.label10.Location = new System.Drawing.Point(3, 143);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 13);
             this.label10.TabIndex = 19;
@@ -461,7 +512,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 139);
+            this.label9.Location = new System.Drawing.Point(12, 117);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(42, 13);
             this.label9.TabIndex = 18;
@@ -470,7 +521,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(15, 112);
+            this.label8.Location = new System.Drawing.Point(12, 90);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(42, 13);
             this.label8.TabIndex = 17;
@@ -496,7 +547,7 @@
             // 
             // txtHorizontalStrayResolution
             // 
-            this.txtHorizontalStrayResolution.Location = new System.Drawing.Point(63, 162);
+            this.txtHorizontalStrayResolution.Location = new System.Drawing.Point(60, 140);
             this.txtHorizontalStrayResolution.Name = "txtHorizontalStrayResolution";
             this.txtHorizontalStrayResolution.Size = new System.Drawing.Size(125, 20);
             this.txtHorizontalStrayResolution.TabIndex = 25;
@@ -504,7 +555,7 @@
             // 
             // txtVerticalStrayResolution
             // 
-            this.txtVerticalStrayResolution.Location = new System.Drawing.Point(63, 136);
+            this.txtVerticalStrayResolution.Location = new System.Drawing.Point(60, 114);
             this.txtVerticalStrayResolution.Name = "txtVerticalStrayResolution";
             this.txtVerticalStrayResolution.Size = new System.Drawing.Size(125, 20);
             this.txtVerticalStrayResolution.TabIndex = 24;
@@ -513,7 +564,7 @@
             // cboStrayResolution
             // 
             this.cboStrayResolution.FormattingEnabled = true;
-            this.cboStrayResolution.Location = new System.Drawing.Point(63, 109);
+            this.cboStrayResolution.Location = new System.Drawing.Point(60, 87);
             this.cboStrayResolution.Name = "cboStrayResolution";
             this.cboStrayResolution.Size = new System.Drawing.Size(125, 21);
             this.cboStrayResolution.TabIndex = 23;
@@ -521,32 +572,51 @@
             // 
             // groupSensor
             // 
-            this.groupSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupSensor.Controls.Add(this.measurementGridView);
             this.groupSensor.Controls.Add(this.listSensors);
             this.groupSensor.Location = new System.Drawing.Point(404, 145);
             this.groupSensor.Name = "groupSensor";
-            this.groupSensor.Size = new System.Drawing.Size(331, 361);
+            this.groupSensor.Size = new System.Drawing.Size(331, 473);
             this.groupSensor.TabIndex = 7;
             this.groupSensor.TabStop = false;
             this.groupSensor.Text = "Sensor";
             // 
+            // measurementGridView
+            // 
+            this.measurementGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.measurementGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.measurementGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewTextBoxColumn14,
+            this.dataGridViewTextBoxColumn15,
+            this.dataGridViewTextBoxColumn16,
+            this.dataGridViewTextBoxColumn17,
+            this.dataGridViewTextBoxColumn18});
+            this.measurementGridView.Location = new System.Drawing.Point(6, 177);
+            this.measurementGridView.Name = "measurementGridView";
+            this.measurementGridView.Size = new System.Drawing.Size(319, 290);
+            this.measurementGridView.TabIndex = 1;
+            // 
             // listSensors
             // 
-            this.listSensors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listSensors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listSensors.FormattingEnabled = true;
             this.listSensors.Location = new System.Drawing.Point(6, 19);
             this.listSensors.Name = "listSensors";
             this.listSensors.Size = new System.Drawing.Size(319, 154);
             this.listSensors.TabIndex = 0;
+            this.listSensors.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listSensors_ItemCheck);
             // 
             // groupCalibration
             // 
-            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupCalibration.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupCalibration.Controls.Add(this.txtDistance);
             this.groupCalibration.Controls.Add(this.label14);
             this.groupCalibration.Controls.Add(this.txtKTheta);
@@ -645,82 +715,60 @@
             // 
             // groupHorizontalSymetry
             // 
-            this.groupHorizontalSymetry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupHorizontalSymetry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalSingle);
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalQuarter);
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalFull);
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalHalf);
             this.groupHorizontalSymetry.Location = new System.Drawing.Point(204, 384);
             this.groupHorizontalSymetry.Name = "groupHorizontalSymetry";
-            this.groupHorizontalSymetry.Size = new System.Drawing.Size(194, 122);
+            this.groupHorizontalSymetry.Size = new System.Drawing.Size(194, 234);
             this.groupHorizontalSymetry.TabIndex = 5;
             this.groupHorizontalSymetry.TabStop = false;
             this.groupHorizontalSymetry.Text = "Horizontal Symetry";
             // 
-            // measurementGridView
+            // dataGridViewTextBoxColumn13
             // 
-            this.measurementGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.measurementGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.measurementGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6});
-            this.measurementGridView.Location = new System.Drawing.Point(6, 177);
-            this.measurementGridView.Name = "measurementGridView";
-            this.measurementGridView.Size = new System.Drawing.Size(319, 178);
-            this.measurementGridView.TabIndex = 1;
+            this.dataGridViewTextBoxColumn13.DataPropertyName = "SensorName";
+            this.dataGridViewTextBoxColumn13.HeaderText = "Sensor Name";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn1
+            // dataGridViewTextBoxColumn14
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "SensorName";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Sensor Name";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn14.DataPropertyName = "PortName";
+            this.dataGridViewTextBoxColumn14.HeaderText = "Port";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn2
+            // dataGridViewTextBoxColumn15
             // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "PortName";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Port";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn15.DataPropertyName = "Theta";
+            this.dataGridViewTextBoxColumn15.HeaderText = "Theta";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn3
+            // dataGridViewTextBoxColumn16
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Theta";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Theta";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn16.DataPropertyName = "Phi";
+            this.dataGridViewTextBoxColumn16.HeaderText = "Phi";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn4
+            // dataGridViewTextBoxColumn17
             // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Phi";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Phi";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn17.DataPropertyName = "Key";
+            this.dataGridViewTextBoxColumn17.HeaderText = "Key";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn5
+            // dataGridViewTextBoxColumn18
             // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Key";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Key";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "Value";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Value";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // timerSensors
-            // 
-            this.timerSensors.Interval = 1000;
-            this.timerSensors.Tick += new System.EventHandler(this.timerSensors_Tick);
+            this.dataGridViewTextBoxColumn18.DataPropertyName = "Value";
+            this.dataGridViewTextBoxColumn18.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
             // 
             // LumenTestSetupControl
             // 
@@ -741,7 +789,7 @@
             this.Controls.Add(this.groupResolution);
             this.MinimumSize = new System.Drawing.Size(749, 571);
             this.Name = "LumenTestSetupControl";
-            this.Size = new System.Drawing.Size(749, 571);
+            this.Size = new System.Drawing.Size(749, 683);
             this.Load += new System.EventHandler(this.LumenTestSetupControl_Load);
             this.grpLamp.ResumeLayout(false);
             this.grpLamp.PerformLayout();
@@ -750,11 +798,11 @@
             this.groupResolution.ResumeLayout(false);
             this.groupResolution.PerformLayout();
             this.groupSensor.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).EndInit();
             this.groupCalibration.ResumeLayout(false);
             this.groupCalibration.PerformLayout();
             this.groupHorizontalSymetry.ResumeLayout(false);
             this.groupHorizontalSymetry.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.measurementGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -817,14 +865,18 @@
         private System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.TextBox txtWattage;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtVerticalStopRange;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txtVerticalStartRange;
         private System.Windows.Forms.CheckedListBox listSensors;
         private Views.MeasurementGridView measurementGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.Timer timerSensors;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
     }
 }

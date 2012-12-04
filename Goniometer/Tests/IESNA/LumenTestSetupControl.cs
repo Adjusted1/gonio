@@ -23,10 +23,7 @@ namespace Goniometer
         }
 
         private void LumenTestSetupControl_Load(object sender, EventArgs e)
-        {
-            //start timer
-            timerSensors.Enabled = true;
-            
+        {            
             //setup default values
             SetCalibrationFactors();
             txtDataFolder.Text = FileFolderProvider.DefaultDataFolder;
@@ -34,11 +31,13 @@ namespace Goniometer
             //setup sensor control
             listSensors.Items.Clear();
             MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
+
+            //check all items
             for (int i = 0; i < listSensors.Items.Count; i++)
-            {
-                //precheck all items
                 listSensors.SetItemChecked(i, true);
-            }
+
+            UpdateMeasurementsDelegate ud = updateMeasurementGrid;
+            IAsyncResult ar = ud.BeginInvoke(measurementGridUpdated, null);
         }
 
         #region public values
@@ -154,7 +153,7 @@ namespace Goniometer
                 if (Double.TryParse(txtHorizontalResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -166,7 +165,7 @@ namespace Goniometer
                 if (Double.TryParse(txtHorizontalStrayResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -178,7 +177,7 @@ namespace Goniometer
                 if (Double.TryParse(txtVerticalResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -190,7 +189,7 @@ namespace Goniometer
                 if (Double.TryParse(txtVerticalStrayResolution.Text, out value))
                     return value;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
@@ -221,6 +220,30 @@ namespace Goniometer
                 return HorizontalSymmetryEnum.Single;
             }
         }
+
+        public double VerticalStartRange
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtVerticalStartRange.Text, out value))
+                    return value;
+                else
+                    return -1;
+            }
+        }
+
+        public double VerticalStopRange
+        {
+            get
+            {
+                double value;
+                if (Double.TryParse(txtVerticalStopRange.Text, out value))
+                    return value;
+                else
+                    return -1;
+            }
+        }
         #endregion
 
         #region range calculations
@@ -236,7 +259,7 @@ namespace Goniometer
 
         private double[] CalculateHorizontalRange(double resolution)
         {
-            int hRange = 0;  //total range in degrees
+            double hRange = 0;  //total range in degrees
             switch(HorizontalSymmetry)
             {
                 case HorizontalSymmetryEnum.Full:
@@ -272,13 +295,20 @@ namespace Goniometer
         }
         private double[] CalculateVerticalRange(double resolution)
         {
-            int vRangeStart = 0;     //start of range in degrees
-            int vRangeStop = 180;     //stop of range in degrees
+            double vRangeStart = 0;     //start of range in degrees
+            double vRangeStop = 180;     //stop of range in degrees
 
             if (VerticalSymmetry == VerticalSymmetryEnum.TopOnly)
                 vRangeStart = 90;
             else if (VerticalSymmetry == VerticalSymmetryEnum.BottomOnly)
                 vRangeStop = 90;
+
+            //hand entered values take precident
+            if (VerticalStartRange >= 0)
+                vRangeStart = VerticalStartRange;
+
+            if (VerticalStopRange >= 0)
+                vRangeStop = VerticalStopRange;
 
             if (resolution <= 0 || resolution > vRangeStop - vRangeStart)
                 return new double[] { vRangeStart, vRangeStop };
@@ -313,6 +343,16 @@ namespace Goniometer
         private void txtHorizontalStrayResolution_TextChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("VerticalStrayResolution");
+        }
+
+        private void txtVerticalStart_TextChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("VerticalStartRange");
+        }
+
+        private void txtVerticalStop_TextChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("VerticalStopRange");
         }
         #endregion
 
@@ -378,11 +418,19 @@ namespace Goniometer
         #endregion
 
         #region sensor timer
-        private object _timerLock = new object();
+        private delegate void UpdateMeasurementsDelegate();
 
-        private void timerSensors_Tick(object sender, EventArgs e)
+        private object _sensorLock = new object();
+
+        private void listSensors_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (Monitor.TryEnter(_timerLock))
+            UpdateMeasurementsDelegate ud = updateMeasurementGrid;
+            IAsyncResult ar = ud.BeginInvoke(measurementGridUpdated, null);
+        }
+
+        private void updateMeasurementGrid()
+        {
+            lock (_sensorLock)
             {
                 try
                 {
@@ -390,7 +438,9 @@ namespace Goniometer
                     double phi = MotorController.GetVerticalMotorPosition();
 
                     var sensors = this.GetSensors().ToList();
-                    var measurements = sensors.AsParallel().SelectMany(s => s.CollectMeasurements(theta, phi));
+                    var measurements = sensors.AsParallel()
+                        .SelectMany(s => s.CollectMeasurements(theta, phi))
+                        .ToList();
 
                     measurementGridView.DataSource = measurements;
                 }
@@ -398,11 +448,11 @@ namespace Goniometer
                 {
                     SimpleLogger.Logging.WriteToLog(ex.Message);
                 }
-                finally
-                {
-                    Monitor.Exit(_timerLock);
-                }
             }
+        }
+
+        private void measurementGridUpdated(IAsyncResult result)
+        {
         }
         #endregion
 
@@ -539,6 +589,5 @@ namespace Goniometer
 
             return true;
         }
-
     }
 }

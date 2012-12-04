@@ -112,8 +112,15 @@ namespace Goniometer_Controller.Sensors
         public void ReadEvTcpUV(int receptor, bool useCF, CalibrationModeEnum mode,
             out double Ev, out double Tcp, out double uv)
         {
-            int command = 8;
-            ReadMeasurement(receptor, command, useCF, mode, out Ev, out Tcp, out uv);
+            try
+            {
+                int command = 8;
+                ReadMeasurement(receptor, command, useCF, mode, out Ev, out Tcp, out uv);
+            }
+            catch (LowIlluminanceException)
+            {
+                Ev = Tcp = uv = 0;
+            }
         }
 
         public void ReadEvDWP(int receptor, bool useCF, CalibrationModeEnum mode,
@@ -145,7 +152,7 @@ namespace Goniometer_Controller.Sensors
             SendCommand(receptor, command, data);
             string res = ReadResponse(out receptor, out command);
 
-            res.Substring(0, 1);                    //"1" or "5"
+            string unknw = res.Substring(0, 1);     //"1" or "5"
             string error = res.Substring(1, 1);
             string range = res.Substring(2, 1);
             string batLv = res.Substring(3, 1);     //battery level, 0 == normal
@@ -160,9 +167,23 @@ namespace Goniometer_Controller.Sensors
             if (range == "6")
                 throw new Exception("Out of Range Error");
 
-            r1 = ParseReadingValue(res.Substring(4, 6));
-            r2 = ParseReadingValue(res.Substring(10, 6));
-            r3 = ParseReadingValue(res.Substring(16, 6));
+            //reading 1
+            if (res.Substring(4, 6) == " ---- ")
+                throw new LowIlluminanceException();
+            else
+                r1 = ParseReadingValue(res.Substring(4, 6));
+
+            //reading 2
+            if (res.Substring(10, 6) == " ---- ")
+                throw new LowIlluminanceException();
+            else
+                r2 = ParseReadingValue(res.Substring(10, 6));
+
+            //reading 3
+            if (res.Substring(16, 6) == " ---- ")
+                throw new LowIlluminanceException();
+            else
+                r3 = ParseReadingValue(res.Substring(16, 6));
         }
 
         protected override void ErrorCheckChar(string error)
@@ -250,8 +271,13 @@ namespace Goniometer_Controller.Sensors
                         double v1 = m1.First(m => m.Key == key).Value;
                         double v2 = m2.First(m => m.Key == key).Value;
 
+                        //validate zero measurements must be identical
+                        //as we don't know what the scale is
+                        if (v1 == 0 && v2 != 0)
+                            valid = false;
+
                         //validate measurement within some epsilon
-                        if (Math.Abs(v1 - v2) > eps)
+                        if (v2 != 0 && Math.Abs((v1 - v2) / v2) > eps)
                             valid = false;
                     }
                 }
@@ -280,28 +306,20 @@ namespace Goniometer_Controller.Sensors
             string name = this.Name;
             string port = this._port.PortName;
 
-            try
-            {
-                var measurements = new List<MeasurementBase>();
-                TakeMeasurement();
+            var measurements = new List<MeasurementBase>();
+            TakeMeasurement();
 
-                double Ev1, u, v;
-                ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
-                //measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
+            double Ev1, u, v;
+            ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
 
-                double Ev2, Tcp, Duv;
-                ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
-                measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
+            double Ev2, Tcp, Duv;
+            ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
 
-                return measurements;
-            }
-            catch (LowIlluminanceException)
-            {
-                return new List<MeasurementBase> { MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, 0, name, port) };
-            }
+            return measurements;
         }
 
         public enum CalibrationModeEnum
