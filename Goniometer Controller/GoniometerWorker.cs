@@ -15,7 +15,7 @@ namespace Goniometer_Controller
     {
         private BackgroundWorker _worker;
 
-        private List<MinoltaBaseSensor> _sensors;
+        private List<BaseSensor> _sensors;
 
         private double[] _hRange;
         private double[] _vRange;
@@ -24,7 +24,7 @@ namespace Goniometer_Controller
         private DateTime _startTime;
         private DateTime _stopTime;
 
-        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<MinoltaBaseSensor> sensors)
+        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors)
         {
             _hRange = hRange;
             _vRange = vRange;

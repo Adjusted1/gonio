@@ -12,12 +12,14 @@ using System.Windows.Forms;
 using Goniometer_Controller;
 using Goniometer_Controller.Sensors;
 using Goniometer_Controller.Models;
+using Goniometer.Sensors;
+using Minolta_Controller;
 
 namespace Goniometer.Setup
 {
     public partial class EditSensorsView : UserControl
     {
-        private MinoltaBaseSensor _sensor;
+        private BaseSensor _sensor;
 
         public EditSensorsView()
         {
@@ -33,9 +35,10 @@ namespace Goniometer.Setup
         private void ResetControl()
         {
             if (_sensor != null)
-                _sensor.Disconnect();
-
-            _sensor = null;
+            {
+                _sensor.Dispose();
+                _sensor = null;
+            }
 
             lblMessage.Text = "Pick a Sensor";
 
@@ -48,7 +51,7 @@ namespace Goniometer.Setup
         {
             cboSensor.SelectedItem = null;
             cboSensor.Items.Clear();
-            cboSensor.Items.AddRange(MinoltaSensorProvider.GetSensorTypes().ToArray());
+            cboSensor.Items.AddRange(MinoltaSensorFactory.GetSensorTypes().ToArray());
         }
 
         private void RefreshPortList()
@@ -61,7 +64,7 @@ namespace Goniometer.Setup
         private void ResetSensorsList()
         {
             listSensors.Items.Clear();
-            MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
+            SensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
         }
         #endregion
 
@@ -75,7 +78,7 @@ namespace Goniometer.Setup
         {
             _sensor.Name = txtName.Text;
 
-            MinoltaSensorProvider.AddSensor(_sensor);
+            SensorProvider.AddSensor(_sensor);
             ResetSensorsList();
         }
         #endregion
@@ -139,8 +142,7 @@ namespace Goniometer.Setup
 
                 //prepare sensor in local variable before assigning to member
                 var port = SerialPortProvider.GetPort(cboPort.SelectedItem.ToString());
-                _sensor = MinoltaSensorProvider.CreateSensor("", cboSensor.SelectedItem.ToString(), port);
-                _sensor.Connect();
+                _sensor = MinoltaSensorFactory.CreateSensor("", cboSensor.SelectedItem.ToString(), port);
 
                 //test the read method on the sensor
                 var measurements = _sensor.CollectMeasurements(0, 0);

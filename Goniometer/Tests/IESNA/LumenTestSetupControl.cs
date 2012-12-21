@@ -12,6 +12,7 @@ using Goniometer.Functions;
 using Goniometer.Settings;
 using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
+using Goniometer.Sensors;
 
 namespace Goniometer
 {
@@ -30,7 +31,7 @@ namespace Goniometer
             
             //setup sensor control
             listSensors.Items.Clear();
-            MinoltaSensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
+            SensorProvider.GetSensors().ToList().ForEach(s => listSensors.Items.Add(s.Name));
 
             //check all items
             for (int i = 0; i < listSensors.Items.Count; i++)
@@ -41,11 +42,11 @@ namespace Goniometer
         }
 
         #region public values
-        public IEnumerable<MinoltaBaseSensor> GetSensors()
+        public IEnumerable<BaseSensor> GetSensors()
         {
             //filter by checked items
             string[] values = listSensors.CheckedItems.OfType<string>().ToArray();
-            return MinoltaSensorProvider.GetSensors().WhereIn(s => s.Name, values);
+            return SensorProvider.GetSensors().WhereIn(s => s.Name, values);
         }
 
         public string DataFolder
@@ -91,17 +92,17 @@ namespace Goniometer
             get { return Double.Parse(txtWattage.Text); }
         }
 
-        public double Length
+        public double OpeningLength
         {
             get { return Double.Parse(txtLength.Text); }
         }
 
-        public double Width
+        public double OpeningWidth
         {
             get { return Double.Parse(txtWidth.Text); }
         }
 
-        public double Height
+        public double OpeningHeight
         {
             get { return Double.Parse(txtHeight.Text); }
         }

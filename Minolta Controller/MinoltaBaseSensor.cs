@@ -6,12 +6,12 @@ using System.Text;
 using System.IO.Ports;
 
 using Goniometer_Controller.Models;
+using Goniometer_Controller.Sensors;
 
-namespace Goniometer_Controller.Sensors
+namespace Minolta_Controller
 {
-    public abstract class MinoltaBaseSensor : IDisposable
+    public abstract class MinoltaBaseSensor : BaseSensor
     {
-        public string Name { get; set; }
         protected SerialPort _port;
 
         #region construction
@@ -197,9 +197,7 @@ namespace Goniometer_Controller.Sensors
         } 
         #endregion
 
-        public abstract IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi);
-
-        void IDisposable.Dispose()
+        public override void Dispose()
         {
             this.Disconnect();
         }

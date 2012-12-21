@@ -11,8 +11,8 @@ using System.Text;
 using System.Windows.Forms;
 
 using Goniometer.Reports;
+using Goniometer.Sensors;
 using Goniometer.Tests;
-using Goniometer.Tests.Calibration;
 using Goniometer.Tests.IESNA;
 
 using Goniometer_Controller;
@@ -50,7 +50,7 @@ namespace Goniometer
                 MotorController.Connect(IPAddress.Parse(address));
 
                 //connect to sensors
-                MinoltaSensorProvider.LoadSensorConfiguration();
+                SensorProvider.LoadSensorConfiguration();
             }
             catch (Exception)
             {
@@ -150,13 +150,13 @@ namespace Goniometer
         #region CalibrationTestControl
         private void LoadCalibrationTestControl()
         {
-            panelMain.Controls.Clear();
+            //panelMain.Controls.Clear();
 
-            var calibrationTestControl = new CalibrationControl();
-            calibrationTestControl.Size = panelMain.Size;
-            calibrationTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            //var calibrationTestControl = new CalibrationControl();
+            //calibrationTestControl.Size = panelMain.Size;
+            //calibrationTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
-            panelMain.Controls.Add(calibrationTestControl);
+            //panelMain.Controls.Add(calibrationTestControl);
         }
         #endregion
 

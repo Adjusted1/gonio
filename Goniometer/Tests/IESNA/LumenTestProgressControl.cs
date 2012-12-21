@@ -43,7 +43,7 @@ namespace Goniometer
         private double _kTheta;
         private double _distance;
 
-        private List<MinoltaBaseSensor> _sensors;
+        private List<BaseSensor> _sensors;
         #endregion
 
         #region results variables
@@ -82,11 +82,11 @@ namespace Goniometer
         public double Wattage { get; set; }
 
         //lumonous opening dimensions
-        public double Length { get; set; }
+        public double OpeningLength { get; set; }
 
-        public double Width { get; set; }
+        public double OpeningWidth { get; set; }
 
-        public double Height { get; set; }
+        public double OpeningHeight { get; set; }
         #endregion
         #endregion
 
@@ -96,7 +96,7 @@ namespace Goniometer
         }
 
         #region public methods
-        public void BeginTestAsync(IEnumerable<MinoltaBaseSensor> sensors, 
+        public void BeginTestAsync(IEnumerable<BaseSensor> sensors, 
             double[] hRange, double[] vRange, 
             double[] hStrayRange, double[] vStrayRange, 
             double kCal, double kTheta, double distance)
@@ -316,6 +316,7 @@ namespace Goniometer
             if (result == DialogResult.Abort)
             {
                 e.Stop = true;
+                e.Skip = true;
             }
             else if (result == DialogResult.Retry)
             {
@@ -393,9 +394,9 @@ namespace Goniometer
             report.Manufacturer = this.Manufacturer;
             report.Model        = this.Model;
             report.Wattage      = this.Wattage;
-            report.Length       = this.Length;
-            report.Width        = this.Width;
-            report.Height       = this.Height;
+            report.Length       = this.OpeningLength;
+            report.Width        = this.OpeningWidth;
+            report.Height       = this.OpeningHeight;
             report.IssueDate    = DateTime.Now;
 
             //generate report file

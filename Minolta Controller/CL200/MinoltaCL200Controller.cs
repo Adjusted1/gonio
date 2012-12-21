@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using Goniometer_Controller.Models;
 
-namespace Goniometer_Controller.Sensors
+namespace Minolta_Controller.Sensors
 {
     public class MinoltaCL200Controller : MinoltaBaseSensor
     {

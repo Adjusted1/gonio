@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goniometer</RootNamespace>
     <AssemblyName>Goniometer</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -48,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Goniometer.Program</StartupObject>
@@ -62,6 +64,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -72,6 +75,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +86,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -92,6 +97,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NationalInstruments.UI, Version=9.1.40.204, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
@@ -116,12 +122,14 @@
     <Compile Include="Controls\NumberTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GoniometerConfigurationSection.cs" />
     <Compile Include="Reports\RawDataView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Reports\RawDataView.Designer.cs">
       <DependentUpon>RawDataView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sensors\SensorProvider.cs" />
     <Compile Include="Settings\CalibrationModel.cs" />
     <Compile Include="Settings\CalibrationView.cs">
       <SubType>Form</SubType>
@@ -135,12 +143,6 @@
     </Compile>
     <Compile Include="Setup\EditSensorsView.Designer.cs">
       <DependentUpon>EditSensorsView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\Calibration\CalibrationControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Tests\Calibration\CalibrationControl.Designer.cs">
-      <DependentUpon>CalibrationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\IESNA\LumenTestControl.cs">
       <SubType>UserControl</SubType>
@@ -197,9 +199,6 @@
     <EmbeddedResource Include="Setup\EditSensorsView.resx">
       <DependentUpon>EditSensorsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\Calibration\CalibrationControl.resx">
-      <DependentUpon>CalibrationControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Tests\IESNA\LumenTestProgressControl.resx">
       <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +245,10 @@
     <ProjectReference Include="..\Goniometer Controller\Goniometer Controller.csproj">
       <Project>{B6359573-6312-46D7-89B4-BFC4DDF986EF}</Project>
       <Name>Goniometer Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Minolta Controller\Minolta Controller.csproj">
+      <Project>{028d2804-8d18-4275-b9e5-4b4e70f3656e}</Project>
+      <Name>Minolta Controller</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simpler Logger\SimpleLogger.csproj">
       <Project>{34F34C09-CF20-4B9F-8156-CAE10774B19D}</Project>

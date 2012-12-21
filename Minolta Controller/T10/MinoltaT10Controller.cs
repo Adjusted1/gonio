@@ -10,7 +10,7 @@ using SimpleLogger;
 
 using Goniometer_Controller.Models;
 
-namespace Goniometer_Controller.Sensors
+namespace Minolta_Controller.Sensors
 {
     public class MinoltaT10Controller : MinoltaBaseSensor, INotifyPropertyChanged
     {

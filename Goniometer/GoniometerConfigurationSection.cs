@@ -4,13 +4,13 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 
-namespace Goniometer_Controller
+namespace Goniometer
 {
-    internal class GoniometerControllerConfigurationSection : ConfigurationSection
+    public class GoniometerConfigurationSection : ConfigurationSection
     {
-        public static GoniometerControllerConfigurationSection GetConfigurationSection()
+        public static GoniometerConfigurationSection GetConfigurationSection()
         {
-            return (GoniometerControllerConfigurationSection)ConfigurationManager.GetSection("Goniometer_Controller");
+            return (GoniometerConfigurationSection)ConfigurationManager.GetSection("Goniometer_Controller");
         }
         
         [ConfigurationProperty("sensors", IsRequired=true, IsDefaultCollection = false)]

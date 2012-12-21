@@ -51,9 +51,9 @@ namespace Goniometer.Tests.IESNA
             progressControl.Manufacturer = setupControl.Manufacturer;
             progressControl.Model        = setupControl.Model;
             progressControl.Wattage      = setupControl.Wattage;
-            progressControl.Length       = setupControl.Length;
-            progressControl.Width        = setupControl.Width;
-            progressControl.Height       = setupControl.Height;
+            progressControl.OpeningLength       = setupControl.OpeningLength;
+            progressControl.OpeningWidth        = setupControl.OpeningWidth;
+            progressControl.OpeningHeight       = setupControl.OpeningHeight;
 
             //running values
             double[] hRange      = setupControl.CalculateHorizontalRange();

@@ -1,15 +1,21 @@
 
 *.suo
+
 /Goniometer/bin
 /Goniometer/obj
+
 /Goniometer Controller/obj
 /Goniometer Controller/bin
+
 /Goniometer Tests/bin
 /Goniometer Tests/obj
-/TestResults
-*.testsettings
-/Goniometer Setup/Release
-/Goniometer Setup/Debug
-/Goniometer Setup/Release
+
+/Minolta Controller/obj
+/Minolta Controller/bin
+
 /Simpler Logger/bin
 /Simpler Logger/obj
+
+/TestResults
+*.testsettings
+
