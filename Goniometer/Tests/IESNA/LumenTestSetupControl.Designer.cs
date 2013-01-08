@@ -76,7 +76,7 @@
             this.txtVerticalStrayResolution = new System.Windows.Forms.TextBox();
             this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
-            this.measurementGridView = new Goniometer.Views.MeasurementGridView();
+            this.measurementGridView = new System.Windows.Forms.DataGridView();
             this.listSensors = new System.Windows.Forms.CheckedListBox();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
             this.txtDistance = new Goniometer.NumberTextBox();
@@ -871,7 +871,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox txtVerticalStartRange;
         private System.Windows.Forms.CheckedListBox listSensors;
-        private Views.MeasurementGridView measurementGridView;
+        private System.Windows.Forms.DataGridView measurementGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;

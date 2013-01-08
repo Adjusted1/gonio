@@ -71,7 +71,7 @@ namespace Goniometer
                     if (!fi.Exists)
                         return;
 
-                    //LoadDataControl(fi.FullName);
+                    LoadDataControl(fi.FullName);
                 }
             }
             catch (Exception)
@@ -81,10 +81,10 @@ namespace Goniometer
 
         private void motorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var view = new MotorView())
-            {
-                view.ShowDialog();
-            }
+            //using (var view = new MotorView())
+            //{
+            //    view.ShowDialog();
+            //}
         }
 
         private void sensorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -99,25 +99,37 @@ namespace Goniometer
         #region main panel context switching
 
         #region DataControl
-        //private void LoadDataControl(string filePath)
-        //{
-        //    //initialize and attach view
-        //    panelMain.Controls.Clear();
+        private void LoadDataControl(string filePath)
+        {
+            //initialize and attach view
+            panelMain.Controls.Clear();
 
-        //    var dataControl = new RawDataView();
-        //    dataControl.Size = panelMain.Size;
-        //    dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            var dataControl = new RawDataView();
+            dataControl.Size = panelMain.Size;
+            dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataControl.OnCloseClicked += dataControl_OnCloseClicked;
+            dataControl.OnExportClicked += dataControl_OnExportClicked;
 
-        //    panelMain.Controls.Add(dataControl);
+            panelMain.Controls.Add(dataControl);
 
-        //    //fetch data and bind it
-        //    using (StreamReader sr = new StreamReader(filePath))
-        //    {
-        //        string raw = sr.ReadToEnd();
-        //        var measurements = MeasurementCollection.FromCSV(raw);
-        //        dataControl.SetDataSource(measurements);
-        //    }
-        //}
+            //fetch data and bind it
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string raw = sr.ReadToEnd();
+                var measurements = MeasurementCollection.FromCSV(raw);
+                dataControl.SetDataSource(measurements);
+            }
+        }
+
+        private void dataControl_OnCloseClicked(object sender, EventArgs e)
+        {
+            LoadTestListControl();
+        }
+
+        private void dataControl_OnExportClicked(object sender, EventArgs e)
+        {
+            LoadTestListControl();
+        }
         #endregion
 
         #region TestListControl
@@ -141,22 +153,13 @@ namespace Goniometer
 
             string testName = testListControl.SelectedTest;
             if (testName == "Lumen Test")
+            {
                 LoadLumenTestControl();
-            else if (testName == "Calibration Test")
-                LoadCalibrationTestControl();
-        }
-        #endregion
-
-        #region CalibrationTestControl
-        private void LoadCalibrationTestControl()
-        {
-            //panelMain.Controls.Clear();
-
-            //var calibrationTestControl = new CalibrationControl();
-            //calibrationTestControl.Size = panelMain.Size;
-            //calibrationTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-
-            //panelMain.Controls.Add(calibrationTestControl);
+            }
+            //else if (testName == "Calibration Test")
+            //{
+            //    LoadCalibrationTestControl();
+            //}
         }
         #endregion
 
@@ -184,30 +187,24 @@ namespace Goniometer
 
                 if (e.PropertyName == "HorizontalResolution" | e.PropertyName == "HorizontalSymmetry")
                 {
-                    gaugeHorizontal.RangeFills.Clear();
-
                     double[] hRange = control.CalculateHorizontalRange();
-                    if (hRange.Length == 0 || hRange.First() == hRange.Last())
+                    if (hRange.Length == 0)
                         return;
 
-                    NationalInstruments.UI.Range range = new NationalInstruments.UI.Range(hRange.First(), hRange.Last());
-                    NationalInstruments.UI.ScaleRangeFill fill = new NationalInstruments.UI.ScaleRangeFill(range);
-                    gaugeHorizontal.RangeFills.Add(fill);
+                    motorControlHorizontal.GaugeRangeStartValue = Convert.ToSingle(hRange.First());
+                    motorControlHorizontal.GaugeRangeEndValue   = Convert.ToSingle(hRange.Last());
                 }
-                else if (e.PropertyName == "VerticalResolution" 
-                       | e.PropertyName == "VerticalSymmetry" 
-                       | e.PropertyName == "VerticalStartRange" 
+                else if (e.PropertyName == "VerticalResolution"
+                       | e.PropertyName == "VerticalSymmetry"
+                       | e.PropertyName == "VerticalStartRange"
                        | e.PropertyName == "VerticalStopRange")
                 {
-                    gaugeVertical.RangeFills.Clear();
-
                     double[] vRange = control.CalculateVerticalRange();
-                    if (vRange.Length == 0 || vRange.First() == vRange.Last())
+                    if (vRange.Length == 0)
                         return;
 
-                    NationalInstruments.UI.Range range = new NationalInstruments.UI.Range(vRange.First(), vRange.Last());
-                    NationalInstruments.UI.ScaleRangeFill fill = new NationalInstruments.UI.ScaleRangeFill(range);
-                    gaugeVertical.RangeFills.Add(fill);
+                    motorControlVertical.GaugeRangeStartValue = Convert.ToSingle(vRange.First());
+                    motorControlVertical.GaugeRangeEndValue   = Convert.ToSingle(vRange.Last());
                 }
             }
             catch
@@ -224,101 +221,17 @@ namespace Goniometer
 
         #endregion
 
-        #region status panel
         private void timerMotor_Tick(object sender, EventArgs e)
         {
             try
             {
-                double hAngle = MotorController.GetHorizontalEncoderPosition();
-                lblHorizontalAngle.Text = hAngle.ToString("0.##");
-                if (hAngle < gaugeHorizontal.Range.Minimum)
-                    gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
-                else if (hAngle > gaugeHorizontal.Range.Maximum)
-                    gaugeHorizontal.Value = gaugeHorizontal.Range.Maximum;
-                else
-                    gaugeHorizontal.Value = hAngle;
-                
-                double vAngle = MotorController.GetVerticalEncoderPosition();
-                lblVerticalAngle.Text = vAngle.ToString("0.##");
-                if (vAngle < gaugeVertical.Range.Minimum)
-                    gaugeVertical.Value = gaugeVertical.Range.Minimum;
-                else if (vAngle > gaugeVertical.Range.Maximum)
-                    gaugeVertical.Value = gaugeVertical.Range.Maximum;
-                else
-                    gaugeVertical.Value = vAngle;
-            }
-            catch (InvalidOperationException)
-            {
-                //omnomnom, (connectivity problems)
+                motorControlHorizontal.GaugeAngle = Convert.ToSingle(MotorController.GetHorizontalEncoderPosition());
+                motorControlVertical.GaugeAngle   = Convert.ToSingle(MotorController.GetVerticalEncoderPosition());
             }
             catch (Exception)
             {
             }
         }
-
-        private void btnExecute_Click(object sender, EventArgs e)
-        {
-            ExecuteMotorDelegate em = ExecuteMotor;
-            IAsyncResult ar = em.BeginInvoke(MotorMoveFinished, null);
-        }
-
-        private delegate void ExecuteMotorDelegate();        
-        private void ExecuteMotor()
-        {
-            try
-            {
-                //set vertical first, as it is usually faster
-                double v;
-                if (Double.TryParse(txtVerticalAngle.Text, out v))
-                    MotorController.SetVerticalAngleAndWait(v);
-
-                double h;
-                if (Double.TryParse(txtHorizontalAngle.Text, out h))
-                    MotorController.SetHorizontalAngleAndWait(h);
-            }
-            catch (InvalidOperationException)
-            {
-                //omnomnom, (connectivity problems)
-            }
-        }
-
-        private void MotorMoveFinished(IAsyncResult result)
-        {
-            btnExecute.Text = "Execute";
-        }
-
-        private void txtHorizontalAngle_TextChanged(object sender, EventArgs e)
-        {
-            double d;
-            if (!Double.TryParse(txtHorizontalAngle.Text, out d))
-                picHorizontalAngleValid.Visible = true;
-
-            if (d < 0 | d > 360)
-                picHorizontalAngleValid.Visible = true;
-
-            picHorizontalAngleValid.Visible = false;
-        }
-
-        private void txtVerticalAngle_TextChanged(object sender, EventArgs e)
-        {
-            double d;
-            if (!Double.TryParse(txtVerticalAngle.Text, out d))
-                picVerticalAngleValid.Visible = true;
-
-            if (d < 0 | d > 180)
-                picVerticalAngleValid.Visible = true;
-
-            picVerticalAngleValid.Visible = false;
-        }
-
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            using (var view = new MotorView())
-            {
-                view.ShowDialog();
-            }
-        }
-        #endregion
 
         private void btnPanic_Click(object sender, EventArgs e)
         {
@@ -329,5 +242,17 @@ namespace Goniometer
         {
             MotorController.EmergencyStop();
         }
+
+        private void motorControlVertical_OnButtonGoClicked(object sender, double? e)
+        {
+            if (e.HasValue)
+                MotorController.SetVerticalAngleAndWait(e.Value);
+        }
+
+        private void motorControlHorizontal_OnButtonGoClicked(object sender, double? e)
+        {
+            if (e.HasValue)
+                MotorController.SetHorizontalAngleAndWait(e.Value);
+        } 
     }
 }

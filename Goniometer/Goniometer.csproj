@@ -100,8 +100,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NationalInstruments.UI, Version=9.1.40.204, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
-    <Reference Include="NationalInstruments.UI.WindowsForms, Version=9.1.40.204, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
+    <Reference Include="AGauge">
+      <HintPath>..\lib\AGauge.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -117,16 +118,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MotorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MotorControl.Designer.cs">
+      <DependentUpon>MotorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions\Extensions.cs" />
     <Compile Include="Functions\ReportUtils.cs" />
     <Compile Include="Controls\NumberTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GoniometerConfigurationSection.cs" />
-    <Compile Include="Reports\RawDataView.cs">
+    <Compile Include="Views\RawDataView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Reports\RawDataView.Designer.cs">
+    <Compile Include="Views\RawDataView.Designer.cs">
       <DependentUpon>RawDataView.cs</DependentUpon>
     </Compile>
     <Compile Include="Sensors\SensorProvider.cs" />
@@ -138,10 +145,10 @@
       <DependentUpon>CalibrationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\FileFolderProvider.cs" />
-    <Compile Include="Setup\EditSensorsView.cs">
+    <Compile Include="Views\Setup\EditSensorsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\EditSensorsView.Designer.cs">
+    <Compile Include="Views\Setup\EditSensorsView.Designer.cs">
       <DependentUpon>EditSensorsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\IESNA\LumenTestControl.cs">
@@ -162,10 +169,10 @@
     <Compile Include="Tests\IESNA\LumenTestSetupControl.Designer.cs">
       <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\MotorView.cs">
@@ -184,19 +191,22 @@
     <Compile Include="Tests\TestListControl.Designer.cs">
       <DependentUpon>TestListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MeasurementGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Include="Reports\RawDataView.resx">
+    <EmbeddedResource Include="Controls\MotorControl.resx">
+      <DependentUpon>MotorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NumberTextBox.resx">
+      <DependentUpon>NumberTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RawDataView.resx">
       <DependentUpon>RawDataView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\CalibrationView.resx">
       <DependentUpon>CalibrationView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setup\EditSensorsView.resx">
+    <EmbeddedResource Include="Views\Setup\EditSensorsView.resx">
       <DependentUpon>EditSensorsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\IESNA\LumenTestProgressControl.resx">
@@ -205,13 +215,12 @@
     <EmbeddedResource Include="Tests\IESNA\LumenTestSetupControl.resx">
       <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\MotorView.resx">
       <DependentUpon>MotorView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -277,6 +286,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

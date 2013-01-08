@@ -29,21 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision1 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision2 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision3 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision4 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision5 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision6 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision7 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision8 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision9 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision10 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision11 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision12 = new NationalInstruments.UI.ScaleCustomDivision();
-            NationalInstruments.UI.ScaleCustomDivision scaleCustomDivision13 = new NationalInstruments.UI.ScaleCustomDivision();
-            this.gaugeVertical = new NationalInstruments.UI.WindowsForms.Gauge();
-            this.gaugeHorizontal = new NationalInstruments.UI.WindowsForms.Gauge();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtIPAddress = new System.Windows.Forms.TextBox();
@@ -74,72 +59,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.gaugeVertical)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gaugeHorizontal)).BeginInit();
             this.SuspendLayout();
-            // 
-            // gaugeVertical
-            // 
-            scaleCustomDivision1.Text = "0";
-            scaleCustomDivision2.Text = "45";
-            scaleCustomDivision2.Value = 45D;
-            scaleCustomDivision3.Text = "90";
-            scaleCustomDivision3.Value = 90D;
-            scaleCustomDivision4.Text = "135";
-            scaleCustomDivision4.Value = 135D;
-            scaleCustomDivision5.Text = "180";
-            scaleCustomDivision5.Value = 180D;
-            this.gaugeVertical.CustomDivisions.AddRange(new NationalInstruments.UI.ScaleCustomDivision[] {
-            scaleCustomDivision1,
-            scaleCustomDivision2,
-            scaleCustomDivision3,
-            scaleCustomDivision4,
-            scaleCustomDivision5});
-            this.gaugeVertical.Location = new System.Drawing.Point(128, 279);
-            this.gaugeVertical.MajorDivisions.LabelVisible = false;
-            this.gaugeVertical.MajorDivisions.TickVisible = false;
-            this.gaugeVertical.MinorDivisions.TickVisible = false;
-            this.gaugeVertical.Name = "gaugeVertical";
-            this.gaugeVertical.Range = new NationalInstruments.UI.Range(0D, 180D);
-            this.gaugeVertical.ScaleArc = new NationalInstruments.UI.Arc(270F, -180F);
-            this.gaugeVertical.Size = new System.Drawing.Size(145, 145);
-            this.gaugeVertical.TabIndex = 0;
-            // 
-            // gaugeHorizontal
-            // 
-            scaleCustomDivision6.Text = "0";
-            scaleCustomDivision7.Text = "45";
-            scaleCustomDivision7.Value = 45D;
-            scaleCustomDivision8.Text = "90";
-            scaleCustomDivision8.Value = 90D;
-            scaleCustomDivision9.Text = "135";
-            scaleCustomDivision9.Value = 135D;
-            scaleCustomDivision10.Text = "180";
-            scaleCustomDivision10.Value = 180D;
-            scaleCustomDivision11.Text = "225";
-            scaleCustomDivision11.Value = 225D;
-            scaleCustomDivision12.Text = "270";
-            scaleCustomDivision12.Value = 270D;
-            scaleCustomDivision13.Text = "315";
-            scaleCustomDivision13.Value = 315D;
-            this.gaugeHorizontal.CustomDivisions.AddRange(new NationalInstruments.UI.ScaleCustomDivision[] {
-            scaleCustomDivision6,
-            scaleCustomDivision7,
-            scaleCustomDivision8,
-            scaleCustomDivision9,
-            scaleCustomDivision10,
-            scaleCustomDivision11,
-            scaleCustomDivision12,
-            scaleCustomDivision13});
-            this.gaugeHorizontal.Location = new System.Drawing.Point(128, 61);
-            this.gaugeHorizontal.MajorDivisions.LabelVisible = false;
-            this.gaugeHorizontal.MajorDivisions.TickVisible = false;
-            this.gaugeHorizontal.MinorDivisions.TickVisible = false;
-            this.gaugeHorizontal.Name = "gaugeHorizontal";
-            this.gaugeHorizontal.Range = new NationalInstruments.UI.Range(0D, 360D);
-            this.gaugeHorizontal.ScaleArc = new NationalInstruments.UI.Arc(270F, -360F);
-            this.gaugeHorizontal.Size = new System.Drawing.Size(145, 145);
-            this.gaugeHorizontal.TabIndex = 1;
             // 
             // label1
             // 
@@ -492,14 +412,10 @@
             this.Controls.Add(this.txtIPAddress);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.gaugeHorizontal);
-            this.Controls.Add(this.gaugeVertical);
             this.MinimumSize = new System.Drawing.Size(393, 533);
             this.Name = "MotorView";
             this.Text = "Motor Settings";
             this.Load += new System.EventHandler(this.MotorView_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gaugeVertical)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gaugeHorizontal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,8 +423,6 @@
 
         #endregion
 
-        private NationalInstruments.UI.WindowsForms.Gauge gaugeVertical;
-        private NationalInstruments.UI.WindowsForms.Gauge gaugeHorizontal;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtIPAddress;

@@ -1,110 +1,370 @@
-Minolta T10,COM1,0,0,Illuminance - Ev (fcd),0.017
-Minolta CL200,COM4,0,0,Color - U',0.2517
-Minolta CL200,COM4,0,0,Color - V',0.5207
-Minolta CL200,COM4,0,0,Color - CorrelatedTemp,2975
-Minolta CL200,COM4,0,0,Color - DeltaUV,-0.0007
-Minolta T10,COM1,180,0,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,0,Color - U',0.2501
-Minolta CL200,COM4,180,0,Color - V',0.5213
-Minolta CL200,COM4,180,0,Color - CorrelatedTemp,3011
-Minolta CL200,COM4,180,0,Color - DeltaUV,0.0002
-Minolta T10,COM1,0,20,Illuminance - Ev (fcd),0.017
-Minolta CL200,COM4,0,20,Color - U',0.2463
-Minolta CL200,COM4,0,20,Color - V',0.52
-Minolta CL200,COM4,0,20,Color - CorrelatedTemp,3117
-Minolta CL200,COM4,0,20,Color - DeltaUV,0.0007
-Minolta T10,COM1,180,20,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,20,Color - U',0.25
-Minolta CL200,COM4,180,20,Color - V',0.5198
-Minolta CL200,COM4,180,20,Color - CorrelatedTemp,3023
-Minolta CL200,COM4,180,20,Color - DeltaUV,-0.0007
-Minolta T10,COM1,0,40,Illuminance - Ev (fcd),0.017
-Minolta CL200,COM4,0,40,Color - U',0.2464
-Minolta CL200,COM4,0,40,Color - V',0.5215
-Minolta CL200,COM4,0,40,Color - CorrelatedTemp,3104
-Minolta CL200,COM4,0,40,Color - DeltaUV,0.0016
-Minolta T10,COM1,180,40,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,40,Color - U',0.2473
-Minolta CL200,COM4,180,40,Color - V',0.5202
-Minolta CL200,COM4,180,40,Color - CorrelatedTemp,3090
-Minolta CL200,COM4,180,40,Color - DeltaUV,0.0005
-Minolta T10,COM1,0,60,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,0,60,Color - U',0.2501
-Minolta CL200,COM4,0,60,Color - V',0.5213
-Minolta CL200,COM4,0,60,Color - CorrelatedTemp,3011
-Minolta CL200,COM4,0,60,Color - DeltaUV,0.0002
-Minolta T10,COM1,180,60,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,60,Color - U',0.2512
-Minolta CL200,COM4,180,60,Color - V',0.5216
-Minolta CL200,COM4,180,60,Color - CorrelatedTemp,2983
-Minolta CL200,COM4,180,60,Color - DeltaUV,0
-Minolta T10,COM1,0,80,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,0,80,Color - U',0.2505
-Minolta CL200,COM4,0,80,Color - V',0.5192
-Minolta CL200,COM4,0,80,Color - CorrelatedTemp,3015
-Minolta CL200,COM4,0,80,Color - DeltaUV,-0.0012
-Minolta T10,COM1,180,80,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,80,Color - U',0.2483
-Minolta CL200,COM4,180,80,Color - V',0.5204
-Minolta CL200,COM4,180,80,Color - CorrelatedTemp,3063
-Minolta CL200,COM4,180,80,Color - DeltaUV,0.0003
-Minolta T10,COM1,0,90,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,0,90,Color - U',0.2506
-Minolta CL200,COM4,0,90,Color - V',0.5207
-Minolta CL200,COM4,0,90,Color - CorrelatedTemp,3003
-Minolta CL200,COM4,0,90,Color - DeltaUV,-0.0003
-Minolta T10,COM1,180,90,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,90,Color - U',0.2484
-Minolta CL200,COM4,180,90,Color - V',0.522
-Minolta CL200,COM4,180,90,Color - CorrelatedTemp,3050
-Minolta CL200,COM4,180,90,Color - DeltaUV,0.0012
-Minolta T10,COM1,0,110,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,0,110,Color - U',0.2501
-Minolta CL200,COM4,0,110,Color - V',0.5213
-Minolta CL200,COM4,0,110,Color - CorrelatedTemp,3011
-Minolta CL200,COM4,0,110,Color - DeltaUV,0.0002
-Minolta T10,COM1,180,110,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,110,Color - U',0.2511
-Minolta CL200,COM4,180,110,Color - V',0.5201
-Minolta CL200,COM4,180,110,Color - CorrelatedTemp,2994
-Minolta CL200,COM4,180,110,Color - DeltaUV,-0.0009
-Minolta T10,COM1,0,130,Illuminance - Ev (fcd),0.017
-Minolta CL200,COM4,0,130,Color - U',0.2527
-Minolta CL200,COM4,0,130,Color - V',0.5195
-Minolta CL200,COM4,0,130,Color - CorrelatedTemp,2958
-Minolta CL200,COM4,0,130,Color - DeltaUV,-0.0018
-Minolta CL200,COM4,180,130,Color - U',0.2511
-Minolta CL200,COM4,180,130,Color - V',0.5201
-Minolta CL200,COM4,180,130,Color - CorrelatedTemp,2994
-Minolta CL200,COM4,180,130,Color - DeltaUV,-0.0009
-Minolta T10,COM1,180,130,Illuminance - Ev (fcd),0.016
-Minolta T10,COM1,0,150,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,0,150,Color - U',0.25
-Minolta CL200,COM4,0,150,Color - V',0.5198
-Minolta CL200,COM4,0,150,Color - CorrelatedTemp,3023
-Minolta CL200,COM4,0,150,Color - DeltaUV,-0.0007
-Minolta T10,COM1,180,150,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,150,Color - U',0.2451
-Minolta CL200,COM4,180,150,Color - V',0.5215
-Minolta CL200,COM4,180,150,Color - CorrelatedTemp,3139
-Minolta CL200,COM4,180,150,Color - DeltaUV,0.0021
-Minolta CL200,COM4,0,170,Color - U',0.2501
-Minolta CL200,COM4,0,170,Color - V',0.5213
-Minolta CL200,COM4,0,170,Color - CorrelatedTemp,3011
-Minolta CL200,COM4,0,170,Color - DeltaUV,0.0002
-Minolta T10,COM1,0,170,Illuminance - Ev (fcd),0.016
-Minolta T10,COM1,180,170,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,170,Color - U',0.2511
-Minolta CL200,COM4,180,170,Color - V',0.5201
-Minolta CL200,COM4,180,170,Color - CorrelatedTemp,2994
-Minolta CL200,COM4,180,170,Color - DeltaUV,-0.0009
-Minolta T10,COM1,0,180,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,0,180,Color - U',0.2506
-Minolta CL200,COM4,0,180,Color - V',0.5207
-Minolta CL200,COM4,0,180,Color - CorrelatedTemp,3003
-Minolta CL200,COM4,0,180,Color - DeltaUV,-0.0003
-Minolta T10,COM1,180,180,Illuminance - Ev (fcd),0.016
-Minolta CL200,COM4,180,180,Color - U',0.2484
-Minolta CL200,COM4,180,180,Color - V',0.522
-Minolta CL200,COM4,180,180,Color - CorrelatedTemp,3050
-Minolta CL200,COM4,180,180,Color - DeltaUV,0.0012
+T10,COM1,0,0,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,0,Color - U',0.2494
+CL200,COM4,0,0,Color - V',0.5219
+CL200,COM4,0,0,Color - CorrelatedTemp,3025
+CL200,COM4,0,0,Color - DeltaUV,0.0008
+T10,COM1,360,0,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,0,Color - U',0.2471
+CL200,COM4,360,0,Color - V',0.5223
+CL200,COM4,360,0,Color - CorrelatedTemp,3081
+CL200,COM4,360,0,Color - DeltaUV,0.0019
+T10,COM1,0,2.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,2.5,Color - U',0.247
+CL200,COM4,0,2.5,Color - V',0.521
+CL200,COM4,0,2.5,Color - CorrelatedTemp,3092
+CL200,COM4,0,2.5,Color - DeltaUV,0.0011
+T10,COM1,360,2.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,2.5,Color - U',0.2493
+CL200,COM4,360,2.5,Color - V',0.5207
+CL200,COM4,360,2.5,Color - CorrelatedTemp,3035
+CL200,COM4,360,2.5,Color - DeltaUV,0.0001
+T10,COM1,0,5,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,5,Color - U',0.2474
+CL200,COM4,0,5,Color - V',0.5204
+CL200,COM4,0,5,Color - CorrelatedTemp,3086
+CL200,COM4,0,5,Color - DeltaUV,0.0006
+T10,COM1,360,5,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,5,Color - U',0.2474
+CL200,COM4,360,5,Color - V',0.5204
+CL200,COM4,360,5,Color - CorrelatedTemp,3086
+CL200,COM4,360,5,Color - DeltaUV,0.0006
+T10,COM1,0,7.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,7.5,Color - U',0.247
+CL200,COM4,0,7.5,Color - V',0.521
+CL200,COM4,0,7.5,Color - CorrelatedTemp,3092
+CL200,COM4,0,7.5,Color - DeltaUV,0.0011
+T10,COM1,360,7.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,7.5,Color - U',0.2447
+CL200,COM4,360,7.5,Color - V',0.5213
+CL200,COM4,360,7.5,Color - CorrelatedTemp,3150
+CL200,COM4,360,7.5,Color - DeltaUV,0.0021
+T10,COM1,0,10,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,10,Color - U',0.2469
+CL200,COM4,0,10,Color - V',0.5197
+CL200,COM4,0,10,Color - CorrelatedTemp,3103
+CL200,COM4,0,10,Color - DeltaUV,0.0003
+T10,COM1,360,10,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,10,Color - U',0.247
+CL200,COM4,360,10,Color - V',0.521
+CL200,COM4,360,10,Color - CorrelatedTemp,3092
+CL200,COM4,360,10,Color - DeltaUV,0.0011
+T10,COM1,0,12.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,12.5,Color - U',0.2493
+CL200,COM4,0,12.5,Color - V',0.5207
+CL200,COM4,0,12.5,Color - CorrelatedTemp,3035
+CL200,COM4,0,12.5,Color - DeltaUV,0.0001
+T10,COM1,360,12.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,12.5,Color - U',0.2493
+CL200,COM4,360,12.5,Color - V',0.5207
+CL200,COM4,360,12.5,Color - CorrelatedTemp,3035
+CL200,COM4,360,12.5,Color - DeltaUV,0.0001
+T10,COM1,0,15,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,15,Color - U',0.2466
+CL200,COM4,0,15,Color - V',0.5202
+CL200,COM4,0,15,Color - CorrelatedTemp,3109
+CL200,COM4,0,15,Color - DeltaUV,0.0008
+T10,COM1,360,15,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,15,Color - U',0.2493
+CL200,COM4,360,15,Color - V',0.5207
+CL200,COM4,360,15,Color - CorrelatedTemp,3035
+CL200,COM4,360,15,Color - DeltaUV,0.0001
+T10,COM1,0,17.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,0,17.5,Color - U',0.2488
+CL200,COM4,0,17.5,Color - V',0.5199
+CL200,COM4,0,17.5,Color - CorrelatedTemp,3052
+CL200,COM4,0,17.5,Color - DeltaUV,-0.0002
+T10,COM1,360,17.5,Illuminance - Ev (fcd),0.019
+CL200,COM4,360,17.5,Color - U',0.2488
+CL200,COM4,360,17.5,Color - V',0.5199
+CL200,COM4,360,17.5,Color - CorrelatedTemp,3052
+CL200,COM4,360,17.5,Color - DeltaUV,-0.0002
+T10,COM1,0,20,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,20,Color - U',0.2485
+CL200,COM4,0,20,Color - V',0.5205
+CL200,COM4,0,20,Color - CorrelatedTemp,3058
+CL200,COM4,0,20,Color - DeltaUV,0.0002
+T10,COM1,360,20,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,20,Color - U',0.2462
+CL200,COM4,360,20,Color - V',0.5208
+CL200,COM4,360,20,Color - CorrelatedTemp,3114
+CL200,COM4,360,20,Color - DeltaUV,0.0013
+T10,COM1,0,22.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,22.5,Color - U',0.2485
+CL200,COM4,0,22.5,Color - V',0.5205
+CL200,COM4,0,22.5,Color - CorrelatedTemp,3058
+CL200,COM4,0,22.5,Color - DeltaUV,0.0002
+T10,COM1,360,22.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,22.5,Color - U',0.2485
+CL200,COM4,360,22.5,Color - V',0.5205
+CL200,COM4,360,22.5,Color - CorrelatedTemp,3058
+CL200,COM4,360,22.5,Color - DeltaUV,0.0002
+T10,COM1,0,25,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,25,Color - U',0.2481
+CL200,COM4,0,25,Color - V',0.521
+CL200,COM4,0,25,Color - CorrelatedTemp,3064
+CL200,COM4,0,25,Color - DeltaUV,0.0007
+T10,COM1,360,25,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,25,Color - U',0.2481
+CL200,COM4,360,25,Color - V',0.521
+CL200,COM4,360,25,Color - CorrelatedTemp,3064
+CL200,COM4,360,25,Color - DeltaUV,0.0007
+T10,COM1,0,27.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,27.5,Color - U',0.2481
+CL200,COM4,0,27.5,Color - V',0.521
+CL200,COM4,0,27.5,Color - CorrelatedTemp,3064
+CL200,COM4,0,27.5,Color - DeltaUV,0.0007
+T10,COM1,360,27.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,27.5,Color - U',0.248
+CL200,COM4,360,27.5,Color - V',0.5198
+CL200,COM4,360,27.5,Color - CorrelatedTemp,3075
+CL200,COM4,360,27.5,Color - DeltaUV,0
+T10,COM1,0,30,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,30,Color - U',0.2477
+CL200,COM4,0,30,Color - V',0.5215
+CL200,COM4,0,30,Color - CorrelatedTemp,3071
+CL200,COM4,0,30,Color - DeltaUV,0.0012
+T10,COM1,360,30,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,30,Color - U',0.2455
+CL200,COM4,360,30,Color - V',0.5218
+CL200,COM4,360,30,Color - CorrelatedTemp,3125
+CL200,COM4,360,30,Color - DeltaUV,0.0021
+T10,COM1,0,32.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,32.5,Color - U',0.2476
+CL200,COM4,0,32.5,Color - V',0.5203
+CL200,COM4,0,32.5,Color - CorrelatedTemp,3081
+CL200,COM4,0,32.5,Color - DeltaUV,0.0004
+T10,COM1,360,32.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,32.5,Color - U',0.2476
+CL200,COM4,360,32.5,Color - V',0.5203
+CL200,COM4,360,32.5,Color - CorrelatedTemp,3081
+CL200,COM4,360,32.5,Color - DeltaUV,0.0004
+T10,COM1,0,35,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,35,Color - U',0.2476
+CL200,COM4,0,35,Color - V',0.5203
+CL200,COM4,0,35,Color - CorrelatedTemp,3081
+CL200,COM4,0,35,Color - DeltaUV,0.0004
+T10,COM1,360,35,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,35,Color - U',0.2473
+CL200,COM4,360,35,Color - V',0.5208
+CL200,COM4,360,35,Color - CorrelatedTemp,3086
+CL200,COM4,360,35,Color - DeltaUV,0.0009
+T10,COM1,0,37.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,37.5,Color - U',0.2499
+CL200,COM4,0,37.5,Color - V',0.5212
+CL200,COM4,0,37.5,Color - CorrelatedTemp,3017
+CL200,COM4,0,37.5,Color - DeltaUV,0.0002
+T10,COM1,360,37.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,37.5,Color - U',0.2498
+CL200,COM4,360,37.5,Color - V',0.52
+CL200,COM4,360,37.5,Color - CorrelatedTemp,3026
+CL200,COM4,360,37.5,Color - DeltaUV,-0.0005
+T10,COM1,0,40,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,40,Color - U',0.2473
+CL200,COM4,0,40,Color - V',0.5208
+CL200,COM4,0,40,Color - CorrelatedTemp,3086
+CL200,COM4,0,40,Color - DeltaUV,0.0009
+T10,COM1,360,40,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,40,Color - U',0.2473
+CL200,COM4,360,40,Color - V',0.5208
+CL200,COM4,360,40,Color - CorrelatedTemp,3086
+CL200,COM4,360,40,Color - DeltaUV,0.0009
+T10,COM1,0,42.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,42.5,Color - U',0.2473
+CL200,COM4,0,42.5,Color - V',0.5208
+CL200,COM4,0,42.5,Color - CorrelatedTemp,3086
+CL200,COM4,0,42.5,Color - DeltaUV,0.0009
+T10,COM1,360,42.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,42.5,Color - U',0.2473
+CL200,COM4,360,42.5,Color - V',0.5208
+CL200,COM4,360,42.5,Color - CorrelatedTemp,3086
+CL200,COM4,360,42.5,Color - DeltaUV,0.0009
+T10,COM1,0,45,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,45,Color - U',0.2494
+CL200,COM4,0,45,Color - V',0.5205
+CL200,COM4,0,45,Color - CorrelatedTemp,3033
+CL200,COM4,0,45,Color - DeltaUV,-0.0001
+T10,COM1,360,45,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,45,Color - U',0.2494
+CL200,COM4,360,45,Color - V',0.5205
+CL200,COM4,360,45,Color - CorrelatedTemp,3033
+CL200,COM4,360,45,Color - DeltaUV,-0.0001
+T10,COM1,0,47.5,Illuminance - Ev (fcd),0.021
+CL200,COM4,0,47.5,Color - U',0.2494
+CL200,COM4,0,47.5,Color - V',0.5205
+CL200,COM4,0,47.5,Color - CorrelatedTemp,3033
+CL200,COM4,0,47.5,Color - DeltaUV,-0.0001
+T10,COM1,360,47.5,Illuminance - Ev (fcd),0.021
+CL200,COM4,360,47.5,Color - U',0.2473
+CL200,COM4,360,47.5,Color - V',0.5208
+CL200,COM4,360,47.5,Color - CorrelatedTemp,3086
+CL200,COM4,360,47.5,Color - DeltaUV,0.0009
+T10,COM1,0,50,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,50,Color - U',0.2468
+CL200,COM4,0,50,Color - V',0.5201
+CL200,COM4,0,50,Color - CorrelatedTemp,3102
+CL200,COM4,0,50,Color - DeltaUV,0.0006
+T10,COM1,360,50,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,50,Color - U',0.2494
+CL200,COM4,360,50,Color - V',0.5205
+CL200,COM4,360,50,Color - CorrelatedTemp,3033
+CL200,COM4,360,50,Color - DeltaUV,-0.0001
+T10,COM1,0,52.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,52.5,Color - U',0.2473
+CL200,COM4,0,52.5,Color - V',0.5208
+CL200,COM4,0,52.5,Color - CorrelatedTemp,3086
+CL200,COM4,0,52.5,Color - DeltaUV,0.0009
+T10,COM1,360,52.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,52.5,Color - U',0.2474
+CL200,COM4,360,52.5,Color - V',0.522
+CL200,COM4,360,52.5,Color - CorrelatedTemp,3076
+CL200,COM4,360,52.5,Color - DeltaUV,0.0016
+T10,COM1,0,55,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,55,Color - U',0.2473
+CL200,COM4,0,55,Color - V',0.5208
+CL200,COM4,0,55,Color - CorrelatedTemp,3086
+CL200,COM4,0,55,Color - DeltaUV,0.0009
+T10,COM1,360,55,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,55,Color - U',0.2474
+CL200,COM4,360,55,Color - V',0.522
+CL200,COM4,360,55,Color - CorrelatedTemp,3076
+CL200,COM4,360,55,Color - DeltaUV,0.0016
+T10,COM1,0,57.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,57.5,Color - U',0.2473
+CL200,COM4,0,57.5,Color - V',0.5208
+CL200,COM4,0,57.5,Color - CorrelatedTemp,3086
+CL200,COM4,0,57.5,Color - DeltaUV,0.0009
+T10,COM1,360,57.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,57.5,Color - U',0.2448
+CL200,COM4,360,57.5,Color - V',0.5216
+CL200,COM4,360,57.5,Color - CorrelatedTemp,3146
+CL200,COM4,360,57.5,Color - DeltaUV,0.0023
+T10,COM1,0,60,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,60,Color - U',0.2473
+CL200,COM4,0,60,Color - V',0.5208
+CL200,COM4,0,60,Color - CorrelatedTemp,3086
+CL200,COM4,0,60,Color - DeltaUV,0.0009
+T10,COM1,360,60,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,60,Color - U',0.2498
+CL200,COM4,360,60,Color - V',0.52
+CL200,COM4,360,60,Color - CorrelatedTemp,3026
+CL200,COM4,360,60,Color - DeltaUV,-0.0005
+T10,COM1,0,62.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,62.5,Color - U',0.2498
+CL200,COM4,0,62.5,Color - V',0.52
+CL200,COM4,0,62.5,Color - CorrelatedTemp,3026
+CL200,COM4,0,62.5,Color - DeltaUV,-0.0005
+T10,COM1,360,62.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,62.5,Color - U',0.2473
+CL200,COM4,360,62.5,Color - V',0.5208
+CL200,COM4,360,62.5,Color - CorrelatedTemp,3086
+CL200,COM4,360,62.5,Color - DeltaUV,0.0009
+T10,COM1,0,65,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,65,Color - U',0.2451
+CL200,COM4,0,65,Color - V',0.5211
+CL200,COM4,0,65,Color - CorrelatedTemp,3141
+CL200,COM4,0,65,Color - DeltaUV,0.0019
+T10,COM1,360,65,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,65,Color - U',0.2473
+CL200,COM4,360,65,Color - V',0.5208
+CL200,COM4,360,65,Color - CorrelatedTemp,3086
+CL200,COM4,360,65,Color - DeltaUV,0.0009
+T10,COM1,0,67.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,67.5,Color - U',0.245
+CL200,COM4,0,67.5,Color - V',0.5199
+CL200,COM4,0,67.5,Color - CorrelatedTemp,3152
+CL200,COM4,0,67.5,Color - DeltaUV,0.0011
+T10,COM1,360,67.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,67.5,Color - U',0.2473
+CL200,COM4,360,67.5,Color - V',0.5208
+CL200,COM4,360,67.5,Color - CorrelatedTemp,3086
+CL200,COM4,360,67.5,Color - DeltaUV,0.0009
+T10,COM1,0,70,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,70,Color - U',0.2473
+CL200,COM4,0,70,Color - V',0.5208
+CL200,COM4,0,70,Color - CorrelatedTemp,3086
+CL200,COM4,0,70,Color - DeltaUV,0.0009
+T10,COM1,360,70,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,70,Color - U',0.2499
+CL200,COM4,360,70,Color - V',0.5212
+CL200,COM4,360,70,Color - CorrelatedTemp,3017
+CL200,COM4,360,70,Color - DeltaUV,0.0002
+T10,COM1,0,72.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,72.5,Color - U',0.2451
+CL200,COM4,0,72.5,Color - V',0.5211
+CL200,COM4,0,72.5,Color - CorrelatedTemp,3141
+CL200,COM4,0,72.5,Color - DeltaUV,0.0019
+T10,COM1,360,72.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,72.5,Color - U',0.2451
+CL200,COM4,360,72.5,Color - V',0.5211
+CL200,COM4,360,72.5,Color - CorrelatedTemp,3141
+CL200,COM4,360,72.5,Color - DeltaUV,0.0019
+T10,COM1,0,75,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,75,Color - U',0.2451
+CL200,COM4,0,75,Color - V',0.5211
+CL200,COM4,0,75,Color - CorrelatedTemp,3141
+CL200,COM4,0,75,Color - DeltaUV,0.0019
+T10,COM1,360,75,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,75,Color - U',0.2498
+CL200,COM4,360,75,Color - V',0.52
+CL200,COM4,360,75,Color - CorrelatedTemp,3026
+CL200,COM4,360,75,Color - DeltaUV,-0.0005
+T10,COM1,0,77.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,77.5,Color - U',0.2498
+CL200,COM4,0,77.5,Color - V',0.52
+CL200,COM4,0,77.5,Color - CorrelatedTemp,3026
+CL200,COM4,0,77.5,Color - DeltaUV,-0.0005
+T10,COM1,360,77.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,77.5,Color - U',0.2475
+CL200,COM4,360,77.5,Color - V',0.5191
+CL200,COM4,360,77.5,Color - CorrelatedTemp,3091
+CL200,COM4,360,77.5,Color - DeltaUV,-0.0003
+T10,COM1,0,80,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,80,Color - U',0.2473
+CL200,COM4,0,80,Color - V',0.5208
+CL200,COM4,0,80,Color - CorrelatedTemp,3086
+CL200,COM4,0,80,Color - DeltaUV,0.0009
+T10,COM1,360,80,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,80,Color - U',0.2473
+CL200,COM4,360,80,Color - V',0.5208
+CL200,COM4,360,80,Color - CorrelatedTemp,3086
+CL200,COM4,360,80,Color - DeltaUV,0.0009
+T10,COM1,0,82.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,82.5,Color - U',0.2473
+CL200,COM4,0,82.5,Color - V',0.5208
+CL200,COM4,0,82.5,Color - CorrelatedTemp,3086
+CL200,COM4,0,82.5,Color - DeltaUV,0.0009
+T10,COM1,360,82.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,82.5,Color - U',0.2473
+CL200,COM4,360,82.5,Color - V',0.5208
+CL200,COM4,360,82.5,Color - CorrelatedTemp,3086
+CL200,COM4,360,82.5,Color - DeltaUV,0.0009
+T10,COM1,0,85,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,85,Color - U',0.2473
+CL200,COM4,0,85,Color - V',0.5208
+CL200,COM4,0,85,Color - CorrelatedTemp,3086
+CL200,COM4,0,85,Color - DeltaUV,0.0009
+T10,COM1,360,85,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,85,Color - U',0.2476
+CL200,COM4,360,85,Color - V',0.5203
+CL200,COM4,360,85,Color - CorrelatedTemp,3081
+CL200,COM4,360,85,Color - DeltaUV,0.0004
+T10,COM1,0,87.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,87.5,Color - U',0.2473
+CL200,COM4,0,87.5,Color - V',0.5208
+CL200,COM4,0,87.5,Color - CorrelatedTemp,3086
+CL200,COM4,0,87.5,Color - DeltaUV,0.0009
+T10,COM1,360,87.5,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,87.5,Color - U',0.2473
+CL200,COM4,360,87.5,Color - V',0.5208
+CL200,COM4,360,87.5,Color - CorrelatedTemp,3086
+CL200,COM4,360,87.5,Color - DeltaUV,0.0009
+T10,COM1,0,90,Illuminance - Ev (fcd),0.02
+CL200,COM4,0,90,Color - U',0.2473
+CL200,COM4,0,90,Color - V',0.5208
+CL200,COM4,0,90,Color - CorrelatedTemp,3086
+CL200,COM4,0,90,Color - DeltaUV,0.0009
+T10,COM1,360,90,Illuminance - Ev (fcd),0.02
+CL200,COM4,360,90,Color - U',0.2473
+CL200,COM4,360,90,Color - V',0.5208
+CL200,COM4,360,90,Color - CorrelatedTemp,3086
+CL200,COM4,360,90,Color - DeltaUV,0.0009

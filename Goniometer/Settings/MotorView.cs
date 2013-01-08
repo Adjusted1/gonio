@@ -27,47 +27,47 @@ namespace Goniometer
 
         protected void timerMotor_Tick(object sender, EventArgs e)
         {
-            try
-            {
-                //set label on motor position
-                double horizontalMotorAngle = MotorController.GetHorizontalMotorPosition();
-                lblHorizontalMotorAngle.Text = horizontalMotorAngle.ToString("0.##");
+            //try
+            //{
+            //    //set label on motor position
+            //    double horizontalMotorAngle = MotorController.GetHorizontalMotorPosition();
+            //    lblHorizontalMotorAngle.Text = horizontalMotorAngle.ToString("0.##");
 
-                //set label on encoder/load position
-                double horizontalEncoderAngle = MotorController.GetHorizontalEncoderPosition();
-                lblHorizontalLoadAngle.Text = horizontalEncoderAngle.ToString("0.##");
+            //    //set label on encoder/load position
+            //    double horizontalEncoderAngle = MotorController.GetHorizontalEncoderPosition();
+            //    lblHorizontalLoadAngle.Text = horizontalEncoderAngle.ToString("0.##");
 
-                //set gauge to encoder location
-                if (horizontalEncoderAngle < gaugeHorizontal.Range.Minimum)
-                    gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
-                else if (horizontalEncoderAngle > gaugeHorizontal.Range.Maximum)
-                    gaugeHorizontal.Value = gaugeHorizontal.Range.Maximum;
-                else
-                    gaugeHorizontal.Value = horizontalEncoderAngle;
+            //    //set gauge to encoder location
+            //    if (horizontalEncoderAngle < gaugeHorizontal.Range.Minimum)
+            //        gaugeHorizontal.Value = gaugeHorizontal.Range.Minimum;
+            //    else if (horizontalEncoderAngle > gaugeHorizontal.Range.Maximum)
+            //        gaugeHorizontal.Value = gaugeHorizontal.Range.Maximum;
+            //    else
+            //        gaugeHorizontal.Value = horizontalEncoderAngle;
 
-                //set label on motor position
-                double verticalMotorAngle = MotorController.GetVerticalMotorPosition();
-                lblVerticalMotorAngle.Text = verticalMotorAngle.ToString("0.##");
+            //    //set label on motor position
+            //    double verticalMotorAngle = MotorController.GetVerticalMotorPosition();
+            //    lblVerticalMotorAngle.Text = verticalMotorAngle.ToString("0.##");
 
-                //set label on encoder/load posotion
-                double verticalEncoderAngle = MotorController.GetVerticalEncoderPosition();
-                lblVerticalLoadAngle.Text = verticalEncoderAngle.ToString("0.##");
+            //    //set label on encoder/load posotion
+            //    double verticalEncoderAngle = MotorController.GetVerticalEncoderPosition();
+            //    lblVerticalLoadAngle.Text = verticalEncoderAngle.ToString("0.##");
 
-                //set gauge to encoder location
-                if (verticalEncoderAngle < gaugeVertical.Range.Minimum)
-                    gaugeVertical.Value = gaugeVertical.Range.Minimum;
-                else if (verticalEncoderAngle > gaugeVertical.Range.Maximum)
-                    gaugeVertical.Value = gaugeVertical.Range.Maximum;
-                else
-                    gaugeVertical.Value = verticalEncoderAngle;
-            }
-            catch (InvalidOperationException)
-            {
-                //omnomnom, (connectivity problems)
-            }
-            catch (Exception)
-            {
-            }
+            //    //set gauge to encoder location
+            //    if (verticalEncoderAngle < gaugeVertical.Range.Minimum)
+            //        gaugeVertical.Value = gaugeVertical.Range.Minimum;
+            //    else if (verticalEncoderAngle > gaugeVertical.Range.Maximum)
+            //        gaugeVertical.Value = gaugeVertical.Range.Maximum;
+            //    else
+            //        gaugeVertical.Value = verticalEncoderAngle;
+            //}
+            //catch (InvalidOperationException)
+            //{
+            //    //omnomnom, (connectivity problems)
+            //}
+            //catch (Exception)
+            //{
+            //}
         }
 
         #region address and connection
