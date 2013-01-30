@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -7,30 +8,25 @@ using Goniometer_Controller.Functions;
 
 namespace Goniometer_Controller.Models
 {
-    public class MeasurementCollection : IEnumerable<MeasurementBase>
+    public class MeasurementCollection : BindingList<MeasurementBase>
     {
-        List<MeasurementBase> _values = new List<MeasurementBase>();
-
-        #region get/set
-        public void Add(MeasurementBase measurement)
+        protected override void InsertItem(int index, MeasurementBase item)
         {
-            var existing = this.FirstOrDefault(m => 
-                      m.Theta == measurement.Theta 
-                    & m.Phi   == measurement.Phi
-                    & m.Key   == measurement.Key);
+            AssertUniqueValue(item);
+
+            base.InsertItem(index, item);
+        }
+
+        public void AssertUniqueValue(MeasurementBase measurement) 
+        {
+            var existing = this.FirstOrDefault(m =>
+                  m.Theta == measurement.Theta
+                & m.Phi == measurement.Phi
+                & m.Key == measurement.Key);
 
             if (existing != null)
                 throw new Exception("Datapoint already in collection");
-
-            _values.Add(measurement);
         }
-
-        public void AddRange(IEnumerable<MeasurementBase> measurements)
-        {
-            foreach (var measurement in measurements)
-                Add(measurement);
-        }
-        #endregion
 
         #region string manipulation
         public string ToCSV()
@@ -59,16 +55,6 @@ namespace Goniometer_Controller.Models
             return collection;
         }
         #endregion
-
-        IEnumerator<MeasurementBase> IEnumerable<MeasurementBase>.GetEnumerator()
-        {
-            return _values.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return _values.GetEnumerator();
-        }
     }
 
     public static class MeasurementCollectionExtensions
