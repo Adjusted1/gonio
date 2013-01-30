@@ -35,49 +35,16 @@ namespace Goniometer_Controller.Motors
 
             MotorSocketProvider.SetIPAddress(address);
 
-            InitializeVerticalMotor();
-            InitializeHorizontalMotor();
+            _verticalMotor.Initialize();
+            _horizontalMotor.Initialize();
 
             //Global Controller Commands
             MotorSocketProvider.Write("scale1");    //set all axis to scale mode
             MotorSocketProvider.Write("!comexc1:"); //set continuous execution mode
+            MotorSocketProvider.Write("!comexs0:"); //stop execution on stop command
 
             //Default not zeroing!
             ExitZeroingMode();
-        }
-
-        private static void InitializeVerticalMotor()
-        {
-            _verticalMotor.SendCommand("eres", "8192");         //encoder resolution * 4 = 8192 counts per rev
-            _verticalMotor.SendCommand("lh",   "0");            //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
-
-            //scale factors: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.222 counts per degree
-            _verticalMotor.SendCommand("scla",  "9102");        //Acceleration Scale Factor [rev/sec/sec]
-            _verticalMotor.SendCommand("sclv",  "9102");        //Velocity Scale Factor     [rev/sec]
-            _verticalMotor.SendCommand("scld",  "9102");        //Distance Scale Factor     [rev]
-
-            //feedback values
-            _verticalMotor.SendCommand("smper", "4");           //Maximum Allowable Position Error
-            _verticalMotor.SendCommand("sgp",   "20");          //Proportional Feedback Gain [microvolts/step]
-            _verticalMotor.SendCommand("sgv",   "3");           //Velocity Feedback Gain     [microvolts/step/sec]
-            _verticalMotor.SendCommand("sgi",   "0");           //
-        }
-
-        private static void InitializeHorizontalMotor()
-        {
-            //encoder resolution not necessary?
-            _horizontalMotor.SendCommand("eres",    "8000");    //encoder resolution * 4 = 8000 counts per rev
-            _horizontalMotor.SendCommand("lh",      "0");       //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
-
-            //scale factors: 100:1 gear reducer = 800,000 counts per rev / 360deg = 2222.222 counts per degree
-            _horizontalMotor.SendCommand("scla",    "2222");    //Acceleration Scale Factor [rev/sec/sec]
-            _horizontalMotor.SendCommand("sclv",    "2222");    //Velocity Scale Factor     [rev/sec]
-            _horizontalMotor.SendCommand("scld",    "2222");    //Distance Scale Factor     [rev]
-
-            //feedback values
-            _horizontalMotor.SendCommand("smper",   "15");      //Maximum Allowable Position Error
-            _horizontalMotor.SendCommand("sgp",     "1");       //Proportional Feeback Gain [microvolts/step]
-            _horizontalMotor.SendCommand("sgv",     "15");      //Velocity Feedback Gain    [microvolts/step/sec]
         }
         #endregion
 

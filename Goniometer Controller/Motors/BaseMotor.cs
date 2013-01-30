@@ -26,6 +26,11 @@ namespace Goniometer_Controller.Motors
             this._scale = scale;
         }
 
+        public virtual void Initialize()
+        {
+
+        }
+
         public virtual double GetMotorPosition()
         {
             short axis = (short) (_axisNumber + 1);

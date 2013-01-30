@@ -32,6 +32,25 @@ namespace Goniometer_Controller.Motors
 
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            this.SendCommand("eres",  "8192");        //encoder resolution * 4 = 8192 counts per rev
+            this.SendCommand("lh",    "0");           //Hardware End-of-Travel Limit — Enable Checking: Disable negative-direction limit; Disable positive-direction limit: i = 0
+
+            //scale factors: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.222 counts per degree
+            this.SendCommand("scla",  "9102");        //Acceleration Scale Factor [rev/sec/sec]
+            this.SendCommand("sclv",  "9102");        //Velocity Scale Factor     [rev/sec]
+            this.SendCommand("scld",  "9102");        //Distance Scale Factor     [rev]
+
+            //feedback values
+            this.SendCommand("smper", "4");           //Maximum Allowable Position Error
+            this.SendCommand("sgp",   "20");          //Proportional Feedback Gain [microvolts/step]
+            this.SendCommand("sgv",   "3");           //Velocity Feedback Gain     [microvolts/step/sec]
+            this.SendCommand("sgi",   "0");           //
+        }
+
         public void Move(double angle)
         {
             this.Move(angle, _velocity, _accerlation);
