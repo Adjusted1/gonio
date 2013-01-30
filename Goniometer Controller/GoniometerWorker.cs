@@ -127,8 +127,11 @@ namespace Goniometer_Controller
                                 .SelectMany(s => s.CollectMeasurements(_hRange[h], _vRange[v]))
                                 .ToList();                                                          //evaluate now
 
+                            //validate measurements
+                            measurements.ForEach(m => _data.AssertUniqueValue(m));
+
                             //add measurements to collection
-                            _data.AddRange(measurements);
+                            measurements.ForEach(m => _data.Add(m));
 
                             //notify subscribes about measurements
                             var measureArgs = new MeasurementEventArgs(measurements);
