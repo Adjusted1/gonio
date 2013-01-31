@@ -88,20 +88,11 @@ namespace Goniometer_Controller.Motors
             //check if we are close enough (or even need to move)
             while (Math.Abs(this.GetEncoderPosition() - distance) > _accuracy)
             {
-                try
-                {
-                    //record attempts
-                    attempt++;
+                //record attempts
+                attempt++;
 
-                    //first or adjusted move
-                    base.MoveAndWait(adjustedDistance, velocity, acceleration);
-                }
-                catch (MotorStoppedException)
-                {
-                    //ignore, probably a bad SMPER setting 
-                    //possibly stalled. stop motor motion and restart
-                    this.EmergencyStop();
-                }
+                //first or adjusted move
+                base.MoveAndWait(adjustedDistance, velocity, acceleration);
 
                 if (attempt > maxAttempts)
                 {

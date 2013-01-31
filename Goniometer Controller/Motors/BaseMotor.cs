@@ -15,6 +15,13 @@ namespace Goniometer_Controller.Motors
         protected short _axisNumber;
         protected double _scale;
 
+        protected MotionSpeed _speed;
+        public MotionSpeed Speed
+        { 
+            get { return _speed; }
+            set { _speed = value; }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -24,6 +31,7 @@ namespace Goniometer_Controller.Motors
         {
             this._axisNumber = axisNumber;
             this._scale = scale;
+            this._speed = MotionSpeed.Normal;
         }
 
         public virtual void Initialize()
@@ -72,13 +80,13 @@ namespace Goniometer_Controller.Motors
         /// <param name="acceleration"></param>
         public virtual void Move(double distance, double velocity, double acceleration)
         {
-            ////apply scaling factors
-            //distance     *= _scale;
-            //velocity     *= _scale;
-            //acceleration *= _scale;
-
+            //adjust for scale direction
             if (_scale < 0)
                 distance *= -1;
+
+            //apply speed factors
+            velocity /= (int) _speed;
+            acceleration /= (int)_speed;
 
             string cmd = "";
 
@@ -132,7 +140,6 @@ namespace Goniometer_Controller.Motors
         /// <param name="velocity"></param>
         /// <param name="acceleration"></param>
         /// <exception cref="TimeoutException">Throw if the motor does not reach it's destination in a timely manner</exception>
-        /// <exception cref="MotorStoppedException">Throw is the motor stops moving unexpectedly</exception>
         public virtual void MoveAndWait(double distance, double velocity, double acceleration)
         {
             //is motion even required?
@@ -140,7 +147,7 @@ namespace Goniometer_Controller.Motors
                 return;
 
             //set maximum time for a full movement
-            TimeSpan timeout = new TimeSpan(0, 1, 0);
+            TimeSpan timeout = new TimeSpan(0, 2, 0);
             DateTime startTime = DateTime.Now;
 
             //record current position
@@ -150,10 +157,6 @@ namespace Goniometer_Controller.Motors
             Move(distance, velocity, acceleration);
             Thread.Sleep(500);
             
-            //check for stalled motor (we already know that motion is required)
-            if (Math.Abs(GetMotorPosition() - lastPosition) < _accuracy)
-                throw new MotorStoppedException();
-
             //has the motor stopped moving?
             while (Math.Abs(GetMotorPosition() - lastPosition) > _accuracy)
             {
@@ -206,8 +209,21 @@ namespace Goniometer_Controller.Motors
         {
         }
 
+        /// <summary>
+        /// indicates that the motor has moved when movement wasn't expected
+        /// </summary>
         public class MotorUnstableException : Exception
         {
+        }
+
+        /// <summary>
+        /// enum for specifying move speed, int values for slowing factor
+        /// </summary>
+        public enum MotionSpeed : int
+        {
+            Normal = 1,
+            Slow = 2,
+            Slowest = 4
         }
     }
 }
