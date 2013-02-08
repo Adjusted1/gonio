@@ -21,6 +21,24 @@ namespace Goniometer_Controller.Motors
         private static HorizontalMotor _horizontalMotor;
         private static VerticalMotor _verticalMotor;
 
+        /// <summary>
+        /// controls the max accerlation and velocity for the horizontal motor
+        /// </summary>
+        public static MotionSpeed HorizontalSpeed
+        {
+            get { return _horizontalMotor.Speed; }
+            set { _horizontalMotor.Speed = value; }
+        }
+
+        /// <summary>
+        /// controls the max accerlation and velocity for the vertical motor
+        /// </summary>
+        public static MotionSpeed VerticalSpeed
+        {
+            get { return _verticalMotor.Speed; }
+            set { _verticalMotor.Speed = value; }
+        }
+
         #region configuration and initialization
         static MotorController()
         {
