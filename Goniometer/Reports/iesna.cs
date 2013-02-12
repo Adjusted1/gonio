@@ -52,6 +52,9 @@ namespace Goniometer.Reports
         public iesna(MeasurementCollection data)
         {
             _data = data;
+
+            //average nadir
+            _data = _data.AveragePoles();
         }
 
         /// <summary>
