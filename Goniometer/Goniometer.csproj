@@ -175,11 +175,11 @@
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings\MotorView.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Views\Setup\EditMotorsView.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Settings\MotorView.Designer.cs">
-      <DependentUpon>MotorView.cs</DependentUpon>
+    <Compile Include="Views\Setup\EditMotorsView.Designer.cs">
+      <DependentUpon>EditMotorsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -218,8 +218,8 @@
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Settings\MotorView.resx">
-      <DependentUpon>MotorView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Setup\EditMotorsView.resx">
+      <DependentUpon>EditMotorsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
