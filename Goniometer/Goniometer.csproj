@@ -194,6 +194,9 @@
     <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Reports\RawDataView.resx">
+      <DependentUpon>RawDataView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MotorControl.resx">
       <DependentUpon>MotorControl.cs</DependentUpon>
     </EmbeddedResource>

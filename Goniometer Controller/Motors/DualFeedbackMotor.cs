@@ -77,7 +77,7 @@ namespace Goniometer_Controller.Motors
         public override void MoveAndWait(double distance, double velocity, double acceleration)
         {
             int attempt = 0;
-            int maxAttempts = 10; //set to arbitrarly large amount
+            int maxAttempts = 30; //set to arbitrarly large amount
             
             //check offset immediately
             double encoderPosition = this.GetEncoderPosition();

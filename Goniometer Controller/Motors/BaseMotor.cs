@@ -10,6 +10,7 @@ namespace Goniometer_Controller.Motors
 {
     internal class BaseMotor
     {
+        //protected readonly double _accuracy = 0.35; //scaled units
         protected readonly double _accuracy = 0.15; //scaled units
 
         protected short _axisNumber;
@@ -151,7 +152,7 @@ namespace Goniometer_Controller.Motors
                 return;
 
             //set maximum time for a full movement
-            TimeSpan timeout = new TimeSpan(0, 2, 0);
+            TimeSpan timeout = new TimeSpan(0, 4, 0);
             DateTime startTime = DateTime.Now;
 
             //record current position
@@ -159,10 +160,10 @@ namespace Goniometer_Controller.Motors
             
             //command motor to move, then wait some time
             Move(distance, velocity, acceleration);
-            Thread.Sleep(500);
+            Thread.Sleep(3000);
             
             //has the motor stopped moving?
-            while (Math.Abs(GetMotorPosition() - lastPosition) > _accuracy)
+            while (Math.Abs(GetMotorPosition() - lastPosition) > 0.15)
             {
                 //we've exceeded our alloted time
                 if (DateTime.Now - startTime > timeout)
@@ -172,7 +173,7 @@ namespace Goniometer_Controller.Motors
                 lastPosition = GetMotorPosition();
 
                 //sleep then check again
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
             }
 
             //halt motion at destination

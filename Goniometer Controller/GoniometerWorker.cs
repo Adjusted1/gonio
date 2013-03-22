@@ -94,20 +94,41 @@ namespace Goniometer_Controller
 
                 for (int v = 0; v < _vRange.Length; v++)
                 {
-                    //update progress, move vertical arm
-                    progress = (int) 100 * (v / _vRange.Length);
-                    _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
-                    MotorController.SetVerticalAngleAndWait(_vRange[v]);
+                    try
+                    {
+                        //update progress, move vertical arm
+                        progress = (int)100 * (v / _vRange.Length);
+                        _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
+                        MotorController.SetVerticalAngleAndWait(_vRange[v]);
+                    }
+                    catch (Exception ex)
+                    {
+                        var args = new GonioErrorEventArgs(ex);
+                        OnError(this, args);
+
+                        if (args.Stop)
+                        {
+                            //halt test
+                            e.Cancel = true;
+                            return;
+                        }
+                        else if (!args.Skip)
+                        {
+                            //go back one step and start over
+                            v--;
+                            continue; //vertical for loop
+                        }
+                    }
 
                     for (int h = 0; h < _hRange.Length; h++)
                     {
-                        //update progress, move horizontal motor
-                        progress = (int) 100 * ((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
-                        _worker.ReportProgress(progress, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
-                        MotorController.SetHorizontalAngleAndWait(_hRange[h]);
-
                         try
                         {
+                            //update progress, move horizontal motor
+                            progress = (int) 100 * ((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
+                            _worker.ReportProgress(progress, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
+                            MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+
                             //loop if paused
                             do
                             {
@@ -249,13 +270,13 @@ namespace Goniometer_Controller
             /// indicates that failure is unrecoverable and the test should halt
             /// set to false if test should continue
             /// </summary>
-            public bool Stop = true;
+            public bool Stop = false;
 
             /// <summary>
             /// indicates that failure is recoverable and the test should continue at next datapoint
             /// set to true if datapoint should recollect
             /// </summary>
-            public bool Skip = true;
+            public bool Skip = false;
 
             /// <summary>
             /// contains the exception caught during Gonio process
