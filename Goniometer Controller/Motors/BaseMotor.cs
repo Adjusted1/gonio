@@ -16,6 +16,10 @@ namespace Goniometer_Controller.Motors
         protected double _scale;
 
         protected MotionSpeed _speed;
+
+        /// <summary>
+        /// controls the max accerlation and velocity for the motor
+        /// </summary>
         public MotionSpeed Speed
         { 
             get { return _speed; }
@@ -214,16 +218,6 @@ namespace Goniometer_Controller.Motors
         /// </summary>
         public class MotorUnstableException : Exception
         {
-        }
-
-        /// <summary>
-        /// enum for specifying move speed, int values for slowing factor
-        /// </summary>
-        public enum MotionSpeed : int
-        {
-            Normal = 1,
-            Slow = 2,
-            Slowest = 4
         }
     }
 }
