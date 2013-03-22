@@ -311,6 +311,7 @@ namespace Goniometer_Controller.Sensors
 
             double Ev1, u, v;
             ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
+            //measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
             measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
             measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
 

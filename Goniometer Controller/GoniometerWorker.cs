@@ -94,20 +94,41 @@ namespace Goniometer_Controller
 
                 for (int v = 0; v < _vRange.Length; v++)
                 {
-                    //update progress, move vertical arm
-                    progress = (int) 100 * (v / _vRange.Length);
-                    _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
-                    MotorController.SetVerticalAngleAndWait(_vRange[v]);
+                    try
+                    {
+                        //update progress, move vertical arm
+                        progress = (int)100 * (v / _vRange.Length);
+                        _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
+                        MotorController.SetVerticalAngleAndWait(_vRange[v]);
+                    }
+                    catch (Exception ex)
+                    {
+                        var args = new GonioErrorEventArgs(ex);
+                        OnError(this, args);
+
+                        if (args.Stop)
+                        {
+                            //halt test
+                            e.Cancel = true;
+                            return;
+                        }
+                        else if (!args.Skip)
+                        {
+                            //go back one step and start over
+                            v--;
+                            continue; //vertical for loop
+                        }
+                    }
 
                     for (int h = 0; h < _hRange.Length; h++)
                     {
-                        //update progress, move horizontal motor
-                        progress = (int) 100 * ((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
-                        _worker.ReportProgress(progress, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
-                        MotorController.SetHorizontalAngleAndWait(_hRange[h]);
-
                         try
                         {
+                            //update progress, move horizontal motor
+                            progress = (int) 100 * ((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
+                            _worker.ReportProgress(progress, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
+                            MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+
                             //loop if paused
                             do
                             {

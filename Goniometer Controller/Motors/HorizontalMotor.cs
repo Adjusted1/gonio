@@ -10,7 +10,9 @@ namespace Goniometer_Controller.Motors
         private static double _min = 0;
         private static double _max = 360;
 
+        //private static double _velocity = 3;
         private static double _velocity = 5;
+        //private static double _accerlation = 1;
         private static double _accerlation = 3;
 
         private static short _motorAxis = 1;
