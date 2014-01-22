@@ -4,6 +4,9 @@ using System.Linq;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
+
+using SimpleLogger;
+
 using Goniometer_Controller.Models;
 
 namespace Minolta_Controller.Sensors
@@ -280,6 +283,20 @@ namespace Minolta_Controller.Sensors
                         //validate measurement within some epsilon
                         if (v2 != 0 && Math.Abs((v1 - v2) / v2) > eps)
                             valid = false;
+                    }
+                }
+                catch (TimeoutException)
+                {
+                    if (fails < maxFails)
+                    {
+                        valid = false;
+                        fails++;
+                        this.Connect();
+                        continue;
+                    }
+                    else
+                    {
+                        throw;
                     }
                 }
                 catch (Exception)
