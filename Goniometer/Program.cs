@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
+using Goniometer_Controller.Motors;
+
 namespace Goniometer
 {
     static class Program
@@ -25,6 +27,7 @@ namespace Goniometer
             catch (Exception ex)
             {
                 SimpleLogger.Logging.WriteToLog(ex.Message);
+                MotorController.EmergencyStop();
                 throw;
             }
         }
