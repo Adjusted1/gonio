@@ -26,7 +26,7 @@ namespace Goniometer
 
         public NumberTextBox()
         {
-
+            InitializeComponent();
         }
 
         private void InitializeComponent()
@@ -42,8 +42,6 @@ namespace Goniometer
         protected EventHandler OnValueChanged;
         private void NumberTextBox_TextChanged(object sender, EventArgs e)
         {
-
-
             var temp = OnValueChanged;
             if (temp != null)
                 temp(sender, e);
