@@ -81,29 +81,42 @@ namespace Goniometer
 
         private void motorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //using (var view = new MotorView())
-            //{
-            //    view.ShowDialog();
-            //}
+            LoadMotorSettingsControl();
         }
 
         private void sensorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //using (var view = new SensorView())
-            //{
-            //    view.ShowDialog();
-            //}
         }
         #endregion
 
         #region main panel context switching
 
+        #region Settings Control
+        private void LoadMotorSettingsControl()
+        {
+            panelMain.Controls.Clear();
+
+            //initialize and attach view
+            var editMotorControl = new EditMotorView();
+            editMotorControl.Size = panelMain.Size;
+            editMotorControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            editMotorControl.OnCloseClicked += motorSettingsControl_OnCloseClicked;
+
+            panelMain.Controls.Add(editMotorControl);
+        }
+
+        private void motorSettingsControl_OnCloseClicked(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
         #region DataControl
         private void LoadDataControl(string filePath)
         {
-            //initialize and attach view
             panelMain.Controls.Clear();
 
+            //initialize and attach view
             var dataControl = new RawDataView();
             dataControl.Size = panelMain.Size;
             dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -117,7 +130,7 @@ namespace Goniometer
             {
                 string raw = sr.ReadToEnd();
                 var measurements = MeasurementCollection.FromCSV(raw);
-                dataControl.SetDataSource(measurements);
+                dataControl.BindDataSource(measurements);
             }
         }
 
@@ -137,6 +150,7 @@ namespace Goniometer
         {
             panelMain.Controls.Clear();
 
+            //initialize and attach view
             var testListControl = new TestListControl();
             testListControl.Size = panelMain.Size;
             testListControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -156,10 +170,6 @@ namespace Goniometer
             {
                 LoadLumenTestControl();
             }
-            //else if (testName == "Calibration Test")
-            //{
-            //    LoadCalibrationTestControl();
-            //}
         }
         #endregion
 
@@ -168,6 +178,7 @@ namespace Goniometer
         {
             panelMain.Controls.Clear();
 
+            //initialize and attach view
             var lumenTestControl = new LumenTestControl();
             lumenTestControl.Size = panelMain.Size;
             lumenTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -225,6 +236,13 @@ namespace Goniometer
         {
             try
             {
+                //check motor controller
+                MotorController.CheckErrorStatus();
+
+                //check motor controller enabled status
+                MotorController.CheckMotorEnabled();
+
+                //check motor position
                 motorControlHorizontal.GaugeAngle = Convert.ToSingle(MotorController.GetHorizontalEncoderPosition());
                 motorControlVertical.GaugeAngle   = Convert.ToSingle(MotorController.GetVerticalEncoderPosition());
             }
@@ -253,6 +271,6 @@ namespace Goniometer
         {
             if (e.HasValue)
                 MotorController.SetHorizontalAngleAndWait(e.Value);
-        } 
+        }
     }
 }

@@ -37,11 +37,11 @@
             this.sensorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPanic = new System.Windows.Forms.Button();
             this.panelStatus = new System.Windows.Forms.Panel();
+            this.motorControlHorizontal = new Goniometer.Controls.MotorControl();
+            this.motorControlVertical = new Goniometer.Controls.MotorControl();
             this.panelMain = new System.Windows.Forms.Panel();
             this.timerMotor = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.motorControlHorizontal = new Goniometer.Controls.MotorControl();
-            this.motorControlVertical = new Goniometer.Controls.MotorControl();
             this.menuStrip.SuspendLayout();
             this.panelStatus.SuspendLayout();
             this.SuspendLayout();
@@ -121,6 +121,32 @@
             this.panelStatus.Size = new System.Drawing.Size(222, 679);
             this.panelStatus.TabIndex = 2;
             // 
+            // motorControlHorizontal
+            // 
+            this.motorControlHorizontal.GaugeAngle = 0F;
+            this.motorControlHorizontal.GaugeRangeEndValue = 180F;
+            this.motorControlHorizontal.GaugeRangeStartValue = 0F;
+            this.motorControlHorizontal.Location = new System.Drawing.Point(0, 262);
+            this.motorControlHorizontal.MaxGaugeAngle = 360;
+            this.motorControlHorizontal.Name = "motorControlHorizontal";
+            this.motorControlHorizontal.Size = new System.Drawing.Size(220, 258);
+            this.motorControlHorizontal.TabIndex = 11;
+            this.motorControlHorizontal.TextBoxValue = 0D;
+            this.motorControlHorizontal.OnButtonGoClicked += new System.EventHandler<System.Nullable<double>>(this.motorControlHorizontal_OnButtonGoClicked);
+            // 
+            // motorControlVertical
+            // 
+            this.motorControlVertical.GaugeAngle = 0F;
+            this.motorControlVertical.GaugeRangeEndValue = 180F;
+            this.motorControlVertical.GaugeRangeStartValue = 0F;
+            this.motorControlVertical.Location = new System.Drawing.Point(0, 0);
+            this.motorControlVertical.MaxGaugeAngle = 180;
+            this.motorControlVertical.Name = "motorControlVertical";
+            this.motorControlVertical.Size = new System.Drawing.Size(220, 258);
+            this.motorControlVertical.TabIndex = 10;
+            this.motorControlVertical.TextBoxValue = 0D;
+            this.motorControlVertical.OnButtonGoClicked += new System.EventHandler<System.Nullable<double>>(this.motorControlVertical_OnButtonGoClicked);
+            // 
             // panelMain
             // 
             this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -143,28 +169,6 @@
             this.openFileDialog.FileName = "raw.csv";
             this.openFileDialog.Filter = "All files|*.*|CSV Files|*.csv";
             this.openFileDialog.FilterIndex = 2;
-            // 
-            // motorControlHorizontal
-            // 
-            this.motorControlHorizontal.GaugeAngle = 0F;
-            this.motorControlHorizontal.Location = new System.Drawing.Point(0, 262);
-            this.motorControlHorizontal.MaxGaugeAngle = 360;
-            this.motorControlHorizontal.Name = "motorControlHorizontal";
-            this.motorControlHorizontal.Size = new System.Drawing.Size(220, 258);
-            this.motorControlHorizontal.TabIndex = 11;
-            this.motorControlHorizontal.TextBoxValue = 0D;
-            this.motorControlHorizontal.OnButtonGoClicked += new System.EventHandler<double?>(this.motorControlHorizontal_OnButtonGoClicked);
-            // 
-            // motorControlVertical
-            // 
-            this.motorControlVertical.GaugeAngle = 0F;
-            this.motorControlVertical.Location = new System.Drawing.Point(0, 0);
-            this.motorControlVertical.MaxGaugeAngle = 180;
-            this.motorControlVertical.Name = "motorControlVertical";
-            this.motorControlVertical.Size = new System.Drawing.Size(220, 258);
-            this.motorControlVertical.TabIndex = 10;
-            this.motorControlVertical.TextBoxValue = 0D;
-            this.motorControlVertical.OnButtonGoClicked += new System.EventHandler<double?>(this.motorControlVertical_OnButtonGoClicked);
             // 
             // MainForm
             // 

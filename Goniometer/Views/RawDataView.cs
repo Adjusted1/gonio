@@ -14,38 +14,32 @@ namespace Goniometer.Reports
 {
     public partial class RawDataView : UserControl
     {
+        private BindingSource _bindingSource;
+
         public RawDataView()
         {
             InitializeComponent();
-        }
-
-        public void SetDataSource(IEnumerable<MeasurementBase> datasource)
-        {
-            BindDataSource(new BindingList<MeasurementBase>(datasource.ToList()));
         }
 
         public void BindDataSource(BindingList<MeasurementBase> datasource)
         {
             AssertDatasourceIsValid(datasource);
 
-            measurementGridView.DataSource = datasource;
+            _bindingSource = new BindingSource();
+            _bindingSource.DataSource = datasource;
+            measurementGridView.DataSource = _bindingSource;
 
             UpdateLumenCount();
         }
 
-        public IEnumerable<MeasurementBase> GetDataSource()
-        {
-            return measurementGridView.DataSource as IEnumerable<MeasurementBase>;
-        }
-
         private void UpdateLumenCount()
         {
-            lblLumens.Text = "";
+            lblLumens.Text = "0.0";
 
             if (measurementGridView.DataSource == null)
                 return;
 
-            var measurements = measurementGridView.DataSource as IEnumerable<MeasurementBase>;
+            var measurements = measurementGridView.DataSource as BindingList<MeasurementBase>;
             if (measurements == null)
                 return;
 
@@ -60,7 +54,6 @@ namespace Goniometer.Reports
 
         #region buttons
         public event EventHandler OnCloseClicked;
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             var notify = OnCloseClicked;
@@ -69,7 +62,6 @@ namespace Goniometer.Reports
         }
 
         public event EventHandler OnExportClicked;
-
         private void btnExport_Click(object sender, EventArgs e)
         {
             var notify = OnExportClicked;
