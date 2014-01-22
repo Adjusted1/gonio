@@ -13,7 +13,7 @@ using Goniometer_Controller;
 using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
 
-namespace Goniometer.Tests.IESNA
+namespace Goniometer.Workflows.IESNA
 {
     public partial class LumenTestControl : UserControl, INotifyPropertyChanged
     {
@@ -47,10 +47,10 @@ namespace Goniometer.Tests.IESNA
             progressControl.DataFolder         = setupControl.DataFolder;
 
             //iesna report values
-            progressControl.TestName     = setupControl.TestName;
-            progressControl.Manufacturer = setupControl.Manufacturer;
-            progressControl.Model        = setupControl.Model;
-            progressControl.Wattage      = setupControl.Wattage;
+            progressControl.TestName            = setupControl.TestName;
+            progressControl.Manufacturer        = setupControl.Manufacturer;
+            progressControl.Model               = setupControl.Model;
+            progressControl.Wattage             = setupControl.Wattage;
             progressControl.OpeningLength       = setupControl.OpeningLength;
             progressControl.OpeningWidth        = setupControl.OpeningWidth;
             progressControl.OpeningHeight       = setupControl.OpeningHeight;

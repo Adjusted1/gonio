@@ -1,4 +1,4 @@
-﻿namespace Goniometer.Tests.Calibration
+﻿namespace Goniometer.Workflows.Calibration
 {
     partial class CalibrationControl
     {

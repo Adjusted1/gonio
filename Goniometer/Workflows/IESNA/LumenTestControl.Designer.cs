@@ -1,4 +1,4 @@
-﻿namespace Goniometer.Tests.IESNA
+﻿namespace Goniometer.Workflows.IESNA
 {
     partial class LumenTestControl
     {

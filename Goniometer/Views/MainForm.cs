@@ -12,8 +12,8 @@ using System.Windows.Forms;
 
 using Goniometer.Reports;
 using Goniometer.Sensors;
-using Goniometer.Tests;
-using Goniometer.Tests.IESNA;
+using Goniometer.Workflows;
+using Goniometer.Workflows.IESNA;
 
 using Goniometer_Controller;
 using Goniometer_Controller.Models;

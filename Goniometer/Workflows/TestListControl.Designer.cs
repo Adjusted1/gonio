@@ -1,4 +1,4 @@
-﻿namespace Goniometer.Tests
+﻿namespace Goniometer.Workflows
 {
     partial class TestListControl
     {

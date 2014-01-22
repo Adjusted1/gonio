@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Goniometer.Tests
+namespace Goniometer.Workflows
 {
     public partial class TestListControl : UserControl
     {

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Goniometer_Controller.Calibration;
 using Goniometer_Controller.Calibration.CalibrationDataSetTableAdapters;
 
-namespace Goniometer.Tests.Calibration
+namespace Goniometer.Workflows.Calibration
 {
     public partial class CalibrationControl : UserControl
     {
