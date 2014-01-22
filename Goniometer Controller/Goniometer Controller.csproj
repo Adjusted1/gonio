@@ -104,6 +104,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Motors\MotionSpeed.cs" />
     <Compile Include="Network\arp.cs" />
     <Compile Include="Sensors\BaseSensor.cs" />
     <Compile Include="Functions\LightMath.cs" />
@@ -181,6 +182,9 @@
       <Project>{34F34C09-CF20-4B9F-8156-CAE10774B19D}</Project>
       <Name>SimpleLogger</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
