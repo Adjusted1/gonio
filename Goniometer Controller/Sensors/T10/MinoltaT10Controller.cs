@@ -187,10 +187,22 @@ namespace Goniometer_Controller.Sensors
                     if (_measureCount < 0)
                         _measureCount = 0;
                 }
+                catch (TimeoutException tEx)
+                {
+                    try
+                    {
+                        this.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.WriteToLog(tEx.Message);
+                        Logging.WriteToLog(ex.Message);
+                    }
+                }
                 catch (Exception ex)
                 {
                     Logging.WriteToLog(ex.Message);
-                }
+                }                
                 finally
                 {
                     Monitor.Exit(_lock);

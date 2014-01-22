@@ -10,8 +10,8 @@ namespace Goniometer_Controller.Motors
 {
     internal class BaseMotor
     {
-        //protected readonly double _accuracy = 0.35; //scaled units
-        protected readonly double _accuracy = 0.15; //scaled units
+        protected readonly double _accuracy = 0.35; //scaled units
+        //protected readonly double _accuracy = 0.15; //scaled units
 
         protected short _axisNumber;
         protected double _scale;

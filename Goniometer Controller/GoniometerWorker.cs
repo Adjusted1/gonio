@@ -100,6 +100,10 @@ namespace Goniometer_Controller
                         progress = (int)100 * (v / _vRange.Length);
                         _worker.ReportProgress(progress, String.Format("Preparing Vertical Angle: {0}", _vRange[v]));
                         MotorController.SetVerticalAngleAndWait(_vRange[v]);
+
+                        //log vertical difference
+                        double vertDiff = MotorController.GetVerticalEncoderPosition() - MotorController.GetVerticalMotorPosition();
+                        _worker.ReportProgress(progress, String.Format("Vertical Diff: {0}", vertDiff));
                     }
                     catch (Exception ex)
                     {
@@ -128,6 +132,10 @@ namespace Goniometer_Controller
                             progress = (int) 100 * ((v / _vRange.Length) + (h / _hRange.Length) * (1 / _vRange.Length));
                             _worker.ReportProgress(progress, String.Format("Preparing Horizontal Angle: {0}", _hRange[h]));
                             MotorController.SetHorizontalAngleAndWait(_hRange[h]);
+
+                            //log horizontal difference
+                            double horzDiff = MotorController.GetHorizontalEncoderPosition() - MotorController.GetHorizontalMotorPosition();
+                            _worker.ReportProgress(progress, String.Format("Horizontal Diff: {0}", horzDiff));
 
                             //loop if paused
                             do
@@ -176,8 +184,12 @@ namespace Goniometer_Controller
                     } //vertical for loop
                 } //horizontal for loop
 
-                //return mirror to start point
+                //return mirror to start point, do in small increments
+                MotorController.SetVerticalAngleAndWait(90);
+                MotorController.SetVerticalAngleAndWait(45);
                 MotorController.SetVerticalAngleAndWait(0);
+
+                //return lamp to start point
                 MotorController.SetHorizontalAngleAndWait(0);
 
                 _worker.ReportProgress(100, "Test Complete");
