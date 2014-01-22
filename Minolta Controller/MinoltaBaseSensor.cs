@@ -97,8 +97,8 @@ namespace Minolta_Controller
             //REMOVE, the device doesn't provide valid checksums back
             //checksum validation
             string bcc = BlockCheckChar(res.Substring(1, 27));
-            if (bcc != res.Substring(28, 2))
-                throw new Exception("Message Malformed");
+            //if (bcc != res.Substring(28, 2))
+            //   throw new Exception("Message Malformed");
 
             receptor = Int32.Parse(res.Substring(1, 2));
             command = Int32.Parse(res.Substring(3, 2));
