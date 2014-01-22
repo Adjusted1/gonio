@@ -79,14 +79,14 @@ namespace Goniometer
 
         public int NumberofLamps { get; set; }
 
-        public double Wattage { get; set; }
+        public string Wattage { get; set; }
 
         //lumonous opening dimensions
-        public double OpeningLength { get; set; }
+        public string OpeningLength { get; set; }
 
-        public double OpeningWidth { get; set; }
+        public string OpeningWidth { get; set; }
 
-        public double OpeningHeight { get; set; }
+        public string OpeningHeight { get; set; }
         #endregion
         #endregion
 

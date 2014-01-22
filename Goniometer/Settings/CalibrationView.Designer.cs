@@ -33,9 +33,9 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.txtDistance = new Goniometer.NumberTextBox();
-            this.txtKTheta = new Goniometer.NumberTextBox();
-            this.txtKCal = new Goniometer.NumberTextBox();
+            this.txtDistance = new Goniometer.Controls.NumberTextBox();
+            this.txtKTheta = new Goniometer.Controls.NumberTextBox();
+            this.txtKCal = new Goniometer.Controls.NumberTextBox();
             this.SuspendLayout();
             // 
             // label14
@@ -147,11 +147,11 @@
 
         #endregion
 
-        private NumberTextBox txtDistance;
+        private Goniometer.Controls.NumberTextBox txtDistance;
         private System.Windows.Forms.Label label14;
-        private NumberTextBox txtKTheta;
+        private Goniometer.Controls.NumberTextBox txtKTheta;
         private System.Windows.Forms.Label label13;
-        private NumberTextBox txtKCal;
+        private Goniometer.Controls.NumberTextBox txtKCal;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;

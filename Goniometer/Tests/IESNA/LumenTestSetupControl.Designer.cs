@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.grpLamp = new System.Windows.Forms.GroupBox();
-            this.txtWattage = new System.Windows.Forms.TextBox();
+            this.txtWattage = new Goniometer.Controls.NumberTextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -79,11 +79,11 @@
             this.measurementGridView = new System.Windows.Forms.DataGridView();
             this.listSensors = new System.Windows.Forms.CheckedListBox();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
-            this.txtDistance = new Goniometer.NumberTextBox();
+            this.txtDistance = new Goniometer.Controls.NumberTextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtKTheta = new Goniometer.NumberTextBox();
+            this.txtKTheta = new Goniometer.Controls.NumberTextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtKCal = new Goniometer.NumberTextBox();
+            this.txtKCal = new Goniometer.Controls.NumberTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.txtDataFolder = new System.Windows.Forms.TextBox();
@@ -849,11 +849,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label12;
-        private NumberTextBox txtDistance;
+        private Goniometer.Controls.NumberTextBox txtDistance;
         private System.Windows.Forms.Label label14;
-        private NumberTextBox txtKTheta;
+        private Goniometer.Controls.NumberTextBox txtKTheta;
         private System.Windows.Forms.Label label13;
-        private NumberTextBox txtKCal;
+        private Goniometer.Controls.NumberTextBox txtKCal;
         private System.Windows.Forms.TextBox txtModel;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label19;
@@ -863,7 +863,7 @@
         private System.Windows.Forms.TextBox txtHeight;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtLength;
-        private System.Windows.Forms.TextBox txtWattage;
+        private Goniometer.Controls.NumberTextBox txtWattage;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;

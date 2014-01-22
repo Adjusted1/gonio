@@ -87,24 +87,24 @@ namespace Goniometer
             get { return txtModel.Text; }
         }
 
-        public double Wattage
+        public string Wattage
         {
-            get { return Double.Parse(txtWattage.Text); }
+            get { return txtWattage.Text; }
         }
 
-        public double OpeningLength
+        public string OpeningLength
         {
-            get { return Double.Parse(txtLength.Text); }
+            get { return txtLength.Text; }
         }
 
-        public double OpeningWidth
+        public string OpeningWidth
         {
-            get { return Double.Parse(txtWidth.Text); }
+            get { return txtWidth.Text; }
         }
 
-        public double OpeningHeight
+        public string OpeningHeight
         {
-            get { return Double.Parse(txtHeight.Text); }
+            get { return txtHeight.Text; }
         }
         #endregion
 

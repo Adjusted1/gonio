@@ -32,7 +32,7 @@
             this.gauge = new System.Windows.Forms.AGauge();
             this.btnGo = new System.Windows.Forms.Button();
             this.lblAngle = new System.Windows.Forms.Label();
-            this.txtAngle = new Goniometer.NumberTextBox();
+            this.txtAngle = new Goniometer.Controls.NumberTextBox();
             this.SuspendLayout();
             // 
             // gauge

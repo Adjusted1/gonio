@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Goniometer
+namespace Goniometer.Controls
 {
     [DefaultBindingProperty("Value")]
     public partial class NumberTextBox : TextBox

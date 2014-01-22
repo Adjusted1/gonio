@@ -22,10 +22,10 @@ namespace Goniometer.Reports
         public DateTime IssueDate;
         public string Manufacturer;
         public string Model;
-        public double Wattage;
-        public double Length;
-        public double Width;
-        public double Height;
+        public string Wattage;
+        public string Length;
+        public string Width;
+        public string Height;
         #endregion
 
         #region optional keywords
