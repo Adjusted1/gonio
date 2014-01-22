@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CalibrationConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CalibrationConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Goniometer_Controller.Properties.Settings.GlobalReference.Default.CalibrationConnectionString" Provider="Microsoft.SqlServerCe.Client.3.5" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CalibrationConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="CalibrationConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Goniometer_Controller.Properties.Settings.GlobalReference.Default.CalibrationConnectionString" Provider="Microsoft.SqlServerCe.Client.3.5" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="LampsTableAdapter" GeneratorDataComponentClassName="LampsTableAdapter" Name="Lamps" UserDataComponentName="LampsTableAdapter">
@@ -231,7 +231,7 @@
   <xs:element name="CalibrationDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="CalibrationDataSet" msprop:Generator_UserDSName="CalibrationDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Lamps" msprop:Generator_TableClassName="LampsDataTable" msprop:Generator_TableVarName="tableLamps" msprop:Generator_TablePropName="Lamps" msprop:Generator_RowDeletingName="LampsRowDeleting" msprop:Generator_UserTableName="Lamps" msprop:Generator_RowChangingName="LampsRowChanging" msprop:Generator_RowEvHandlerName="LampsRowChangeEventHandler" msprop:Generator_RowDeletedName="LampsRowDeleted" msprop:Generator_RowEvArgName="LampsRowChangeEvent" msprop:Generator_RowChangedName="LampsRowChanged" msprop:Generator_RowClassName="LampsRow">
+        <xs:element name="Lamps" msprop:Generator_TableClassName="LampsDataTable" msprop:Generator_TableVarName="tableLamps" msprop:Generator_RowChangedName="LampsRowChanged" msprop:Generator_TablePropName="Lamps" msprop:Generator_RowDeletingName="LampsRowDeleting" msprop:Generator_RowChangingName="LampsRowChanging" msprop:Generator_RowEvHandlerName="LampsRowChangeEventHandler" msprop:Generator_RowDeletedName="LampsRowDeleted" msprop:Generator_RowClassName="LampsRow" msprop:Generator_UserTableName="Lamps" msprop:Generator_RowEvArgName="LampsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -259,7 +259,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Usage_Log" msprop:Generator_TableClassName="Usage_LogDataTable" msprop:Generator_TableVarName="tableUsage_Log" msprop:Generator_TablePropName="Usage_Log" msprop:Generator_RowDeletingName="Usage_LogRowDeleting" msprop:Generator_UserTableName="Usage_Log" msprop:Generator_RowChangingName="Usage_LogRowChanging" msprop:Generator_RowEvHandlerName="Usage_LogRowChangeEventHandler" msprop:Generator_RowDeletedName="Usage_LogRowDeleted" msprop:Generator_RowEvArgName="Usage_LogRowChangeEvent" msprop:Generator_RowChangedName="Usage_LogRowChanged" msprop:Generator_RowClassName="Usage_LogRow">
+        <xs:element name="Usage_Log" msprop:Generator_TableClassName="Usage_LogDataTable" msprop:Generator_TableVarName="tableUsage_Log" msprop:Generator_RowChangedName="Usage_LogRowChanged" msprop:Generator_TablePropName="Usage_Log" msprop:Generator_RowDeletingName="Usage_LogRowDeleting" msprop:Generator_RowChangingName="Usage_LogRowChanging" msprop:Generator_RowEvHandlerName="Usage_LogRowChangeEventHandler" msprop:Generator_RowDeletedName="Usage_LogRowDeleted" msprop:Generator_RowClassName="Usage_LogRow" msprop:Generator_UserTableName="Usage_Log" msprop:Generator_RowEvArgName="Usage_LogRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Lamp_ID" msprop:Generator_ColumnVarNameInTable="columnLamp_ID" msprop:Generator_ColumnPropNameInRow="Lamp_ID" msprop:Generator_ColumnPropNameInTable="Lamp_IDColumn" msprop:Generator_UserColumnName="Lamp_ID" type="xs:int" />
@@ -275,7 +275,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Certifications" msprop:Generator_TableClassName="CertificationsDataTable" msprop:Generator_TableVarName="tableCertifications" msprop:Generator_TablePropName="Certifications" msprop:Generator_RowDeletingName="CertificationsRowDeleting" msprop:Generator_UserTableName="Certifications" msprop:Generator_RowChangingName="CertificationsRowChanging" msprop:Generator_RowEvHandlerName="CertificationsRowChangeEventHandler" msprop:Generator_RowDeletedName="CertificationsRowDeleted" msprop:Generator_RowEvArgName="CertificationsRowChangeEvent" msprop:Generator_RowChangedName="CertificationsRowChanged" msprop:Generator_RowClassName="CertificationsRow">
+        <xs:element name="Certifications" msprop:Generator_TableClassName="CertificationsDataTable" msprop:Generator_TableVarName="tableCertifications" msprop:Generator_RowChangedName="CertificationsRowChanged" msprop:Generator_TablePropName="Certifications" msprop:Generator_RowDeletingName="CertificationsRowDeleting" msprop:Generator_RowChangingName="CertificationsRowChanging" msprop:Generator_RowEvHandlerName="CertificationsRowChangeEventHandler" msprop:Generator_RowDeletedName="CertificationsRowDeleted" msprop:Generator_RowClassName="CertificationsRow" msprop:Generator_UserTableName="Certifications" msprop:Generator_RowEvArgName="CertificationsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -300,7 +300,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Certification_Data" msprop:Generator_TableClassName="Certification_DataDataTable" msprop:Generator_TableVarName="tableCertification_Data" msprop:Generator_TablePropName="Certification_Data" msprop:Generator_RowDeletingName="Certification_DataRowDeleting" msprop:Generator_UserTableName="Certification_Data" msprop:Generator_RowChangingName="Certification_DataRowChanging" msprop:Generator_RowEvHandlerName="Certification_DataRowChangeEventHandler" msprop:Generator_RowDeletedName="Certification_DataRowDeleted" msprop:Generator_RowEvArgName="Certification_DataRowChangeEvent" msprop:Generator_RowChangedName="Certification_DataRowChanged" msprop:Generator_RowClassName="Certification_DataRow">
+        <xs:element name="Certification_Data" msprop:Generator_TableClassName="Certification_DataDataTable" msprop:Generator_TableVarName="tableCertification_Data" msprop:Generator_RowChangedName="Certification_DataRowChanged" msprop:Generator_TablePropName="Certification_Data" msprop:Generator_RowDeletingName="Certification_DataRowDeleting" msprop:Generator_RowChangingName="Certification_DataRowChanging" msprop:Generator_RowEvHandlerName="Certification_DataRowChangeEventHandler" msprop:Generator_RowDeletedName="Certification_DataRowDeleted" msprop:Generator_RowClassName="Certification_DataRow" msprop:Generator_UserTableName="Certification_Data" msprop:Generator_RowEvArgName="Certification_DataRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Certification_ID" msprop:Generator_ColumnVarNameInTable="columnCertification_ID" msprop:Generator_ColumnPropNameInRow="Certification_ID" msprop:Generator_ColumnPropNameInTable="Certification_IDColumn" msprop:Generator_UserColumnName="Certification_ID" type="xs:int" />
@@ -339,15 +339,15 @@
       <xs:field xpath="mstns:Angle_Phi" />
       <xs:field xpath="mstns:Key" />
     </xs:unique>
-    <xs:keyref name="FK_Certifications_Certification_Data" refer="Certifications_Constraint1" msprop:rel_Generator_UserChildTable="Certification_Data" msprop:rel_Generator_ChildPropName="GetCertification_DataRows" msprop:rel_Generator_ParentPropName="CertificationsRow" msprop:rel_Generator_UserRelationName="FK_Certifications_Certification_Data" msprop:rel_Generator_RelationVarName="relationFK_Certifications_Certification_Data" msprop:rel_Generator_UserParentTable="Certifications" msdata:UpdateRule="None" msdata:DeleteRule="None">
+    <xs:keyref name="FK_Certifications_Certification_Data" refer="Certifications_Constraint1" msprop:rel_Generator_UserChildTable="Certification_Data" msprop:rel_Generator_ChildPropName="GetCertification_DataRows" msprop:rel_Generator_UserRelationName="FK_Certifications_Certification_Data" msprop:rel_Generator_RelationVarName="relationFK_Certifications_Certification_Data" msprop:rel_Generator_UserParentTable="Certifications" msprop:rel_Generator_ParentPropName="CertificationsRow" msdata:UpdateRule="None" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:Certification_Data" />
       <xs:field xpath="mstns:Certification_ID" />
     </xs:keyref>
-    <xs:keyref name="FK_Lamps_Certifications" refer="Constraint1" msprop:rel_Generator_UserChildTable="Certifications" msprop:rel_Generator_ChildPropName="GetCertificationsRows" msprop:rel_Generator_ParentPropName="LampsRow" msprop:rel_Generator_UserRelationName="FK_Lamps_Certifications" msprop:rel_Generator_RelationVarName="relationFK_Lamps_Certifications" msprop:rel_Generator_UserParentTable="Lamps" msdata:UpdateRule="None" msdata:DeleteRule="None">
+    <xs:keyref name="FK_Lamps_Certifications" refer="Constraint1" msprop:rel_Generator_UserChildTable="Certifications" msprop:rel_Generator_ChildPropName="GetCertificationsRows" msprop:rel_Generator_UserRelationName="FK_Lamps_Certifications" msprop:rel_Generator_RelationVarName="relationFK_Lamps_Certifications" msprop:rel_Generator_UserParentTable="Lamps" msprop:rel_Generator_ParentPropName="LampsRow" msdata:UpdateRule="None" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:Certifications" />
       <xs:field xpath="mstns:Lamp_ID" />
     </xs:keyref>
-    <xs:keyref name="FK_Lamps_Usage_Log" refer="Constraint1" msprop:rel_Generator_UserChildTable="Usage_Log" msprop:rel_Generator_ChildPropName="GetUsage_LogRows" msprop:rel_Generator_UserParentTable="Lamps" msprop:rel_Generator_UserRelationName="FK_Lamps_Usage_Log" msprop:rel_Generator_RelationVarName="relationFK_Lamps_Usage_Log" msprop:rel_Generator_ParentPropName="LampsRow" msdata:UpdateRule="None" msdata:DeleteRule="None">
+    <xs:keyref name="FK_Lamps_Usage_Log" refer="Constraint1" msprop:rel_Generator_UserChildTable="Usage_Log" msprop:rel_Generator_ChildPropName="GetUsage_LogRows" msprop:rel_Generator_UserRelationName="FK_Lamps_Usage_Log" msprop:rel_Generator_ParentPropName="LampsRow" msprop:rel_Generator_RelationVarName="relationFK_Lamps_Usage_Log" msprop:rel_Generator_UserParentTable="Lamps" msdata:UpdateRule="None" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:Usage_Log" />
       <xs:field xpath="mstns:Lamp_ID" />
     </xs:keyref>
