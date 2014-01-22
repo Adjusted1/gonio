@@ -143,6 +143,24 @@ namespace Goniometer_Controller.Motors
         }
         #endregion
 
+        #region error checking
+        public static void CheckErrorStatus()
+        {
+            string cmd = "ter!:";
+            string result = MotorSocketProvider.WriteForResponse(cmd);
+
+            //parse result;
+        }
+
+        public static void CheckMotorEnabled()
+        {
+            string cmd = "tino!:";
+            string result = MotorSocketProvider.WriteForResponse(cmd);
+        
+            //parse result;
+        }
+        #endregion
+
         public static void EmergencyStop()
         {
             try
