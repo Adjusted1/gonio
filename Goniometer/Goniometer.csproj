@@ -170,25 +170,30 @@
     <Compile Include="Controls\WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Workflows\Calibration\CalibrationControl.cs" />
-    <Compile Include="Workflows\Calibration\CalibrationControl.Designer.cs">
-      <DependentUpon>CalibrationControl.cs</DependentUpon>
+    <Compile Include="Workflows\IESNA\LumenTestLoadDataControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Workflows\IESNA\LumenTestControl.cs" />
+    <Compile Include="Workflows\IESNA\LumenTestLoadDataControl.Designer.cs">
+      <DependentUpon>LumenTestLoadDataControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Workflows\IESNA\LumenTestControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Workflows\IESNA\LumenTestControl.Designer.cs">
       <DependentUpon>LumenTestControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Workflows\IESNA\LumenTestProgressControl.cs" />
+    <Compile Include="Workflows\IESNA\LumenTestProgressControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Workflows\IESNA\LumenTestProgressControl.Designer.cs">
       <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Workflows\IESNA\LumenTestSetupControl.cs" />
+    <Compile Include="Workflows\IESNA\LumenTestSettingsModel.cs" />
+    <Compile Include="Workflows\IESNA\LumenTestSetupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Workflows\IESNA\LumenTestSetupControl.Designer.cs">
       <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Workflows\TestListControl.cs" />
-    <Compile Include="Workflows\TestListControl.Designer.cs">
-      <DependentUpon>TestListControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Controls\MotorControl.resx">
       <DependentUpon>MotorControl.cs</DependentUpon>
@@ -221,20 +226,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Workflows\Calibration\CalibrationControl.resx">
-      <DependentUpon>CalibrationControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Workflows\IESNA\LumenTestControl.resx">
       <DependentUpon>LumenTestControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Workflows\IESNA\LumenTestLoadDataControl.resx">
+      <DependentUpon>LumenTestLoadDataControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Workflows\IESNA\LumenTestProgressControl.resx">
       <DependentUpon>LumenTestProgressControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Workflows\IESNA\LumenTestSetupControl.resx">
       <DependentUpon>LumenTestSetupControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Workflows\TestListControl.resx">
-      <DependentUpon>TestListControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -285,7 +287,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Tools\" />
+    <Folder Include="Workflows\Calibration\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -28,22 +28,18 @@ namespace Goniometer.Reports
             _bindingSource = new BindingSource();
             _bindingSource.DataSource = datasource;
             measurementGridView.DataSource = _bindingSource;
-
-            UpdateLumenCount();
         }
 
-        private void UpdateLumenCount()
+        private double GetLumenCount()
         {
-            lblLumens.Text = "0.0";
-
             if (measurementGridView.DataSource == null)
-                return;
+                return 0;
 
             var measurements = measurementGridView.DataSource as BindingList<MeasurementBase>;
             if (measurements == null)
-                return;
+                return 0;
 
-            lblLumens.Text = String.Format("{0:0.##}", LightMath.CalculateLumens(measurements));
+            return LightMath.CalculateLumens(measurements);
         }
 
         private void AssertDatasourceIsValid(IEnumerable<MeasurementBase> datasource)
@@ -51,23 +47,5 @@ namespace Goniometer.Reports
             if (datasource == null)
                 throw new ArgumentNullException("datasource cannot be null");
         }
-
-        #region buttons
-        public event EventHandler OnCloseClicked;
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            var notify = OnCloseClicked;
-            if (notify != null)
-                OnCloseClicked(sender, e);    
-        }
-
-        public event EventHandler OnExportClicked;
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            var notify = OnExportClicked;
-            if (notify != null)
-                OnExportClicked(sender, e);
-        }
-        #endregion
     }
 }

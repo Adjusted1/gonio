@@ -19,15 +19,23 @@ namespace Goniometer_Controller
 
         private double[] _hRange;
         private double[] _vRange;
-        private MeasurementCollection _data = new MeasurementCollection();
+        private MeasurementCollection _data;
 
         private DateTime _startTime;
         private DateTime _stopTime;
 
-        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hRange">horizontal testing range</param>
+        /// <param name="vRange">vertical testing range</param>
+        /// <param name="sensors">sensors to measure from</param>
+        /// <param name="data">dataset to add data to</param>
+        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors, MeasurementCollection data)
         {
             _hRange = hRange;
             _vRange = vRange;
+            _data = data;
 
             _worker = new BackgroundWorker();
             _worker.WorkerReportsProgress = true;

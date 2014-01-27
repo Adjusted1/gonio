@@ -32,6 +32,11 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openRawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workflowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newLumenTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.continueLumenTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeRawFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.motorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sensorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +47,7 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.timerMotor = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.viewRawFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.panelStatus.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +56,8 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.workflowsToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -71,6 +79,45 @@
             this.openRawToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.openRawToolStripMenuItem.Text = "Open Raw";
             this.openRawToolStripMenuItem.Click += new System.EventHandler(this.openRawToolStripMenuItem_Click);
+            // 
+            // workflowsToolStripMenuItem
+            // 
+            this.workflowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newLumenTestToolStripMenuItem,
+            this.continueLumenTestToolStripMenuItem});
+            this.workflowsToolStripMenuItem.Name = "workflowsToolStripMenuItem";
+            this.workflowsToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.workflowsToolStripMenuItem.Text = "Workflows";
+            // 
+            // newLumenTestToolStripMenuItem
+            // 
+            this.newLumenTestToolStripMenuItem.Name = "newLumenTestToolStripMenuItem";
+            this.newLumenTestToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.newLumenTestToolStripMenuItem.Text = "New Lumen Test";
+            this.newLumenTestToolStripMenuItem.Click += new System.EventHandler(this.newLumenTestToolStripMenuItem_Click);
+            // 
+            // continueLumenTestToolStripMenuItem
+            // 
+            this.continueLumenTestToolStripMenuItem.Name = "continueLumenTestToolStripMenuItem";
+            this.continueLumenTestToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.continueLumenTestToolStripMenuItem.Text = "Continue Lumen Test";
+            this.continueLumenTestToolStripMenuItem.Click += new System.EventHandler(this.continueLumenTestToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mergeRawFilesToolStripMenuItem,
+            this.viewRawFilesToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // mergeRawFilesToolStripMenuItem
+            // 
+            this.mergeRawFilesToolStripMenuItem.Name = "mergeRawFilesToolStripMenuItem";
+            this.mergeRawFilesToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.mergeRawFilesToolStripMenuItem.Text = "Merge Raw Files";
+            this.mergeRawFilesToolStripMenuItem.Click += new System.EventHandler(this.mergeRawFilesToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -170,6 +217,13 @@
             this.openFileDialog.Filter = "All files|*.*|CSV Files|*.csv";
             this.openFileDialog.FilterIndex = 2;
             // 
+            // viewRawFilesToolStripMenuItem
+            // 
+            this.viewRawFilesToolStripMenuItem.Name = "viewRawFilesToolStripMenuItem";
+            this.viewRawFilesToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.viewRawFilesToolStripMenuItem.Text = "View Raw Files";
+            this.viewRawFilesToolStripMenuItem.Click += new System.EventHandler(this.viewRawFilesToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -209,5 +263,11 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private Controls.MotorControl motorControlHorizontal;
         private Controls.MotorControl motorControlVertical;
+        private System.Windows.Forms.ToolStripMenuItem workflowsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newLumenTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem continueLumenTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mergeRawFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewRawFilesToolStripMenuItem;
     }
 }

@@ -47,8 +47,8 @@ namespace Goniometer
         #endregion
 
         #region results variables
-        private MeasurementCollection _lightData;
-        private MeasurementCollection _strayData;
+        private MeasurementCollection _rawLightData;
+        private MeasurementCollection _rawStrayData;
         #endregion
 
         #region public variables
@@ -69,6 +69,19 @@ namespace Goniometer
             get { return lblDataFolder.Text; }
             set { lblDataFolder.Text = value; }
         }
+
+        public bool SkipLightTest
+        {
+            get;
+            set;
+        }
+
+        public bool SkipStrayTest
+        {
+            get;
+            set;
+        }
+
 
         #region lamp information
         public string TestName { get; set; }
@@ -96,11 +109,16 @@ namespace Goniometer
         }
 
         #region public methods
+
         public void BeginTestAsync(IEnumerable<BaseSensor> sensors, 
             double[] hRange, double[] vRange, 
             double[] hStrayRange, double[] vStrayRange, 
-            double kCal, double kTheta, double distance)
+            double kCal, double kTheta, double distance,
+            MeasurementCollection rawLightData, MeasurementCollection rawStrayData)
         {
+            _rawLightData = rawLightData;
+            _rawStrayData = rawStrayData;
+
             _hRange = hRange;
             _vRange = vRange;
             _hStrayRange = hStrayRange;
@@ -122,11 +140,25 @@ namespace Goniometer
             //schedule test finalization when the stray test is finished
             StrayTestFinished += new EventHandler((o, e) => FinalizeTest());
 
-            //start with stray test
-            BeginStandardTestAsync();
-
             _startTime = DateTime.Now;
             timerElapsed.Enabled = true;
+
+            //based on skip settings, pick start place
+            if (SkipLightTest && SkipStrayTest)
+            {
+                //skip to end of test
+                FinalizeTest();
+            }
+            else if (SkipLightTest)
+            {
+                //skip to stray test
+                BeginStrayTestAsync();
+            }
+            else
+            {
+                //start with standard test
+                BeginStandardTestAsync();
+            }
         }
 
         public void PauseTestAsync()
@@ -168,7 +200,7 @@ namespace Goniometer
         #region stray lumen test
         private void SetupStrayTest()
         {
-            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors);
+            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors, _rawStrayData);
             _strayWorker.ProgressChanged += OnProgressChanged;
             _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
             _strayWorker.Error += OnError;
@@ -215,7 +247,7 @@ namespace Goniometer
             else
 
             //record results
-            _strayData = e.Result as MeasurementCollection;
+            _rawStrayData = e.Result as MeasurementCollection;
 
             //inform user
             if (chkEmail.Checked)
@@ -235,7 +267,7 @@ namespace Goniometer
         #region standard lumen test
         private void SetupStandardTest()
         {
-            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors);
+            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors, _rawLightData);
             _lightWorker.ProgressChanged += OnProgressChanged;
             _lightWorker.RunWorkerCompleted += OnLightTestFinished;
             _lightWorker.Error += OnError;
@@ -278,7 +310,7 @@ namespace Goniometer
             }
 
             //record results
-            _lightData = e.Result as MeasurementCollection;
+            _rawLightData = e.Result as MeasurementCollection;
 
             //inform user
             if (chkEmail.Checked)
@@ -361,7 +393,7 @@ namespace Goniometer
 
             //if successful, generate report
             string reportFilepath = "";
-            if (_lightData != null && _strayData != null)
+            if (_rawLightData != null && _rawStrayData != null)
             {
                 reportFilepath = GenerateReport();
 
@@ -382,11 +414,11 @@ namespace Goniometer
         private string GenerateReport()
         {
             //convert any candle values to candelas
-            _lightData = LightMath.PrepareLuminousMeasurements(_lightData, _distance, _kCal, _kTheta);
-            _strayData = LightMath.PrepareLuminousMeasurements(_strayData, _distance, _kCal, _kTheta);
+            _rawLightData = LightMath.PrepareLuminousMeasurements(_rawLightData, _distance, _kCal, _kTheta);
+            _rawStrayData = LightMath.PrepareLuminousMeasurements(_rawStrayData, _distance, _kCal, _kTheta);
 
             //calculate corrected values from stray
-            var correctedData = _lightData.SubstractStray(_strayData);
+            var correctedData = _rawLightData.SubstractStray(_rawStrayData);
 
             //calculate lumens from corrected values
             var report = new iesna(correctedData);

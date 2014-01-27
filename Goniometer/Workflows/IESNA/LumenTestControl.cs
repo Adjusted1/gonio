@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Goniometer.Functions;
 
 using Goniometer_Controller;
+using Goniometer_Controller.Models;
 using Goniometer_Controller.Motors;
 using Goniometer_Controller.Sensors;
 
@@ -17,16 +18,76 @@ namespace Goniometer.Workflows.IESNA
 {
     public partial class LumenTestControl : UserControl, INotifyPropertyChanged
     {
-        public LumenTestControl()
+        private bool _continueRun;
+
+        /// <summary>
+        /// create new lumen test control
+        /// </summary>
+        /// <param name="loadData">should we present the loaddata control?</param>
+        public LumenTestControl(bool loadData)
         {
             InitializeComponent();
-        }
+
+            this._continueRun = loadData;
+            if (loadData)
+            {
+                setupControl.SetReadOnly(true);
+                wizard.SelectedTab = tabLoadData;
+            }
+            else
+            {
+                //setupControl.SetReadOnly(false);
+                wizard.SelectedTab = tabSetup;
+            }
+        }   
 
         private void LumenTestControl_Load(object sender, EventArgs e)
         {
             setupControl.PropertyChanged += new PropertyChangedEventHandler(setupControl_PropertyChanged);
             progressControl.TestCompleted += new EventHandler(progressControl_TestCompleted);
         }
+
+        #region loaddata page
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            var notify = OnExit;
+            if (notify != null)
+                notify(sender, e);
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            //check for valid settings file
+            if (lumenTestLoadDataControl.FoundSettings == null)
+                return;
+
+            setupControl.EmailNotifications        = lumenTestLoadDataControl.FoundSettings.EmailNotifications;
+            setupControl.Email                     = lumenTestLoadDataControl.FoundSettings.Email;
+            setupControl.DataFolder                = lumenTestLoadDataControl.FoundSettings.DataFolder;
+            setupControl.TestName                  = lumenTestLoadDataControl.FoundSettings.TestName;
+            setupControl.Manufacturer              = lumenTestLoadDataControl.FoundSettings.Manufacturer;
+            setupControl.Model                     = lumenTestLoadDataControl.FoundSettings.Model;
+            setupControl.Wattage                   = lumenTestLoadDataControl.FoundSettings.Wattage;
+            setupControl.OpeningLength             = lumenTestLoadDataControl.FoundSettings.OpeningLength;
+            setupControl.OpeningWidth              = lumenTestLoadDataControl.FoundSettings.OpeningWidth;
+            setupControl.OpeningHeight             = lumenTestLoadDataControl.FoundSettings.OpeningHeight;
+
+            setupControl.HorizontalResolution      = lumenTestLoadDataControl.FoundSettings.HorizontalResolution;
+            setupControl.HorizontalStrayResolution = lumenTestLoadDataControl.FoundSettings.HorizontalStrayResolution;
+            setupControl.HorizontalSymmetry        = lumenTestLoadDataControl.FoundSettings.HorizontalSymmetry;
+            setupControl.VerticalResolution        = lumenTestLoadDataControl.FoundSettings.VerticalResolution;
+            setupControl.VerticalStrayResolution   = lumenTestLoadDataControl.FoundSettings.VerticalStrayResolution;
+            setupControl.VerticalStartRange        = lumenTestLoadDataControl.FoundSettings.VerticalStartRange;
+            setupControl.VerticalStopRange         = lumenTestLoadDataControl.FoundSettings.VerticalStopRange;
+            setupControl.VerticalSymmetry          = lumenTestLoadDataControl.FoundSettings.VerticalSymmetry;
+
+            //setupControl.KCal                      = lumenTestLoadDataControl.FoundSettings.kCal;
+            //setupControl.KTheta                    = lumenTestLoadDataControl.FoundSettings.kTheta;
+            //setupControl.Distance                  = lumenTestLoadDataControl.FoundSettings.distance;
+
+            wizard.SelectedTab = tabSetup;
+        }
+        #endregion
 
         #region setup page
         private void btnBack_Click(object sender, EventArgs e)
@@ -47,29 +108,75 @@ namespace Goniometer.Workflows.IESNA
             progressControl.DataFolder         = setupControl.DataFolder;
 
             //iesna report values
-            progressControl.TestName            = setupControl.TestName;
-            progressControl.Manufacturer        = setupControl.Manufacturer;
-            progressControl.Model               = setupControl.Model;
-            progressControl.Wattage             = setupControl.Wattage;
-            progressControl.OpeningLength       = setupControl.OpeningLength;
-            progressControl.OpeningWidth        = setupControl.OpeningWidth;
-            progressControl.OpeningHeight       = setupControl.OpeningHeight;
+            progressControl.TestName           = setupControl.TestName;
+            progressControl.Manufacturer       = setupControl.Manufacturer;
+            progressControl.Model              = setupControl.Model;
+            progressControl.Wattage            = setupControl.Wattage;
+            progressControl.OpeningLength      = setupControl.OpeningLength;
+            progressControl.OpeningWidth       = setupControl.OpeningWidth;
+            progressControl.OpeningHeight      = setupControl.OpeningHeight;
 
             //running values
-            double[] hRange      = setupControl.CalculateHorizontalRange();
-            double[] vRange      = setupControl.CalculateVerticalRange();
-            double[] hStrayRange = setupControl.CalculateStrayHorizontalRange();
-            double[] vStrayRange = setupControl.CalculateStrayVerticalRange();
+            double[] hRange                    = setupControl.CalculateHorizontalRange();
+            double[] vRange                    = setupControl.CalculateVerticalRange();
+            double[] hStrayRange               = setupControl.CalculateStrayHorizontalRange();
+            double[] vStrayRange               = setupControl.CalculateStrayVerticalRange();
 
-            double kCal     = setupControl.KCal;
-            double kTheta   = setupControl.KTheta;
-            double distance = setupControl.Distance;
+            double kCal                        = setupControl.KCal;
+            double kTheta                      = setupControl.KTheta;
+            double distance                    = setupControl.Distance;
             
             //fetch a list of active sensors
             var sensors = setupControl.GetSensors();
             
+            //data containers
+            MeasurementCollection rawLightData;
+            MeasurementCollection rawStrayData;
+
+            if (!this._continueRun)
+            {
+                //create settings file for new run
+                LumenTestSettingsModel settings = new LumenTestSettingsModel
+                {
+                    EmailNotifications = setupControl.EmailNotifications,
+                    Email = setupControl.Email,
+                    DataFolder = setupControl.DataFolder,
+                    TestName = setupControl.TestName,
+                    Manufacturer = setupControl.Manufacturer,
+                    Model = setupControl.Model,
+                    Wattage = setupControl.Wattage,
+                    OpeningLength = setupControl.OpeningLength,
+                    OpeningWidth = setupControl.OpeningWidth,
+                    OpeningHeight = setupControl.OpeningHeight,
+                    HorizontalResolution = setupControl.HorizontalResolution,
+                    HorizontalStrayResolution = setupControl.HorizontalStrayResolution,
+                    HorizontalSymmetry = setupControl.HorizontalSymmetry,
+                    VerticalResolution = setupControl.VerticalResolution,
+                    VerticalStrayResolution = setupControl.VerticalStrayResolution,
+                    VerticalStartRange = setupControl.VerticalStartRange,
+                    VerticalStopRange = setupControl.VerticalStopRange,
+                    VerticalSymmetry = setupControl.VerticalSymmetry,
+                    kCal = setupControl.KCal,
+                    kTheta = setupControl.KTheta,
+                    distance = setupControl.Distance,
+                };
+
+                //save settings to file
+                LumenTestSettingsModel.WriteXML(settings, setupControl.DataFolder + "\\settings.xml");
+
+                //create new data containers
+                rawLightData = new MeasurementCollection();
+                rawStrayData = new MeasurementCollection();
+            }
+            else
+            {
+                //fetch data
+                rawLightData = lumenTestLoadDataControl.FoundLightData;
+                rawStrayData = lumenTestLoadDataControl.FoundStrayData;
+            }
+
             //start test
-            progressControl.BeginTestAsync(sensors, hRange, vRange, hStrayRange, vStrayRange, kCal, kTheta, distance);
+            progressControl.BeginTestAsync(sensors, hRange, vRange, hStrayRange, vStrayRange, kCal, kTheta, distance, rawLightData, rawStrayData);
             wizard.SelectedTab = tabProgress;
         }
 
@@ -176,6 +283,5 @@ namespace Goniometer.Workflows.IESNA
             }
         }
         #endregion
-
     }
 }

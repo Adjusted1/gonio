@@ -51,7 +51,14 @@ namespace Goniometer
 
         public string DataFolder
         {
-            get { return String.Format("{0}/{1:yyyyMMdd} {2} {3}",txtDataFolder.Text, DateTime.Now, this.TestName, this.Model); }
+            get 
+            { 
+                return String.Format("{0}/{1:yyyyMMdd} {2} {3}",txtDataFolder.Text, DateTime.Now, this.TestName, this.Model); 
+            }
+            set
+            {
+                txtDataFolder.Text = value;
+            }
         }
 
         public bool EmailNotifications
@@ -70,41 +77,49 @@ namespace Goniometer
         public string TestName
         {
             get { return txtTestName.Text; }
+            set { txtTestName.Text = value; }
         }
 
         public string Manufacturer
         {
             get { return txtManufacturer.Text; }
+            set { txtManufacturer.Text = value; }
         }
 
-        public int NumberOfLamps
+        public string NumberOfLamps
         {
-            get { return Int32.Parse(txtNumberOfLamps.Text); }
+            get { return txtNumberOfLamps.Text; }
+            set { txtNumberOfLamps.Text = value; }
         } 
 
         public string Model
         {
             get { return txtModel.Text; }
+            set { txtModel.Text = value; }
         }
 
         public string Wattage
         {
             get { return txtWattage.Text; }
+            set { txtWattage.Text = value; }
         }
 
         public string OpeningLength
         {
             get { return txtLength.Text; }
+            set { txtLength.Text = value; }
         }
 
         public string OpeningWidth
         {
             get { return txtWidth.Text; }
+            set { txtWidth.Text = value; }
         }
 
         public string OpeningHeight
         {
             get { return txtHeight.Text; }
+            set { txtHeight.Text = value; }
         }
         #endregion
 
@@ -156,6 +171,7 @@ namespace Goniometer
                 else
                     return -1;
             }
+            set { txtHorizontalResolution.Text = String.Format("{0}", value); }
         }
 
         public double HorizontalStrayResolution
@@ -168,6 +184,7 @@ namespace Goniometer
                 else
                     return -1;
             }
+            set { txtHorizontalStrayResolution.Text = String.Format("{0}", value); }
         }
 
         public double VerticalResolution
@@ -180,6 +197,7 @@ namespace Goniometer
                 else
                     return -1;
             }
+            set { txtVerticalResolution.Text = String.Format("{0}", value); }
         }
 
         public double VerticalStrayResolution
@@ -192,6 +210,7 @@ namespace Goniometer
                 else
                     return -1;
             }
+            set { txtVerticalStrayResolution.Text = String.Format("{0}", value); }
         }
 
         public VerticalSymmetryEnum VerticalSymmetry
@@ -204,6 +223,21 @@ namespace Goniometer
                     return VerticalSymmetryEnum.BottomOnly;
 
                 return VerticalSymmetryEnum.Full;
+            }
+            set 
+            {
+                switch (value)
+                {
+                    case VerticalSymmetryEnum.TopOnly:    
+                        radVerticalTop.Checked = true;    
+                        break;
+                    case VerticalSymmetryEnum.BottomOnly: 
+                        radVerticalBottom.Checked = true; 
+                        break;
+                    case VerticalSymmetryEnum.Full:
+                        radVerticalFull.Checked = true;
+                        break;
+                }
             }
         }
 
@@ -220,6 +254,24 @@ namespace Goniometer
                     
                 return HorizontalSymmetryEnum.Single;
             }
+            set
+            {
+                switch (value)
+                {
+                    case HorizontalSymmetryEnum.Full:
+                        radHorizontalFull.Checked = true;
+                        break;
+                    case HorizontalSymmetryEnum.Half:
+                        radHorizontalHalf.Checked = true;
+                        break;
+                    case HorizontalSymmetryEnum.Quarter:
+                        radHorizontalQuarter.Checked = true;
+                        break;
+                    case HorizontalSymmetryEnum.Single:
+                        radHorizontalSingle.Checked = true;
+                        break;
+                }
+            }
         }
 
         public double VerticalStartRange
@@ -232,6 +284,7 @@ namespace Goniometer
                 else
                     return -1;
             }
+            set { txtVerticalStartRange.Text = String.Format("{0}", value); }
         }
 
         public double VerticalStopRange
@@ -244,6 +297,7 @@ namespace Goniometer
                 else
                     return -1;
             }
+            set { txtVerticalStopRange.Text = String.Format("{0}", value); }
         }
         #endregion
 
@@ -589,6 +643,57 @@ namespace Goniometer
                 return false;
 
             return true;
+        }
+
+        private bool _readOnly = false;
+        public void SetReadOnly(bool readOnly)
+        {
+            this._readOnly = readOnly;
+
+            //data folder controls
+            this.txtDataFolder.ReadOnly = readOnly;
+            this.btnDataFolder.Enabled  = readOnly;
+
+            //text boxes
+            this.txtNumberOfLamps.ReadOnly = readOnly;
+            this.txtManufacturer.ReadOnly  = readOnly;
+            this.txtTestName.ReadOnly      = readOnly;
+            this.txtModel.ReadOnly         = readOnly;
+            this.txtWidth.ReadOnly         = readOnly;
+            this.txtHeight.ReadOnly        = readOnly;
+            this.txtLength.ReadOnly        = readOnly;
+            this.txtWattage.ReadOnly       = readOnly;
+            
+            //vertical range controls
+            this.txtVerticalResolution.ReadOnly      = readOnly;
+            this.txtVerticalStrayResolution.ReadOnly = readOnly;
+            this.txtVerticalStopRange.ReadOnly       = readOnly;
+            this.txtVerticalStartRange.ReadOnly      = readOnly;
+
+            this.radVerticalFull.Enabled   = readOnly;
+            this.radVerticalBottom.Enabled = readOnly;
+            this.radVerticalTop.Enabled    = readOnly;
+
+            //horizontal range controls
+            this.txtHorizontalResolution.ReadOnly      = readOnly;
+            this.txtHorizontalStrayResolution.ReadOnly = readOnly;
+
+            this.radHorizontalFull.Enabled    = readOnly;
+            this.radHorizontalQuarter.Enabled = readOnly;
+            this.radHorizontalHalf.Enabled    = readOnly;
+            this.radHorizontalSingle.Enabled  = readOnly;
+
+            this.cboStrayResolution.Enabled = readOnly;
+
+            //email controls
+            //ignore as these can be set
+            //this.txtEmail.ReadOnly = readOnly;
+            //this.chkEmail.ReadOnly = readOnly;
+
+            //calibration controls
+            //this.txtDistance.ReadOnly = readOnly;
+            //this.txtKTheta.ReadOnly   = readOnly;
+            //this.txtKCal.ReadOnly     = readOnly;
         }
     }
 }

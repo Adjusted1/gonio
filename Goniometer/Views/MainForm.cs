@@ -31,14 +31,6 @@ namespace Goniometer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                //load main content
-                LoadTestListControl();
-            }
-            catch (Exception)
-            {
-            }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -58,7 +50,14 @@ namespace Goniometer
             }
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MotorController.EmergencyStop();
+        }
+
         #region menu items
+
+        #region file
         private void openRawToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -78,7 +77,47 @@ namespace Goniometer
             { 
             }
         }
+        #endregion
 
+        #region workflows
+        /// <summary>
+        /// starts new lumen test workflow
+        /// </summary>
+        private void newLumenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadLumenTestControl(false);
+        }
+
+        /// <summary>
+        /// restarts lumen test workflow from raw file
+        /// </summary>
+        private void continueLumenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadLumenTestControl(true);
+        }
+        #endregion
+
+        #region tools
+        /// <summary>
+        /// launch raw file merge tool
+        /// </summary>
+        private void mergeRawFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// launch raw file view tool
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewRawFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region settings
         private void motorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadMotorSettingsControl();
@@ -87,6 +126,8 @@ namespace Goniometer
         private void sensorToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
+        #endregion
+
         #endregion
 
         #region main panel context switching
@@ -111,75 +152,17 @@ namespace Goniometer
         }
         #endregion
 
-        #region DataControl
-        private void LoadDataControl(string filePath)
-        {
-            panelMain.Controls.Clear();
-
-            //initialize and attach view
-            var dataControl = new RawDataView();
-            dataControl.Size = panelMain.Size;
-            dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataControl.OnCloseClicked += dataControl_OnCloseClicked;
-            dataControl.OnExportClicked += dataControl_OnExportClicked;
-
-            panelMain.Controls.Add(dataControl);
-
-            //fetch data and bind it
-            using (StreamReader sr = new StreamReader(filePath))
-            {
-                string raw = sr.ReadToEnd();
-                var measurements = MeasurementCollection.FromCSV(raw);
-                dataControl.BindDataSource(measurements);
-            }
-        }
-
-        private void dataControl_OnCloseClicked(object sender, EventArgs e)
-        {
-            LoadTestListControl();
-        }
-
-        private void dataControl_OnExportClicked(object sender, EventArgs e)
-        {
-            LoadTestListControl();
-        }
-        #endregion
-
-        #region TestListControl
-        private void LoadTestListControl()
-        {
-            panelMain.Controls.Clear();
-
-            //initialize and attach view
-            var testListControl = new TestListControl();
-            testListControl.Size = panelMain.Size;
-            testListControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            testListControl.OnTestSelected += new EventHandler(testListControl_btnTest_Clicked);
-
-            panelMain.Controls.Add(testListControl);
-        }
-
-        private void testListControl_btnTest_Clicked(object sender, EventArgs e)
-        {
-            var testListControl = sender as TestListControl;
-            if (testListControl == null)
-                return;
-
-            string testName = testListControl.SelectedTest;
-            if (testName == "Lumen Test")
-            {
-                LoadLumenTestControl();
-            }
-        }
-        #endregion
-
         #region LumenTestControl
-        private void LoadLumenTestControl()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loadData">should we present the loaddata control?</param>
+        private void LoadLumenTestControl(bool loadData)
         {
             panelMain.Controls.Clear();
 
             //initialize and attach view
-            var lumenTestControl = new LumenTestControl();
+            var lumenTestControl = new LumenTestControl(loadData);
             lumenTestControl.Size = panelMain.Size;
             lumenTestControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lumenTestControl.PropertyChanged += new PropertyChangedEventHandler(lumenTestControl_PropertyChanged);
@@ -226,7 +209,29 @@ namespace Goniometer
 
         private void lumenTestControl_OnExit(object sender, EventArgs e)
         {
-            LoadTestListControl();
+            panelMain.Controls.Clear();
+        }
+        #endregion
+
+        #region DataControl
+        private void LoadDataControl(string filePath)
+        {
+            panelMain.Controls.Clear();
+
+            //initialize and attach view
+            var dataControl = new RawDataView();
+            dataControl.Size = panelMain.Size;
+            dataControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            panelMain.Controls.Add(dataControl);
+
+            //fetch data and bind it
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string raw = sr.ReadToEnd();
+                var measurements = MeasurementCollection.FromCSV(raw);
+                dataControl.BindDataSource(measurements);
+            }
         }
         #endregion
 
@@ -252,11 +257,6 @@ namespace Goniometer
         }
 
         private void btnPanic_Click(object sender, EventArgs e)
-        {
-            MotorController.EmergencyStop();
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             MotorController.EmergencyStop();
         }

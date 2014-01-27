@@ -9,9 +9,15 @@ namespace Goniometer_Controller.Models
     public class MeasurementBase
     {
         private readonly double _theta;
+        /// <summary>
+        /// Horizontal/Azimuthal angle from lamp reference
+        /// </summary>
         public double Theta { get { return _theta; } }
 
         private readonly double _phi;
+        /// <summary>
+        /// Vertical Angle from bottom
+        /// </summary>
         public double Phi { get { return _phi; } }
 
         private readonly string _key;
@@ -26,6 +32,15 @@ namespace Goniometer_Controller.Models
         private readonly string _portname;
         public string PortName { get { return _portname; } }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="theta">Horizontal/Azimuthal angle from lamp reference</param>
+        /// <param name="phi">Vertical Angle from bottom</param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="sensorname"></param>
+        /// <param name="portname"></param>
         public MeasurementBase(double theta, double phi, string key, double value, string sensorname = "", string portname = "")
         {
             this._theta = theta;
@@ -36,6 +51,16 @@ namespace Goniometer_Controller.Models
             this._portname = portname;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="theta">Horizontal/Azimuthal angle from lamp reference</param>
+        /// <param name="phi">Vertical Angle from bottom</param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="sensorname"></param>
+        /// <param name="portname"></param>
+        /// <returns></returns>
         public static MeasurementBase Create(double theta, double phi, string key, double value, string sensorname = "", string portname = "")
         {
             return new MeasurementBase(theta, phi, key, value, sensorname, portname);

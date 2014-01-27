@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.IO;
 using System.Text;
 
 using Goniometer_Controller.Functions;
@@ -52,6 +53,20 @@ namespace Goniometer_Controller.Models
                 var measurement = MeasurementBase.FromCSV(line);
                 collection.Add(measurement);
             }
+            return collection;
+        }
+
+        public static MeasurementCollection FromCSVFile(string fileName)
+        {
+            var stream = File.OpenText(fileName);
+            
+            string s = "";
+            var collection = new MeasurementCollection();
+            while ((s = stream.ReadLine()) != null)
+            {
+                collection.Add(MeasurementBase.FromCSV(s));
+            }
+
             return collection;
         }
         #endregion

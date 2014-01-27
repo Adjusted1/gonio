@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.wizard = new WizardPages();
+            this.tabLoadData = new System.Windows.Forms.TabPage();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.lumenTestLoadDataControl = new Goniometer.Workflows.IESNA.LumenTestLoadDataControl();
             this.tabSetup = new System.Windows.Forms.TabPage();
             this.setupControl = new Goniometer.LumenTestSetupControl();
             this.btnBack = new System.Windows.Forms.Button();
@@ -40,6 +44,7 @@
             this.tabCompletion = new System.Windows.Forms.TabPage();
             this.btnClose = new System.Windows.Forms.Button();
             this.wizard.SuspendLayout();
+            this.tabLoadData.SuspendLayout();
             this.tabSetup.SuspendLayout();
             this.tabProgress.SuspendLayout();
             this.tabCompletion.SuspendLayout();
@@ -47,9 +52,10 @@
             // 
             // wizard
             // 
-            this.wizard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.wizard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.wizard.Controls.Add(this.tabLoadData);
             this.wizard.Controls.Add(this.tabSetup);
             this.wizard.Controls.Add(this.tabProgress);
             this.wizard.Controls.Add(this.tabCompletion);
@@ -58,6 +64,48 @@
             this.wizard.SelectedIndex = 0;
             this.wizard.Size = new System.Drawing.Size(957, 679);
             this.wizard.TabIndex = 0;
+            // 
+            // tabLoadData
+            // 
+            this.tabLoadData.Controls.Add(this.btnExit);
+            this.tabLoadData.Controls.Add(this.btnLoad);
+            this.tabLoadData.Controls.Add(this.lumenTestLoadDataControl);
+            this.tabLoadData.Location = new System.Drawing.Point(4, 22);
+            this.tabLoadData.Name = "tabLoadData";
+            this.tabLoadData.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLoadData.Size = new System.Drawing.Size(949, 653);
+            this.tabLoadData.TabIndex = 3;
+            this.tabLoadData.Text = "LoadData";
+            this.tabLoadData.UseVisualStyleBackColor = true;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExit.Location = new System.Drawing.Point(6, 624);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.TabIndex = 3;
+            this.btnExit.Text = "Back";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoad.Location = new System.Drawing.Point(868, 624);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.TabIndex = 2;
+            this.btnLoad.Text = "Start";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            // 
+            // lumenTestLoadDataControl
+            // 
+            this.lumenTestLoadDataControl.Location = new System.Drawing.Point(6, 6);
+            this.lumenTestLoadDataControl.Name = "lumenTestLoadDataControl";
+            this.lumenTestLoadDataControl.Size = new System.Drawing.Size(940, 612);
+            this.lumenTestLoadDataControl.TabIndex = 0;
             // 
             // tabSetup
             // 
@@ -74,9 +122,9 @@
             // 
             // setupControl
             // 
-            this.setupControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.setupControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.setupControl.Email = "";
             this.setupControl.EmailNotifications = false;
             this.setupControl.Location = new System.Drawing.Point(6, 6);
@@ -122,17 +170,25 @@
             // 
             // progressControl
             // 
-            this.progressControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressControl.DataFolder = "C:\\";
             this.progressControl.Email = "";
             this.progressControl.EmailNotifications = false;
             this.progressControl.Location = new System.Drawing.Point(6, 6);
+            this.progressControl.Manufacturer = null;
             this.progressControl.MinimumSize = new System.Drawing.Size(270, 327);
+            this.progressControl.Model = null;
             this.progressControl.Name = "progressControl";
+            this.progressControl.NumberofLamps = 0;
+            this.progressControl.OpeningHeight = null;
+            this.progressControl.OpeningLength = null;
+            this.progressControl.OpeningWidth = null;
             this.progressControl.Size = new System.Drawing.Size(937, 612);
             this.progressControl.TabIndex = 4;
+            this.progressControl.TestName = null;
+            this.progressControl.Wattage = null;
             // 
             // btnPause
             // 
@@ -187,6 +243,7 @@
             this.Size = new System.Drawing.Size(963, 685);
             this.Load += new System.EventHandler(this.LumenTestControl_Load);
             this.wizard.ResumeLayout(false);
+            this.tabLoadData.ResumeLayout(false);
             this.tabSetup.ResumeLayout(false);
             this.tabProgress.ResumeLayout(false);
             this.tabCompletion.ResumeLayout(false);
@@ -207,5 +264,9 @@
         private System.Windows.Forms.Button btnClose;
         private LumenTestSetupControl setupControl;
         private LumenTestProgressControl progressControl;
+        private System.Windows.Forms.TabPage tabLoadData;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnLoad;
+        private LumenTestLoadDataControl lumenTestLoadDataControl;
     }
 }
