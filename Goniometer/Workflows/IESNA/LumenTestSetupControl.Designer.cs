@@ -77,6 +77,12 @@
             this.cboStrayResolution = new System.Windows.Forms.ComboBox();
             this.groupSensor = new System.Windows.Forms.GroupBox();
             this.measurementGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.listSensors = new System.Windows.Forms.CheckedListBox();
             this.groupCalibration = new System.Windows.Forms.GroupBox();
             this.txtDistance = new Goniometer.Controls.NumberTextBox();
@@ -90,12 +96,8 @@
             this.btnDataFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupHorizontalSymetry = new System.Windows.Forms.GroupBox();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboOutputFormat = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.grpLamp.SuspendLayout();
             this.groupVerticalSymetry.SuspendLayout();
             this.groupResolution.SuspendLayout();
@@ -137,6 +139,7 @@
             this.txtWattage.Name = "txtWattage";
             this.txtWattage.Size = new System.Drawing.Size(100, 20);
             this.txtWattage.TabIndex = 14;
+            this.txtWattage.Value = null;
             // 
             // label20
             // 
@@ -443,7 +446,7 @@
             this.groupResolution.Controls.Add(this.txtHorizontalResolution);
             this.groupResolution.Location = new System.Drawing.Point(3, 290);
             this.groupResolution.Name = "groupResolution";
-            this.groupResolution.Size = new System.Drawing.Size(194, 328);
+            this.groupResolution.Size = new System.Drawing.Size(194, 295);
             this.groupResolution.TabIndex = 3;
             this.groupResolution.TabStop = false;
             this.groupResolution.Text = "Resolution";
@@ -602,6 +605,48 @@
             this.measurementGridView.Size = new System.Drawing.Size(319, 290);
             this.measurementGridView.TabIndex = 1;
             // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.DataPropertyName = "SensorName";
+            this.dataGridViewTextBoxColumn13.HeaderText = "Sensor Name";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.DataPropertyName = "PortName";
+            this.dataGridViewTextBoxColumn14.HeaderText = "Port";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.DataPropertyName = "Theta";
+            this.dataGridViewTextBoxColumn15.HeaderText = "Theta";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.DataPropertyName = "Phi";
+            this.dataGridViewTextBoxColumn16.HeaderText = "Phi";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.DataPropertyName = "Key";
+            this.dataGridViewTextBoxColumn17.HeaderText = "Key";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.DataPropertyName = "Value";
+            this.dataGridViewTextBoxColumn18.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
+            // 
             // listSensors
             // 
             this.listSensors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -638,6 +683,7 @@
             this.txtDistance.Size = new System.Drawing.Size(141, 20);
             this.txtDistance.TabIndex = 5;
             this.txtDistance.TabStop = false;
+            this.txtDistance.Value = null;
             this.txtDistance.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDistance_MouseDoubleClick);
             // 
             // label14
@@ -657,6 +703,7 @@
             this.txtKTheta.Size = new System.Drawing.Size(141, 20);
             this.txtKTheta.TabIndex = 3;
             this.txtKTheta.TabStop = false;
+            this.txtKTheta.Value = null;
             this.txtKTheta.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKTheta_MouseDoubleClick);
             // 
             // label13
@@ -676,6 +723,7 @@
             this.txtKCal.Size = new System.Drawing.Size(141, 20);
             this.txtKCal.TabIndex = 1;
             this.txtKCal.TabStop = false;
+            this.txtKCal.Value = null;
             this.txtKCal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtKCal_MouseDoubleClick);
             // 
             // label12
@@ -723,57 +771,37 @@
             this.groupHorizontalSymetry.Controls.Add(this.radHorizontalHalf);
             this.groupHorizontalSymetry.Location = new System.Drawing.Point(204, 384);
             this.groupHorizontalSymetry.Name = "groupHorizontalSymetry";
-            this.groupHorizontalSymetry.Size = new System.Drawing.Size(194, 234);
+            this.groupHorizontalSymetry.Size = new System.Drawing.Size(194, 201);
             this.groupHorizontalSymetry.TabIndex = 5;
             this.groupHorizontalSymetry.TabStop = false;
             this.groupHorizontalSymetry.Text = "Horizontal Symetry";
             // 
-            // dataGridViewTextBoxColumn13
+            // cboOutputFormat
             // 
-            this.dataGridViewTextBoxColumn13.DataPropertyName = "SensorName";
-            this.dataGridViewTextBoxColumn13.HeaderText = "Sensor Name";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.ReadOnly = true;
+            this.cboOutputFormat.FormattingEnabled = true;
+            this.cboOutputFormat.Items.AddRange(new object[] {
+            "IESNA Report",
+            "CSV (Exact Values)"});
+            this.cboOutputFormat.Location = new System.Drawing.Point(94, 591);
+            this.cboOutputFormat.Name = "cboOutputFormat";
+            this.cboOutputFormat.Size = new System.Drawing.Size(303, 21);
+            this.cboOutputFormat.TabIndex = 28;
             // 
-            // dataGridViewTextBoxColumn14
+            // label22
             // 
-            this.dataGridViewTextBoxColumn14.DataPropertyName = "PortName";
-            this.dataGridViewTextBoxColumn14.HeaderText = "Port";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.DataPropertyName = "Theta";
-            this.dataGridViewTextBoxColumn15.HeaderText = "Theta";
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.DataPropertyName = "Phi";
-            this.dataGridViewTextBoxColumn16.HeaderText = "Phi";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.DataPropertyName = "Key";
-            this.dataGridViewTextBoxColumn17.HeaderText = "Key";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.DataPropertyName = "Value";
-            this.dataGridViewTextBoxColumn18.HeaderText = "Value";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            this.dataGridViewTextBoxColumn18.ReadOnly = true;
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(14, 594);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(74, 13);
+            this.label22.TabIndex = 29;
+            this.label22.Text = "Output Format";
             // 
             // LumenTestSetupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.cboOutputFormat);
             this.Controls.Add(this.groupHorizontalSymetry);
             this.Controls.Add(this.btnDataFolder);
             this.Controls.Add(this.txtDataFolder);
@@ -878,5 +906,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.ComboBox cboOutputFormat;
+        private System.Windows.Forms.Label label22;
     }
 }

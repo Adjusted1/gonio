@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Goniometer_Controller.Motors
 {
-    internal class VerticalMotor : BaseMotor
+    internal class VerticalMotor : DualFeedbackMotor
     {
         private static double _min = 0;
         private static double _max = 180;
@@ -26,8 +26,8 @@ namespace Goniometer_Controller.Motors
         //motor scale factor: 400:1 gear reducer = 3,276,800 counts per rev / 360deg = 9102.2... counts per degree
         //load  scale factor:         no reducer =    10,000 counts per rev / 360deg = 27.7...
 
-        public VerticalMotor() 
-            : base(_motorAxis, _motorScale)
+        public VerticalMotor()
+            : base(_motorAxis, _motorScale, _encoderAxis, _encoderScale)
         {
 
         }

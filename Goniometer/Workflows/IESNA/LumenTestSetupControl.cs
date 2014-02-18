@@ -299,6 +299,18 @@ namespace Goniometer
             }
             set { txtVerticalStopRange.Text = String.Format("{0}", value); }
         }
+
+        public string OutputFormat
+        {
+            get
+            {
+                return cboOutputFormat.SelectedValue as string;
+            }
+            set
+            {
+                cboOutputFormat.SelectedValue = value;
+            }
+        }
         #endregion
 
         #region range calculations

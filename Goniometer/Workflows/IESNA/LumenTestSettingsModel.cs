@@ -12,7 +12,8 @@ namespace Goniometer.Workflows.IESNA
         public bool EmailNotifications;
         public string Email;
         public string DataFolder;
-        
+        public string OutputFormat;
+
         //iesna report values
         public string TestName;
         public string Manufacturer;

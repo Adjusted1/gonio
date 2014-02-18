@@ -70,6 +70,12 @@ namespace Goniometer
             set { lblDataFolder.Text = value; }
         }
 
+        public string OutputFormat
+        {
+            get;
+            set;
+        }
+
         public bool SkipLightTest
         {
             get;
@@ -200,7 +206,9 @@ namespace Goniometer
         #region stray lumen test
         private void SetupStrayTest()
         {
-            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors, _rawStrayData);
+            bool exactMeasurements = OutputFormat.ToLower().Contains("exact");
+
+            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors, _rawStrayData, exactMeasurements);
             _strayWorker.ProgressChanged += OnProgressChanged;
             _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
             _strayWorker.Error += OnError;
@@ -267,7 +275,9 @@ namespace Goniometer
         #region standard lumen test
         private void SetupStandardTest()
         {
-            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors, _rawLightData);
+            bool exactMeasurements = OutputFormat.ToLower().Contains("exact");
+
+            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors, _rawLightData, exactMeasurements);
             _lightWorker.ProgressChanged += OnProgressChanged;
             _lightWorker.RunWorkerCompleted += OnLightTestFinished;
             _lightWorker.Error += OnError;
@@ -413,6 +423,17 @@ namespace Goniometer
 
         private string GenerateReport()
         {
+            if (OutputFormat.ToLower().Contains("iesna"))
+            {
+                return GenerateIesnaReport();
+            }
+            else
+            {
+                return GenerateCsvReport();
+            }
+        }
+
+        private string GenerateIesnaReport() {
             //convert any candle values to candelas
             _rawLightData = LightMath.PrepareLuminousMeasurements(_rawLightData, _distance, _kCal, _kTheta);
             _rawStrayData = LightMath.PrepareLuminousMeasurements(_rawStrayData, _distance, _kCal, _kTheta);
@@ -436,6 +457,11 @@ namespace Goniometer
             return fullpath;
         }
 
+        private string GenerateCsvReport()
+        {
+            return String.Format("{0}/{1:yyyyMMdd} {2} {3}_raw.csv", this.DataFolder, _startTime, this.TestName, this.Model);
+        }
+
         private void OnMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
         {
             var measurements = e.Measurements;
@@ -445,7 +471,7 @@ namespace Goniometer
                 Directory.CreateDirectory(this.DataFolder);
 
             //write out recorded measurement immediately
-            string filePath = String.Format("{0}/{1:yyyyMMdd} {2} {3}_raw.csv", this.DataFolder, DateTime.Now, this.TestName, this.Model);
+            string filePath = String.Format("{0}/{1:yyyyMMdd} {2} {3}_raw.csv", this.DataFolder, _startTime, this.TestName, this.Model);
             using (StreamWriter sw = new StreamWriter(filePath, true))
             {
                 foreach (var measurement in measurements)

@@ -20,6 +20,7 @@ namespace Goniometer_Controller
         private double[] _hRange;
         private double[] _vRange;
         private MeasurementCollection _data;
+        private bool _exactMeasurements;
 
         private DateTime _startTime;
         private DateTime _stopTime;
@@ -31,11 +32,12 @@ namespace Goniometer_Controller
         /// <param name="vRange">vertical testing range</param>
         /// <param name="sensors">sensors to measure from</param>
         /// <param name="data">dataset to add data to</param>
-        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors, MeasurementCollection data)
+        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors, MeasurementCollection data, bool exactMeasurements)
         {
             _hRange = hRange;
             _vRange = vRange;
             _data = data;
+            _exactMeasurements = exactMeasurements;
 
             _worker = new BackgroundWorker();
             _worker.WorkerReportsProgress = true;
@@ -160,8 +162,17 @@ namespace Goniometer_Controller
 
                             //collect measurements
                             _worker.ReportProgress(progress, "Taking Measurements");
+
+                            double currentH = _hRange[h];
+                            double currentV = _vRange[v];
+                            if (_exactMeasurements)
+                            {
+                                currentH = MotorController.GetHorizontalEncoderPosition();
+                                currentV = MotorController.GetVerticalEncoderPosition();
+                            }
+
                             var measurements = _sensors.AsParallel()
-                                .SelectMany(s => s.CollectMeasurements(_hRange[h], _vRange[v]))
+                                .SelectMany(s => s.CollectMeasurements(currentH, currentV))
                                 .ToList();                                                          //evaluate now
 
                             //validate measurements

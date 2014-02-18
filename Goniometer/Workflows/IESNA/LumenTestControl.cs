@@ -64,6 +64,7 @@ namespace Goniometer.Workflows.IESNA
             setupControl.EmailNotifications        = lumenTestLoadDataControl.FoundSettings.EmailNotifications;
             setupControl.Email                     = lumenTestLoadDataControl.FoundSettings.Email;
             setupControl.DataFolder                = lumenTestLoadDataControl.FoundSettings.DataFolder;
+            setupControl.OutputFormat              = lumenTestLoadDataControl.FoundSettings.OutputFormat;
             setupControl.TestName                  = lumenTestLoadDataControl.FoundSettings.TestName;
             setupControl.Manufacturer              = lumenTestLoadDataControl.FoundSettings.Manufacturer;
             setupControl.Model                     = lumenTestLoadDataControl.FoundSettings.Model;
@@ -106,6 +107,7 @@ namespace Goniometer.Workflows.IESNA
             progressControl.EmailNotifications = setupControl.EmailNotifications;
             progressControl.Email              = setupControl.Email;
             progressControl.DataFolder         = setupControl.DataFolder;
+            progressControl.OutputFormat       = setupControl.OutputFormat;
 
             //iesna report values
             progressControl.TestName           = setupControl.TestName;
