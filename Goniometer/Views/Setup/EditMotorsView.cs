@@ -23,6 +23,7 @@ namespace Goniometer
         protected void MotorView_Load(object sender, EventArgs e)
         {
             SetZeroingMode(false);
+            timer.Enabled = true;
         }
 
         #region speed dropdowns
@@ -219,6 +220,11 @@ namespace Goniometer
         {
             gaugeHorizontal.Value = Convert.ToSingle(MotorController.GetHorizontalEncoderPosition());
             gaugeVertical.Value   = Convert.ToSingle(MotorController.GetVerticalEncoderPosition());
+
+            lblHorizontalMotorAngle.Text = String.Format("{0:0.0}", MotorController.GetHorizontalMotorPosition());
+            lblHorizontalLoadAngle.Text  = String.Format("{0:0.0}", MotorController.GetHorizontalEncoderPosition());
+            lblVerticalMotorAngle.Text   = String.Format("{0:0.0}", MotorController.GetVerticalMotorPosition());
+            lblVerticalLoadAngle.Text    = String.Format("{0:0.0}", MotorController.GetVerticalEncoderPosition());
         }
 
         public event EventHandler OnCloseClicked;
