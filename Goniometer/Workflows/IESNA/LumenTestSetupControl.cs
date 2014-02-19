@@ -41,7 +41,7 @@ namespace Goniometer
             IAsyncResult ar = ud.BeginInvoke(measurementGridUpdated, null);
         }
 
-        #region public values
+        #region Test Values
         public IEnumerable<BaseSensor> GetSensors()
         {
             //filter by checked items
@@ -72,6 +72,19 @@ namespace Goniometer
             get { return txtEmail.Text; }
             set { txtEmail.Text = value; }
         }
+
+        public string OutputFormat
+        {
+            get
+            {
+                return cboOutputFormat.SelectedItem as string;
+            }
+            set
+            {
+                cboOutputFormat.SelectedItem = value;
+            }
+        }
+        #endregion
 
         #region Lamp Information
         public string TestName
@@ -161,6 +174,7 @@ namespace Goniometer
         }
         #endregion
 
+        #region Range Values
         public double HorizontalResolution
         {
             get
@@ -299,21 +313,9 @@ namespace Goniometer
             }
             set { txtVerticalStopRange.Text = String.Format("{0}", value); }
         }
-
-        public string OutputFormat
-        {
-            get
-            {
-                return cboOutputFormat.SelectedValue as string;
-            }
-            set
-            {
-                cboOutputFormat.SelectedValue = value;
-            }
-        }
         #endregion
 
-        #region range calculations
+        #region Range Calculations
         public double[] CalculateHorizontalRange()
         {
             return CalculateHorizontalRange(HorizontalResolution);
