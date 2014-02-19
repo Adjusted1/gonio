@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -41,6 +42,12 @@ namespace Goniometer.Workflows.IESNA
 
         public static void WriteXML(LumenTestSettingsModel settings, string filename)
         {
+            FileInfo fi = new FileInfo(filename);
+            if (!fi.Directory.Exists)
+            {
+                fi.Directory.Create();
+            }
+
             XmlSerializer writer = new XmlSerializer(typeof(LumenTestSettingsModel));
             using (var file = new System.IO.StreamWriter(filename))
             {
