@@ -148,7 +148,7 @@ namespace Goniometer
 
         private void motorSettingsControl_OnCloseClicked(object sender, EventArgs e)
         {
-
+            panelMain.Controls.Clear();
         }
         #endregion
 
