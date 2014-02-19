@@ -67,5 +67,18 @@ namespace Goniometer_Controller.Motors
             int pos = MotorSocketProvider.GetEncoderPosition(axis);
             return pos / _encoderScale;
         }
+
+        public override void ZeroMotor()
+        {
+            //zero motor
+            base.ZeroMotor();
+
+            //zero encoder
+            string cmd = "pset";
+            cmd += ','.Multiply(_encoderAxis);
+            cmd += "0:";
+
+            MotorSocketProvider.Write(cmd);
+        }
     }
 }
