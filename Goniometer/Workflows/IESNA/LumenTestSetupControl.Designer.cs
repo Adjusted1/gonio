@@ -778,6 +778,7 @@
             // 
             // cboOutputFormat
             // 
+            this.cboOutputFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cboOutputFormat.FormattingEnabled = true;
             this.cboOutputFormat.Items.AddRange(new object[] {
             "IESNA Report",
@@ -789,6 +790,7 @@
             // 
             // label22
             // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(14, 594);
             this.label22.Name = "label22";
