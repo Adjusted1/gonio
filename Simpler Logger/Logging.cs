@@ -68,6 +68,7 @@ namespace SimpleLogger
 
                     StreamWriter SW;
                     SW = File.AppendText(logFile);
+                    SW.Write(String.Format("{0:hh\\:mm\\:ss}: ", DateTime.Now));
                     SW.WriteLine(message);
                     SW.Close();
                 }
