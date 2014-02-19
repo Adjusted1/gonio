@@ -251,8 +251,9 @@ namespace Goniometer
                 motorControlHorizontal.GaugeAngle = Convert.ToSingle(MotorController.GetHorizontalEncoderPosition());
                 motorControlVertical.GaugeAngle   = Convert.ToSingle(MotorController.GetVerticalEncoderPosition());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SimpleLogger.Logging.WriteToLog(ex.Message);
             }
         }
 
@@ -264,13 +265,55 @@ namespace Goniometer
         private void motorControlVertical_OnButtonGoClicked(object sender, double? e)
         {
             if (e.HasValue)
-                MotorController.SetVerticalAngleAndWait(e.Value);
+            {
+                ExecuteSetVerticalAngleDelegate d = ExecuteSetVerticalAngle;
+                IAsyncResult ar = d.BeginInvoke(e.Value, SetVerticalAngleFinished, null);
+            }
+        }
+
+        private delegate void ExecuteSetVerticalAngleDelegate(double angle);
+        private void ExecuteSetVerticalAngle(double angle)
+        {
+            try
+            {
+                MotorController.SetVerticalAngle(angle);
+            }
+            catch (InvalidOperationException ex)
+            {
+                SimpleLogger.Logging.WriteToLog(ex.Message);
+            }
+        }
+
+        private void SetVerticalAngleFinished(IAsyncResult result)
+        {
+            //?
         }
 
         private void motorControlHorizontal_OnButtonGoClicked(object sender, double? e)
         {
             if (e.HasValue)
-                MotorController.SetHorizontalAngleAndWait(e.Value);
+            {
+                ExecuteSetHorizontalAngleDelegate d = ExecuteSetHorizontalAngle;
+                IAsyncResult ar = d.BeginInvoke(e.Value, SetHorizontalAngleFinished, null);
+            }
+        }
+
+        private delegate void ExecuteSetHorizontalAngleDelegate(double angle);
+        private void ExecuteSetHorizontalAngle(double angle)
+        {
+            try
+            {
+                MotorController.SetHorizontalAngleAndWait(angle);
+            }
+            catch (InvalidOperationException ex)
+            {
+                SimpleLogger.Logging.WriteToLog(ex.Message);
+            }
+        }
+
+        private void SetHorizontalAngleFinished(IAsyncResult result)
+        {
+            //?
         }
     }
 }
