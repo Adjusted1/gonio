@@ -171,7 +171,7 @@ namespace Goniometer_Controller
                                 currentV = MotorController.GetVerticalEncoderPosition();
                             }
 
-                            var measurements = _sensors.AsParallel()
+                            var measurements = _sensors
                                 .SelectMany(s => s.CollectMeasurements(currentH, currentV))
                                 .ToList();                                                          //evaluate now
 

@@ -459,7 +459,7 @@ namespace Goniometer
 
         private string GenerateCsvReport()
         {
-            return String.Format("{0}/{1:yyyyMMdd} {2} {3}_raw.csv", this.DataFolder, _startTime, this.TestName, this.Model);
+            return String.Format("{0}/raw.csv", this.DataFolder, _startTime, this.TestName, this.Model);
         }
 
         private void OnMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
@@ -471,7 +471,7 @@ namespace Goniometer
                 Directory.CreateDirectory(this.DataFolder);
 
             //write out recorded measurement immediately
-            string filePath = String.Format("{0}/{1:yyyyMMdd} {2} {3}_raw.csv", this.DataFolder, _startTime, this.TestName, this.Model);
+            string filePath = String.Format("{0}/raw.csv", this.DataFolder);
             using (StreamWriter sw = new StreamWriter(filePath, true))
             {
                 foreach (var measurement in measurements)

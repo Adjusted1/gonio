@@ -102,6 +102,9 @@
             // 
             // lumenTestLoadDataControl
             // 
+            this.lumenTestLoadDataControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lumenTestLoadDataControl.Location = new System.Drawing.Point(6, 6);
             this.lumenTestLoadDataControl.Name = "lumenTestLoadDataControl";
             this.lumenTestLoadDataControl.Size = new System.Drawing.Size(940, 612);
@@ -125,13 +128,31 @@
             this.setupControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.setupControl.DataFolder = "/20140224  ";
             this.setupControl.Email = "";
             this.setupControl.EmailNotifications = false;
+            this.setupControl.HorizontalResolution = -1D;
+            this.setupControl.HorizontalStrayResolution = -1D;
+            this.setupControl.HorizontalSymmetry = Goniometer.HorizontalSymmetryEnum.Full;
             this.setupControl.Location = new System.Drawing.Point(6, 6);
+            this.setupControl.Manufacturer = "";
             this.setupControl.MinimumSize = new System.Drawing.Size(411, 430);
+            this.setupControl.Model = "";
             this.setupControl.Name = "setupControl";
+            this.setupControl.NumberOfLamps = "";
+            this.setupControl.OpeningHeight = "0";
+            this.setupControl.OpeningLength = "0";
+            this.setupControl.OpeningWidth = "0";
+            this.setupControl.OutputFormat = null;
             this.setupControl.Size = new System.Drawing.Size(937, 612);
             this.setupControl.TabIndex = 2;
+            this.setupControl.TestName = "";
+            this.setupControl.VerticalResolution = -1D;
+            this.setupControl.VerticalStartRange = -1D;
+            this.setupControl.VerticalStopRange = -1D;
+            this.setupControl.VerticalStrayResolution = -1D;
+            this.setupControl.VerticalSymmetry = Goniometer.VerticalSymmetryEnum.Full;
+            this.setupControl.Wattage = "";
             // 
             // btnBack
             // 
@@ -185,7 +206,10 @@
             this.progressControl.OpeningHeight = null;
             this.progressControl.OpeningLength = null;
             this.progressControl.OpeningWidth = null;
+            this.progressControl.OutputFormat = null;
             this.progressControl.Size = new System.Drawing.Size(937, 612);
+            this.progressControl.SkipLightTest = false;
+            this.progressControl.SkipStrayTest = false;
             this.progressControl.TabIndex = 4;
             this.progressControl.TestName = null;
             this.progressControl.Wattage = null;
