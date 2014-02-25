@@ -66,10 +66,13 @@ namespace Goniometer.Functions
                 message.Subject = subject;
                 message.Body = body;
 
-                foreach (var attachment in attachments)
+                if (attachments != null)
                 {
-                    if (attachment != null)
-                        message.Attachments.Add(attachment);
+                    foreach (var attachment in attachments)
+                    {
+                        if (attachment != null)
+                            message.Attachments.Add(attachment);
+                    }
                 }
 
                 SmtpClient client = new SmtpClient(host);
