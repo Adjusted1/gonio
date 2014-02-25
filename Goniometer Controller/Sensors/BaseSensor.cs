@@ -11,7 +11,7 @@ namespace Goniometer_Controller.Sensors
     {
         public string Name { get; set; }
 
-        public abstract IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi);
+        public abstract IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi, double exactTheta, double exactPhi);
 
         public abstract void Dispose();
     }

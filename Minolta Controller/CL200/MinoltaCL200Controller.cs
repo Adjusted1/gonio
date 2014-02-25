@@ -227,7 +227,7 @@ namespace Minolta_Controller.Sensors
         }
         #endregion
 
-        public override IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi)
+        public override IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi, double exactTheta, double exactPhi)
         {
             //timeout values
             TimeSpan timeout = new TimeSpan(0, 1, 0);
@@ -260,7 +260,7 @@ namespace Minolta_Controller.Sensors
                 {
                     //rotate m2 => m1, take new measurements
                     m1 = m2;
-                    m2 = CollectMeasurements(theta, phi, 0, useCF, mode);
+                    m2 = CollectMeasurements(theta, phi, exactTheta, exactPhi, 0, useCF, mode);
 
                     //if this is the first iteration, m1 will be null
                     if (m1 == null || m2 == null)
@@ -319,7 +319,7 @@ namespace Minolta_Controller.Sensors
             return m2;
         }
 
-        private List<MeasurementBase> CollectMeasurements(double theta, double phi, int receptor, bool useCF, CalibrationModeEnum mode)
+        private List<MeasurementBase> CollectMeasurements(double theta, double phi, double exactTheta, double exactPhi, int receptor, bool useCF, CalibrationModeEnum mode)
         {
             string name = this.Name;
             string port = this._port.PortName;
@@ -330,13 +330,13 @@ namespace Minolta_Controller.Sensors
             double Ev1, u, v;
             ReadEvUV(receptor, useCF, mode, out Ev1, out u, out v);
             //measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, Ev1, name, port));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorU, u, name, port));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorV, v, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, exactTheta, exactPhi, MeasurementKeys.ColorU, u, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, exactTheta, exactPhi, MeasurementKeys.ColorV, v, name, port));
 
             double Ev2, Tcp, Duv;
             ReadEvTcpUV(receptor, useCF, mode, out Ev2, out Tcp, out Duv);
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorTemp, Tcp, name, port));
-            measurements.Add(MeasurementBase.Create(theta, phi, MeasurementKeys.ColorDiff, Duv, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, exactTheta, exactPhi, MeasurementKeys.ColorTemp, Tcp, name, port));
+            measurements.Add(MeasurementBase.Create(theta, phi, exactTheta, exactPhi, MeasurementKeys.ColorDiff, Duv, name, port));
 
             return measurements;
         }

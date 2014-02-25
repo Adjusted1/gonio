@@ -505,10 +505,12 @@ namespace Goniometer
                 {
                     double theta = MotorController.GetHorizontalMotorPosition();
                     double phi = MotorController.GetVerticalMotorPosition();
+                    double exactTheta = MotorController.GetHorizontalEncoderPosition();
+                    double exactPhi = MotorController.GetVerticalEncoderPosition();
 
                     var sensors = this.GetSensors().ToList();
                     var measurements = sensors.AsParallel()
-                        .SelectMany(s => s.CollectMeasurements(theta, phi))
+                        .SelectMany(s => s.CollectMeasurements(theta, phi, exactTheta, exactPhi))
                         .ToList();
 
                     measurementGridView.DataSource = measurements;

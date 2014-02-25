@@ -119,7 +119,7 @@ namespace Goniometer_Controller.Models
                     var bot = above.OrderBy(t => t.Theta).First();
 
                     double estimate = LightMath.LinearExtrapolation(Tuple.Create(top.Theta, top.Value), Tuple.Create(bot.Theta, top.Value), theta);
-                    return MeasurementBase.Create(theta, phi, key, estimate);
+                    return MeasurementBase.Create(theta, phi, theta, phi, key, estimate);
                 }
             }
 
@@ -139,7 +139,7 @@ namespace Goniometer_Controller.Models
                 double estimate = stray.GetEstimateReading(m.Key, m.Theta, m.Phi).Value;
                 double value = (m.Value - estimate < 0) ? 0 : (m.Value - estimate);
 
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, value, m.SensorName, m.PortName));
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.ExactTheta, m.ExactPhi, m.Key, value, m.SensorName, m.PortName));
             }
 
             return results;
@@ -152,7 +152,7 @@ namespace Goniometer_Controller.Models
             foreach (var m in source)
             {
                 double estimate = source.GetEstimateReading(m.Key, m.Theta, m.Phi).Value;
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value - estimate, m.SensorName, m.PortName));
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.ExactTheta, m.ExactPhi, m.Key, m.Value - estimate, m.SensorName, m.PortName));
             }
 
             return results;
@@ -164,7 +164,7 @@ namespace Goniometer_Controller.Models
 
             foreach (var m in source)
             {
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, m.Value * value, m.SensorName, m.PortName));
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.ExactTheta, m.ExactPhi, m.Key, m.Value * value, m.SensorName, m.PortName));
             }
 
             return results;
@@ -189,9 +189,9 @@ namespace Goniometer_Controller.Models
                 foreach (var m in source.Where(m => m.Key == key))
                 {
                     if (m.Phi == 180)
-                        results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key, north, m.SensorName, m.PortName));
+                        results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.ExactTheta, m.ExactPhi, m.Key, north, m.SensorName, m.PortName));
                     else if (m.Phi == 0)
-                        results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.Key ,south, m.SensorName, m.PortName));
+                        results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.ExactTheta, m.ExactPhi, m.Key, south, m.SensorName, m.PortName));
                     else
                         results.Add(m);
                 }
@@ -212,7 +212,7 @@ namespace Goniometer_Controller.Models
             foreach (var m in source.Where(m => m.Key == oldUnit))
             {
                 double value = m.Value * Math.Pow(distance, 2);
-                results.Add(MeasurementBase.Create(m.Theta, m.Phi, newUnit, value, m.SensorName, m.PortName));
+                results.Add(MeasurementBase.Create(m.Theta, m.Phi, m.ExactTheta, m.ExactPhi, newUnit, value, m.SensorName, m.PortName));
             }
 
             return results;

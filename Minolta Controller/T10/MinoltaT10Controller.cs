@@ -210,7 +210,7 @@ namespace Minolta_Controller.Sensors
             }
         }
 
-        public override IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi)
+        public override IEnumerable<MeasurementBase> CollectMeasurements(double theta, double phi, double exactTheta, double exactPhi)
         {
             double eps = 0.02;
             MeasurementBase m1, m2;
@@ -225,8 +225,8 @@ namespace Minolta_Controller.Sensors
             {
                 //start over!
                 valid = true;
-                m1 = CollectMeasurement(theta, phi);
-                m2 = CollectMeasurement(theta, phi);
+                m1 = CollectMeasurement(theta, phi, exactTheta, exactPhi);
+                m2 = CollectMeasurement(theta, phi, exactTheta, exactPhi);
 
                 if (Math.Abs(m1.Value - m2.Value) > eps)
                     valid = false;
@@ -236,7 +236,7 @@ namespace Minolta_Controller.Sensors
             return new List<MeasurementBase> { m1 };
         }
 
-        private MeasurementBase CollectMeasurement(double theta, double phi)
+        private MeasurementBase CollectMeasurement(double theta, double phi, double exactTheta, double exactPhi)
         {
             //timeout
             TimeSpan timeout = new TimeSpan(0, 1, 0);
@@ -252,7 +252,7 @@ namespace Minolta_Controller.Sensors
                     throw new TimeoutException(String.Format("Waiting on new measurement for {0} on {1} took too long.", this.Name, this._port.PortName));
             }
 
-            return MeasurementBase.Create(theta, phi, MeasurementKeys.Illuminance, reading, this.Name, this._port.PortName);
+            return MeasurementBase.Create(theta, phi, exactTheta, exactPhi, MeasurementKeys.Illuminance, reading, this.Name, this._port.PortName);
         }
     }
 }

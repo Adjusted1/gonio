@@ -212,7 +212,7 @@ namespace Goniometer
             _strayWorker.ProgressChanged += OnProgressChanged;
             _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
             _strayWorker.Error += OnError;
-            _strayWorker.MeasurementTaken += OnMeasurementTaken;
+            _strayWorker.MeasurementTaken += OnStrayMeasurementTaken;
         }
 
         private void BeginStrayTestAsync()
@@ -281,7 +281,7 @@ namespace Goniometer
             _lightWorker.ProgressChanged += OnProgressChanged;
             _lightWorker.RunWorkerCompleted += OnLightTestFinished;
             _lightWorker.Error += OnError;
-            _lightWorker.MeasurementTaken += OnMeasurementTaken;
+            _lightWorker.MeasurementTaken += OnLightMeasurementTaken;
         }
 
         private void BeginStandardTestAsync()
@@ -459,10 +459,22 @@ namespace Goniometer
 
         private string GenerateCsvReport()
         {
-            return String.Format("{0}/raw.csv", this.DataFolder, _startTime, this.TestName, this.Model);
+            return String.Format("{0}/raw_light.csv", this.DataFolder);
         }
 
-        private void OnMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
+        private void OnStrayMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
+        {
+            string filepath = String.Format("{0}/raw_stray.csv", this.DataFolder);
+            OnMeasurementTaken(sender, e, filepath);
+        }
+        
+        private void OnLightMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
+        {
+            string filepath = String.Format("{0}/raw_light.csv", this.DataFolder);
+            OnMeasurementTaken(sender, e, filepath);
+        }
+
+        private void OnMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e, string filepath)
         {
             var measurements = e.Measurements;
 
@@ -471,8 +483,7 @@ namespace Goniometer
                 Directory.CreateDirectory(this.DataFolder);
 
             //write out recorded measurement immediately
-            string filePath = String.Format("{0}/raw.csv", this.DataFolder);
-            using (StreamWriter sw = new StreamWriter(filePath, true))
+            using (StreamWriter sw = new StreamWriter(filepath, true))
             {
                 foreach (var measurement in measurements)
                 {

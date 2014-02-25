@@ -145,7 +145,7 @@ namespace Goniometer.Setup
                 _sensor = MinoltaSensorFactory.CreateSensor("", cboSensor.SelectedItem.ToString(), port);
 
                 //test the read method on the sensor
-                var measurements = _sensor.CollectMeasurements(0, 0);
+                var measurements = _sensor.CollectMeasurements(0, 0, 0, 0);
                 measurementGridView.DataSource = measurements;
 
                 lblMessage.Text = "Success";

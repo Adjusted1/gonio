@@ -14,11 +14,23 @@ namespace Goniometer_Controller.Models
         /// </summary>
         public double Theta { get { return _theta; } }
 
+        private readonly double _exactTheta;
+        /// <summary>
+        /// Horizontal/Azimuthal angle from lamp reference, measured by encoder value
+        /// </summary>
+        public double ExactTheta { get { return _exactTheta; } }
+
         private readonly double _phi;
         /// <summary>
         /// Vertical Angle from bottom
         /// </summary>
         public double Phi { get { return _phi; } }
+
+        private readonly double _exactPhi;
+        /// <summary>
+        /// Vertical Angle from bottom, measured by encoder value
+        /// </summary>
+        public double ExactPhi { get { return _exactPhi; } }
 
         private readonly string _key;
         public string Key { get { return _key; } }
@@ -26,11 +38,11 @@ namespace Goniometer_Controller.Models
         private readonly double _value;
         public double Value { get { return _value; } }
 
-        private readonly string _sensorname;
-        public string SensorName { get { return _sensorname; } }
+        private readonly string _sensorName;
+        public string SensorName { get { return _sensorName; } }
 
-        private readonly string _portname;
-        public string PortName { get { return _portname; } }
+        private readonly string _portName;
+        public string PortName { get { return _portName; } }
 
         /// <summary>
         /// 
@@ -39,16 +51,19 @@ namespace Goniometer_Controller.Models
         /// <param name="phi">Vertical Angle from bottom</param>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        /// <param name="sensorname"></param>
-        /// <param name="portname"></param>
-        public MeasurementBase(double theta, double phi, string key, double value, string sensorname = "", string portname = "")
+        /// <param name="sensorName"></param>
+        /// <param name="portName"></param>
+        public MeasurementBase(double theta, double phi, double exactTheta, double exactPhi,
+            string key, double value, string sensorName = "", string portName = "")
         {
             this._theta = theta;
             this._phi = phi;
+            this._exactTheta = exactTheta;
+            this._exactPhi = exactPhi;
             this._key = key;
             this._value = value;
-            this._sensorname = sensorname;
-            this._portname = portname;
+            this._sensorName = sensorName;
+            this._portName = portName;
         }
 
         /// <summary>
@@ -61,9 +76,10 @@ namespace Goniometer_Controller.Models
         /// <param name="sensorname"></param>
         /// <param name="portname"></param>
         /// <returns></returns>
-        public static MeasurementBase Create(double theta, double phi, string key, double value, string sensorname = "", string portname = "")
+        public static MeasurementBase Create(double theta, double phi, double exactTheta, double exactPhi,
+            string key, double value, string sensorname = "", string portname = "")
         {
-            return new MeasurementBase(theta, phi, key, value, sensorname, portname);
+            return new MeasurementBase(theta, phi, exactTheta, exactPhi, key, value , sensorname, portname);
         }
 
         public static string ToCSV(MeasurementBase measurement)
@@ -73,6 +89,8 @@ namespace Goniometer_Controller.Models
             s += measurement.PortName   + ",";
             s += measurement.Theta      + ",";
             s += measurement.Phi        + ",";
+            s += measurement.ExactTheta + ",";
+            s += measurement.ExactPhi   + ",";
             s += measurement.Key        + ",";
             s += measurement.Value;
             return s;
@@ -81,17 +99,19 @@ namespace Goniometer_Controller.Models
         public static MeasurementBase FromCSV(string measurement)
         {
             string[] values = measurement.Split(',');
-            if (values.Length != 6)
+            if (values.Length != 8)
                 throw new ArgumentException("Expected comma separated string with 6 values");
 
-            string sensorname = values[0];
-            string portname   = values[1];
+            string sensorName = values[0];
+            string portName   = values[1];
             double theta      = Double.Parse(values[2]);
             double phi        = Double.Parse(values[3]);
-            string key        = values[4];
-            double value      = Double.Parse(values[5]);
+            double exactTheta = Double.Parse(values[4]);
+            double exactPhi   = Double.Parse(values[5]);
+            string key        = values[6];
+            double value      = Double.Parse(values[7]);
 
-            return MeasurementBase.Create(theta, phi, key, value, sensorname, portname);
+            return MeasurementBase.Create(theta, phi, exactTheta, exactPhi, key, value, sensorName, portName);
         }
     }
 }

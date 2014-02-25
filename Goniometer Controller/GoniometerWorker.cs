@@ -163,16 +163,13 @@ namespace Goniometer_Controller
                             //collect measurements
                             _worker.ReportProgress(progress, "Taking Measurements");
 
-                            double currentH = _hRange[h];
-                            double currentV = _vRange[v];
-                            if (_exactMeasurements)
-                            {
-                                currentH = MotorController.GetHorizontalEncoderPosition();
-                                currentV = MotorController.GetVerticalEncoderPosition();
-                            }
+                            double theta = _hRange[h];
+                            double phi = _vRange[v];
+                            double exactTheta = MotorController.GetHorizontalEncoderPosition();
+                            double exactPhi = MotorController.GetVerticalEncoderPosition();
 
                             var measurements = _sensors
-                                .SelectMany(s => s.CollectMeasurements(currentH, currentV))
+                                .SelectMany(s => s.CollectMeasurements(theta, phi, exactTheta, exactPhi))
                                 .ToList();                                                          //evaluate now
 
                             //validate measurements
