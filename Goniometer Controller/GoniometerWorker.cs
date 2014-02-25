@@ -20,7 +20,6 @@ namespace Goniometer_Controller
         private double[] _hRange;
         private double[] _vRange;
         private MeasurementCollection _data;
-        private bool _exactMeasurements;
 
         private DateTime _startTime;
         private DateTime _stopTime;
@@ -32,12 +31,11 @@ namespace Goniometer_Controller
         /// <param name="vRange">vertical testing range</param>
         /// <param name="sensors">sensors to measure from</param>
         /// <param name="data">dataset to add data to</param>
-        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors, MeasurementCollection data, bool exactMeasurements)
+        public GoniometerWorker(double[] hRange, double[] vRange, IEnumerable<BaseSensor> sensors, MeasurementCollection data)
         {
             _hRange = hRange;
             _vRange = vRange;
             _data = data;
-            _exactMeasurements = exactMeasurements;
 
             _worker = new BackgroundWorker();
             _worker.WorkerReportsProgress = true;

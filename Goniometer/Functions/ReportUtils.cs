@@ -50,7 +50,7 @@ namespace Goniometer.Functions
             return range;
         }
 
-        public static void EmailResults(string subject, string body, string to, Attachment attachment)
+        public static void EmailResults(string subject, string body, string to, IEnumerable<Attachment> attachments)
         {
             try
             {
@@ -66,8 +66,11 @@ namespace Goniometer.Functions
                 message.Subject = subject;
                 message.Body = body;
 
-                if (attachment != null)
-                    message.Attachments.Add(attachment);
+                foreach (var attachment in attachments)
+                {
+                    if (attachment != null)
+                        message.Attachments.Add(attachment);
+                }
 
                 SmtpClient client = new SmtpClient(host);
                 client.Send(message);

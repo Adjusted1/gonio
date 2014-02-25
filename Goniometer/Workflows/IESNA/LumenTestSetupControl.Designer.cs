@@ -781,8 +781,8 @@
             this.cboOutputFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cboOutputFormat.FormattingEnabled = true;
             this.cboOutputFormat.Items.AddRange(new object[] {
-            "IESNA Report",
-            "CSV (Exact Values)"});
+            "IESNA Report (IES)",
+            "Raw Report (CSV)"});
             this.cboOutputFormat.Location = new System.Drawing.Point(94, 591);
             this.cboOutputFormat.Name = "cboOutputFormat";
             this.cboOutputFormat.Size = new System.Drawing.Size(303, 21);

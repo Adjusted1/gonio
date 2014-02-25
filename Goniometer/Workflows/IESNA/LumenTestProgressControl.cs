@@ -206,9 +206,7 @@ namespace Goniometer
         #region stray lumen test
         private void SetupStrayTest()
         {
-            bool exactMeasurements = OutputFormat.ToLower().Contains("exact");
-
-            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors, _rawStrayData, exactMeasurements);
+            _strayWorker = new GoniometerWorker(_hStrayRange, _vStrayRange, _sensors, _rawStrayData);
             _strayWorker.ProgressChanged += OnProgressChanged;
             _strayWorker.RunWorkerCompleted += OnStrayLightTestFinished;
             _strayWorker.Error += OnError;
@@ -275,9 +273,7 @@ namespace Goniometer
         #region standard lumen test
         private void SetupStandardTest()
         {
-            bool exactMeasurements = OutputFormat.ToLower().Contains("exact");
-
-            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors, _rawLightData, exactMeasurements);
+            _lightWorker = new GoniometerWorker(_hRange, _vRange, _sensors, _rawLightData);
             _lightWorker.ProgressChanged += OnProgressChanged;
             _lightWorker.RunWorkerCompleted += OnLightTestFinished;
             _lightWorker.Error += OnError;
@@ -402,17 +398,16 @@ namespace Goniometer
             progressbar.Value = progressbar.Maximum;
 
             //if successful, generate report
-            string reportFilepath = "";
             if (_rawLightData != null && _rawStrayData != null)
             {
-                reportFilepath = GenerateReport();
+                List<string> reports = GenerateReport().ToList();
 
                 if (chkEmail.Checked)
                 {
                     string subject = "Goniometer Lumen Test Completed";
                     string body = "The Goniometer Lumen Test has completed";
-                    Attachment attachment = new Attachment(reportFilepath);
-                    ReportUtils.EmailResults(subject, body, txtEmail.Text, attachment);
+                    List<Attachment> attachments = reports.Select(r => new Attachment(r)).ToList();
+                    ReportUtils.EmailResults(subject, body, txtEmail.Text, attachments);
                 }
             }
 
@@ -421,11 +416,11 @@ namespace Goniometer
                 TestCompleted(this, null);
         }
 
-        private string GenerateReport()
+        private IEnumerable<string> GenerateReport()
         {
             if (OutputFormat.ToLower().Contains("iesna"))
             {
-                return GenerateIesnaReport();
+                return new List<string> { GenerateIesnaReport() };
             }
             else
             {
@@ -457,9 +452,13 @@ namespace Goniometer
             return fullpath;
         }
 
-        private string GenerateCsvReport()
+        private IEnumerable<string> GenerateCsvReport()
         {
-            return String.Format("{0}/raw_light.csv", this.DataFolder);
+            return new List<string> 
+            {
+                String.Format("{0}/raw_light.csv", this.DataFolder),
+                String.Format("{0}/raw_stray.csv", this.DataFolder)
+            };
         }
 
         private void OnStrayMeasurementTaken(object sender, GoniometerWorker.MeasurementEventArgs e)
