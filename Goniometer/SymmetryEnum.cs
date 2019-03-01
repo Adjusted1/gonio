@@ -24,7 +24,7 @@ namespace Goniometer
                 case VerticalSymmetryEnum.BottomOnly:
                     return 0;
                 case VerticalSymmetryEnum.TopOnly:
-                    return 180;
+                    return 90;
                 case VerticalSymmetryEnum.Full:
                     return 0;
                 default:
@@ -37,13 +37,13 @@ namespace Goniometer
             switch (symmetry)
             {
                 case VerticalSymmetryEnum.BottomOnly:
-                    return 180;
+                    return 90;
                 case VerticalSymmetryEnum.TopOnly:
-                    return 360;
+                    return 180;
                 case VerticalSymmetryEnum.Full:
-                    return 360;
+                    return 180;
                 default:
-                    return 360;
+                    return 180;
             }
         }
     }

@@ -9,12 +9,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
-
+using Goniometer.Functions;
 using Goniometer.Reports;
 using Goniometer.Sensors;
 using Goniometer.Workflows;
 using Goniometer.Workflows.IESNA;
-
 using Goniometer_Controller;
 using Goniometer_Controller.Models;
 using Goniometer_Controller.Motors;
@@ -27,6 +26,8 @@ namespace Goniometer
         public MainForm()
         {
             InitializeComponent();
+            // test email subsystem
+            ReportUtils.EmailResults("main gonio gui load completed", "see subj", "sweetlawrence205@gmail.com", null);
         }
 
         private void MainForm_Load(object sender, EventArgs e)

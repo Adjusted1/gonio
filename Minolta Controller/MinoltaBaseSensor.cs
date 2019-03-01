@@ -12,7 +12,9 @@ namespace Minolta_Controller
 {
     public abstract class MinoltaBaseSensor : BaseSensor
     {
+
         protected SerialPort _port;
+
 
         #region construction
         public MinoltaBaseSensor(SerialPort port)
@@ -26,7 +28,9 @@ namespace Minolta_Controller
         public virtual void Connect()
         {
             if (!_port.IsOpen)
+            {
                 _port.Open();
+            }
         }
 
         public virtual void Disconnect()

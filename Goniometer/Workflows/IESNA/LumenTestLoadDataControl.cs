@@ -47,6 +47,16 @@ namespace Goniometer.Workflows.IESNA
                         FoundSettings = LumenTestSettingsModel.ReadXML(settingsFileName);
 
                         //TODO: validate settings file
+                        if (FoundSettings.VerticalStartRange < 0)
+                        {
+                            FoundSettings.VerticalStartRange = FoundSettings.VerticalSymmetry.StartAngle();
+                        }
+
+                        if (FoundSettings.VerticalStopRange < 0)
+                        {
+                            FoundSettings.VerticalStopRange = FoundSettings.VerticalSymmetry.StopAngle();
+                        }
+
                     }
                     else
                     {
@@ -77,10 +87,8 @@ namespace Goniometer.Workflows.IESNA
                                 .Max(m => m.Phi);
                             
                             //stop off incomplete portions
-                            foreach(var point in FoundLightData.Where(m => m.Phi > bestVStart))
-                            {
-                                FoundLightData.Remove(point);
-                            }
+                            var invalidLightPoints = FoundLightData.Where(m => m.Phi >= bestVStart).ToList();
+                            invalidLightPoints.ForEach(p => FoundLightData.Remove(p));
 
                             //update to newest start value
                             FoundSettings.VerticalStartRange = bestVStart;
@@ -112,10 +120,8 @@ namespace Goniometer.Workflows.IESNA
                                     .Max(m => m.Phi);
 
                                 //stop off incomplete portions
-                                foreach (var point in FoundStrayData.Where(m => m.Phi > bestVStart))
-                                {
-                                    FoundStrayData.Remove(point);
-                                }
+                                var invalidStrayPoints = FoundStrayData.Where(m => m.Phi >= bestVStart).ToList();
+                                invalidStrayPoints.ForEach(p => FoundStrayData.Remove(p));
 
                                 //update to newest start value
                                 FoundSettings.VerticalStartRange = bestVStart;

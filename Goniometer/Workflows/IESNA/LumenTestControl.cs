@@ -172,9 +172,16 @@ namespace Goniometer.Workflows.IESNA
             }
             else
             {
+                //fix data folder setting
+                progressControl.DataFolder = lumenTestLoadDataControl.FoundSettings.DataFolder;
+
                 //fetch data
                 rawLightData = lumenTestLoadDataControl.FoundLightData;
                 rawStrayData = lumenTestLoadDataControl.FoundStrayData;
+
+                //pass skip values
+                progressControl.SkipLightTest = lumenTestLoadDataControl.LightTestFinished;
+                progressControl.SkipStrayTest = lumenTestLoadDataControl.StrayTestFinished;
             }
 
             //start test
